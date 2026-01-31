@@ -1,0 +1,133 @@
+# Example: Complete Organization with Multi-Environment Platform
+# This demonstrates the new organization and environment multi-tenancy features
+
+---
+# Organization definition
+apiVersion: platformfoundry.io/v1
+kind: Organization
+metadata:
+  name: acme-corp
+spec:
+  displayName: Acme Corporation
+  description: Main organization for Acme Corp platform resources
+  owner: john.doe
+  contact:
+    email: platform-team@acme.com
+  quotas:
+    maxPlatforms: 10
+    maxClusters: 20
+    maxEnvironments: 30
+
+---
+# Base platform definition
+apiVersion: platformfoundry.io/v1
+kind: Platform
+metadata:
+  name: payment-platform
+  organization: acme-corp
+  labels:
+    team: payments
+    criticality: high
+spec:
+  components:
+    infrastructure: payment-infra
+    orchestrator: payment-orchestrator
+    observability: payment-observability
+  global:
+    region: us-east-1
+    tags:
+      team: payments
+      cost-center: engineering
+      managed-by: platformfoundry
+
+---
+# Development environment profile
+apiVersion: platformfoundry.io/v1
+kind: Environment
+metadata:
+  name: payment-platform-dev
+  organization: acme-corp
+  labels:
+    environment: development
+spec:
+  type: development
+  platformRef: payment-platform
+  overrides:
+    infrastructure:
+      nodeCount: 2
+      nodeType: t3.medium
+      autoScaling: false
+    observability:
+      prometheus:
+        retention: 7d
+        scrapeInterval: 30s
+    global:
+      region: us-west-2
+    tags:
+      environment: dev
+      cost-center: development
+
+---
+# Staging environment profile
+apiVersion: platformfoundry.io/v1
+kind: Environment
+metadata:
+  name: payment-platform-staging
+  organization: acme-corp
+  labels:
+    environment: staging
+spec:
+  type: staging
+  platformRef: payment-platform
+  promotion:
+    auto: false
+    promotesTo: payment-platform-prod
+    requiresApproval: true
+    approvers:
+      - john.doe
+      - jane.smith
+  overrides:
+    infrastructure:
+      nodeCount: 3
+      nodeType: t3.large
+      autoScaling: true
+    observability:
+      prometheus:
+        retention: 15d
+        scrapeInterval: 15s
+    tags:
+      environment: staging
+      cost-center: qa
+
+---
+# Production environment profile
+apiVersion: platformfoundry.io/v1
+kind: Environment
+metadata:
+  name: payment-platform-prod
+  organization: acme-corp
+  labels:
+    environment: production
+    criticality: critical
+spec:
+  type: production
+  platformRef: payment-platform
+  overrides:
+    infrastructure:
+      nodeCount: 5
+      nodeType: t3.xlarge
+      autoScaling: true
+      minNodes: 5
+      maxNodes: 20
+    observability:
+      prometheus:
+        retention: 30d
+        scrapeInterval: 10s
+        highAvailability: true
+      grafana:
+        enabled: true
+        replicas: 3
+    tags:
+      environment: production
+      cost-center: production
+      sla: tier-1

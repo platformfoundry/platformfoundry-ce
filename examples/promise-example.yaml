@@ -1,0 +1,270 @@
+# Example Promise Definition
+# Promises define platform capabilities that developers can self-service
+---
+apiVersion: platformfoundry.io/v1
+kind: Promise
+metadata:
+  name: postgresql-database
+  description: Production-ready PostgreSQL database with backups and monitoring
+  labels:
+    category: database
+    tier: production-ready
+    compliance: soc2
+spec:
+  description: >
+    Production-ready PostgreSQL database with automated daily backups,
+    point-in-time recovery, performance monitoring, and high availability options.
+    Includes automatic patching and security updates.
+
+  provider: terraform-aws
+  category: database
+
+  inputs:
+    - name: name
+      type: string
+      description: "Database name (will be prefixed with team name)"
+      required: true
+      validation: "^[a-z][a-z0-9-]{2,20}$"
+
+    - name: size
+      type: enum
+      description: "Database size tier"
+      required: true
+      enum: [small, medium, large, xlarge]
+      default: medium
+
+    - name: version
+      type: enum
+      description: "PostgreSQL version"
+      required: false
+      enum: ["13", "14", "15", "16"]
+      default: "15"
+
+    - name: backup_retention
+      type: number
+      description: "Backup retention period in days"
+      required: false
+      default: 7
+      min: 1
+      max: 35
+
+    - name: multi_az
+      type: boolean
+      description: "Enable multi-AZ deployment for high availability"
+      required: false
+      default: false
+
+    - name: storage_encrypted
+      type: boolean
+      description: "Enable storage encryption (recommended)"
+      required: false
+      default: true
+
+    - name: publicly_accessible
+      type: boolean
+      description: "Make database publicly accessible (not recommended)"
+      required: false
+      default: false
+
+  outputs:
+    - name: connection_string
+      type: secret
+      description: "Full database connection string"
+
+    - name: host
+      type: string
+      description: "Database hostname"
+
+    - name: port
+      type: number
+      description: "Database port (typically 5432)"
+
+    - name: database_name
+      type: string
+      description: "Created database name"
+
+    - name: username
+      type: string
+      description: "Master username"
+
+    - name: password
+      type: secret
+      description: "Master password"
+
+    - name: readonly_endpoint
+      type: string
+      description: "Read replica endpoint (if multi_az enabled)"
+
+  # Policy enforcement
+  policies:
+    - require-team-label
+    - cost-limit-database
+    - require-encryption
+
+  # Approval workflow
+  approval:
+    required: true
+    policy: database-provisioning
+    approvers:
+      - platform-leads
+      - security-team
+    environments:
+      - production
+
+  # Default provider configuration
+  defaults:
+    instance_class: db.t3.medium
+    engine: postgres
+    allocated_storage: 20
+    max_allocated_storage: 100
+    performance_insights_enabled: true
+    monitoring_interval: 60
+
+---
+# Example Promise Request
+# Developers use this to request infrastructure from a Promise
+apiVersion: platformfoundry.io/v1
+kind: PromiseRequest
+metadata:
+  name: orders-database
+  team: orders
+  environment: production
+  labels:
+    app: order-service
+spec:
+  promise: postgresql-database
+  inputs:
+    name: orders-db
+    size: medium
+    version: "15"
+    backup_retention: 14
+    multi_az: true
+    storage_encrypted: true
+    publicly_accessible: false
+
+---
+# Another Promise Example - Redis Cache
+apiVersion: platformfoundry.io/v1
+kind: Promise
+metadata:
+  name: redis-cache
+  description: Managed Redis cache for high-performance caching
+spec:
+  description: >
+    Managed Redis cache with automatic failover, persistence options,
+    and monitoring. Ideal for session storage, caching, and real-time analytics.
+
+  provider: terraform-aws
+  category: cache
+
+  inputs:
+    - name: name
+      type: string
+      description: "Cache cluster name"
+      required: true
+      validation: "^[a-z][a-z0-9-]{2,20}$"
+
+    - name: size
+      type: enum
+      description: "Cache node size"
+      required: true
+      enum: [small, medium, large]
+      default: small
+
+    - name: version
+      type: enum
+      description: "Redis version"
+      required: false
+      enum: ["6", "7"]
+      default: "7"
+
+    - name: cluster_mode
+      type: boolean
+      description: "Enable cluster mode for horizontal scaling"
+      required: false
+      default: false
+
+    - name: num_replicas
+      type: number
+      description: "Number of read replicas"
+      required: false
+      default: 0
+      min: 0
+      max: 5
+
+  outputs:
+    - name: endpoint
+      type: string
+      description: "Primary endpoint"
+
+    - name: port
+      type: number
+      description: "Redis port"
+
+    - name: auth_token
+      type: secret
+      description: "Authentication token"
+
+    - name: reader_endpoint
+      type: string
+      description: "Reader endpoint for read replicas"
+
+---
+# Example: S3 Bucket Promise
+apiVersion: platformfoundry.io/v1
+kind: Promise
+metadata:
+  name: s3-bucket
+  description: S3 bucket with encryption and lifecycle policies
+spec:
+  description: >
+    S3 bucket with server-side encryption, optional versioning,
+    and configurable lifecycle policies for cost optimization.
+
+  provider: terraform-aws
+  category: storage
+
+  inputs:
+    - name: name
+      type: string
+      description: "Bucket name suffix (will be prefixed with account/team)"
+      required: true
+      validation: "^[a-z][a-z0-9-]{2,30}$"
+
+    - name: versioning
+      type: boolean
+      description: "Enable object versioning"
+      required: false
+      default: false
+
+    - name: lifecycle_days
+      type: number
+      description: "Days before transitioning to Glacier"
+      required: false
+      default: 90
+      min: 30
+      max: 365
+
+    - name: public_access
+      type: boolean
+      description: "Allow public access (requires approval)"
+      required: false
+      default: false
+
+  outputs:
+    - name: bucket_name
+      type: string
+      description: "Full bucket name"
+
+    - name: bucket_arn
+      type: string
+      description: "Bucket ARN"
+
+    - name: bucket_url
+      type: string
+      description: "Bucket URL"
+
+  approval:
+    required: true
+    environments:
+      - production

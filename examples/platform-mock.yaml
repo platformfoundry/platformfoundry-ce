@@ -1,0 +1,43 @@
+apiVersion: platformfoundry.io/v1
+kind: Platform
+metadata:
+  name: my-mock-platform
+spec:
+  mockEnabled: true
+  components:
+    infrastructure:
+      ref: my-mock-platform-infrastructure
+    orchestrator:
+      ref: my-mock-platform-orchestrator
+    observability:
+      ref: my-mock-platform-observability
+    devex:
+      ref: my-mock-platform-devex
+---
+apiVersion: platformfoundry.io/v1
+kind: Infrastructure
+metadata:
+  name: my-mock-platform-infrastructure
+spec:
+  provider: mock
+---
+apiVersion: platformfoundry.io/v1
+kind: Orchestrator
+metadata:
+  name: my-mock-platform-orchestrator
+spec:
+  provider: mock
+---
+apiVersion: platformfoundry.io/v1
+kind: Observability
+metadata:
+  name: my-mock-platform-observability
+spec:
+  provider: mock
+---
+apiVersion: platformfoundry.io/v1
+kind: DevEx
+metadata:
+  name: my-mock-platform-devex
+spec:
+  provider: mock
