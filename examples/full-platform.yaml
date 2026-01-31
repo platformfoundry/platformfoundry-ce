@@ -1,0 +1,199 @@
+# Full Production Platform
+# Usage: pf apply -f full-platform.yaml
+
+apiVersion: platformfoundry.io/v1
+kind: Cluster
+metadata:
+  name: prod-cluster
+spec:
+  provider: eks
+  region: us-west-2
+  nodeCount: 5
+  nodeType: t3.large
+  version: 1.28
+  networking:
+    vpcCIDR: 10.0.0.0/16
+    privateCIDRs:
+      - 10.0.1.0/24
+      - 10.0.2.0/24
+    publicCIDRs:
+      - 10.0.101.0/24
+      - 10.0.102.0/24
+  tags:
+    environment: production
+    team: platform-engineering
+    costCenter: engineering
+
+---
+apiVersion: platformfoundry.io/v1
+kind: Pipeline
+metadata:
+  name: jenkins-prod
+spec:
+  provider: jenkins
+  url: https://jenkins.company.com
+  clusterRef: prod-cluster
+
+  credentials:
+    secretRef: jenkins-admin-credentials
+
+  plugins:
+    - kubernetes
+    - docker
+    - git
+    - pipeline
+
+  jobs:
+    - name: build-pipeline
+      type: pipeline
+      scriptPath: pipelines/Jenkinsfile.build
+    - name: deploy-pipeline
+      type: pipeline
+      scriptPath: pipelines/Jenkinsfile.deploy
+    - name: security-scan
+      type: pipeline
+      scriptPath: pipelines/Jenkinsfile.security
+
+---
+apiVersion: platformfoundry.io/v1
+kind: Observability
+metadata:
+  name: full-monitoring
+spec:
+  clusterRef: prod-cluster
+
+  prometheus:
+    enabled: true
+    retention: 30d
+    storageSize: 50Gi
+    scrapeTargets:
+      - kubernetes-nodes
+      - kubernetes-pods
+      - jenkins
+      - vault
+      - istio
+
+  grafana:
+    enabled: true
+    adminPassword:
+      secretRef: grafana-admin-password
+    dashboards:
+      - kubernetes-cluster-monitoring
+      - application-metrics
+      - jenkins-metrics
+      - istio-service-mesh
+
+  loki:
+    enabled: true
+    retention: 15d
+    storageSize: 100Gi
+
+  alertmanager:
+    enabled: true
+    receivers:
+      - name: slack
+        slackWebhook:
+          secretRef: slack-webhook-url
+      - name: pagerduty
+        pagerdutyKey:
+          secretRef: pagerduty-integration-key
+
+---
+apiVersion: platformfoundry.io/v1
+kind: SecretStore
+metadata:
+  name: vault-prod
+spec:
+  provider: vault
+  clusterRef: prod-cluster
+  mode: production
+  backend: consul
+  ha:
+    enabled: true
+    replicas: 3
+  policies:
+    - name: jenkins-policy
+      rules: |
+        path "secret/jenkins/*" {
+          capabilities = ["read", "list"]
+        }
+    - name: app-policy
+      rules: |
+        path "secret/apps/*" {
+          capabilities = ["read", "list"]
+        }
+
+---
+apiVersion: platformfoundry.io/v1
+kind: ServiceMesh
+metadata:
+  name: istio-mesh
+spec:
+  provider: istio
+  version: 1.20.0
+  clusterRef: prod-cluster
+
+  features:
+    mTLS:
+      enabled: true
+      mode: STRICT
+    trafficManagement:
+      enabled: true
+    observability:
+      enabled: true
+      tracing: true
+
+  ingress:
+    enabled: true
+    replicas: 3
+
+---
+apiVersion: platformfoundry.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+spec:
+  provider: nginx
+  clusterRef: prod-cluster
+  replicaCount: 3
+
+  rules:
+    - host: "*.prod.company.com"
+      defaultBackend: true
+
+  tls:
+    letsencrypt:
+      enabled: true
+      email: devops@company.com
+      production: true
+
+---
+apiVersion: platformfoundry.io/v1
+kind: Orchestrator
+metadata:
+  name: argocd-prod
+spec:
+  provider: argocd
+  version: 2.9.0
+  clusterRef: prod-cluster
+
+  repoURL: https://github.com/company/platform-config
+  branch: main
+  path: production
+
+  credentials:
+    secretRef: github-token
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - PruneLast=true
+
+  notifications:
+    slack:
+      enabled: true
+      webhook:
+        secretRef: argocd-slack-webhook

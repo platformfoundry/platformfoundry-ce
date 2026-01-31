@@ -1,0 +1,93 @@
+# Platform Foundry - Local Demo Configuration
+# This example creates a complete platform on your local machine using kind
+# No cloud account required - everything runs locally!
+#
+# Usage:
+#   pf demo              # Runs this configuration automatically
+#   pf apply -f local-demo.yaml --mode=local  # Manual apply
+
+apiVersion: platformfoundry.io/v1
+kind: Platform
+metadata:
+  name: local-demo-platform
+  labels:
+    environment: demo
+    mode: local
+spec:
+  # Mode determines how components are deployed
+  mode: local  # Options: local, cloud, hybrid
+
+  # Infrastructure - uses kind to create local Kubernetes cluster
+  infrastructure:
+    name: pf-local-infra
+    provider: kind
+    cluster:
+      name: pf-demo
+      nodes: 1
+      version: "1.27.0"
+
+  # Components to install
+  components:
+    # GitOps orchestration with ArgoCD
+    orchestrator:
+      name: demo-argocd
+      provider: argocd
+      mode: lightweight  # Minimal resources for local
+      namespace: argocd
+      config:
+        insecure: true  # For local demo
+        version: "v2.8.0"
+
+    # Monitoring with Prometheus + Grafana
+    observability:
+      name: demo-monitoring
+      provider: prometheus-stack
+      mode: lightweight
+      namespace: monitoring
+      prometheus:
+        enabled: true
+        retention: "7d"  # Reduced for local
+        storage: "10Gi"  # Minimal for demo
+      grafana:
+        enabled: true
+        dashboards:
+          - kubernetes-cluster
+          - argocd
+
+    # Developer portal with Backstage
+    devex:
+      name: demo-portal
+      provider: backstage
+      mode: lightweight
+      namespace: backstage
+      config:
+        intelligentGeneration: true
+        features:
+          - software-catalog
+          - tech-docs
+          - scaffolder
+          - kubernetes
+        integrations:
+          - argocd
+          - grafana
+          - prometheus
+
+  # Global configuration
+  config:
+    # Auto-configure integrations
+    autoIntegration: true
+
+    # Demo-specific settings
+    demo:
+      enabled: true
+      portForward: true  # Automatically port-forward services
+      openBrowser: false  # Don't auto-open browser
+
+    # Resource limits for local
+    resources:
+      defaultLimits:
+        cpu: "500m"
+        memory: "512Mi"
+      defaultRequests:
+        cpu: "100m"
+        memory: "128Mi"

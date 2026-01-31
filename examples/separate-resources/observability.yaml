@@ -1,0 +1,18 @@
+apiVersion: platformfoundry.io/v1
+kind: Observability
+metadata:
+  name: monitoring
+  labels:
+    environment: development
+spec:
+  clusterRef: dev-cluster
+
+  prometheus:
+    enabled: true
+    retention: 15d
+
+  grafana:
+    enabled: true
+    dashboards:
+      - kubernetes-cluster
+      - application-metrics

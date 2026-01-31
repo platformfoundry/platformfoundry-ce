@@ -1,0 +1,115 @@
+# Jenkins on Kubernetes Platform
+# Usage: pf apply -f jenkins-k8s-platform.yaml
+
+apiVersion: platformfoundry.io/v1
+kind: Cluster
+metadata:
+  name: dev-cluster
+spec:
+  provider: existing
+  kubeconfig: ~/.kube/config
+  context: dev-cluster
+
+---
+apiVersion: platformfoundry.io/v1
+kind: Pipeline
+metadata:
+  name: jenkins-ci
+spec:
+  provider: jenkins
+  url: https://jenkins.example.com:8080
+  clusterRef: dev-cluster
+
+  credentials:
+    username: admin
+    passwordSecretRef: jenkins-admin-password
+
+  # Configure Jenkins to use Kubernetes for dynamic agents
+  kubernetes:
+    enabled: true
+    namespace: jenkins-agents
+    serviceAccount: jenkins
+
+  # Pre-configured jobs
+  jobs:
+    - name: backend-build
+      type: pipeline
+      description: Build backend microservices
+      script: |
+        pipeline {
+          agent {
+            kubernetes {
+              label 'backend-builder'
+            }
+          }
+          stages {
+            stage('Build') {
+              steps {
+                sh 'make build'
+              }
+            }
+            stage('Test') {
+              steps {
+                sh 'make test'
+              }
+            }
+            stage('Deploy') {
+              steps {
+                sh 'make deploy'
+              }
+            }
+          }
+        }
+
+    - name: frontend-build
+      type: pipeline
+      description: Build frontend applications
+      scriptPath: pipelines/frontend-Jenkinsfile
+
+  # Jenkins plugins to install
+  plugins:
+    - kubernetes:latest
+    - docker-workflow:latest
+    - git:latest
+    - pipeline-stage-view:latest
+    - blueocean:latest
+
+---
+apiVersion: platformfoundry.io/v1
+kind: Observability
+metadata:
+  name: monitoring-stack
+spec:
+  clusterRef: dev-cluster
+
+  prometheus:
+    enabled: true
+    retention: 7d
+    scrapeTargets:
+      - jenkins
+      - kubernetes-nodes
+      - kubernetes-pods
+
+  grafana:
+    enabled: true
+    dashboards:
+      - kubernetes-cluster
+      - jenkins-performance
+
+---
+apiVersion: platformfoundry.io/v1
+kind: Ingress
+metadata:
+  name: jenkins-ingress
+spec:
+  provider: nginx
+  clusterRef: dev-cluster
+
+  rules:
+    - host: jenkins.dev.example.com
+      service: jenkins-ci
+      port: 8080
+
+  tls:
+    enabled: true
+    secretName: jenkins-tls-cert

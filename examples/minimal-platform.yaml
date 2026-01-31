@@ -1,0 +1,26 @@
+# Minimal Platform: Existing K8s cluster + Monitoring
+# Usage: pf apply -f minimal-platform.yaml
+
+apiVersion: platformfoundry.io/v1
+kind: Cluster
+metadata:
+  name: existing-cluster
+spec:
+  provider: existing
+  kubeconfig: ~/.kube/config
+  context: my-cluster
+
+---
+apiVersion: platformfoundry.io/v1
+kind: Observability
+metadata:
+  name: basic-monitoring
+spec:
+  clusterRef: existing-cluster
+  prometheus:
+    enabled: true
+    retention: 15d
+  grafana:
+    enabled: true
+    dashboards:
+      - kubernetes-cluster
