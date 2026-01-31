@@ -1,0 +1,388 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: #f5f7fa;
+    color: #2c3e50;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header h1 {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.header-stats {
+    display: flex;
+    gap: 30px;
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat-value {
+    display: block;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.stat-label {
+    display: block;
+    font-size: 12px;
+    opacity: 0.9;
+    text-transform: uppercase;
+}
+
+/* Navigation */
+.nav {
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    display: flex;
+    gap: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.nav-btn {
+    padding: 12px 24px;
+    border: none;
+    background: transparent;
+    color: #2c3e50;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.nav-btn:hover {
+    background: #f5f7fa;
+}
+
+.nav-btn.active {
+    background: #667eea;
+    color: white;
+}
+
+/* Main Content */
+.main {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    min-height: 500px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.view {
+    display: none;
+}
+
+.view.active {
+    display: block;
+}
+
+.view-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f5f7fa;
+}
+
+.view-header h2 {
+    font-size: 24px;
+    color: #2c3e50;
+}
+
+/* Platforms Grid */
+.platforms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.platform-card {
+    background: #f5f7fa;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+    transition: all 0.2s;
+}
+
+.platform-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.platform-name {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+.platform-meta {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #7f8c8d;
+}
+
+.platform-status {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-ready {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-failed {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.platform-actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+/* Jobs List */
+.jobs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.job-item {
+    background: #f5f7fa;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+}
+
+.job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.job-id {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.job-progress {
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.job-progress-bar {
+    height: 100%;
+    background: #667eea;
+    transition: width 0.3s;
+}
+
+/* Form */
+.form-container {
+    max-width: 600px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+/* Editor */
+.editor-container {
+    display: flex;
+    gap: 20px;
+}
+
+#yamlEditor {
+    flex: 1;
+    min-height: 400px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    resize: vertical;
+}
+
+#yamlEditor:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.validation-result {
+    flex: 0 0 300px;
+    padding: 20px;
+    background: #f5f7fa;
+    border-radius: 6px;
+    min-height: 200px;
+}
+
+/* Buttons */
+.btn {
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    background: white;
+    color: #2c3e50;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.btn:hover {
+    background: #f5f7fa;
+}
+
+.btn-primary {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+.btn-primary:hover {
+    background: #5568d3;
+}
+
+.btn-danger {
+    background: #e74c3c;
+    color: white;
+    border-color: #e74c3c;
+}
+
+.btn-danger:hover {
+    background: #c0392b;
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 12px;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #7f8c8d;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+    color: #7f8c8d;
+    font-size: 14px;
+}
+
+.footer a {
+    color: #667eea;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .header-stats {
+        width: 100%;
+        justify-content: space-around;
+    }
+
+    .nav {
+        flex-wrap: wrap;
+    }
+
+    .platforms-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .editor-container {
+        flex-direction: column;
+    }
+
+    .validation-result {
+        flex: 1;
+    }
+}

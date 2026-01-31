@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platform Foundry - Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Platform Foundry</h1>
+            <div class="header-stats">
+                <div class="stat">
+                    <span class="stat-value" id="platformCount">0</span>
+                    <span class="stat-label">Platforms</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value" id="jobCount">0</span>
+                    <span class="stat-label">Active Jobs</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value" id="resourceCount">0</span>
+                    <span class="stat-label">Resources</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav">
+            <button class="nav-btn active" data-view="platforms">Platforms</button>
+            <button class="nav-btn" data-view="jobs">Jobs</button>
+            <button class="nav-btn" data-view="create">Create Platform</button>
+            <button class="nav-btn" data-view="editor">YAML Editor</button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Platforms View -->
+            <div class="view active" id="platforms-view">
+                <div class="view-header">
+                    <h2>Platforms</h2>
+                    <button class="btn btn-primary" onclick="refreshPlatforms()">Refresh</button>
+                </div>
+                <div class="platforms-grid" id="platformsGrid">
+                    <p class="empty-state">No platforms found. Create one to get started.</p>
+                </div>
+            </div>
+
+            <!-- Jobs View -->
+            <div class="view" id="jobs-view">
+                <div class="view-header">
+                    <h2>Jobs</h2>
+                    <button class="btn btn-primary" onclick="refreshJobs()">Refresh</button>
+                </div>
+                <div class="jobs-list" id="jobsList">
+                    <p class="empty-state">No active jobs.</p>
+                </div>
+            </div>
+
+            <!-- Create Platform View -->
+            <div class="view" id="create-view">
+                <div class="view-header">
+                    <h2>Create Platform</h2>
+                </div>
+                <div class="form-container">
+                    <form id="createPlatformForm">
+                        <div class="form-group">
+                            <label for="platformName">Platform Name</label>
+                            <input type="text" id="platformName" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="platformType">Type</label>
+                            <select id="platformType" name="type">
+                                <option value="Platform">Platform</option>
+                                <option value="Infrastructure">Infrastructure</option>
+                                <option value="Orchestrator">Orchestrator</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="platformRegion">Region</label>
+                            <input type="text" id="platformRegion" name="region" placeholder="us-east-1">
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Create Platform</button>
+                            <button type="button" class="btn" onclick="resetForm()">Reset</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- YAML Editor View -->
+            <div class="view" id="editor-view">
+                <div class="view-header">
+                    <h2>YAML Editor</h2>
+                    <div>
+                        <button class="btn" onclick="validateYAML()">Validate</button>
+                        <button class="btn btn-primary" onclick="applyYAML()">Apply</button>
+                    </div>
+                </div>
+                <div class="editor-container">
+                    <textarea id="yamlEditor" placeholder="Paste your YAML configuration here..."></textarea>
+                    <div id="validationResult" class="validation-result"></div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Platform Foundry v1.0.0 | <a href="/metrics" target="_blank">Metrics</a></p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
