@@ -61,7 +61,7 @@ spec:
 			name:        "apply with non-existent file",
 			args:        []string{"-f", "nonexistent.yaml"},
 			wantErr:     true,
-			errContains: "cannot find", // Works on both Unix ("no such file or directory") and Windows ("cannot find the file")
+			errContains: "nonexistent.yaml", // Error message contains the filename on both Unix and Windows
 		},
 		{
 			name: "apply with invalid YAML",
