@@ -7,7 +7,6 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/platformfoundry/pf-ce/internal/generator"
 	"github.com/platformfoundry/pf-ce/internal/orchestrator"
 	"github.com/platformfoundry/pf-ce/internal/parser"
 	"github.com/platformfoundry/pf-ce/internal/plugin"
@@ -71,16 +70,7 @@ func runCreateOrg(cmd *cobra.Command, args []string) error {
 	}
 
 	// Generate organization YAML
-	gen := generator.NewOrganizationGenerator()
-	yaml, err := gen.Generate(generator.OrganizationConfig{
-		Name:        createOrgName,
-		DisplayName: createOrgDisplayName,
-		Owner:       createOrgOwner,
-		Email:       createOrgEmail,
-	})
-	if err != nil {
-		return fmt.Errorf("failed to generate organization YAML: %w", err)
-	}
+	yaml := generateOrgYAML(createOrgName, createOrgDisplayName, createOrgOwner, createOrgEmail)
 
 	// Apply mode - create organization directly
 	if createOrgApply {
@@ -163,4 +153,24 @@ func promptString(prompt, defaultValue string) (string, error) {
 	}
 
 	return value, nil
+}
+
+// generateOrgYAML generates organization YAML inline
+func generateOrgYAML(name, displayName, owner, email string) string {
+	var sb strings.Builder
+	sb.WriteString("apiVersion: platformfoundry.io/v1\n")
+	sb.WriteString("kind: Organization\n")
+	sb.WriteString("metadata:\n")
+	sb.WriteString(fmt.Sprintf("  name: %s\n", name))
+	if displayName != "" {
+		sb.WriteString(fmt.Sprintf("  displayName: %s\n", displayName))
+	}
+	sb.WriteString("spec:\n")
+	if owner != "" {
+		sb.WriteString(fmt.Sprintf("  owner: %s\n", owner))
+	}
+	if email != "" {
+		sb.WriteString(fmt.Sprintf("  contactEmail: %s\n", email))
+	}
+	return sb.String()
 }

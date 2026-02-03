@@ -8,7 +8,6 @@ import (
 	"sort"
 	"time"
 
-	"github.com/platformfoundry/pf-ce/internal/cost"
 	"github.com/platformfoundry/pf-ce/internal/drift"
 	"github.com/platformfoundry/pf-ce/internal/lint"
 	"github.com/platformfoundry/pf-ce/internal/policy"
@@ -121,11 +120,10 @@ func DefaultConfig() *Config {
 
 // Checker performs health checks
 type Checker struct {
-	config    *Config
-	linter    *lint.Linter
-	drifter   *drift.Detector
-	policy    policy.Engine
-	estimator *cost.Estimator
+	config  *Config
+	linter  *lint.Linter
+	drifter *drift.Detector
+	policy  policy.Engine
 }
 
 // NewChecker creates a new health checker
@@ -158,11 +156,6 @@ func (c *Checker) WithPolicyEngine(p policy.Engine) *Checker {
 	return c
 }
 
-// WithCostEstimator sets the cost estimator
-func (c *Checker) WithCostEstimator(e *cost.Estimator) *Checker {
-	c.estimator = e
-	return c
-}
 
 // Check performs a health check on the platform
 func (c *Checker) Check(ctx context.Context, platform string, configFiles []string) (*Score, error) {
@@ -339,14 +332,8 @@ func (c *Checker) checkCost(ctx context.Context, platform string, score *Score) 
 		Status: StatusHealthy,
 	}
 
-	if c.estimator == nil {
-		cat.Message = "Cost estimation not configured"
-		return cat
-	}
-
-	// Cost estimator requires resource list - for now return default score
-	// In production, this would load estimates from saved data
-	cat.Message = "Within budget"
+	// Cost estimation moved to finops package - use `pf cost` commands
+	cat.Message = "Use 'pf cost' for cost analysis"
 	return cat
 }
 

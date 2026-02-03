@@ -13,9 +13,9 @@ import (
 )
 
 var finopsCmd = &cobra.Command{
-	Use:   "finops",
-	Short: "FinOps and cost management commands",
-	Long:  `Manage costs, analyze resource rightsizing, and detect anomalies.`,
+	Use:   "cost",
+	Short: "Cost management and FinOps commands",
+	Long:  `Manage costs, budgets, analyze resource rightsizing, and detect anomalies.`,
 }
 
 var finopsRightsizeCmd = &cobra.Command{
