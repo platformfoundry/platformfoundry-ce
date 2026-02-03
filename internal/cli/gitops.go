@@ -22,6 +22,15 @@ func init() {
 	gitopsCmd.AddCommand(gitopsStatusCmd)
 	gitopsCmd.AddCommand(gitopsEventsCmd)
 	gitopsCmd.AddCommand(gitopsPromoteCmd)
+	gitopsCmd.AddCommand(gitopsDeployCmd)
+
+	// Deploy subcommands
+	gitopsDeployCmd.AddCommand(gitopsDeployCreateCmd)
+	gitopsDeployCmd.AddCommand(gitopsDeployListCmd)
+	gitopsDeployCmd.AddCommand(gitopsDeployStatusCmd)
+	gitopsDeployCmd.AddCommand(gitopsDeployApproveCmd)
+	gitopsDeployCmd.AddCommand(gitopsDeployCancelCmd)
+	gitopsDeployCmd.AddCommand(gitopsDeployRollbackCmd)
 
 	// Flags
 	gitopsInitCmd.Flags().StringP("config", "c", "", "Path to GitOps configuration file")
@@ -39,6 +48,14 @@ func init() {
 	gitopsPromoteCmd.Flags().StringP("source", "s", "", "Source environment")
 	gitopsPromoteCmd.Flags().StringP("target", "t", "", "Target environment")
 	gitopsPromoteCmd.Flags().Bool("auto-merge", false, "Automatically merge the promotion PR")
+
+	// Deploy flags
+	gitopsDeployCreateCmd.Flags().String("app", "", "Application name (required)")
+	gitopsDeployCreateCmd.Flags().String("env", "", "Target environment (required)")
+	gitopsDeployCreateCmd.Flags().String("image", "", "Container image")
+	gitopsDeployCreateCmd.Flags().String("strategy", "canary", "Deployment strategy (canary, blue-green, rolling, recreate)")
+	gitopsDeployCreateCmd.MarkFlagRequired("app")
+	gitopsDeployCreateCmd.MarkFlagRequired("env")
 }
 
 var gitopsCmd = &cobra.Command{
@@ -114,8 +131,65 @@ environment to the target environment.`,
 	RunE: runGitOpsPromote,
 }
 
+// Intent-based deployment commands
+var gitopsDeployCmd = &cobra.Command{
+	Use:   "deploy",
+	Short: "Intent-based deployment commands",
+	Long: `Manage intent-based progressive deployments.
+
+Intent-based deployments allow you to specify the desired state and let
+the platform determine the best way to achieve it with progressive delivery.`,
+}
+
+var gitopsDeployCreateCmd = &cobra.Command{
+	Use:   "create",
+	Short: "Create a deployment intent",
+	Long:  `Create a new intent-based deployment with progressive delivery.`,
+	RunE:  runGitOpsDeployCreate,
+}
+
+var gitopsDeployListCmd = &cobra.Command{
+	Use:   "list",
+	Short: "List deployment intents",
+	RunE:  runGitOpsDeployList,
+}
+
+var gitopsDeployStatusCmd = &cobra.Command{
+	Use:   "status <intent-id>",
+	Short: "Get status of a deployment intent",
+	Args:  cobra.ExactArgs(1),
+	RunE:  runGitOpsDeployStatus,
+}
+
+var gitopsDeployApproveCmd = &cobra.Command{
+	Use:   "approve <intent-id>",
+	Short: "Approve a paused deployment",
+	Args:  cobra.ExactArgs(1),
+	RunE:  runGitOpsDeployApprove,
+}
+
+var gitopsDeployCancelCmd = &cobra.Command{
+	Use:   "cancel <intent-id>",
+	Short: "Cancel a deployment",
+	Args:  cobra.ExactArgs(1),
+	RunE:  runGitOpsDeployCancel,
+}
+
+var gitopsDeployRollbackCmd = &cobra.Command{
+	Use:   "rollback <intent-id>",
+	Short: "Rollback a deployment",
+	Args:  cobra.ExactArgs(1),
+	RunE:  runGitOpsDeployRollback,
+}
+
 // Global manager instance (would be properly initialized in real implementation)
 var gitopsManager *gitops.Manager
+var intentController *gitops.IntentController
+
+func init() {
+	// Initialize intent controller
+	intentController = gitops.NewIntentController(nil, nil, nil, nil, nil)
+}
 
 func runGitOpsInit(cmd *cobra.Command, args []string) error {
 	configPath, _ := cmd.Flags().GetString("config")
@@ -425,5 +499,209 @@ func getEventIcon(eventType string) string {
 		return "🚀"
 	default:
 		return "•"
+	}
+}
+
+// Intent-based deployment command implementations
+
+func runGitOpsDeployCreate(cmd *cobra.Command, args []string) error {
+	app, _ := cmd.Flags().GetString("app")
+	env, _ := cmd.Flags().GetString("env")
+	image, _ := cmd.Flags().GetString("image")
+	strategyType, _ := cmd.Flags().GetString("strategy")
+
+	// Create deployment strategy based on type
+	var strategy gitops.DeployStrategy
+	switch strategyType {
+	case "canary":
+		strategy = gitops.DefaultCanaryStrategy()
+	case "blue-green":
+		strategy = gitops.DefaultBlueGreenStrategy()
+	case "rolling":
+		strategy = gitops.DefaultRollingStrategy()
+	case "recreate":
+		strategy = gitops.DeployStrategy{Type: "recreate"}
+	default:
+		return fmt.Errorf("unknown strategy: %s", strategyType)
+	}
+
+	// Create intent
+	intent := &gitops.DeploymentIntent{
+		Application:       app,
+		TargetEnvironment: env,
+		TargetRevision:    image,
+		Strategy:          strategy,
+		Analysis:          gitops.CommonAnalysisRules(app),
+	}
+
+	ctx := context.Background()
+	if err := intentController.CreateIntent(ctx, intent); err != nil {
+		return err
+	}
+
+	fmt.Printf("Deployment intent created: %s\n", intent.ID)
+	fmt.Printf("  Application:  %s\n", app)
+	fmt.Printf("  Environment:  %s\n", env)
+	fmt.Printf("  Strategy:     %s\n", strategyType)
+	if image != "" {
+		fmt.Printf("  Image:        %s\n", image)
+	}
+	fmt.Printf("  Steps:        %d\n", len(strategy.Steps))
+	fmt.Println()
+	fmt.Println("Starting deployment...")
+
+	// Execute intent
+	if err := intentController.ExecuteIntent(ctx, intent.ID); err != nil {
+		// Check if paused for approval
+		if intent.Status == gitops.IntentStatusPaused {
+			fmt.Println("\nDeployment paused - waiting for approval")
+			fmt.Printf("Run: pf gitops deploy approve %s\n", intent.ID)
+			return nil
+		}
+		return err
+	}
+
+	fmt.Println("Deployment completed successfully!")
+	return nil
+}
+
+func runGitOpsDeployList(cmd *cobra.Command, args []string) error {
+	ctx := context.Background()
+	intents := intentController.ListIntents(ctx)
+
+	if len(intents) == 0 {
+		fmt.Println("No deployment intents found")
+		return nil
+	}
+
+	fmt.Printf("%-20s %-15s %-15s %-12s %-10s\n", "ID", "APPLICATION", "ENVIRONMENT", "STRATEGY", "STATUS")
+	fmt.Println(strings.Repeat("-", 80))
+
+	for _, intent := range intents {
+		shortID := intent.ID
+		if len(shortID) > 18 {
+			shortID = shortID[:18]
+		}
+
+		fmt.Printf("%-20s %-15s %-15s %-12s %-10s\n",
+			shortID,
+			intent.Application,
+			intent.TargetEnvironment,
+			intent.Strategy.Type,
+			intent.Status)
+	}
+
+	return nil
+}
+
+func runGitOpsDeployStatus(cmd *cobra.Command, args []string) error {
+	intentID := args[0]
+	ctx := context.Background()
+
+	intent, err := intentController.GetIntent(ctx, intentID)
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("Deployment Intent: %s\n", intent.ID)
+	fmt.Println(strings.Repeat("=", 50))
+	fmt.Printf("Application:  %s\n", intent.Application)
+	fmt.Printf("Environment:  %s\n", intent.TargetEnvironment)
+	fmt.Printf("Strategy:     %s\n", intent.Strategy.Type)
+	fmt.Printf("Status:       %s\n", formatIntentStatus(intent.Status))
+	fmt.Printf("Current Step: %d/%d\n", intent.CurrentStep+1, len(intent.Strategy.Steps))
+
+	if intent.Message != "" {
+		fmt.Printf("Message:      %s\n", intent.Message)
+	}
+
+	fmt.Println()
+	fmt.Printf("Created:      %s\n", intent.CreatedAt.Format(time.RFC3339))
+	fmt.Printf("Updated:      %s\n", intent.UpdatedAt.Format(time.RFC3339))
+
+	// Show steps
+	if len(intent.Strategy.Steps) > 0 {
+		fmt.Println("\nProgression Steps:")
+		for i, step := range intent.Strategy.Steps {
+			status := " "
+			if i < intent.CurrentStep {
+				status = "V"
+			} else if i == intent.CurrentStep && intent.Status == gitops.IntentStatusRunning {
+				status = ">"
+			}
+			fmt.Printf("  [%s] Step %d: %d%% traffic", status, i+1, step.Weight)
+			if step.Analysis {
+				fmt.Print(" (with analysis)")
+			}
+			fmt.Println()
+		}
+	}
+
+	return nil
+}
+
+func runGitOpsDeployApprove(cmd *cobra.Command, args []string) error {
+	intentID := args[0]
+	ctx := context.Background()
+
+	if err := intentController.ApproveIntent(ctx, intentID); err != nil {
+		return err
+	}
+
+	fmt.Printf("Deployment %s approved and continuing\n", intentID)
+	return nil
+}
+
+func runGitOpsDeployCancel(cmd *cobra.Command, args []string) error {
+	intentID := args[0]
+	ctx := context.Background()
+
+	if err := intentController.CancelIntent(ctx, intentID); err != nil {
+		return err
+	}
+
+	fmt.Printf("Deployment %s cancelled\n", intentID)
+	return nil
+}
+
+func runGitOpsDeployRollback(cmd *cobra.Command, args []string) error {
+	intentID := args[0]
+	ctx := context.Background()
+
+	intent, err := intentController.GetIntent(ctx, intentID)
+	if err != nil {
+		return err
+	}
+
+	// Trigger rollback
+	intent.Strategy.Rollback.OnFailure = "rollback"
+	intent.Strategy.Rollback.Automatic = true
+
+	if err := intentController.CancelIntent(ctx, intentID); err != nil {
+		return err
+	}
+
+	fmt.Printf("Deployment %s rolled back\n", intentID)
+	return nil
+}
+
+func formatIntentStatus(status gitops.IntentStatus) string {
+	switch status {
+	case gitops.IntentStatusPending:
+		return "Pending"
+	case gitops.IntentStatusRunning:
+		return "Running"
+	case gitops.IntentStatusPaused:
+		return "Paused (awaiting approval)"
+	case gitops.IntentStatusSucceeded:
+		return "Succeeded"
+	case gitops.IntentStatusFailed:
+		return "Failed"
+	case gitops.IntentStatusRolledBack:
+		return "Rolled Back"
+	case gitops.IntentStatusCancelled:
+		return "Cancelled"
+	default:
+		return string(status)
 	}
 }

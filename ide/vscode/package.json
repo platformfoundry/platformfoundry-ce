@@ -1,0 +1,300 @@
+{
+  "name": "platformfoundry",
+  "displayName": "PlatformFoundry",
+  "description": "PlatformFoundry Internal Developer Platform integration for VS Code",
+  "version": "1.0.0",
+  "publisher": "platformfoundry",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other",
+    "Debuggers",
+    "Linters"
+  ],
+  "keywords": [
+    "platformfoundry",
+    "idp",
+    "kubernetes",
+    "devops",
+    "platform engineering"
+  ],
+  "activationEvents": [
+    "onCommand:platformfoundry.connect",
+    "workspaceContains:**/platform.yaml",
+    "workspaceContains:**/score.yaml"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "platformfoundry.connect",
+        "title": "Connect to Platform",
+        "category": "PlatformFoundry"
+      },
+      {
+        "command": "platformfoundry.disconnect",
+        "title": "Disconnect from Platform",
+        "category": "PlatformFoundry"
+      },
+      {
+        "command": "platformfoundry.apply",
+        "title": "Apply Configuration",
+        "category": "PlatformFoundry",
+        "icon": "$(cloud-upload)"
+      },
+      {
+        "command": "platformfoundry.plan",
+        "title": "Plan Changes",
+        "category": "PlatformFoundry",
+        "icon": "$(diff)"
+      },
+      {
+        "command": "platformfoundry.validate",
+        "title": "Validate Configuration",
+        "category": "PlatformFoundry",
+        "icon": "$(check)"
+      },
+      {
+        "command": "platformfoundry.deploy",
+        "title": "Deploy Workload",
+        "category": "PlatformFoundry",
+        "icon": "$(rocket)"
+      },
+      {
+        "command": "platformfoundry.logs",
+        "title": "View Logs",
+        "category": "PlatformFoundry",
+        "icon": "$(output)"
+      },
+      {
+        "command": "platformfoundry.portForward",
+        "title": "Port Forward",
+        "category": "PlatformFoundry",
+        "icon": "$(plug)"
+      },
+      {
+        "command": "platformfoundry.openTerminal",
+        "title": "Open Terminal",
+        "category": "PlatformFoundry",
+        "icon": "$(terminal)"
+      },
+      {
+        "command": "platformfoundry.refreshExplorer",
+        "title": "Refresh",
+        "category": "PlatformFoundry",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "platformfoundry.scaffold",
+        "title": "Scaffold New Project",
+        "category": "PlatformFoundry"
+      },
+      {
+        "command": "platformfoundry.openDocs",
+        "title": "Open Documentation",
+        "category": "PlatformFoundry"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "platformfoundry",
+          "title": "PlatformFoundry",
+          "icon": "resources/pf-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "platformfoundry": [
+        {
+          "id": "platformfoundry.environments",
+          "name": "Environments"
+        },
+        {
+          "id": "platformfoundry.workloads",
+          "name": "Workloads"
+        },
+        {
+          "id": "platformfoundry.deployments",
+          "name": "Deployments"
+        },
+        {
+          "id": "platformfoundry.resources",
+          "name": "Resources"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "platformfoundry.refreshExplorer",
+          "when": "view =~ /platformfoundry\\./",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "platformfoundry.logs",
+          "when": "viewItem == workload",
+          "group": "inline"
+        },
+        {
+          "command": "platformfoundry.portForward",
+          "when": "viewItem == workload",
+          "group": "inline"
+        },
+        {
+          "command": "platformfoundry.openTerminal",
+          "when": "viewItem == workload"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "platformfoundry.apply",
+          "when": "resourceFilename =~ /platform\\.yaml$|score\\.yaml$/",
+          "group": "platformfoundry"
+        },
+        {
+          "command": "platformfoundry.validate",
+          "when": "resourceFilename =~ /platform\\.yaml$|score\\.yaml$/",
+          "group": "platformfoundry"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "platformfoundry.apply",
+          "when": "resourceFilename =~ /platform\\.yaml$|score\\.yaml$/",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "PlatformFoundry",
+      "properties": {
+        "platformfoundry.apiEndpoint": {
+          "type": "string",
+          "default": "http://localhost:8080",
+          "description": "PlatformFoundry API endpoint URL"
+        },
+        "platformfoundry.defaultEnvironment": {
+          "type": "string",
+          "default": "development",
+          "description": "Default environment for deployments"
+        },
+        "platformfoundry.autoValidate": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically validate configuration files on save"
+        },
+        "platformfoundry.showStatusBar": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show PlatformFoundry status in the status bar"
+        },
+        "platformfoundry.logLevel": {
+          "type": "string",
+          "enum": ["debug", "info", "warn", "error"],
+          "default": "info",
+          "description": "Logging level for the extension"
+        },
+        "platformfoundry.cliPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to the pf CLI binary (leave empty for auto-detect)"
+        }
+      }
+    },
+    "languages": [
+      {
+        "id": "platformfoundry",
+        "aliases": ["PlatformFoundry", "pf"],
+        "extensions": [".pf.yaml", ".platform.yaml"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "platformfoundry",
+        "scopeName": "source.platformfoundry",
+        "path": "./syntaxes/platformfoundry.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "yaml",
+        "path": "./snippets/platformfoundry.json"
+      }
+    ],
+    "problemMatchers": [
+      {
+        "name": "platformfoundry",
+        "owner": "platformfoundry",
+        "fileLocation": ["relative", "${workspaceFolder}"],
+        "pattern": {
+          "regexp": "^(.*):(\\d+):(\\d+):\\s+(error|warning|info):\\s+(.*)$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "severity": 4,
+          "message": 5
+        }
+      }
+    ],
+    "taskDefinitions": [
+      {
+        "type": "platformfoundry",
+        "required": ["command"],
+        "properties": {
+          "command": {
+            "type": "string",
+            "description": "The PlatformFoundry command to run"
+          },
+          "args": {
+            "type": "array",
+            "description": "Command arguments"
+          },
+          "environment": {
+            "type": "string",
+            "description": "Target environment"
+          }
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "^20.x",
+    "@typescript-eslint/eslint-plugin": "^6.x",
+    "@typescript-eslint/parser": "^6.x",
+    "eslint": "^8.x",
+    "typescript": "^5.x",
+    "@vscode/test-electron": "^2.x",
+    "@vscode/vsce": "^2.x"
+  },
+  "dependencies": {
+    "axios": "^1.x",
+    "yaml": "^2.x",
+    "ws": "^8.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/platformfoundry/vscode-extension"
+  },
+  "bugs": {
+    "url": "https://github.com/platformfoundry/vscode-extension/issues"
+  },
+  "homepage": "https://platformfoundry.io",
+  "license": "Apache-2.0",
+  "icon": "resources/pf-icon.png"
+}

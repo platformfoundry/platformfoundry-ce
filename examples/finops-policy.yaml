@@ -1,0 +1,125 @@
+apiVersion: platformfoundry.io/v1
+kind: FinOpsPolicy
+metadata:
+  name: acme-finops
+  description: "ACME Corp FinOps Policy"
+  labels:
+    environment: production
+    team: platform
+
+spec:
+  # Budget configuration
+  budgets:
+    - name: total-monthly
+      scope: organization
+      amount: 50000
+      period: monthly
+      currency: USD
+      alertThresholds: [50, 75, 90, 100]
+      notifyChannels: ["slack://finops-alerts"]
+      enforceLimit: false
+
+    - name: backend-team
+      scope: team
+      scopeValue: backend
+      amount: 15000
+      period: monthly
+      alertThresholds: [75, 90, 100]
+      notifyChannels: ["slack://backend-team"]
+
+    - name: production-env
+      scope: environment
+      scopeValue: production
+      amount: 30000
+      period: monthly
+      alertThresholds: [80, 95, 100]
+      enforceLimit: true
+
+    - name: api-service
+      scope: application
+      scopeValue: api-gateway
+      amount: 5000
+      period: monthly
+      alertThresholds: [90, 100]
+
+  # Optimization settings
+  optimization:
+    rightSizing:
+      enabled: true
+      minSavings: 50              # Minimum $50/mo savings to recommend
+      cpuThreshold: 0.3           # Recommend if avg CPU < 30%
+      memThreshold: 0.4           # Recommend if avg memory < 40%
+      autoApply: ["dev"]          # Auto-apply in dev environment
+      excludeApps:
+        - "critical-service"
+        - "high-traffic-api"
+
+    reservations:
+      analyze: true
+      recommend: true
+      autoPurchase: false
+      minTerm: "1yr"
+      maxCommitment: 10000
+
+    spotInstances:
+      enabled: true
+      workloads:
+        - batch
+        - ci
+        - dev
+      fallbackOnDemand: true
+      maxSpotPercent: 70
+
+    unusedResources:
+      detectAfter: "7d"
+      notifyOwner: true
+      autoDelete:
+        - dev
+        - staging
+      excludeTypes:
+        - "backup"
+        - "archive"
+
+    scheduledScaling:
+      enabled: true
+      schedules:
+        - name: dev-night
+          environments: ["dev"]
+          cron: "0 20 * * MON-FRI"
+          scaleDown: true
+          minReplicas: 0
+          timezone: "America/New_York"
+        - name: dev-morning
+          environments: ["dev"]
+          cron: "0 8 * * MON-FRI"
+          scaleDown: false
+          timezone: "America/New_York"
+
+  # Showback / cost allocation
+  showback:
+    enabled: true
+    granularity:
+      - team
+      - application
+      - environment
+    reports:
+      schedule: weekly
+      recipients:
+        - "finance@acme.com"
+        - "platform-team@acme.com"
+      format:
+        - pdf
+        - csv
+    allocation:
+      sharedCostMethod: proportional
+      customRules:
+        platform-overhead: 0.10    # 10% overhead to platform team
+
+  # Anomaly detection
+  anomaly:
+    enabled: true
+    threshold: 50                  # Alert on 50% deviation
+    lookbackDays: 30
+    notifyChannels:
+      - "slack://finops-alerts"
+      - "pagerduty://cost-anomaly"

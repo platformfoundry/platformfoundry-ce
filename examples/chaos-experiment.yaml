@@ -1,0 +1,329 @@
+apiVersion: platformfoundry.io/v1
+kind: ChaosExperiment
+metadata:
+  name: api-gateway-resilience
+  description: Test API Gateway resilience under various failure conditions
+  labels:
+    team: platform
+    environment: staging
+    category: resilience
+
+spec:
+  target:
+    kind: Deployment
+    name: api-gateway
+    namespace: production
+    environment: staging
+    selector:
+      app: api-gateway
+      version: v2
+    percentage: 30  # Affect 30% of pods
+
+  experiments:
+    # Pod failure test
+    - type: pod-failure
+      duration: "5m"
+      parameters:
+        gracePeriod: "0s"
+        mode: "one"  # one, all, fixed, percentage
+
+    # Network latency injection
+    - type: network-latency
+      duration: "10m"
+      parameters:
+        latency: "200ms"
+        jitter: "50ms"
+        correlation: "25%"
+        interface: "eth0"
+
+  steadyState:
+    - name: error-rate
+      metric: "sum(rate(http_requests_total{status=~\"5..\"}[5m])) / sum(rate(http_requests_total[5m]))"
+      threshold: "< 1%"
+      provider: prometheus
+
+    - name: latency-p99
+      metric: "histogram_quantile(0.99, rate(http_request_duration_seconds_bucket[5m]))"
+      threshold: "< 2s"
+      provider: prometheus
+
+  rollback:
+    onFailure: true
+    onSteadyStateViolation: true
+    manual: false
+
+  notifications:
+    - channel: slack
+      target: "#chaos-alerts"
+      events:
+        - started
+        - completed
+        - failed
+        - steady-state-violated
+
+  dryRun: false
+
+---
+apiVersion: platformfoundry.io/v1
+kind: ChaosExperiment
+metadata:
+  name: payment-service-network-chaos
+  description: Test payment service behavior under network degradation
+  labels:
+    team: payments
+    environment: staging
+    category: network
+
+spec:
+  target:
+    kind: Service
+    name: payment-service
+    namespace: production
+    environment: staging
+
+  experiments:
+    # Network packet loss
+    - type: network-loss
+      duration: "15m"
+      parameters:
+        loss: "10%"
+        correlation: "25%"
+
+    # DNS resolution failures
+    - type: dns-failure
+      duration: "5m"
+      parameters:
+        hosts:
+          - "stripe-api.internal"
+          - "external-payment.com"
+        errorType: "NXDOMAIN"
+
+  steadyState:
+    - name: payment-success-rate
+      metric: "payment_success_rate"
+      threshold: "> 95%"
+      tolerance: 0.02
+
+  schedule:
+    cron: "0 3 * * WED"  # Every Wednesday at 3 AM
+    timezone: "America/Los_Angeles"
+    concurrencyPolicy: Forbid
+
+  rollback:
+    onFailure: true
+
+---
+apiVersion: platformfoundry.io/v1
+kind: ChaosExperiment
+metadata:
+  name: database-stress-test
+  description: Test application behavior under database stress
+  labels:
+    team: data
+    category: resource
+
+spec:
+  target:
+    kind: Pod
+    name: postgres-primary
+    namespace: database
+    selector:
+      app: postgres
+      role: primary
+
+  experiments:
+    # CPU stress
+    - type: cpu-stress
+      duration: "10m"
+      parameters:
+        workers: 4
+        load: 80
+
+    # Memory pressure
+    - type: memory-stress
+      duration: "10m"
+      parameters:
+        workers: 2
+        percentage: 70
+
+    # I/O stress
+    - type: io-stress
+      duration: "5m"
+      parameters:
+        workers: 4
+        size: "1GB"
+        mode: "read-write"
+
+  steadyState:
+    - name: query-latency
+      metric: "pg_query_duration_p99"
+      threshold: "< 100ms"
+
+    - name: connection-pool
+      metric: "pg_connections_active / pg_connections_max"
+      threshold: "< 80%"
+
+---
+apiVersion: platformfoundry.io/v1
+kind: GameDay
+metadata:
+  name: q1-resilience-gameday
+  description: Q1 2024 Resilience Testing Game Day
+  labels:
+    quarter: Q1
+    year: "2024"
+
+spec:
+  scenario: "Complete cloud region failure"
+
+  objectives:
+    - "Verify automatic failover to secondary region"
+    - "Measure recovery time objective (RTO)"
+    - "Validate data consistency after failover"
+    - "Test monitoring and alerting coverage"
+
+  experiments:
+    - api-gateway-resilience
+    - payment-service-network-chaos
+    - database-stress-test
+
+  runOrder: sequential  # sequential or parallel
+
+  teams:
+    - name: Platform Team
+      participants:
+        - alice@example.com
+        - bob@example.com
+      role: conductor
+
+    - name: SRE Team
+      participants:
+        - charlie@example.com
+        - diana@example.com
+      role: observer
+
+    - name: Development Team
+      participants:
+        - eve@example.com
+        - frank@example.com
+      role: responder
+
+  schedule:
+    startTime: "2024-03-15T09:00:00Z"
+    duration: "4h"
+    timezone: "America/New_York"
+
+  briefing: |
+    This game day will test our system's resilience to a complete
+    cloud region failure. We will:
+    1. Run pod failure experiments on critical services
+    2. Inject network chaos to simulate regional connectivity issues
+    3. Stress test database to verify capacity limits
+
+    All participants should have access to monitoring dashboards
+    and be ready to respond to incidents.
+
+  postmortem: true
+
+---
+# HTTP fault injection experiment
+apiVersion: platformfoundry.io/v1
+kind: ChaosExperiment
+metadata:
+  name: http-fault-injection
+  description: Inject HTTP faults to test client error handling
+
+spec:
+  target:
+    kind: Service
+    name: user-service
+    namespace: production
+
+  experiments:
+    - type: http-abort
+      duration: "10m"
+      parameters:
+        statusCode: 503
+        percentage: 10
+        path: "/api/v1/users/*"
+
+    - type: http-delay
+      duration: "10m"
+      parameters:
+        delay: "3s"
+        percentage: 25
+        path: "/api/v1/users/*"
+
+  steadyState:
+    - name: client-error-rate
+      metric: "client_error_rate"
+      threshold: "< 5%"
+
+---
+# Node-level chaos experiment
+apiVersion: platformfoundry.io/v1
+kind: ChaosExperiment
+metadata:
+  name: node-drain-test
+  description: Test workload redistribution during node drain
+
+spec:
+  target:
+    kind: Node
+    selector:
+      node-pool: general
+      zone: us-west-2a
+    percentage: 25
+
+  experiments:
+    - type: node-drain
+      duration: "15m"
+      parameters:
+        gracePeriodSeconds: 30
+        ignoreDaemonSets: true
+        deleteEmptyDirData: true
+
+    - type: node-cordon
+      duration: "10m"
+
+  steadyState:
+    - name: pod-availability
+      metric: "kube_deployment_status_replicas_available / kube_deployment_spec_replicas"
+      threshold: "> 80%"
+
+  rollback:
+    onFailure: true
+    manual: false
+
+---
+# Time-based chaos for testing clock skew handling
+apiVersion: platformfoundry.io/v1
+kind: ChaosExperiment
+metadata:
+  name: time-skew-test
+  description: Test application behavior with clock skew
+
+spec:
+  target:
+    kind: Pod
+    name: authentication-service
+    namespace: production
+
+  experiments:
+    - type: time-chaos
+      duration: "5m"
+      parameters:
+        offset: "+5m"  # Shift clock 5 minutes forward
+        mode: "offset"
+
+  steadyState:
+    - name: token-validation
+      metric: "token_validation_success_rate"
+      threshold: "> 99%"
+
+  notifications:
+    - channel: webhook
+      target: "https://hooks.example.com/chaos-events"
+      events:
+        - started
+        - completed

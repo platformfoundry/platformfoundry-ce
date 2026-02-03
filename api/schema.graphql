@@ -1,0 +1,718 @@
+"""
+PlatformFoundry GraphQL API Schema
+"""
+
+scalar DateTime
+scalar JSON
+
+type Query {
+  """System health check"""
+  health: Health!
+
+  """API version information"""
+  version: Version!
+
+  # Platforms
+  """List all platforms"""
+  platforms(limit: Int = 20, offset: Int = 0, status: PlatformStatus): PlatformConnection!
+
+  """Get platform by name"""
+  platform(name: String!): Platform
+
+  # Workloads
+  """List workloads"""
+  workloads(limit: Int = 20, offset: Int = 0, environment: String): WorkloadConnection!
+
+  """Get workload by name"""
+  workload(name: String!, environment: String): Workload
+
+  # Environments
+  """List environments"""
+  environments: [Environment!]!
+
+  """Get environment by name"""
+  environment(name: String!): Environment
+
+  # Deployments
+  """List deployments"""
+  deployments(
+    limit: Int = 20
+    offset: Int = 0
+    environment: String
+    workload: String
+    status: DeploymentStatus
+  ): DeploymentConnection!
+
+  """Get deployment by ID"""
+  deployment(id: ID!): Deployment
+
+  # Workflows
+  """List workflows"""
+  workflows: [Workflow!]!
+
+  """Get workflow by name"""
+  workflow(name: String!): Workflow
+
+  """List workflow executions"""
+  workflowExecutions(workflowName: String, status: WorkflowStatus): [WorkflowExecution!]!
+
+  """Get workflow execution"""
+  workflowExecution(id: ID!): WorkflowExecution
+
+  # Policies
+  """List policies"""
+  policies: [Policy!]!
+
+  """Get policy by name"""
+  policy(name: String!): Policy
+
+  # Secrets
+  """List secret paths"""
+  secrets(path: String): [String!]!
+
+  """Get secret metadata"""
+  secret(path: String!): Secret
+
+  # Catalog
+  """List catalog services"""
+  catalogServices(tags: [String!]): [CatalogService!]!
+
+  """Get catalog service"""
+  catalogService(name: String!): CatalogService
+
+  """List templates"""
+  templates(category: String): [Template!]!
+
+  """Get template"""
+  template(name: String!): Template
+
+  # Plugins
+  """List plugins"""
+  plugins(enabled: Boolean): [Plugin!]!
+
+  """Get plugin"""
+  plugin(name: String!): Plugin
+
+  # Observability
+  """Query metrics"""
+  metrics(query: String!, start: DateTime, end: DateTime): MetricsResult!
+
+  """List SLOs"""
+  slos(service: String): [SLO!]!
+
+  """Get SLO"""
+  slo(name: String!): SLO
+
+  # Compliance
+  """List compliance reports"""
+  complianceReports(framework: String): [ComplianceReport!]!
+
+  """Get compliance report"""
+  complianceReport(id: ID!): ComplianceReport
+
+  # Events
+  """List events"""
+  events(limit: Int = 100, type: String, source: String): [Event!]!
+
+  # Graph
+  """Get resource dependency graph"""
+  resourceGraph(root: String): ResourceGraph!
+
+  """Impact analysis for a resource"""
+  impactAnalysis(resource: String!): ImpactAnalysis!
+}
+
+type Mutation {
+  # Platforms
+  """Create a new platform"""
+  createPlatform(input: PlatformInput!): Platform!
+
+  """Update a platform"""
+  updatePlatform(name: String!, input: PlatformInput!): Platform!
+
+  """Delete a platform"""
+  deletePlatform(name: String!): Boolean!
+
+  """Apply platform configuration"""
+  applyPlatform(name: String!, options: ApplyOptions): Job!
+
+  """Plan platform changes"""
+  planPlatform(name: String!): PlanResult!
+
+  # Workloads
+  """Create workload"""
+  createWorkload(input: WorkloadInput!): Workload!
+
+  """Update workload"""
+  updateWorkload(name: String!, input: WorkloadInput!): Workload!
+
+  """Delete workload"""
+  deleteWorkload(name: String!): Boolean!
+
+  # Environments
+  """Create environment"""
+  createEnvironment(input: EnvironmentInput!): Environment!
+
+  """Delete environment"""
+  deleteEnvironment(name: String!): Boolean!
+
+  # Deployments
+  """Create deployment"""
+  createDeployment(input: DeploymentInput!): Deployment!
+
+  """Rollback deployment"""
+  rollbackDeployment(id: ID!, targetVersion: String): Deployment!
+
+  """Cancel deployment"""
+  cancelDeployment(id: ID!): Deployment!
+
+  # Workflows
+  """Create workflow"""
+  createWorkflow(input: WorkflowInput!): Workflow!
+
+  """Run workflow"""
+  runWorkflow(name: String!, inputs: JSON): WorkflowExecution!
+
+  """Cancel workflow execution"""
+  cancelWorkflowExecution(id: ID!): WorkflowExecution!
+
+  """Approve workflow step"""
+  approveWorkflowStep(executionId: ID!, stepId: String!, comment: String): WorkflowExecution!
+
+  # Policies
+  """Create policy"""
+  createPolicy(input: PolicyInput!): Policy!
+
+  """Evaluate policy"""
+  evaluatePolicy(name: String!, input: JSON!): PolicyEvaluationResult!
+
+  # Secrets
+  """Set secret"""
+  setSecret(path: String!, value: String!, metadata: JSON): Secret!
+
+  """Delete secret"""
+  deleteSecret(path: String!): Boolean!
+
+  # Plugins
+  """Install plugin"""
+  installPlugin(name: String!, version: String): Plugin!
+
+  """Uninstall plugin"""
+  uninstallPlugin(name: String!): Boolean!
+
+  """Enable plugin"""
+  enablePlugin(name: String!): Plugin!
+
+  """Disable plugin"""
+  disablePlugin(name: String!): Plugin!
+
+  # Chaos
+  """Run chaos experiment"""
+  runChaosExperiment(name: String!): ChaosExecution!
+
+  """Stop chaos experiment"""
+  stopChaosExperiment(name: String!): ChaosExecution!
+}
+
+type Subscription {
+  """Subscribe to events"""
+  events(types: [String!]): Event!
+
+  """Subscribe to deployment updates"""
+  deploymentUpdated(id: ID!): Deployment!
+
+  """Subscribe to workflow execution updates"""
+  workflowExecutionUpdated(id: ID!): WorkflowExecution!
+
+  """Subscribe to job updates"""
+  jobUpdated(id: ID!): Job!
+}
+
+# Types
+
+type Health {
+  status: HealthStatus!
+  timestamp: DateTime!
+  components: [ComponentHealth!]
+}
+
+enum HealthStatus {
+  HEALTHY
+  DEGRADED
+  UNHEALTHY
+}
+
+type ComponentHealth {
+  name: String!
+  status: HealthStatus!
+  message: String
+}
+
+type Version {
+  version: String!
+  apiVersion: String!
+  gitCommit: String
+  buildDate: String
+}
+
+type Platform {
+  apiVersion: String!
+  kind: String!
+  metadata: Metadata!
+  spec: JSON!
+  status: PlatformStatusInfo
+}
+
+type PlatformStatusInfo {
+  phase: PlatformStatus!
+  message: String
+  lastApplied: DateTime
+  resources: Int
+}
+
+enum PlatformStatus {
+  ACTIVE
+  INACTIVE
+  ERROR
+  APPLYING
+}
+
+type PlatformConnection {
+  items: [Platform!]!
+  total: Int!
+  pageInfo: PageInfo!
+}
+
+type Workload {
+  apiVersion: String!
+  kind: String!
+  metadata: Metadata!
+  spec: WorkloadSpec!
+  status: WorkloadStatusInfo
+}
+
+type WorkloadSpec {
+  containers: JSON!
+  resources: JSON
+  service: ServiceSpec
+}
+
+type ServiceSpec {
+  ports: [PortSpec!]
+}
+
+type PortSpec {
+  name: String!
+  port: Int!
+  targetPort: Int
+  protocol: String
+}
+
+type WorkloadStatusInfo {
+  phase: String!
+  replicas: Int
+  readyReplicas: Int
+  deployments: [String!]
+}
+
+type WorkloadConnection {
+  items: [Workload!]!
+  total: Int!
+  pageInfo: PageInfo!
+}
+
+type Environment {
+  name: String!
+  type: EnvironmentType!
+  cluster: String!
+  namespace: String
+  variables: JSON
+  status: String
+}
+
+enum EnvironmentType {
+  DEVELOPMENT
+  STAGING
+  PRODUCTION
+}
+
+type Deployment {
+  id: ID!
+  workload: String!
+  environment: String!
+  version: String!
+  status: DeploymentStatus!
+  strategy: DeploymentStrategy
+  startedAt: DateTime
+  completedAt: DateTime
+  rollbackTo: String
+  steps: [DeploymentStep!]
+}
+
+enum DeploymentStatus {
+  PENDING
+  RUNNING
+  SUCCEEDED
+  FAILED
+  ROLLED_BACK
+  CANCELLED
+}
+
+enum DeploymentStrategy {
+  ROLLING
+  CANARY
+  BLUE_GREEN
+  RECREATE
+}
+
+type DeploymentStep {
+  name: String!
+  status: String!
+  startedAt: DateTime
+  completedAt: DateTime
+  message: String
+}
+
+type DeploymentConnection {
+  items: [Deployment!]!
+  total: Int!
+  pageInfo: PageInfo!
+}
+
+type Workflow {
+  apiVersion: String!
+  kind: String!
+  metadata: Metadata!
+  spec: WorkflowSpec!
+}
+
+type WorkflowSpec {
+  triggers: [WorkflowTrigger!]
+  inputs: [WorkflowInput!]
+  steps: [WorkflowStep!]!
+  timeout: String
+}
+
+type WorkflowTrigger {
+  type: String!
+  config: JSON
+}
+
+type WorkflowInput {
+  name: String!
+  type: String!
+  required: Boolean
+  default: String
+}
+
+type WorkflowStep {
+  id: String!
+  type: String!
+  config: JSON
+  dependsOn: [String!]
+  condition: String
+}
+
+type WorkflowExecution {
+  id: ID!
+  workflowName: String!
+  status: WorkflowStatus!
+  startedAt: DateTime!
+  completedAt: DateTime
+  inputs: JSON
+  steps: [WorkflowStepExecution!]
+  error: String
+}
+
+enum WorkflowStatus {
+  PENDING
+  RUNNING
+  SUCCEEDED
+  FAILED
+  CANCELLED
+  WAITING_APPROVAL
+}
+
+type WorkflowStepExecution {
+  id: String!
+  status: String!
+  startedAt: DateTime
+  completedAt: DateTime
+  outputs: JSON
+  error: String
+}
+
+type Policy {
+  name: String!
+  description: String
+  rules: [PolicyRule!]!
+  enabled: Boolean!
+}
+
+type PolicyRule {
+  name: String!
+  query: String!
+  message: String
+  severity: String
+}
+
+type PolicyEvaluationResult {
+  allowed: Boolean!
+  violations: [PolicyViolation!]
+}
+
+type PolicyViolation {
+  rule: String!
+  message: String!
+  severity: String!
+  resource: String
+}
+
+type Secret {
+  path: String!
+  version: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  metadata: JSON
+}
+
+type CatalogService {
+  name: String!
+  description: String
+  owner: String
+  lifecycle: String
+  tier: String
+  tags: [String!]
+  links: [ServiceLink!]
+  dependencies: [String!]
+}
+
+type ServiceLink {
+  title: String!
+  url: String!
+  type: String
+}
+
+type Template {
+  name: String!
+  description: String
+  category: String
+  parameters: [TemplateParameter!]
+  output: JSON
+}
+
+type TemplateParameter {
+  name: String!
+  type: String!
+  description: String
+  required: Boolean
+  default: String
+  enum: [String!]
+}
+
+type Plugin {
+  name: String!
+  version: String!
+  description: String
+  author: String
+  enabled: Boolean!
+  installed: Boolean!
+  config: JSON
+  capabilities: [String!]
+}
+
+type MetricsResult {
+  data: [MetricSeries!]!
+  query: String!
+}
+
+type MetricSeries {
+  metric: JSON!
+  values: [[Float!]!]!
+}
+
+type SLO {
+  name: String!
+  service: String!
+  description: String
+  indicator: SLOIndicator!
+  objective: Float!
+  window: String!
+  current: Float
+  errorBudget: ErrorBudget
+}
+
+type SLOIndicator {
+  type: String!
+  metric: String!
+}
+
+type ErrorBudget {
+  total: Float!
+  remaining: Float!
+  consumed: Float!
+}
+
+type ComplianceReport {
+  id: ID!
+  framework: String!
+  status: ComplianceStatus!
+  score: Float!
+  generatedAt: DateTime!
+  controls: [ControlResult!]
+}
+
+enum ComplianceStatus {
+  COMPLIANT
+  NON_COMPLIANT
+  PARTIAL
+}
+
+type ControlResult {
+  id: String!
+  name: String!
+  status: ComplianceStatus!
+  evidence: [String!]
+}
+
+type Event {
+  id: ID!
+  type: String!
+  source: String!
+  subject: String
+  data: JSON!
+  timestamp: DateTime!
+}
+
+type ResourceGraph {
+  nodes: [GraphNode!]!
+  edges: [GraphEdge!]!
+}
+
+type GraphNode {
+  id: String!
+  type: String!
+  name: String!
+  status: String
+  metadata: JSON
+}
+
+type GraphEdge {
+  source: String!
+  target: String!
+  type: String!
+}
+
+type ImpactAnalysis {
+  resource: String!
+  directDependents: [String!]!
+  transitiveDependents: [String!]!
+  risk: String!
+  recommendations: [String!]
+}
+
+type Job {
+  id: ID!
+  type: String!
+  status: JobStatus!
+  progress: Int
+  message: String
+  startedAt: DateTime
+  completedAt: DateTime
+  result: JSON
+}
+
+enum JobStatus {
+  PENDING
+  RUNNING
+  SUCCEEDED
+  FAILED
+  CANCELLED
+}
+
+type PlanResult {
+  toCreate: [String!]!
+  toUpdate: [String!]!
+  toDelete: [String!]!
+  noChanges: Boolean!
+}
+
+type ChaosExecution {
+  id: ID!
+  experimentName: String!
+  status: String!
+  startedAt: DateTime
+  completedAt: DateTime
+  results: JSON
+}
+
+type Metadata {
+  name: String!
+  namespace: String
+  labels: JSON
+  annotations: JSON
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+# Inputs
+
+input PlatformInput {
+  name: String!
+  spec: JSON!
+  labels: JSON
+  annotations: JSON
+}
+
+input WorkloadInput {
+  name: String!
+  spec: JSON!
+  environment: String
+}
+
+input EnvironmentInput {
+  name: String!
+  type: EnvironmentType!
+  cluster: String!
+  namespace: String
+  variables: JSON
+}
+
+input DeploymentInput {
+  workload: String!
+  environment: String!
+  version: String
+  strategy: DeploymentStrategy
+}
+
+input WorkflowInput {
+  name: String!
+  spec: JSON!
+}
+
+input PolicyInput {
+  name: String!
+  description: String
+  rules: [PolicyRuleInput!]!
+}
+
+input PolicyRuleInput {
+  name: String!
+  query: String!
+  message: String
+  severity: String
+}
+
+input ApplyOptions {
+  dryRun: Boolean
+  force: Boolean
+  wait: Boolean
+  timeout: String
+}

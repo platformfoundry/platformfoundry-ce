@@ -53,6 +53,8 @@ type CostAnomaly struct {
 	Type         string    `json:"type"`           // spike, drop, trend_change
 	Description  string    `json:"description"`
 	Acknowledged bool      `json:"acknowledged"`
+	Status       string    `json:"status,omitempty"`    // new, investigating, resolved
+	RootCause    string    `json:"rootCause,omitempty"`
 }
 
 // Baseline represents statistical baseline for a resource

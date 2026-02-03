@@ -83,4 +83,6 @@ func init() {
 	rootCmd.AddCommand(lintCmd)
 	rootCmd.AddCommand(previewCmd)
 	rootCmd.AddCommand(copilotCmd)
+	rootCmd.AddCommand(GetMarketplaceCmd())
+	rootCmd.AddCommand(GetPortalCmd())
 }

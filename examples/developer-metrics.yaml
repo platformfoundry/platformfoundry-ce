@@ -1,0 +1,109 @@
+apiVersion: platformfoundry.io/v1
+kind: DeveloperMetrics
+metadata:
+  name: alpha-team-metrics
+  team: alpha
+  labels:
+    department: engineering
+    cost-center: cc-1234
+
+spec:
+  team: alpha
+
+  metrics:
+    # DORA Metrics
+    - name: deployment_frequency
+      type: dora
+      target: ">= 10/day"
+
+    - name: lead_time
+      type: dora
+      target: "< 1 hour"
+
+    - name: change_failure_rate
+      type: dora
+      target: "< 15%"
+
+    - name: time_to_restore
+      type: dora
+      target: "< 1 hour"
+
+    # Custom Platform Metrics
+    - name: time_to_first_deployment
+      type: custom
+      target: "< 30 minutes"
+      source: platform_metrics
+
+    - name: self_service_ratio
+      type: custom
+      target: "> 90%"
+      source: platform_metrics
+
+    - name: golden_path_adoption
+      type: custom
+      target: "> 80%"
+      source: platform_metrics
+
+    - name: automated_deployments
+      type: custom
+      target: "> 95%"
+      source: platform_metrics
+
+    # Developer Satisfaction
+    - name: developer_satisfaction
+      type: survey
+      target: "> 4.0/5.0"
+      source: quarterly_survey
+
+    - name: developer_nps
+      type: survey
+      target: "> 50"
+      source: monthly_survey
+
+  reporting:
+    dashboard: true
+    weeklyDigest: true
+    slackChannel: "#alpha-team-metrics"
+
+---
+apiVersion: platformfoundry.io/v1
+kind: DeveloperMetrics
+metadata:
+  name: org-wide-metrics
+  labels:
+    scope: organization
+
+spec:
+  team: ""  # Empty for org-wide
+
+  metrics:
+    # Organization DORA targets
+    - name: deployment_frequency
+      type: dora
+      target: ">= 5/day"
+
+    - name: lead_time
+      type: dora
+      target: "< 4 hours"
+
+    - name: change_failure_rate
+      type: dora
+      target: "< 20%"
+
+    - name: time_to_restore
+      type: dora
+      target: "< 2 hours"
+
+    # Platform Adoption Goals
+    - name: platform_adoption
+      type: custom
+      target: "> 85%"
+
+    - name: self_service_ratio
+      type: custom
+      target: "> 80%"
+
+  reporting:
+    dashboard: true
+    weeklyDigest: true
+    slackChannel: "#platform-metrics"
