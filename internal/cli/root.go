@@ -81,4 +81,6 @@ func init() {
 	rootCmd.AddCommand(statusCmd)
 	rootCmd.AddCommand(graphCmd)
 	rootCmd.AddCommand(lintCmd)
+	rootCmd.AddCommand(previewCmd)
+	rootCmd.AddCommand(copilotCmd)
 }
