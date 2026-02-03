@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/platformfoundry/pf-ce/internal/context"
-	"github.com/platformfoundry/pf-ce/internal/generator"
 	"github.com/platformfoundry/pf-ce/internal/orchestrator"
 	"github.com/platformfoundry/pf-ce/internal/parser"
 	"github.com/platformfoundry/pf-ce/internal/plugin"
@@ -68,16 +68,7 @@ func runCreatePlatform(cmd *cobra.Command, args []string) error {
 	}
 
 	// Generate platform YAML with environment profiles
-	gen := generator.NewPlatformGenerator()
-	yaml, err := gen.Generate(generator.PlatformConfig{
-		Name:         createPlatformName,
-		Organization: createPlatformOrg,
-		Type:         createPlatformType,
-		Environments: createPlatformEnvs,
-	})
-	if err != nil {
-		return fmt.Errorf("failed to generate platform YAML: %w", err)
-	}
+	yaml := generatePlatformYAML(createPlatformName, createPlatformOrg, createPlatformType, createPlatformEnvs)
 
 	// Apply mode - create platform and environments directly
 	if createPlatformApply {
@@ -152,4 +143,21 @@ func runCreatePlatform(cmd *cobra.Command, args []string) error {
 	}
 
 	return nil
+}
+
+// generatePlatformYAML generates platform YAML inline
+func generatePlatformYAML(name, org, platformType string, envs []string) string {
+	var sb strings.Builder
+	sb.WriteString("apiVersion: platformfoundry.io/v1\n")
+	sb.WriteString("kind: Platform\n")
+	sb.WriteString("metadata:\n")
+	sb.WriteString(fmt.Sprintf("  name: %s\n", name))
+	sb.WriteString(fmt.Sprintf("  organization: %s\n", org))
+	sb.WriteString("spec:\n")
+	sb.WriteString(fmt.Sprintf("  type: %s\n", platformType))
+	sb.WriteString("  environments:\n")
+	for _, env := range envs {
+		sb.WriteString(fmt.Sprintf("    - %s\n", env))
+	}
+	return sb.String()
 }

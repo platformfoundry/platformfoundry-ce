@@ -9,23 +9,21 @@ import (
 	"time"
 
 	"github.com/platformfoundry/pf-ce/internal/events"
-	"github.com/platformfoundry/pf-ce/internal/graph"
 	"github.com/platformfoundry/pf-ce/internal/telemetry"
 	"github.com/platformfoundry/pf-ce/pkg/types"
 )
 
 // Server provides the HTTP API for Platform Foundry
 type Server struct {
-	mu          sync.RWMutex
-	server      *http.Server
-	mux         *http.ServeMux
-	config      ServerConfig
-	eventBus    *events.EventBus
-	graphEngine *graph.Engine
-	telemetry   *telemetry.Provider
-	middleware  []Middleware
-	routes      []Route
-	startTime   time.Time
+	mu         sync.RWMutex
+	server     *http.Server
+	mux        *http.ServeMux
+	config     ServerConfig
+	eventBus   *events.EventBus
+	telemetry  *telemetry.Provider
+	middleware []Middleware
+	routes     []Route
+	startTime  time.Time
 }
 
 // ServerConfig configures the API server
@@ -108,11 +106,6 @@ func NewServer(config ServerConfig) *Server {
 // SetEventBus sets the event bus for the server
 func (s *Server) SetEventBus(bus *events.EventBus) {
 	s.eventBus = bus
-}
-
-// SetGraphEngine sets the graph engine for the server
-func (s *Server) SetGraphEngine(engine *graph.Engine) {
-	s.graphEngine = engine
 }
 
 // SetTelemetry sets the telemetry provider
@@ -409,34 +402,11 @@ func (s *Server) handlePlanPlatform(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) handleGetGraph(w http.ResponseWriter, r *http.Request) {
-	if s.graphEngine == nil {
-		s.writeError(w, http.StatusServiceUnavailable, "graph engine not available")
-		return
-	}
-
-	graph := s.graphEngine.GetGraph()
-	s.writeJSON(w, http.StatusOK, graph)
+	s.writeError(w, http.StatusGone, "graph feature has been removed - use kubectl for dependency visualization")
 }
 
 func (s *Server) handleImpactAnalysis(w http.ResponseWriter, r *http.Request) {
-	resource := r.PathValue("resource")
-	if resource == "" {
-		s.writeError(w, http.StatusBadRequest, "resource is required")
-		return
-	}
-
-	if s.graphEngine == nil {
-		s.writeError(w, http.StatusServiceUnavailable, "graph engine not available")
-		return
-	}
-
-	impact, err := s.graphEngine.ImpactAnalysis(r.Context(), resource)
-	if err != nil {
-		s.writeError(w, http.StatusNotFound, err.Error())
-		return
-	}
-
-	s.writeJSON(w, http.StatusOK, impact)
+	s.writeError(w, http.StatusGone, "graph feature has been removed - use kubectl for impact analysis")
 }
 
 func (s *Server) handleListEvents(w http.ResponseWriter, r *http.Request) {

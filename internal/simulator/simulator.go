@@ -7,13 +7,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/platformfoundry/pf-ce/internal/graph"
 	"github.com/platformfoundry/pf-ce/pkg/types"
 )
 
 // Simulator provides dry-run and what-if analysis capabilities
 type Simulator struct {
-	graph             *graph.Engine
 	policyChecker     PolicyChecker
 	costEstimator     CostEstimator
 	complianceChecker ComplianceChecker
@@ -42,7 +40,6 @@ type Validator interface {
 
 // Config configures the simulator
 type Config struct {
-	Graph             *graph.Engine
 	PolicyChecker     PolicyChecker
 	CostEstimator     CostEstimator
 	ComplianceChecker ComplianceChecker
@@ -53,7 +50,6 @@ type Config struct {
 // NewSimulator creates a new simulator
 func NewSimulator(config Config) *Simulator {
 	return &Simulator{
-		graph:             config.Graph,
 		policyChecker:     config.PolicyChecker,
 		costEstimator:     config.CostEstimator,
 		complianceChecker: config.ComplianceChecker,
@@ -123,14 +119,10 @@ func (s *Simulator) Simulate(ctx context.Context, req *types.SimulationRequest) 
 		}
 	}
 
-	// Run impact analysis if requested
-	if req.Options.IncludeImpactAnalysis && s.graph != nil {
-		impact, err := s.analyzeImpact(ctx, req.Resources)
-		if err != nil {
-			report.Warnings = append(report.Warnings, fmt.Sprintf("Impact analysis error: %v", err))
-		} else {
-			report.ImpactAnalysis = impact
-		}
+	// Impact analysis requires external graph engine (removed)
+	// Use kubectl or ArgoCD for dependency visualization
+	if req.Options.IncludeImpactAnalysis {
+		report.Warnings = append(report.Warnings, "Impact analysis feature removed - use kubectl for dependency analysis")
 	}
 
 	// Calculate summary
@@ -218,24 +210,7 @@ func (s *Simulator) processResource(ctx context.Context, resource *types.Simulat
 		change.Diff = s.calculateDiff(resource.Current, resource.Spec)
 	}
 
-	// Find dependencies if graph is available
-	if s.graph != nil {
-		resourceID := fmt.Sprintf("%s/%s", resource.Kind, resource.Name)
-
-		deps, err := s.graph.GetDependencies(resourceID, 1)
-		if err == nil {
-			for _, dep := range deps {
-				change.Dependencies = append(change.Dependencies, dep.ID)
-			}
-		}
-
-		dependents, err := s.graph.GetDependents(resourceID, 1)
-		if err == nil {
-			for _, dep := range dependents {
-				change.Dependents = append(change.Dependents, dep.ID)
-			}
-		}
-	}
+	// Dependency analysis removed - use kubectl for dependency information
 
 	return change, nil
 }
@@ -308,58 +283,23 @@ func (s *Simulator) compareFields(prefix string, before, after map[string]interf
 }
 
 // analyzeImpact performs impact analysis on the changes
+// Note: Graph-based impact analysis removed - returns basic impact info
 func (s *Simulator) analyzeImpact(ctx context.Context, resources []types.SimulatedResource) (*types.SimulationImpact, error) {
 	impact := &types.SimulationImpact{
 		DirectlyAffected:     make([]string, 0),
 		TransitivelyAffected: make([]string, 0),
 		AffectedTeams:        make([]string, 0),
 		AffectedEnvironments: make([]string, 0),
+		RiskLevel:            "unknown",
 	}
 
-	directSet := make(map[string]bool)
-	transitiveSet := make(map[string]bool)
-	teamSet := make(map[string]bool)
-	envSet := make(map[string]bool)
-
+	// Basic impact based on resource count
 	for _, resource := range resources {
 		resourceID := fmt.Sprintf("%s/%s", resource.Kind, resource.Name)
-
-		analysis, err := s.graph.ImpactAnalysis(ctx, resourceID)
-		if err != nil {
-			continue
-		}
-
-		for _, id := range analysis.DirectlyAffected {
-			directSet[id] = true
-		}
-		for _, id := range analysis.TransitivelyAffected {
-			transitiveSet[id] = true
-		}
-		for _, team := range analysis.AffectedTeams {
-			teamSet[team] = true
-		}
-		for _, env := range analysis.AffectedEnvironments {
-			envSet[env] = true
-		}
-
-		impact.CriticalResourcesAffected += analysis.CriticalAffected
+		impact.DirectlyAffected = append(impact.DirectlyAffected, resourceID)
 	}
 
-	// Convert sets to slices
-	for id := range directSet {
-		impact.DirectlyAffected = append(impact.DirectlyAffected, id)
-	}
-	for id := range transitiveSet {
-		impact.TransitivelyAffected = append(impact.TransitivelyAffected, id)
-	}
-	for team := range teamSet {
-		impact.AffectedTeams = append(impact.AffectedTeams, team)
-	}
-	for env := range envSet {
-		impact.AffectedEnvironments = append(impact.AffectedEnvironments, env)
-	}
-
-	impact.BlastRadius = len(impact.DirectlyAffected) + len(impact.TransitivelyAffected)
+	impact.BlastRadius = len(impact.DirectlyAffected)
 
 	// Determine risk level
 	impact.RiskLevel = s.calculateRiskLevel(impact)
