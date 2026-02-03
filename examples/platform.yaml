@@ -1,0 +1,191 @@
+apiVersion: platformfoundry.io/v1
+kind: Platform
+metadata:
+  name: acme-platform
+  version: "1.0.0"
+  description: "ACME Corp Internal Developer Platform"
+  owner: platform-team@acme.com
+spec:
+  # Golden paths - standardized ways to build applications
+  goldenPaths:
+    - name: microservice-go
+      description: "Go microservice with standard tooling"
+      template: microservice
+      language: go
+      framework: gin
+      resources:
+        - type: kubernetes-deployment
+          required: true
+        - type: kubernetes-service
+          required: true
+        - type: kubernetes-ingress
+          required: false
+        - type: postgres
+          required: false
+          shareable: true
+        - type: redis
+          required: false
+          shareable: true
+      pipelines:
+        - build
+        - test
+        - security-scan
+        - deploy
+      observability:
+        - metrics
+        - traces
+        - logs
+      security:
+        imageScanning: true
+        dependencyCheck: true
+        sast: true
+      tags:
+        - backend
+        - api
+        - go
+
+    - name: web-frontend
+      description: "React single-page application"
+      template: web-app
+      language: typescript
+      framework: react
+      resources:
+        - type: s3-bucket
+          required: true
+        - type: cloudfront
+          required: true
+      pipelines:
+        - build
+        - test
+        - deploy
+      observability:
+        - rum
+        - logs
+      tags:
+        - frontend
+        - spa
+        - react
+
+    - name: batch-worker
+      description: "Background job processor"
+      template: worker
+      language: go
+      resources:
+        - type: kubernetes-deployment
+          required: true
+        - type: sqs-queue
+          required: true
+        - type: redis
+          required: false
+      pipelines:
+        - build
+        - test
+        - deploy
+      observability:
+        - metrics
+        - logs
+      tags:
+        - backend
+        - worker
+        - async
+
+  # Platform capabilities - integrated tools
+  capabilities:
+    secrets: vault
+    gitops: argocd
+    ci: github-actions
+    monitoring: prometheus
+    logging: loki
+    tracing: tempo
+    serviceMesh: istio
+    registry: ecr
+    notifications: slack
+
+  # Global policies
+  policies:
+    security:
+      imageScanning: required
+      secretsInEnv: denied
+      publicEndpoints: require-auth
+      privilegedPods: denied
+      rootUser: denied
+      allowedRegistries:
+        - "123456789.dkr.ecr.us-east-1.amazonaws.com"
+        - "gcr.io/acme-prod"
+      deniedImages:
+        - "*:latest"
+      requiredLabels:
+        - app
+        - team
+        - environment
+
+    cost:
+      budgetAlerts: true
+      unusedResourceCleanup: "7d"
+      maxCostPerApp: "$500/month"
+      requireSpotForDev: true
+      showbackEnabled: true
+
+    compliance:
+      frameworks:
+        - SOC2
+        - GDPR
+      dataResidency:
+        - us
+        - eu
+      auditLogging: true
+      encryption: true
+
+    network:
+      defaultDeny: true
+      requireTLS: true
+      minTLSVersion: "1.2"
+
+  # Environment definitions
+  environments:
+    - name: dev
+      type: dev
+      cluster: dev-cluster
+      namespace: "{{.app}}-dev"
+      overrides:
+        replicas: 1
+        resources:
+          cpu: "100m"
+          memory: "256Mi"
+
+    - name: staging
+      type: staging
+      cluster: staging-cluster
+      namespace: "{{.app}}-staging"
+      promotion:
+        from: dev
+        requireTests: true
+        autoPromote: true
+      overrides:
+        replicas: 2
+
+    - name: production
+      type: production
+      cluster: prod-cluster
+      namespace: "{{.app}}-prod"
+      promotion:
+        from: staging
+        requireTests: true
+        requireReview: true
+        reviewers:
+          - platform-team
+          - security-team
+      overrides:
+        replicas: 3
+        resources:
+          cpu: "500m"
+          memory: "1Gi"
+
+  # Default values for all applications
+  defaults:
+    replicas: 2
+    cpu: "250m"
+    memory: "512Mi"
+    labels:
+      managed-by: platformfoundry
+      platform: acme-platform
