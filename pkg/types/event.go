@@ -9,45 +9,45 @@ type EventType string
 
 const (
 	// Resource lifecycle events
-	EventResourceCreated   EventType = "resource.created"
-	EventResourceUpdated   EventType = "resource.updated"
-	EventResourceDeleted   EventType = "resource.deleted"
-	EventResourceFailed    EventType = "resource.failed"
+	EventResourceCreated EventType = "resource.created"
+	EventResourceUpdated EventType = "resource.updated"
+	EventResourceDeleted EventType = "resource.deleted"
+	EventResourceFailed  EventType = "resource.failed"
 
 	// Drift events
-	EventDriftDetected     EventType = "drift.detected"
-	EventDriftResolved     EventType = "drift.resolved"
-	EventDriftRemediated   EventType = "drift.remediated"
+	EventDriftDetected   EventType = "drift.detected"
+	EventDriftResolved   EventType = "drift.resolved"
+	EventDriftRemediated EventType = "drift.remediated"
 
 	// Health events
-	EventHealthDegraded    EventType = "health.degraded"
-	EventHealthRecovered   EventType = "health.recovered"
-	EventHealthCritical    EventType = "health.critical"
+	EventHealthDegraded  EventType = "health.degraded"
+	EventHealthRecovered EventType = "health.recovered"
+	EventHealthCritical  EventType = "health.critical"
 
 	// Promise events
-	EventPromiseRequested  EventType = "promise.requested"
-	EventPromiseApproved   EventType = "promise.approved"
-	EventPromiseRejected   EventType = "promise.rejected"
-	EventPromiseFulfilled  EventType = "promise.fulfilled"
-	EventPromiseFailed     EventType = "promise.failed"
+	EventPromiseRequested EventType = "promise.requested"
+	EventPromiseApproved  EventType = "promise.approved"
+	EventPromiseRejected  EventType = "promise.rejected"
+	EventPromiseFulfilled EventType = "promise.fulfilled"
+	EventPromiseFailed    EventType = "promise.failed"
 
 	// Workload events
-	EventWorkloadDeployed  EventType = "workload.deployed"
-	EventWorkloadScaled    EventType = "workload.scaled"
-	EventWorkloadFailed    EventType = "workload.failed"
+	EventWorkloadDeployed EventType = "workload.deployed"
+	EventWorkloadScaled   EventType = "workload.scaled"
+	EventWorkloadFailed   EventType = "workload.failed"
 
 	// Chaos events
-	EventChaosStarted      EventType = "chaos.started"
-	EventChaosCompleted    EventType = "chaos.completed"
-	EventChaosFailed       EventType = "chaos.failed"
+	EventChaosStarted   EventType = "chaos.started"
+	EventChaosCompleted EventType = "chaos.completed"
+	EventChaosFailed    EventType = "chaos.failed"
 
 	// Compliance events
 	EventComplianceViolation EventType = "compliance.violation"
 	EventCompliancePassed    EventType = "compliance.passed"
 
 	// Cost events
-	EventCostAlert         EventType = "cost.alert"
-	EventCostAnomaly       EventType = "cost.anomaly"
+	EventCostAlert   EventType = "cost.alert"
+	EventCostAnomaly EventType = "cost.anomaly"
 
 	// GitOps events
 	EventGitOpsSyncStarted   EventType = "gitops.sync.started"
@@ -57,9 +57,9 @@ const (
 	EventGitOpsPRMerged      EventType = "gitops.pr.merged"
 
 	// System events
-	EventSystemStartup     EventType = "system.startup"
-	EventSystemShutdown    EventType = "system.shutdown"
-	EventSystemError       EventType = "system.error"
+	EventSystemStartup  EventType = "system.startup"
+	EventSystemShutdown EventType = "system.shutdown"
+	EventSystemError    EventType = "system.error"
 )
 
 // EventSeverity represents the severity level of an event

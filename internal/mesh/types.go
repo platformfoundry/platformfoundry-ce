@@ -6,10 +6,10 @@ import (
 
 // ServiceMesh defines service mesh configuration
 type ServiceMesh struct {
-	APIVersion string            `json:"apiVersion" yaml:"apiVersion"`
-	Kind       string            `json:"kind" yaml:"kind"`
-	Metadata   MeshMetadata      `json:"metadata" yaml:"metadata"`
-	Spec       ServiceMeshSpec   `json:"spec" yaml:"spec"`
+	APIVersion string             `json:"apiVersion" yaml:"apiVersion"`
+	Kind       string             `json:"kind" yaml:"kind"`
+	Metadata   MeshMetadata       `json:"metadata" yaml:"metadata"`
+	Spec       ServiceMeshSpec    `json:"spec" yaml:"spec"`
 	Status     *ServiceMeshStatus `json:"status,omitempty" yaml:"status,omitempty"`
 }
 
@@ -24,13 +24,13 @@ type MeshMetadata struct {
 
 // ServiceMeshSpec defines mesh specification
 type ServiceMeshSpec struct {
-	Provider       MeshProvider       `json:"provider" yaml:"provider"`
-	MTLS           MTLSConfig         `json:"mtls,omitempty" yaml:"mtls,omitempty"`
-	Traffic        TrafficConfig      `json:"traffic,omitempty" yaml:"traffic,omitempty"`
-	Observability  ObservabilityConfig `json:"observability,omitempty" yaml:"observability,omitempty"`
-	Security       SecurityConfig     `json:"security,omitempty" yaml:"security,omitempty"`
-	Ingress        *IngressConfig     `json:"ingress,omitempty" yaml:"ingress,omitempty"`
-	Egress         *EgressConfig      `json:"egress,omitempty" yaml:"egress,omitempty"`
+	Provider      MeshProvider        `json:"provider" yaml:"provider"`
+	MTLS          MTLSConfig          `json:"mtls,omitempty" yaml:"mtls,omitempty"`
+	Traffic       TrafficConfig       `json:"traffic,omitempty" yaml:"traffic,omitempty"`
+	Observability ObservabilityConfig `json:"observability,omitempty" yaml:"observability,omitempty"`
+	Security      SecurityConfig      `json:"security,omitempty" yaml:"security,omitempty"`
+	Ingress       *IngressConfig      `json:"ingress,omitempty" yaml:"ingress,omitempty"`
+	Egress        *EgressConfig       `json:"egress,omitempty" yaml:"egress,omitempty"`
 }
 
 // MeshProvider defines the service mesh provider
@@ -63,11 +63,11 @@ const (
 
 // TrafficConfig defines traffic management settings
 type TrafficConfig struct {
-	Retries        RetryConfig        `json:"retries,omitempty" yaml:"retries,omitempty"`
+	Retries        RetryConfig          `json:"retries,omitempty" yaml:"retries,omitempty"`
 	CircuitBreaker CircuitBreakerConfig `json:"circuitBreaker,omitempty" yaml:"circuitBreaker,omitempty"`
-	Timeout        TimeoutConfig      `json:"timeout,omitempty" yaml:"timeout,omitempty"`
-	LoadBalancing  LoadBalancingConfig `json:"loadBalancing,omitempty" yaml:"loadBalancing,omitempty"`
-	RateLimiting   *RateLimitConfig   `json:"rateLimiting,omitempty" yaml:"rateLimiting,omitempty"`
+	Timeout        TimeoutConfig        `json:"timeout,omitempty" yaml:"timeout,omitempty"`
+	LoadBalancing  LoadBalancingConfig  `json:"loadBalancing,omitempty" yaml:"loadBalancing,omitempty"`
+	RateLimiting   *RateLimitConfig     `json:"rateLimiting,omitempty" yaml:"rateLimiting,omitempty"`
 }
 
 // RetryConfig defines retry policy
@@ -81,11 +81,11 @@ type RetryConfig struct {
 
 // CircuitBreakerConfig defines circuit breaker settings
 type CircuitBreakerConfig struct {
-	ConsecutiveErrors   int    `json:"consecutiveErrors" yaml:"consecutiveErrors"`
-	Interval            string `json:"interval" yaml:"interval"`
-	BaseEjectionTime    string `json:"baseEjectionTime" yaml:"baseEjectionTime"`
-	MaxEjectionPercent  int    `json:"maxEjectionPercent,omitempty" yaml:"maxEjectionPercent,omitempty"`
-	MinHealthPercent    int    `json:"minHealthPercent,omitempty" yaml:"minHealthPercent,omitempty"`
+	ConsecutiveErrors  int    `json:"consecutiveErrors" yaml:"consecutiveErrors"`
+	Interval           string `json:"interval" yaml:"interval"`
+	BaseEjectionTime   string `json:"baseEjectionTime" yaml:"baseEjectionTime"`
+	MaxEjectionPercent int    `json:"maxEjectionPercent,omitempty" yaml:"maxEjectionPercent,omitempty"`
+	MinHealthPercent   int    `json:"minHealthPercent,omitempty" yaml:"minHealthPercent,omitempty"`
 }
 
 // TimeoutConfig defines timeout settings
@@ -96,17 +96,17 @@ type TimeoutConfig struct {
 
 // LoadBalancingConfig defines load balancing strategy
 type LoadBalancingConfig struct {
-	Algorithm       string             `json:"algorithm" yaml:"algorithm"` // round_robin, least_conn, random
-	ConsistentHash  *ConsistentHashConfig `json:"consistentHash,omitempty" yaml:"consistentHash,omitempty"`
-	LocalityAware   bool               `json:"localityAware,omitempty" yaml:"localityAware,omitempty"`
+	Algorithm      string                `json:"algorithm" yaml:"algorithm"` // round_robin, least_conn, random
+	ConsistentHash *ConsistentHashConfig `json:"consistentHash,omitempty" yaml:"consistentHash,omitempty"`
+	LocalityAware  bool                  `json:"localityAware,omitempty" yaml:"localityAware,omitempty"`
 }
 
 // ConsistentHashConfig defines consistent hashing for load balancing
 type ConsistentHashConfig struct {
-	HTTPHeader     string `json:"httpHeader,omitempty" yaml:"httpHeader,omitempty"`
-	HTTPCookie     string `json:"httpCookie,omitempty" yaml:"httpCookie,omitempty"`
-	SourceIP       bool   `json:"sourceIP,omitempty" yaml:"sourceIP,omitempty"`
-	MinimumRingSize int   `json:"minimumRingSize,omitempty" yaml:"minimumRingSize,omitempty"`
+	HTTPHeader      string `json:"httpHeader,omitempty" yaml:"httpHeader,omitempty"`
+	HTTPCookie      string `json:"httpCookie,omitempty" yaml:"httpCookie,omitempty"`
+	SourceIP        bool   `json:"sourceIP,omitempty" yaml:"sourceIP,omitempty"`
+	MinimumRingSize int    `json:"minimumRingSize,omitempty" yaml:"minimumRingSize,omitempty"`
 }
 
 // RateLimitConfig defines rate limiting
@@ -126,17 +126,17 @@ type ObservabilityConfig struct {
 // TracingConfig defines distributed tracing settings
 type TracingConfig struct {
 	Enabled       bool    `json:"enabled" yaml:"enabled"`
-	Sampling      float64 `json:"sampling" yaml:"sampling"` // 0.0 to 100.0
+	Sampling      float64 `json:"sampling" yaml:"sampling"`                     // 0.0 to 100.0
 	Provider      string  `json:"provider,omitempty" yaml:"provider,omitempty"` // jaeger, zipkin, tempo
 	CollectorAddr string  `json:"collectorAddr,omitempty" yaml:"collectorAddr,omitempty"`
 }
 
 // MetricsConfig defines metrics collection
 type MetricsConfig struct {
-	Enabled          bool     `json:"enabled" yaml:"enabled"`
-	PrometheusPort   int      `json:"prometheusPort,omitempty" yaml:"prometheusPort,omitempty"`
-	IncludeLabels    []string `json:"includeLabels,omitempty" yaml:"includeLabels,omitempty"`
-	ExcludeLabels    []string `json:"excludeLabels,omitempty" yaml:"excludeLabels,omitempty"`
+	Enabled        bool     `json:"enabled" yaml:"enabled"`
+	PrometheusPort int      `json:"prometheusPort,omitempty" yaml:"prometheusPort,omitempty"`
+	IncludeLabels  []string `json:"includeLabels,omitempty" yaml:"includeLabels,omitempty"`
+	ExcludeLabels  []string `json:"excludeLabels,omitempty" yaml:"excludeLabels,omitempty"`
 }
 
 // LoggingConfig defines access logging
@@ -154,14 +154,14 @@ type SecurityConfig struct {
 
 // AuthorizationPolicy defines access control
 type AuthorizationPolicy struct {
-	Action string `json:"action" yaml:"action"` // ALLOW, DENY
+	Action string     `json:"action" yaml:"action"` // ALLOW, DENY
 	Rules  []AuthRule `json:"rules,omitempty" yaml:"rules,omitempty"`
 }
 
 // AuthRule defines an authorization rule
 type AuthRule struct {
-	From []AuthSource `json:"from,omitempty" yaml:"from,omitempty"`
-	To   []AuthTarget `json:"to,omitempty" yaml:"to,omitempty"`
+	From []AuthSource    `json:"from,omitempty" yaml:"from,omitempty"`
+	To   []AuthTarget    `json:"to,omitempty" yaml:"to,omitempty"`
 	When []AuthCondition `json:"when,omitempty" yaml:"when,omitempty"`
 }
 
@@ -188,16 +188,16 @@ type AuthCondition struct {
 
 // PeerAuthentication defines peer authentication settings
 type PeerAuthentication struct {
-	Mode         MTLSMode            `json:"mode" yaml:"mode"`
-	PortSelector map[int]MTLSMode    `json:"portSelector,omitempty" yaml:"portSelector,omitempty"`
+	Mode         MTLSMode         `json:"mode" yaml:"mode"`
+	PortSelector map[int]MTLSMode `json:"portSelector,omitempty" yaml:"portSelector,omitempty"`
 }
 
 // IngressConfig defines ingress gateway settings
 type IngressConfig struct {
-	Enabled       bool          `json:"enabled" yaml:"enabled"`
-	Hosts         []string      `json:"hosts,omitempty" yaml:"hosts,omitempty"`
-	TLS           *TLSConfig    `json:"tls,omitempty" yaml:"tls,omitempty"`
-	Replicas      int           `json:"replicas,omitempty" yaml:"replicas,omitempty"`
+	Enabled  bool       `json:"enabled" yaml:"enabled"`
+	Hosts    []string   `json:"hosts,omitempty" yaml:"hosts,omitempty"`
+	TLS      *TLSConfig `json:"tls,omitempty" yaml:"tls,omitempty"`
+	Replicas int        `json:"replicas,omitempty" yaml:"replicas,omitempty"`
 }
 
 // TLSConfig defines TLS settings
@@ -209,9 +209,9 @@ type TLSConfig struct {
 
 // EgressConfig defines egress gateway settings
 type EgressConfig struct {
-	Enabled         bool     `json:"enabled" yaml:"enabled"`
-	AllowedHosts    []string `json:"allowedHosts,omitempty" yaml:"allowedHosts,omitempty"`
-	BlockByDefault  bool     `json:"blockByDefault,omitempty" yaml:"blockByDefault,omitempty"`
+	Enabled        bool     `json:"enabled" yaml:"enabled"`
+	AllowedHosts   []string `json:"allowedHosts,omitempty" yaml:"allowedHosts,omitempty"`
+	BlockByDefault bool     `json:"blockByDefault,omitempty" yaml:"blockByDefault,omitempty"`
 }
 
 // ServiceMeshStatus tracks mesh status
@@ -245,36 +245,36 @@ type MeshCondition struct {
 
 // VirtualService defines traffic routing for a service
 type VirtualService struct {
-	APIVersion string               `json:"apiVersion" yaml:"apiVersion"`
-	Kind       string               `json:"kind" yaml:"kind"`
-	Metadata   MeshMetadata         `json:"metadata" yaml:"metadata"`
-	Spec       VirtualServiceSpec   `json:"spec" yaml:"spec"`
+	APIVersion string             `json:"apiVersion" yaml:"apiVersion"`
+	Kind       string             `json:"kind" yaml:"kind"`
+	Metadata   MeshMetadata       `json:"metadata" yaml:"metadata"`
+	Spec       VirtualServiceSpec `json:"spec" yaml:"spec"`
 }
 
 // VirtualServiceSpec defines virtual service specification
 type VirtualServiceSpec struct {
-	Hosts   []string     `json:"hosts" yaml:"hosts"`
+	Hosts    []string    `json:"hosts" yaml:"hosts"`
 	Gateways []string    `json:"gateways,omitempty" yaml:"gateways,omitempty"`
-	HTTP    []HTTPRoute  `json:"http,omitempty" yaml:"http,omitempty"`
-	TCP     []TCPRoute   `json:"tcp,omitempty" yaml:"tcp,omitempty"`
+	HTTP     []HTTPRoute `json:"http,omitempty" yaml:"http,omitempty"`
+	TCP      []TCPRoute  `json:"tcp,omitempty" yaml:"tcp,omitempty"`
 }
 
 // HTTPRoute defines an HTTP route
 type HTTPRoute struct {
-	Name    string          `json:"name,omitempty" yaml:"name,omitempty"`
-	Match   []HTTPMatchRequest `json:"match,omitempty" yaml:"match,omitempty"`
+	Name    string                 `json:"name,omitempty" yaml:"name,omitempty"`
+	Match   []HTTPMatchRequest     `json:"match,omitempty" yaml:"match,omitempty"`
 	Route   []HTTPRouteDestination `json:"route" yaml:"route"`
-	Timeout string          `json:"timeout,omitempty" yaml:"timeout,omitempty"`
-	Retries *RetryConfig    `json:"retries,omitempty" yaml:"retries,omitempty"`
-	Fault   *FaultInjection `json:"fault,omitempty" yaml:"fault,omitempty"`
-	Headers *HeaderOperations `json:"headers,omitempty" yaml:"headers,omitempty"`
+	Timeout string                 `json:"timeout,omitempty" yaml:"timeout,omitempty"`
+	Retries *RetryConfig           `json:"retries,omitempty" yaml:"retries,omitempty"`
+	Fault   *FaultInjection        `json:"fault,omitempty" yaml:"fault,omitempty"`
+	Headers *HeaderOperations      `json:"headers,omitempty" yaml:"headers,omitempty"`
 }
 
 // HTTPMatchRequest defines HTTP match criteria
 type HTTPMatchRequest struct {
-	URI     *StringMatch       `json:"uri,omitempty" yaml:"uri,omitempty"`
+	URI     *StringMatch           `json:"uri,omitempty" yaml:"uri,omitempty"`
 	Headers map[string]StringMatch `json:"headers,omitempty" yaml:"headers,omitempty"`
-	Method  *StringMatch       `json:"method,omitempty" yaml:"method,omitempty"`
+	Method  *StringMatch           `json:"method,omitempty" yaml:"method,omitempty"`
 }
 
 // StringMatch defines string matching
@@ -329,8 +329,8 @@ type HeaderOperations struct {
 
 // TCPRoute defines a TCP route
 type TCPRoute struct {
-	Match []TCPMatchRequest       `json:"match,omitempty" yaml:"match,omitempty"`
-	Route []TCPRouteDestination   `json:"route" yaml:"route"`
+	Match []TCPMatchRequest     `json:"match,omitempty" yaml:"match,omitempty"`
+	Route []TCPRouteDestination `json:"route" yaml:"route"`
 }
 
 // TCPMatchRequest defines TCP match criteria
@@ -355,17 +355,17 @@ type DestinationRule struct {
 
 // DestinationRuleSpec defines destination rule specification
 type DestinationRuleSpec struct {
-	Host          string              `json:"host" yaml:"host"`
-	TrafficPolicy *TrafficPolicy      `json:"trafficPolicy,omitempty" yaml:"trafficPolicy,omitempty"`
-	Subsets       []Subset            `json:"subsets,omitempty" yaml:"subsets,omitempty"`
+	Host          string         `json:"host" yaml:"host"`
+	TrafficPolicy *TrafficPolicy `json:"trafficPolicy,omitempty" yaml:"trafficPolicy,omitempty"`
+	Subsets       []Subset       `json:"subsets,omitempty" yaml:"subsets,omitempty"`
 }
 
 // TrafficPolicy defines traffic policies
 type TrafficPolicy struct {
-	ConnectionPool *ConnectionPool    `json:"connectionPool,omitempty" yaml:"connectionPool,omitempty"`
-	LoadBalancer   *LoadBalancerSettings `json:"loadBalancer,omitempty" yaml:"loadBalancer,omitempty"`
-	OutlierDetection *OutlierDetection `json:"outlierDetection,omitempty" yaml:"outlierDetection,omitempty"`
-	TLS            *TLSSettings       `json:"tls,omitempty" yaml:"tls,omitempty"`
+	ConnectionPool   *ConnectionPool       `json:"connectionPool,omitempty" yaml:"connectionPool,omitempty"`
+	LoadBalancer     *LoadBalancerSettings `json:"loadBalancer,omitempty" yaml:"loadBalancer,omitempty"`
+	OutlierDetection *OutlierDetection     `json:"outlierDetection,omitempty" yaml:"outlierDetection,omitempty"`
+	TLS              *TLSSettings          `json:"tls,omitempty" yaml:"tls,omitempty"`
 }
 
 // ConnectionPool defines connection pool settings
@@ -396,9 +396,9 @@ type LoadBalancerSettings struct {
 
 // ConsistentHashLB defines consistent hash load balancing
 type ConsistentHashLB struct {
-	HTTPHeaderName   string `json:"httpHeaderName,omitempty" yaml:"httpHeaderName,omitempty"`
-	HTTPCookie       *HTTPCookie `json:"httpCookie,omitempty" yaml:"httpCookie,omitempty"`
-	UseSourceIP      bool   `json:"useSourceIp,omitempty" yaml:"useSourceIp,omitempty"`
+	HTTPHeaderName string      `json:"httpHeaderName,omitempty" yaml:"httpHeaderName,omitempty"`
+	HTTPCookie     *HTTPCookie `json:"httpCookie,omitempty" yaml:"httpCookie,omitempty"`
+	UseSourceIP    bool        `json:"useSourceIp,omitempty" yaml:"useSourceIp,omitempty"`
 }
 
 // HTTPCookie defines HTTP cookie for consistent hashing
@@ -409,11 +409,11 @@ type HTTPCookie struct {
 
 // OutlierDetection defines outlier detection (circuit breaker)
 type OutlierDetection struct {
-	Consecutive5xxErrors    int    `json:"consecutive5xxErrors,omitempty" yaml:"consecutive5xxErrors,omitempty"`
-	ConsecutiveGatewayErrors int   `json:"consecutiveGatewayErrors,omitempty" yaml:"consecutiveGatewayErrors,omitempty"`
-	Interval                string `json:"interval,omitempty" yaml:"interval,omitempty"`
-	BaseEjectionTime        string `json:"baseEjectionTime,omitempty" yaml:"baseEjectionTime,omitempty"`
-	MaxEjectionPercent      int    `json:"maxEjectionPercent,omitempty" yaml:"maxEjectionPercent,omitempty"`
+	Consecutive5xxErrors     int    `json:"consecutive5xxErrors,omitempty" yaml:"consecutive5xxErrors,omitempty"`
+	ConsecutiveGatewayErrors int    `json:"consecutiveGatewayErrors,omitempty" yaml:"consecutiveGatewayErrors,omitempty"`
+	Interval                 string `json:"interval,omitempty" yaml:"interval,omitempty"`
+	BaseEjectionTime         string `json:"baseEjectionTime,omitempty" yaml:"baseEjectionTime,omitempty"`
+	MaxEjectionPercent       int    `json:"maxEjectionPercent,omitempty" yaml:"maxEjectionPercent,omitempty"`
 }
 
 // TLSSettings defines TLS settings for traffic policy
@@ -426,7 +426,7 @@ type TLSSettings struct {
 
 // Subset defines a service subset
 type Subset struct {
-	Name   string            `json:"name" yaml:"name"`
-	Labels map[string]string `json:"labels" yaml:"labels"`
-	TrafficPolicy *TrafficPolicy `json:"trafficPolicy,omitempty" yaml:"trafficPolicy,omitempty"`
+	Name          string            `json:"name" yaml:"name"`
+	Labels        map[string]string `json:"labels" yaml:"labels"`
+	TrafficPolicy *TrafficPolicy    `json:"trafficPolicy,omitempty" yaml:"trafficPolicy,omitempty"`
 }

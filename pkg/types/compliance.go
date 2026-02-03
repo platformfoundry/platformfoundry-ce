@@ -8,22 +8,22 @@ import (
 type ComplianceFramework string
 
 const (
-	ComplianceSOC2    ComplianceFramework = "soc2"
-	ComplianceHIPAA   ComplianceFramework = "hipaa"
-	CompliancePCIDSS  ComplianceFramework = "pci-dss"
-	ComplianceGDPR    ComplianceFramework = "gdpr"
+	ComplianceSOC2     ComplianceFramework = "soc2"
+	ComplianceHIPAA    ComplianceFramework = "hipaa"
+	CompliancePCIDSS   ComplianceFramework = "pci-dss"
+	ComplianceGDPR     ComplianceFramework = "gdpr"
 	ComplianceISO27001 ComplianceFramework = "iso27001"
-	ComplianceNIST    ComplianceFramework = "nist"
-	ComplianceCIS     ComplianceFramework = "cis"
-	ComplianceCustom  ComplianceFramework = "custom"
+	ComplianceNIST     ComplianceFramework = "nist"
+	ComplianceCIS      ComplianceFramework = "cis"
+	ComplianceCustom   ComplianceFramework = "custom"
 )
 
 // CompliancePolicy defines a compliance policy
 type CompliancePolicy struct {
-	APIVersion string                `yaml:"apiVersion" json:"apiVersion"`
-	Kind       string                `yaml:"kind" json:"kind"`
-	Metadata   ComplianceMetadata    `yaml:"metadata" json:"metadata"`
-	Spec       CompliancePolicySpec  `yaml:"spec" json:"spec"`
+	APIVersion string                  `yaml:"apiVersion" json:"apiVersion"`
+	Kind       string                  `yaml:"kind" json:"kind"`
+	Metadata   ComplianceMetadata      `yaml:"metadata" json:"metadata"`
+	Spec       CompliancePolicySpec    `yaml:"spec" json:"spec"`
 	Status     *CompliancePolicyStatus `yaml:"status,omitempty" json:"status,omitempty"`
 }
 
@@ -36,14 +36,14 @@ type ComplianceMetadata struct {
 
 // CompliancePolicySpec defines the policy specification
 type CompliancePolicySpec struct {
-	Framework    ComplianceFramework   `yaml:"framework" json:"framework"`
-	Description  string                `yaml:"description,omitempty" json:"description,omitempty"`
-	Version      string                `yaml:"version,omitempty" json:"version,omitempty"`
-	Rules        []ComplianceRule      `yaml:"rules" json:"rules"`
-	Exceptions   []ComplianceException `yaml:"exceptions,omitempty" json:"exceptions,omitempty"`
-	Schedule     *ComplianceSchedule   `yaml:"schedule,omitempty" json:"schedule,omitempty"`
-	Notifications ComplianceNotify     `yaml:"notifications,omitempty" json:"notifications,omitempty"`
-	Enforcement  EnforcementMode       `yaml:"enforcement" json:"enforcement"`
+	Framework     ComplianceFramework   `yaml:"framework" json:"framework"`
+	Description   string                `yaml:"description,omitempty" json:"description,omitempty"`
+	Version       string                `yaml:"version,omitempty" json:"version,omitempty"`
+	Rules         []ComplianceRule      `yaml:"rules" json:"rules"`
+	Exceptions    []ComplianceException `yaml:"exceptions,omitempty" json:"exceptions,omitempty"`
+	Schedule      *ComplianceSchedule   `yaml:"schedule,omitempty" json:"schedule,omitempty"`
+	Notifications ComplianceNotify      `yaml:"notifications,omitempty" json:"notifications,omitempty"`
+	Enforcement   EnforcementMode       `yaml:"enforcement" json:"enforcement"`
 }
 
 // ComplianceRule defines a single compliance rule
@@ -94,11 +94,11 @@ type RuleCheck struct {
 type CheckType string
 
 const (
-	CheckTypeExpr     CheckType = "expression"  // CEL or Rego expression
-	CheckTypeJSONPath CheckType = "jsonpath"    // JSON path check
-	CheckTypeScript   CheckType = "script"      // Custom script
-	CheckTypeBuiltin  CheckType = "builtin"     // Built-in check
-	CheckTypeWebhook  CheckType = "webhook"     // External webhook
+	CheckTypeExpr     CheckType = "expression" // CEL or Rego expression
+	CheckTypeJSONPath CheckType = "jsonpath"   // JSON path check
+	CheckTypeScript   CheckType = "script"     // Custom script
+	CheckTypeBuiltin  CheckType = "builtin"    // Built-in check
+	CheckTypeWebhook  CheckType = "webhook"    // External webhook
 )
 
 // RuleRemediation defines how to fix violations
@@ -111,11 +111,11 @@ type RuleRemediation struct {
 
 // ComplianceException defines an exception to a rule
 type ComplianceException struct {
-	RuleID      string     `yaml:"ruleId" json:"ruleId"`
-	Reason      string     `yaml:"reason" json:"reason"`
-	ApprovedBy  string     `yaml:"approvedBy" json:"approvedBy"`
-	ExpiresAt   *time.Time `yaml:"expiresAt,omitempty" json:"expiresAt,omitempty"`
-	Resources   []string   `yaml:"resources,omitempty" json:"resources,omitempty"`
+	RuleID     string     `yaml:"ruleId" json:"ruleId"`
+	Reason     string     `yaml:"reason" json:"reason"`
+	ApprovedBy string     `yaml:"approvedBy" json:"approvedBy"`
+	ExpiresAt  *time.Time `yaml:"expiresAt,omitempty" json:"expiresAt,omitempty"`
+	Resources  []string   `yaml:"resources,omitempty" json:"resources,omitempty"`
 }
 
 // ComplianceSchedule defines when to run compliance scans
@@ -127,9 +127,9 @@ type ComplianceSchedule struct {
 
 // ComplianceNotify defines notification settings
 type ComplianceNotify struct {
-	OnViolation  bool     `yaml:"onViolation" json:"onViolation"`
-	OnRemediation bool    `yaml:"onRemediation" json:"onRemediation"`
-	Channels     []string `yaml:"channels,omitempty" json:"channels,omitempty"`
+	OnViolation   bool     `yaml:"onViolation" json:"onViolation"`
+	OnRemediation bool     `yaml:"onRemediation" json:"onRemediation"`
+	Channels      []string `yaml:"channels,omitempty" json:"channels,omitempty"`
 }
 
 // EnforcementMode defines how violations are handled
@@ -144,13 +144,13 @@ const (
 
 // CompliancePolicyStatus represents policy status
 type CompliancePolicyStatus struct {
-	LastScan      *time.Time          `yaml:"lastScan,omitempty" json:"lastScan,omitempty"`
-	NextScan      *time.Time          `yaml:"nextScan,omitempty" json:"nextScan,omitempty"`
-	TotalRules    int                 `yaml:"totalRules" json:"totalRules"`
-	PassingRules  int                 `yaml:"passingRules" json:"passingRules"`
-	FailingRules  int                 `yaml:"failingRules" json:"failingRules"`
-	Compliance    float64             `yaml:"compliance" json:"compliance"` // Percentage
-	Conditions    []ComplianceCondition `yaml:"conditions,omitempty" json:"conditions,omitempty"`
+	LastScan     *time.Time            `yaml:"lastScan,omitempty" json:"lastScan,omitempty"`
+	NextScan     *time.Time            `yaml:"nextScan,omitempty" json:"nextScan,omitempty"`
+	TotalRules   int                   `yaml:"totalRules" json:"totalRules"`
+	PassingRules int                   `yaml:"passingRules" json:"passingRules"`
+	FailingRules int                   `yaml:"failingRules" json:"failingRules"`
+	Compliance   float64               `yaml:"compliance" json:"compliance"` // Percentage
+	Conditions   []ComplianceCondition `yaml:"conditions,omitempty" json:"conditions,omitempty"`
 }
 
 // ComplianceCondition represents a status condition
@@ -164,34 +164,34 @@ type ComplianceCondition struct {
 
 // ComplianceScanResult represents a scan result
 type ComplianceScanResult struct {
-	ScanID       string               `json:"scanId"`
-	PolicyName   string               `json:"policyName"`
-	Framework    ComplianceFramework  `json:"framework"`
-	StartTime    time.Time            `json:"startTime"`
-	EndTime      time.Time            `json:"endTime"`
-	Duration     time.Duration        `json:"duration"`
-	TotalChecks  int                  `json:"totalChecks"`
-	Passed       int                  `json:"passed"`
-	Failed       int                  `json:"failed"`
-	Skipped      int                  `json:"skipped"`
-	Compliance   float64              `json:"compliance"`
-	Violations   []ComplianceViolation `json:"violations"`
-	Summary      map[string]int       `json:"summary"` // By severity
+	ScanID      string                `json:"scanId"`
+	PolicyName  string                `json:"policyName"`
+	Framework   ComplianceFramework   `json:"framework"`
+	StartTime   time.Time             `json:"startTime"`
+	EndTime     time.Time             `json:"endTime"`
+	Duration    time.Duration         `json:"duration"`
+	TotalChecks int                   `json:"totalChecks"`
+	Passed      int                   `json:"passed"`
+	Failed      int                   `json:"failed"`
+	Skipped     int                   `json:"skipped"`
+	Compliance  float64               `json:"compliance"`
+	Violations  []ComplianceViolation `json:"violations"`
+	Summary     map[string]int        `json:"summary"` // By severity
 }
 
 // ComplianceViolation represents a specific violation
 type ComplianceViolation struct {
-	RuleID       string                 `json:"ruleId"`
-	RuleName     string                 `json:"ruleName"`
-	Severity     RuleSeverity           `json:"severity"`
-	Category     string                 `json:"category,omitempty"`
-	Resource     ViolationResource      `json:"resource"`
-	Description  string                 `json:"description"`
-	Evidence     map[string]interface{} `json:"evidence,omitempty"`
-	Remediation  string                 `json:"remediation,omitempty"`
-	AutoFixable  bool                   `json:"autoFixable"`
-	DetectedAt   time.Time              `json:"detectedAt"`
-	Status       ViolationStatus        `json:"status"`
+	RuleID      string                 `json:"ruleId"`
+	RuleName    string                 `json:"ruleName"`
+	Severity    RuleSeverity           `json:"severity"`
+	Category    string                 `json:"category,omitempty"`
+	Resource    ViolationResource      `json:"resource"`
+	Description string                 `json:"description"`
+	Evidence    map[string]interface{} `json:"evidence,omitempty"`
+	Remediation string                 `json:"remediation,omitempty"`
+	AutoFixable bool                   `json:"autoFixable"`
+	DetectedAt  time.Time              `json:"detectedAt"`
+	Status      ViolationStatus        `json:"status"`
 }
 
 // ViolationResource identifies the violating resource
@@ -206,32 +206,32 @@ type ViolationResource struct {
 type ViolationStatus string
 
 const (
-	ViolationStatusOpen       ViolationStatus = "open"
+	ViolationStatusOpen         ViolationStatus = "open"
 	ViolationStatusAcknowledged ViolationStatus = "acknowledged"
-	ViolationStatusRemediated ViolationStatus = "remediated"
-	ViolationStatusExcepted   ViolationStatus = "excepted"
+	ViolationStatusRemediated   ViolationStatus = "remediated"
+	ViolationStatusExcepted     ViolationStatus = "excepted"
 )
 
 // ComplianceReport summarizes compliance status
 type ComplianceReport struct {
-	GeneratedAt   time.Time                      `json:"generatedAt"`
-	Period        string                         `json:"period"`
-	Frameworks    []FrameworkSummary             `json:"frameworks"`
-	TotalPolicies int                            `json:"totalPolicies"`
-	OverallCompliance float64                    `json:"overallCompliance"`
-	ViolationsBySeverity map[RuleSeverity]int   `json:"violationsBySeverity"`
-	TopViolations []ComplianceViolation          `json:"topViolations"`
-	Trends        []ComplianceTrend              `json:"trends,omitempty"`
+	GeneratedAt          time.Time             `json:"generatedAt"`
+	Period               string                `json:"period"`
+	Frameworks           []FrameworkSummary    `json:"frameworks"`
+	TotalPolicies        int                   `json:"totalPolicies"`
+	OverallCompliance    float64               `json:"overallCompliance"`
+	ViolationsBySeverity map[RuleSeverity]int  `json:"violationsBySeverity"`
+	TopViolations        []ComplianceViolation `json:"topViolations"`
+	Trends               []ComplianceTrend     `json:"trends,omitempty"`
 }
 
 // FrameworkSummary summarizes compliance by framework
 type FrameworkSummary struct {
-	Framework   ComplianceFramework `json:"framework"`
-	Compliance  float64             `json:"compliance"`
-	TotalRules  int                 `json:"totalRules"`
-	Passing     int                 `json:"passing"`
-	Failing     int                 `json:"failing"`
-	Trend       string              `json:"trend"` // improving, stable, declining
+	Framework  ComplianceFramework `json:"framework"`
+	Compliance float64             `json:"compliance"`
+	TotalRules int                 `json:"totalRules"`
+	Passing    int                 `json:"passing"`
+	Failing    int                 `json:"failing"`
+	Trend      string              `json:"trend"` // improving, stable, declining
 }
 
 // ComplianceTrend represents compliance over time

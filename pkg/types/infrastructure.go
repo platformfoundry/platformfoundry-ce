@@ -12,17 +12,17 @@ type Infrastructure struct {
 
 // InfrastructureSpec defines infrastructure specification
 type InfrastructureSpec struct {
-	Provider string                 `yaml:"provider" json:"provider"` // terraform, crossplane, pulumi
-	Cloud    CloudConfig            `yaml:"cloud,omitempty" json:"cloud,omitempty"`
-	Clusters []ClusterConfig        `yaml:"clusters,omitempty" json:"clusters,omitempty"`
-	Tags     map[string]string      `yaml:"tags,omitempty" json:"tags,omitempty"`
+	Provider string            `yaml:"provider" json:"provider"` // terraform, crossplane, pulumi
+	Cloud    CloudConfig       `yaml:"cloud,omitempty" json:"cloud,omitempty"`
+	Clusters []ClusterConfig   `yaml:"clusters,omitempty" json:"clusters,omitempty"`
+	Tags     map[string]string `yaml:"tags,omitempty" json:"tags,omitempty"`
 }
 
 // CloudConfig defines cloud provider configuration
 type CloudConfig struct {
-	Provider string      `yaml:"provider" json:"provider"` // aws, gcp, azure
-	Region   string      `yaml:"region,omitempty" json:"region,omitempty"`
-	VPC      *VPCConfig  `yaml:"vpc,omitempty" json:"vpc,omitempty"`
+	Provider string     `yaml:"provider" json:"provider"` // aws, gcp, azure
+	Region   string     `yaml:"region,omitempty" json:"region,omitempty"`
+	VPC      *VPCConfig `yaml:"vpc,omitempty" json:"vpc,omitempty"`
 }
 
 // VPCConfig defines VPC configuration

@@ -20,9 +20,9 @@ const (
 	RoleViewer   Role = "viewer"   // Read-only access
 
 	// Organization-scoped roles
-	RoleOrgAdmin         Role = "org-admin"          // Full access within organization
-	RolePlatformEngineer Role = "platform-engineer"  // Manage platforms and components
-	RoleDeveloper        Role = "developer"          // Read-only + manage DevEx resources
+	RoleOrgAdmin         Role = "org-admin"         // Full access within organization
+	RolePlatformEngineer Role = "platform-engineer" // Manage platforms and components
+	RoleDeveloper        Role = "developer"         // Read-only + manage DevEx resources
 )
 
 // Action represents an action that can be performed on a resource
@@ -42,23 +42,23 @@ const (
 type ResourceType string
 
 const (
-	ResourcePlatform       ResourceType = "Platform"
-	ResourceInfrastructure ResourceType = "Infrastructure"
-	ResourceOrchestrator   ResourceType = "Orchestrator"
-	ResourceObservability  ResourceType = "Observability"
-	ResourceDevEx          ResourceType = "DevEx"
-	ResourcePipeline       ResourceType = "Pipeline"
-	ResourceMesh           ResourceType = "Mesh"
-	ResourceSecurity       ResourceType = "Security"
-	ResourceCompliance     ResourceType = "Compliance"
-	ResourceJob            ResourceType = "Job"
-	ResourcePlugin         ResourceType = "Plugin"
-	ResourceRBAC           ResourceType = "RBAC"
-	ResourceOrganization   ResourceType = "Organization"
-	ResourceEnvironment    ResourceType = "Environment"
-	ResourceService        ResourceType = "Service"
-	ResourceServiceTemplate ResourceType = "ServiceTemplate"
-	ResourceServiceAction   ResourceType = "ServiceAction"
+	ResourcePlatform         ResourceType = "Platform"
+	ResourceInfrastructure   ResourceType = "Infrastructure"
+	ResourceOrchestrator     ResourceType = "Orchestrator"
+	ResourceObservability    ResourceType = "Observability"
+	ResourceDevEx            ResourceType = "DevEx"
+	ResourcePipeline         ResourceType = "Pipeline"
+	ResourceMesh             ResourceType = "Mesh"
+	ResourceSecurity         ResourceType = "Security"
+	ResourceCompliance       ResourceType = "Compliance"
+	ResourceJob              ResourceType = "Job"
+	ResourcePlugin           ResourceType = "Plugin"
+	ResourceRBAC             ResourceType = "RBAC"
+	ResourceOrganization     ResourceType = "Organization"
+	ResourceEnvironment      ResourceType = "Environment"
+	ResourceService          ResourceType = "Service"
+	ResourceServiceTemplate  ResourceType = "ServiceTemplate"
+	ResourceServiceAction    ResourceType = "ServiceAction"
 	ResourceServiceScorecard ResourceType = "ServiceScorecard"
 )
 
@@ -71,12 +71,12 @@ type Permission struct {
 
 // User represents a user with roles
 type User struct {
-	Username          string              `json:"username"`
-	Email             string              `json:"email"`
-	Roles             []Role              `json:"roles"` // Global roles
-	OrganizationRoles map[string][]Role   `json:"organization_roles,omitempty"` // Org-specific roles
-	CreatedAt         time.Time           `json:"created_at"`
-	UpdatedAt         time.Time           `json:"updated_at"`
+	Username          string            `json:"username"`
+	Email             string            `json:"email"`
+	Roles             []Role            `json:"roles"`                        // Global roles
+	OrganizationRoles map[string][]Role `json:"organization_roles,omitempty"` // Org-specific roles
+	CreatedAt         time.Time         `json:"created_at"`
+	UpdatedAt         time.Time         `json:"updated_at"`
 }
 
 // PermissionCheck represents a permission check event
@@ -93,12 +93,12 @@ type PermissionCheck struct {
 
 // RBAC manages role-based access control
 type RBAC struct {
-	permissions     map[Role]map[ResourceType][]Action
-	users           map[string]*User
-	permissionLogs  []PermissionCheck
-	mu              sync.RWMutex
-	auditLogPath    string
-	enableAuditLog  bool
+	permissions    map[Role]map[ResourceType][]Action
+	users          map[string]*User
+	permissionLogs []PermissionCheck
+	mu             sync.RWMutex
+	auditLogPath   string
+	enableAuditLog bool
 }
 
 var (

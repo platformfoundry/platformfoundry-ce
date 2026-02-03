@@ -10,50 +10,50 @@ import (
 // TranslationResult contains the results of translating a workload
 type TranslationResult struct {
 	// Kubernetes resources
-	Deployment        *DeploymentSpec        `json:"deployment,omitempty"`
-	Service           *ServiceSpec           `json:"service,omitempty"`
-	HPA               *HPASpec               `json:"hpa,omitempty"`
-	Ingress           *IngressResourceSpec   `json:"ingress,omitempty"`
-	ConfigMaps        []ConfigMapSpec        `json:"configMaps,omitempty"`
-	Secrets           []SecretSpec           `json:"secrets,omitempty"`
+	Deployment *DeploymentSpec      `json:"deployment,omitempty"`
+	Service    *ServiceSpec         `json:"service,omitempty"`
+	HPA        *HPASpec             `json:"hpa,omitempty"`
+	Ingress    *IngressResourceSpec `json:"ingress,omitempty"`
+	ConfigMaps []ConfigMapSpec      `json:"configMaps,omitempty"`
+	Secrets    []SecretSpec         `json:"secrets,omitempty"`
 
 	// Infrastructure resources
-	InfraResources    []InfraResource        `json:"infraResources,omitempty"`
+	InfraResources []InfraResource `json:"infraResources,omitempty"`
 
 	// Outputs that will be available after provisioning
-	Outputs           map[string]OutputSpec  `json:"outputs,omitempty"`
+	Outputs map[string]OutputSpec `json:"outputs,omitempty"`
 }
 
 // DeploymentSpec represents a Kubernetes Deployment
 type DeploymentSpec struct {
-	Name        string                 `json:"name"`
-	Namespace   string                 `json:"namespace"`
-	Labels      map[string]string      `json:"labels"`
-	Annotations map[string]string      `json:"annotations,omitempty"`
-	Replicas    int                    `json:"replicas"`
-	Containers  []ContainerSpec        `json:"containers"`
-	Volumes     []VolumeSpec           `json:"volumes,omitempty"`
+	Name        string            `json:"name"`
+	Namespace   string            `json:"namespace"`
+	Labels      map[string]string `json:"labels"`
+	Annotations map[string]string `json:"annotations,omitempty"`
+	Replicas    int               `json:"replicas"`
+	Containers  []ContainerSpec   `json:"containers"`
+	Volumes     []VolumeSpec      `json:"volumes,omitempty"`
 }
 
 // ContainerSpec represents a container in a deployment
 type ContainerSpec struct {
-	Name           string                 `json:"name"`
-	Image          string                 `json:"image"`
-	Command        []string               `json:"command,omitempty"`
-	Args           []string               `json:"args,omitempty"`
-	Env            []EnvVarSpec           `json:"env,omitempty"`
-	EnvFrom        []EnvFromSpec          `json:"envFrom,omitempty"`
-	Resources      ResourceSpec           `json:"resources,omitempty"`
-	Ports          []ContainerPortSpec    `json:"ports,omitempty"`
-	LivenessProbe  *ProbeSpec             `json:"livenessProbe,omitempty"`
-	ReadinessProbe *ProbeSpec             `json:"readinessProbe,omitempty"`
-	VolumeMounts   []VolumeMountSpec      `json:"volumeMounts,omitempty"`
+	Name           string              `json:"name"`
+	Image          string              `json:"image"`
+	Command        []string            `json:"command,omitempty"`
+	Args           []string            `json:"args,omitempty"`
+	Env            []EnvVarSpec        `json:"env,omitempty"`
+	EnvFrom        []EnvFromSpec       `json:"envFrom,omitempty"`
+	Resources      ResourceSpec        `json:"resources,omitempty"`
+	Ports          []ContainerPortSpec `json:"ports,omitempty"`
+	LivenessProbe  *ProbeSpec          `json:"livenessProbe,omitempty"`
+	ReadinessProbe *ProbeSpec          `json:"readinessProbe,omitempty"`
+	VolumeMounts   []VolumeMountSpec   `json:"volumeMounts,omitempty"`
 }
 
 // EnvVarSpec represents an environment variable
 type EnvVarSpec struct {
-	Name      string          `json:"name"`
-	Value     string          `json:"value,omitempty"`
+	Name      string            `json:"name"`
+	Value     string            `json:"value,omitempty"`
 	ValueFrom *EnvVarSourceSpec `json:"valueFrom,omitempty"`
 }
 
@@ -102,12 +102,12 @@ type ContainerPortSpec struct {
 
 // ProbeSpec represents a health probe
 type ProbeSpec struct {
-	HTTPGet             *HTTPGetProbeSpec `json:"httpGet,omitempty"`
+	HTTPGet             *HTTPGetProbeSpec   `json:"httpGet,omitempty"`
 	TCPSocket           *TCPSocketProbeSpec `json:"tcpSocket,omitempty"`
-	InitialDelaySeconds int               `json:"initialDelaySeconds,omitempty"`
-	PeriodSeconds       int               `json:"periodSeconds,omitempty"`
-	TimeoutSeconds      int               `json:"timeoutSeconds,omitempty"`
-	FailureThreshold    int               `json:"failureThreshold,omitempty"`
+	InitialDelaySeconds int                 `json:"initialDelaySeconds,omitempty"`
+	PeriodSeconds       int                 `json:"periodSeconds,omitempty"`
+	TimeoutSeconds      int                 `json:"timeoutSeconds,omitempty"`
+	FailureThreshold    int                 `json:"failureThreshold,omitempty"`
 }
 
 // HTTPGetProbeSpec represents an HTTP GET probe
@@ -131,10 +131,10 @@ type VolumeMountSpec struct {
 
 // VolumeSpec represents a volume
 type VolumeSpec struct {
-	Name      string           `json:"name"`
-	Secret    *SecretVolumeSpec `json:"secret,omitempty"`
+	Name      string               `json:"name"`
+	Secret    *SecretVolumeSpec    `json:"secret,omitempty"`
 	ConfigMap *ConfigMapVolumeSpec `json:"configMap,omitempty"`
-	EmptyDir  *EmptyDirVolumeSpec `json:"emptyDir,omitempty"`
+	EmptyDir  *EmptyDirVolumeSpec  `json:"emptyDir,omitempty"`
 }
 
 // SecretVolumeSpec represents a secret volume
@@ -154,12 +154,12 @@ type EmptyDirVolumeSpec struct {
 
 // ServiceSpec represents a Kubernetes Service
 type ServiceSpec struct {
-	Name        string            `json:"name"`
-	Namespace   string            `json:"namespace"`
-	Labels      map[string]string `json:"labels"`
-	Type        string            `json:"type"`
-	Ports       []ServicePortSpec `json:"ports"`
-	Selector    map[string]string `json:"selector"`
+	Name      string            `json:"name"`
+	Namespace string            `json:"namespace"`
+	Labels    map[string]string `json:"labels"`
+	Type      string            `json:"type"`
+	Ports     []ServicePortSpec `json:"ports"`
+	Selector  map[string]string `json:"selector"`
 }
 
 // ServicePortSpec represents a service port
@@ -172,12 +172,12 @@ type ServicePortSpec struct {
 
 // HPASpec represents a HorizontalPodAutoscaler
 type HPASpec struct {
-	Name                     string `json:"name"`
-	Namespace                string `json:"namespace"`
-	MinReplicas              int    `json:"minReplicas"`
-	MaxReplicas              int    `json:"maxReplicas"`
-	TargetCPUUtilization     int    `json:"targetCPUUtilization,omitempty"`
-	TargetMemoryUtilization  int    `json:"targetMemoryUtilization,omitempty"`
+	Name                    string `json:"name"`
+	Namespace               string `json:"namespace"`
+	MinReplicas             int    `json:"minReplicas"`
+	MaxReplicas             int    `json:"maxReplicas"`
+	TargetCPUUtilization    int    `json:"targetCPUUtilization,omitempty"`
+	TargetMemoryUtilization int    `json:"targetMemoryUtilization,omitempty"`
 }
 
 // IngressResourceSpec represents a Kubernetes Ingress
@@ -210,7 +210,7 @@ type SecretSpec struct {
 
 // InfraResource represents an infrastructure resource to provision
 type InfraResource struct {
-	Type     string                 `json:"type"`     // terraform-aws-rds, terraform-aws-elasticache, etc.
+	Type     string                 `json:"type"` // terraform-aws-rds, terraform-aws-elasticache, etc.
 	Name     string                 `json:"name"`
 	Provider string                 `json:"provider"` // terraform, pulumi, etc.
 	Config   map[string]interface{} `json:"config"`
@@ -218,7 +218,7 @@ type InfraResource struct {
 
 // OutputSpec represents an output value
 type OutputSpec struct {
-	Type        string `json:"type"`        // string, secret, number
+	Type        string `json:"type"` // string, secret, number
 	Description string `json:"description"`
 	Value       string `json:"value,omitempty"`
 }
@@ -233,10 +233,10 @@ type Translator struct {
 
 // DependencyMapping defines how a dependency type maps to infrastructure
 type DependencyMapping struct {
-	Provider       string                 `json:"provider"`       // terraform, pulumi
-	ResourceType   string                 `json:"resourceType"`   // aws-rds, aws-elasticache
-	DefaultConfig  map[string]interface{} `json:"defaultConfig"`
-	SizeMapping    map[string]SizeSpec    `json:"sizeMapping"`
+	Provider      string                 `json:"provider"`     // terraform, pulumi
+	ResourceType  string                 `json:"resourceType"` // aws-rds, aws-elasticache
+	DefaultConfig map[string]interface{} `json:"defaultConfig"`
+	SizeMapping   map[string]SizeSpec    `json:"sizeMapping"`
 }
 
 // SizeSpec defines resource specifications for a size tier
@@ -301,10 +301,10 @@ func (t *Translator) initDefaultMappings() {
 			Provider:     "terraform",
 			ResourceType: "aws-elasticache-redis",
 			DefaultConfig: map[string]interface{}{
-				"engine":               "redis",
-				"engine_version":       "7.0",
-				"num_cache_clusters":   1,
-				"automatic_failover":   false,
+				"engine":             "redis",
+				"engine_version":     "7.0",
+				"num_cache_clusters": 1,
+				"automatic_failover": false,
 			},
 			SizeMapping: map[string]SizeSpec{
 				"small":  {InstanceType: "cache.t3.small"},
@@ -340,9 +340,9 @@ func (t *Translator) initDefaultMappings() {
 			Provider:     "terraform",
 			ResourceType: "aws-msk",
 			DefaultConfig: map[string]interface{}{
-				"kafka_version":     "3.5.1",
-				"number_of_nodes":   3,
-				"ebs_volume_size":   100,
+				"kafka_version":   "3.5.1",
+				"number_of_nodes": 3,
+				"ebs_volume_size": 100,
 			},
 			SizeMapping: map[string]SizeSpec{
 				"small":  {InstanceType: "kafka.t3.small"},
@@ -355,8 +355,8 @@ func (t *Translator) initDefaultMappings() {
 			Provider:     "terraform",
 			ResourceType: "aws-mq-rabbitmq",
 			DefaultConfig: map[string]interface{}{
-				"engine_version":    "3.12",
-				"deployment_mode":   "SINGLE_INSTANCE",
+				"engine_version":  "3.12",
+				"deployment_mode": "SINGLE_INSTANCE",
 			},
 			SizeMapping: map[string]SizeSpec{
 				"small":  {InstanceType: "mq.t3.micro"},
@@ -383,9 +383,9 @@ func (t *Translator) initDefaultMappings() {
 			Provider:     "terraform",
 			ResourceType: "aws-elasticache-memcached",
 			DefaultConfig: map[string]interface{}{
-				"engine":             "memcached",
-				"engine_version":     "1.6.17",
-				"num_cache_nodes":    1,
+				"engine":          "memcached",
+				"engine_version":  "1.6.17",
+				"num_cache_nodes": 1,
 			},
 			SizeMapping: map[string]SizeSpec{
 				"small":  {InstanceType: "cache.t3.small"},
@@ -423,10 +423,10 @@ func (t *Translator) Translate(w *types.Workload) (*TranslationResult, error) {
 
 	// Create labels
 	labels := map[string]string{
-		"app":                          w.Metadata.Name,
-		"team":                         w.Metadata.Team,
-		"platformfoundry.io/workload":  w.Metadata.Name,
-		"platformfoundry.io/managed":   "true",
+		"app":                         w.Metadata.Name,
+		"team":                        w.Metadata.Team,
+		"platformfoundry.io/workload": w.Metadata.Name,
+		"platformfoundry.io/managed":  "true",
 	}
 	for k, v := range w.Metadata.Labels {
 		labels[k] = v

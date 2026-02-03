@@ -10,7 +10,7 @@ import (
 // Manager handles multi-tenant operations
 type Manager struct {
 	tenants       map[string]*Tenant
-	roles         map[string]map[string]*Role // tenant -> role name -> role
+	roles         map[string]map[string]*Role        // tenant -> role name -> role
 	bindings      map[string]map[string]*RoleBinding // tenant -> binding name -> binding
 	jitRequests   map[string]*JITAccessRequest
 	accessReviews map[string]*AccessReview
@@ -591,15 +591,15 @@ func (m *Manager) GetResourceUsage(ctx context.Context, tenantName string) (*Res
 	// In a real implementation, this would query actual resource usage
 	// For now, return mock data
 	usage := &ResourceUsage{
-		CPU:           "250m",
-		CPUPercent:    25.0,
-		Memory:        "512Mi",
-		MemoryPercent: 25.0,
-		Storage:       "10Gi",
+		CPU:            "250m",
+		CPUPercent:     25.0,
+		Memory:         "512Mi",
+		MemoryPercent:  25.0,
+		Storage:        "10Gi",
 		StoragePercent: 10.0,
-		Pods:          15,
-		PodsPercent:   15.0,
-		UpdatedAt:     time.Now(),
+		Pods:           15,
+		PodsPercent:    15.0,
+		UpdatedAt:      time.Now(),
 	}
 
 	tenant.Status.ResourceUsage = usage

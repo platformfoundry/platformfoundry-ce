@@ -48,7 +48,7 @@ func (p *ProgressDisplay) Stop() {
 	p.started = false
 	if !p.isVerbose {
 		fmt.Print("\033[?25h") // Show cursor
-		fmt.Println()         // New line after progress display
+		fmt.Println()          // New line after progress display
 	}
 }
 

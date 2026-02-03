@@ -489,9 +489,9 @@ func TestCoordinatorStop(t *testing.T) {
 
 	// Create a slow engine that respects context
 	engine := &mockEngine{
-		BaseEngine:     NewBaseEngine("slow-engine", "test"),
-		applyDelay:     5 * time.Second,
-		checkContext:   true, // Enable context checking
+		BaseEngine:   NewBaseEngine("slow-engine", "test"),
+		applyDelay:   5 * time.Second,
+		checkContext: true, // Enable context checking
 	}
 	coord.RegisterEngine(engine)
 

@@ -24,11 +24,11 @@ type Check interface {
 // CheckContext provides additional context for check evaluation
 type CheckContext struct {
 	// Repository information
-	HasReadme       bool
-	ReadmeLength    int
-	HasTests        bool
-	TestCoverage    float64
-	HasCI           bool
+	HasReadme    bool
+	ReadmeLength int
+	HasTests     bool
+	TestCoverage float64
+	HasCI        bool
 
 	// Security information
 	HasSecurityScan bool
@@ -44,11 +44,11 @@ type CheckContext struct {
 	MTTR            *time.Duration
 
 	// Observability
-	HasMetrics      bool
-	HasLogs         bool
-	HasTraces       bool
-	HasAlerts       bool
-	AlertCount      int
+	HasMetrics bool
+	HasLogs    bool
+	HasTraces  bool
+	HasAlerts  bool
+	AlertCount int
 }
 
 // NewScorecardEngine creates a new scorecard engine with default checks

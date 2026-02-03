@@ -12,10 +12,10 @@ import (
 
 // MemoryEventStore provides an in-memory event store implementation
 type MemoryEventStore struct {
-	mu     sync.RWMutex
-	events []*types.Event
-	byID   map[string]*types.Event
-	maxAge time.Duration
+	mu      sync.RWMutex
+	events  []*types.Event
+	byID    map[string]*types.Event
+	maxAge  time.Duration
 	maxSize int
 }
 

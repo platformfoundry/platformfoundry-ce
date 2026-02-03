@@ -14,12 +14,12 @@ type ServiceAction struct {
 
 // ServiceActionSpec defines the service action specification
 type ServiceActionSpec struct {
-	Service     string            `yaml:"service" json:"service"`
-	Action      ActionType        `yaml:"action" json:"action"`
-	Environment string            `yaml:"environment" json:"environment"`
+	Service     string                 `yaml:"service" json:"service"`
+	Action      ActionType             `yaml:"action" json:"action"`
+	Environment string                 `yaml:"environment" json:"environment"`
 	Config      map[string]interface{} `yaml:"config,omitempty" json:"config,omitempty"`
-	DryRun      bool              `yaml:"dryRun,omitempty" json:"dryRun,omitempty"`
-	Force       bool              `yaml:"force,omitempty" json:"force,omitempty"`
+	DryRun      bool                   `yaml:"dryRun,omitempty" json:"dryRun,omitempty"`
+	Force       bool                   `yaml:"force,omitempty" json:"force,omitempty"`
 }
 
 // ActionType represents the type of action to perform

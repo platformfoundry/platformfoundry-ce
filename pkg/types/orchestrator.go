@@ -12,10 +12,10 @@ type Orchestrator struct {
 
 // OrchestratorSpec defines orchestrator specification
 type OrchestratorSpec struct {
-	Provider   string           `yaml:"provider" json:"provider"` // argocd, flux, tekton
-	ClusterRef string           `yaml:"clusterRef" json:"clusterRef"`
-	GitOps     *GitOpsConfig    `yaml:"gitops,omitempty" json:"gitops,omitempty"`
-	Applications []Application  `yaml:"applications,omitempty" json:"applications,omitempty"`
+	Provider     string        `yaml:"provider" json:"provider"` // argocd, flux, tekton
+	ClusterRef   string        `yaml:"clusterRef" json:"clusterRef"`
+	GitOps       *GitOpsConfig `yaml:"gitops,omitempty" json:"gitops,omitempty"`
+	Applications []Application `yaml:"applications,omitempty" json:"applications,omitempty"`
 }
 
 // GitOpsConfig defines GitOps configuration

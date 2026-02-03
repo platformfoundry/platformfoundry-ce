@@ -13,11 +13,11 @@ import (
 
 // Simulator provides dry-run and what-if analysis capabilities
 type Simulator struct {
-	graph          *graph.Engine
-	policyChecker  PolicyChecker
-	costEstimator  CostEstimator
+	graph             *graph.Engine
+	policyChecker     PolicyChecker
+	costEstimator     CostEstimator
 	complianceChecker ComplianceChecker
-	validator      Validator
+	validator         Validator
 }
 
 // PolicyChecker interface for checking policies

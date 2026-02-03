@@ -320,8 +320,8 @@ func TestEnvironment_Validate(t *testing.T) {
 
 func TestIsValidEnvironmentType(t *testing.T) {
 	tests := []struct {
-		name     string
-		envType  EnvironmentType
+		name      string
+		envType   EnvironmentType
 		wantValid bool
 	}{
 		{"development is valid", EnvironmentDev, true},
@@ -343,9 +343,9 @@ func TestIsValidEnvironmentType(t *testing.T) {
 
 func TestPromotionConfig(t *testing.T) {
 	tests := []struct {
-		name   string
-		config *PromotionConfig
-		wantAuto bool
+		name         string
+		config       *PromotionConfig
+		wantAuto     bool
 		wantApproval bool
 	}{
 		{

@@ -86,11 +86,11 @@ func (e *Executor) GetHandler(stepType workflow.StepType) (StepHandler, bool) {
 
 // ExecutionContext holds context for a workflow execution
 type ExecutionContext struct {
-	Execution     *workflow.DAGExecution
-	Workflow      *workflow.DAGWorkflow
-	Graph         *Graph
-	Resolver      OutputResolver
-	OnStepStart   func(stepID string)
+	Execution      *workflow.DAGExecution
+	Workflow       *workflow.DAGWorkflow
+	Graph          *Graph
+	Resolver       OutputResolver
+	OnStepStart    func(stepID string)
 	OnStepComplete func(stepID string, result *workflow.StepResult)
 }
 

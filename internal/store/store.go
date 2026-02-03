@@ -15,14 +15,14 @@ import (
 // ResourceState represents the state of a provisioned resource
 // Kept for backwards compatibility
 type ResourceState struct {
-	ID         uint      `json:"id"`
-	Name       string    `json:"name"`
-	Kind       string    `json:"kind"`
-	Provider   string    `json:"provider"`
-	Spec       string    `json:"spec"` // JSON-encoded spec
-	Status     string    `json:"status"`
-	CreatedAt  time.Time `json:"createdAt"`
-	UpdatedAt  time.Time `json:"updatedAt"`
+	ID        uint      `json:"id"`
+	Name      string    `json:"name"`
+	Kind      string    `json:"kind"`
+	Provider  string    `json:"provider"`
+	Spec      string    `json:"spec"` // JSON-encoded spec
+	Status    string    `json:"status"`
+	CreatedAt time.Time `json:"createdAt"`
+	UpdatedAt time.Time `json:"updatedAt"`
 }
 
 // Store manages resource state persistence

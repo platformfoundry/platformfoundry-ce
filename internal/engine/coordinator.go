@@ -36,10 +36,10 @@ type Coordinator struct {
 	cancel context.CancelFunc
 
 	// Results
-	results     map[string]*Result
-	resultsMu   sync.RWMutex
-	errors      map[string]error
-	errorsMu    sync.RWMutex
+	results   map[string]*Result
+	resultsMu sync.RWMutex
+	errors    map[string]error
+	errorsMu  sync.RWMutex
 
 	// Configuration
 	config CoordinatorConfig

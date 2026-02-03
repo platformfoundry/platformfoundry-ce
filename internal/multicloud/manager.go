@@ -11,11 +11,11 @@ import (
 
 // Manager handles multi-cloud operations
 type Manager struct {
-	accounts    map[string]*types.CloudAccount
-	providers   map[types.CloudProvider]Provider
-	resources   map[string]*types.UnifiedResource
-	mappings    []types.ResourceMapping
-	mu          sync.RWMutex
+	accounts  map[string]*types.CloudAccount
+	providers map[types.CloudProvider]Provider
+	resources map[string]*types.UnifiedResource
+	mappings  []types.ResourceMapping
+	mu        sync.RWMutex
 }
 
 // Provider interface for cloud provider operations
@@ -406,9 +406,9 @@ func (p *MockProvider) GetCosts(ctx context.Context, start, end time.Time) (*typ
 		Total:    1250.50,
 		Currency: "USD",
 		ByService: map[string]float64{
-			"compute": 650.00,
-			"storage": 200.50,
-			"network": 150.00,
+			"compute":  650.00,
+			"storage":  200.50,
+			"network":  150.00,
 			"database": 250.00,
 		},
 	}, nil

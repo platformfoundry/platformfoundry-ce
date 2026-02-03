@@ -18,7 +18,7 @@ var pluginListCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List installed plugins",
 	Long:  `List all installed plugins and their versions.`,
-	RunE: runPluginList,
+	RunE:  runPluginList,
 }
 
 func init() {

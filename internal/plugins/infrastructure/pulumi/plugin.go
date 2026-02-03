@@ -16,17 +16,17 @@ type Config struct {
 
 // CloudConfig represents cloud provider configuration
 type CloudConfig struct {
-	Provider string        `yaml:"provider" json:"provider" validate:"required,oneof=aws gcp azure kubernetes"`
-	Region   string        `yaml:"region" json:"region" validate:"required"`
-	VPC      *VPCConfig    `yaml:"vpc,omitempty" json:"vpc,omitempty"`
+	Provider string         `yaml:"provider" json:"provider" validate:"required,oneof=aws gcp azure kubernetes"`
+	Region   string         `yaml:"region" json:"region" validate:"required"`
+	VPC      *VPCConfig     `yaml:"vpc,omitempty" json:"vpc,omitempty"`
 	Cluster  *ClusterConfig `yaml:"cluster,omitempty" json:"cluster,omitempty"`
 }
 
 // VPCConfig represents VPC configuration
 type VPCConfig struct {
-	CIDR             string   `yaml:"cidr" json:"cidr" validate:"required,cidr"`
+	CIDR              string   `yaml:"cidr" json:"cidr" validate:"required,cidr"`
 	AvailabilityZones []string `yaml:"availabilityZones,omitempty" json:"availabilityZones,omitempty"`
-	EnableNATGateway bool     `yaml:"enableNATGateway" json:"enableNATGateway"`
+	EnableNATGateway  bool     `yaml:"enableNATGateway" json:"enableNATGateway"`
 }
 
 // ClusterConfig represents Kubernetes cluster configuration

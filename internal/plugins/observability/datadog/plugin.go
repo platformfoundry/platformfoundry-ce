@@ -23,11 +23,11 @@ type Config struct {
 
 // AgentConfig represents Datadog Agent configuration
 type AgentConfig struct {
-	Enabled          bool              `yaml:"enabled" json:"enabled"`
+	Enabled          bool                `yaml:"enabled" json:"enabled"`
 	ClusterAgent     *ClusterAgentConfig `yaml:"clusterAgent,omitempty" json:"clusterAgent,omitempty"`
 	NodeAgent        *NodeAgentConfig    `yaml:"nodeAgent,omitempty" json:"nodeAgent,omitempty"`
-	ClusterChecks    bool              `yaml:"clusterChecksEnabled" json:"clusterChecksEnabled"`
-	KubeStateMetrics *KSMConfig        `yaml:"kubeStateMetricsCore,omitempty" json:"kubeStateMetricsCore,omitempty"`
+	ClusterChecks    bool                `yaml:"clusterChecksEnabled" json:"clusterChecksEnabled"`
+	KubeStateMetrics *KSMConfig          `yaml:"kubeStateMetricsCore,omitempty" json:"kubeStateMetricsCore,omitempty"`
 }
 
 // ClusterAgentConfig represents Cluster Agent settings
@@ -63,11 +63,11 @@ type KSMConfig struct {
 
 // LogsConfig represents Datadog Logs configuration
 type LogsConfig struct {
-	Enabled           bool     `yaml:"enabled" json:"enabled"`
-	ContainerCollect  bool     `yaml:"containerCollectAll" json:"containerCollectAll"`
-	ContainerExclude  []string `yaml:"containerExclude,omitempty" json:"containerExclude,omitempty"`
-	ContainerInclude  []string `yaml:"containerInclude,omitempty" json:"containerInclude,omitempty"`
-	ProcessingRules   []ProcessingRule `yaml:"processingRules,omitempty" json:"processingRules,omitempty"`
+	Enabled          bool             `yaml:"enabled" json:"enabled"`
+	ContainerCollect bool             `yaml:"containerCollectAll" json:"containerCollectAll"`
+	ContainerExclude []string         `yaml:"containerExclude,omitempty" json:"containerExclude,omitempty"`
+	ContainerInclude []string         `yaml:"containerInclude,omitempty" json:"containerInclude,omitempty"`
+	ProcessingRules  []ProcessingRule `yaml:"processingRules,omitempty" json:"processingRules,omitempty"`
 }
 
 // ProcessingRule defines log processing rules
@@ -79,42 +79,42 @@ type ProcessingRule struct {
 
 // APMConfig represents APM/Tracing configuration
 type APMConfig struct {
-	Enabled              bool     `yaml:"enabled" json:"enabled"`
-	HostPort             int      `yaml:"hostPort" json:"hostPort"`
-	NonLocalTraffic      bool     `yaml:"nonLocalTraffic" json:"nonLocalTraffic"`
-	UnixDomainSocket     bool     `yaml:"unixDomainSocketEnabled" json:"unixDomainSocketEnabled"`
-	TraceSampleRate      float64  `yaml:"traceSampleRate,omitempty" json:"traceSampleRate,omitempty"`
-	IgnoredResources     []string `yaml:"ignoredResources,omitempty" json:"ignoredResources,omitempty"`
-	ServiceMapping       map[string]string `yaml:"serviceMapping,omitempty" json:"serviceMapping,omitempty"`
+	Enabled          bool              `yaml:"enabled" json:"enabled"`
+	HostPort         int               `yaml:"hostPort" json:"hostPort"`
+	NonLocalTraffic  bool              `yaml:"nonLocalTraffic" json:"nonLocalTraffic"`
+	UnixDomainSocket bool              `yaml:"unixDomainSocketEnabled" json:"unixDomainSocketEnabled"`
+	TraceSampleRate  float64           `yaml:"traceSampleRate,omitempty" json:"traceSampleRate,omitempty"`
+	IgnoredResources []string          `yaml:"ignoredResources,omitempty" json:"ignoredResources,omitempty"`
+	ServiceMapping   map[string]string `yaml:"serviceMapping,omitempty" json:"serviceMapping,omitempty"`
 }
 
 // MetricsConfig represents custom metrics configuration
 type MetricsConfig struct {
-	Enabled           bool              `yaml:"enabled" json:"enabled"`
-	DogStatsDPort     int               `yaml:"dogstatsdPort" json:"dogstatsdPort"`
-	OriginDetection   bool              `yaml:"dogstatsdOriginDetection" json:"dogstatsdOriginDetection"`
-	CustomMetrics     []CustomMetric    `yaml:"customMetrics,omitempty" json:"customMetrics,omitempty"`
-	AutodiscoveryTags []string          `yaml:"autodiscoveryTags,omitempty" json:"autodiscoveryTags,omitempty"`
+	Enabled           bool           `yaml:"enabled" json:"enabled"`
+	DogStatsDPort     int            `yaml:"dogstatsdPort" json:"dogstatsdPort"`
+	OriginDetection   bool           `yaml:"dogstatsdOriginDetection" json:"dogstatsdOriginDetection"`
+	CustomMetrics     []CustomMetric `yaml:"customMetrics,omitempty" json:"customMetrics,omitempty"`
+	AutodiscoveryTags []string       `yaml:"autodiscoveryTags,omitempty" json:"autodiscoveryTags,omitempty"`
 }
 
 // CustomMetric defines a custom metric to collect
 type CustomMetric struct {
-	Name       string            `yaml:"name" json:"name" validate:"required"`
-	Type       string            `yaml:"type" json:"type" validate:"required,oneof=gauge counter histogram"`
-	Tags       []string          `yaml:"tags,omitempty" json:"tags,omitempty"`
-	Labels     map[string]string `yaml:"labels,omitempty" json:"labels,omitempty"`
+	Name   string            `yaml:"name" json:"name" validate:"required"`
+	Type   string            `yaml:"type" json:"type" validate:"required,oneof=gauge counter histogram"`
+	Tags   []string          `yaml:"tags,omitempty" json:"tags,omitempty"`
+	Labels map[string]string `yaml:"labels,omitempty" json:"labels,omitempty"`
 }
 
 // MonitorConfig represents a Datadog monitor definition
 type MonitorConfig struct {
-	Name               string            `yaml:"name" json:"name" validate:"required"`
-	Type               string            `yaml:"type" json:"type" validate:"required,oneof=metric query_alert service_check event_alert log_alert process_alert synthetics_alert"`
-	Query              string            `yaml:"query" json:"query" validate:"required"`
-	Message            string            `yaml:"message" json:"message"`
-	Tags               []string          `yaml:"tags,omitempty" json:"tags,omitempty"`
-	Priority           int               `yaml:"priority,omitempty" json:"priority,omitempty" validate:"omitempty,min=1,max=5"`
-	Thresholds         *ThresholdConfig  `yaml:"thresholds,omitempty" json:"thresholds,omitempty"`
-	NotificationConfig *NotifyConfig     `yaml:"notificationConfig,omitempty" json:"notificationConfig,omitempty"`
+	Name               string           `yaml:"name" json:"name" validate:"required"`
+	Type               string           `yaml:"type" json:"type" validate:"required,oneof=metric query_alert service_check event_alert log_alert process_alert synthetics_alert"`
+	Query              string           `yaml:"query" json:"query" validate:"required"`
+	Message            string           `yaml:"message" json:"message"`
+	Tags               []string         `yaml:"tags,omitempty" json:"tags,omitempty"`
+	Priority           int              `yaml:"priority,omitempty" json:"priority,omitempty" validate:"omitempty,min=1,max=5"`
+	Thresholds         *ThresholdConfig `yaml:"thresholds,omitempty" json:"thresholds,omitempty"`
+	NotificationConfig *NotifyConfig    `yaml:"notificationConfig,omitempty" json:"notificationConfig,omitempty"`
 }
 
 // ThresholdConfig defines monitor thresholds
@@ -128,10 +128,10 @@ type ThresholdConfig struct {
 
 // NotifyConfig defines notification settings
 type NotifyConfig struct {
-	NoDataTimeframe int  `yaml:"noDataTimeframe,omitempty" json:"noDataTimeframe,omitempty"`
-	NotifyAudit     bool `yaml:"notifyAudit" json:"notifyAudit"`
-	NotifyNoData    bool `yaml:"notifyNoData" json:"notifyNoData"`
-	RenotifyInterval int `yaml:"renotifyInterval,omitempty" json:"renotifyInterval,omitempty"`
+	NoDataTimeframe  int  `yaml:"noDataTimeframe,omitempty" json:"noDataTimeframe,omitempty"`
+	NotifyAudit      bool `yaml:"notifyAudit" json:"notifyAudit"`
+	NotifyNoData     bool `yaml:"notifyNoData" json:"notifyNoData"`
+	RenotifyInterval int  `yaml:"renotifyInterval,omitempty" json:"renotifyInterval,omitempty"`
 }
 
 // DashboardRef references an existing dashboard or defines a new one

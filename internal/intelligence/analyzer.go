@@ -173,7 +173,7 @@ func (a *Analyzer) AnalyzeOrchestrator(orch *types.Orchestrator) *TechStack {
 func detectCloudFromRegion(region string) string {
 	// Azure regions (no dashes, all lowercase)
 	if region == "eastus" || region == "westus" || region == "centralus" ||
-	   region == "northeurope" || region == "westeurope" {
+		region == "northeurope" || region == "westeurope" {
 		return "azure"
 	}
 
@@ -198,8 +198,8 @@ func detectCloudFromRegion(region string) string {
 	// GCP: us-central1, europe-west1, asia-east1 (1 dash)
 	if dashCount == 1 && len(region) > 7 {
 		if (region[:3] == "us-") ||
-		   (len(region) > 11 && region[:7] == "europe-") ||
-		   (len(region) > 9 && region[:5] == "asia-") {
+			(len(region) > 11 && region[:7] == "europe-") ||
+			(len(region) > 9 && region[:5] == "asia-") {
 			return "gcp"
 		}
 	}

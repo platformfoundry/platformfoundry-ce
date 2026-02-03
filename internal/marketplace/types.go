@@ -6,29 +6,29 @@ import (
 
 // Plugin represents a plugin in the marketplace
 type Plugin struct {
-	Name        string            `json:"name" yaml:"name"`
-	Version     string            `json:"version" yaml:"version"`
-	Description string            `json:"description" yaml:"description"`
-	Author      Author            `json:"author" yaml:"author"`
-	License     string            `json:"license" yaml:"license"`
-	Homepage    string            `json:"homepage,omitempty" yaml:"homepage,omitempty"`
-	Repository  string            `json:"repository,omitempty" yaml:"repository,omitempty"`
-	Keywords    []string          `json:"keywords,omitempty" yaml:"keywords,omitempty"`
-	Categories  []string          `json:"categories,omitempty" yaml:"categories,omitempty"`
-	Platforms   []string          `json:"platforms,omitempty" yaml:"platforms,omitempty"`
-	MinVersion  string            `json:"minVersion,omitempty" yaml:"minVersion,omitempty"`
-	Verified    bool              `json:"verified" yaml:"verified"`
-	Downloads   int64             `json:"downloads" yaml:"downloads"`
-	Rating      float64           `json:"rating" yaml:"rating"`
-	RatingCount int               `json:"ratingCount" yaml:"ratingCount"`
-	PublishedAt time.Time         `json:"publishedAt" yaml:"publishedAt"`
-	UpdatedAt   time.Time         `json:"updatedAt" yaml:"updatedAt"`
-	Readme      string            `json:"readme,omitempty" yaml:"readme,omitempty"`
-	Changelog   string            `json:"changelog,omitempty" yaml:"changelog,omitempty"`
-	Assets      []Asset           `json:"assets,omitempty" yaml:"assets,omitempty"`
-	Dependencies []Dependency     `json:"dependencies,omitempty" yaml:"dependencies,omitempty"`
-	Capabilities []string         `json:"capabilities,omitempty" yaml:"capabilities,omitempty"`
-	Config       PluginConfig     `json:"config,omitempty" yaml:"config,omitempty"`
+	Name         string       `json:"name" yaml:"name"`
+	Version      string       `json:"version" yaml:"version"`
+	Description  string       `json:"description" yaml:"description"`
+	Author       Author       `json:"author" yaml:"author"`
+	License      string       `json:"license" yaml:"license"`
+	Homepage     string       `json:"homepage,omitempty" yaml:"homepage,omitempty"`
+	Repository   string       `json:"repository,omitempty" yaml:"repository,omitempty"`
+	Keywords     []string     `json:"keywords,omitempty" yaml:"keywords,omitempty"`
+	Categories   []string     `json:"categories,omitempty" yaml:"categories,omitempty"`
+	Platforms    []string     `json:"platforms,omitempty" yaml:"platforms,omitempty"`
+	MinVersion   string       `json:"minVersion,omitempty" yaml:"minVersion,omitempty"`
+	Verified     bool         `json:"verified" yaml:"verified"`
+	Downloads    int64        `json:"downloads" yaml:"downloads"`
+	Rating       float64      `json:"rating" yaml:"rating"`
+	RatingCount  int          `json:"ratingCount" yaml:"ratingCount"`
+	PublishedAt  time.Time    `json:"publishedAt" yaml:"publishedAt"`
+	UpdatedAt    time.Time    `json:"updatedAt" yaml:"updatedAt"`
+	Readme       string       `json:"readme,omitempty" yaml:"readme,omitempty"`
+	Changelog    string       `json:"changelog,omitempty" yaml:"changelog,omitempty"`
+	Assets       []Asset      `json:"assets,omitempty" yaml:"assets,omitempty"`
+	Dependencies []Dependency `json:"dependencies,omitempty" yaml:"dependencies,omitempty"`
+	Capabilities []string     `json:"capabilities,omitempty" yaml:"capabilities,omitempty"`
+	Config       PluginConfig `json:"config,omitempty" yaml:"config,omitempty"`
 }
 
 // Author represents plugin author information
@@ -41,12 +41,12 @@ type Author struct {
 
 // Asset represents a downloadable plugin asset
 type Asset struct {
-	Name        string `json:"name" yaml:"name"`
-	Platform    string `json:"platform" yaml:"platform"`
-	Arch        string `json:"arch" yaml:"arch"`
-	URL         string `json:"url" yaml:"url"`
-	Checksum    string `json:"checksum" yaml:"checksum"`
-	Size        int64  `json:"size" yaml:"size"`
+	Name     string `json:"name" yaml:"name"`
+	Platform string `json:"platform" yaml:"platform"`
+	Arch     string `json:"arch" yaml:"arch"`
+	URL      string `json:"url" yaml:"url"`
+	Checksum string `json:"checksum" yaml:"checksum"`
+	Size     int64  `json:"size" yaml:"size"`
 }
 
 // Dependency represents a plugin dependency
@@ -57,8 +57,8 @@ type Dependency struct {
 
 // PluginConfig represents plugin configuration schema
 type PluginConfig struct {
-	Schema     map[string]ConfigField `json:"schema,omitempty" yaml:"schema,omitempty"`
-	Defaults   map[string]interface{} `json:"defaults,omitempty" yaml:"defaults,omitempty"`
+	Schema   map[string]ConfigField `json:"schema,omitempty" yaml:"schema,omitempty"`
+	Defaults map[string]interface{} `json:"defaults,omitempty" yaml:"defaults,omitempty"`
 }
 
 // ConfigField represents a configuration field
@@ -87,7 +87,7 @@ type SearchQuery struct {
 	Keywords   []string `json:"keywords,omitempty"`
 	Author     string   `json:"author,omitempty"`
 	Verified   *bool    `json:"verified,omitempty"`
-	SortBy     string   `json:"sortBy,omitempty"` // downloads, rating, updated, name
+	SortBy     string   `json:"sortBy,omitempty"`    // downloads, rating, updated, name
 	SortOrder  string   `json:"sortOrder,omitempty"` // asc, desc
 	Limit      int      `json:"limit,omitempty"`
 	Offset     int      `json:"offset,omitempty"`
@@ -103,48 +103,48 @@ type SearchResult struct {
 
 // Review represents a plugin review
 type Review struct {
-	ID        string    `json:"id"`
-	PluginName string   `json:"pluginName"`
-	Version   string    `json:"version"`
-	Author    string    `json:"author"`
-	Rating    int       `json:"rating"` // 1-5
-	Title     string    `json:"title,omitempty"`
-	Body      string    `json:"body,omitempty"`
-	CreatedAt time.Time `json:"createdAt"`
-	Helpful   int       `json:"helpful"`
+	ID         string    `json:"id"`
+	PluginName string    `json:"pluginName"`
+	Version    string    `json:"version"`
+	Author     string    `json:"author"`
+	Rating     int       `json:"rating"` // 1-5
+	Title      string    `json:"title,omitempty"`
+	Body       string    `json:"body,omitempty"`
+	CreatedAt  time.Time `json:"createdAt"`
+	Helpful    int       `json:"helpful"`
 }
 
 // InstalledPlugin represents a locally installed plugin
 type InstalledPlugin struct {
-	Name         string                 `json:"name"`
-	Version      string                 `json:"version"`
-	Enabled      bool                   `json:"enabled"`
-	InstalledAt  time.Time              `json:"installedAt"`
-	UpdatedAt    time.Time              `json:"updatedAt"`
-	Config       map[string]interface{} `json:"config,omitempty"`
-	AutoUpdate   bool                   `json:"autoUpdate"`
-	LatestVersion string                `json:"latestVersion,omitempty"`
-	HasUpdate    bool                   `json:"hasUpdate"`
+	Name          string                 `json:"name"`
+	Version       string                 `json:"version"`
+	Enabled       bool                   `json:"enabled"`
+	InstalledAt   time.Time              `json:"installedAt"`
+	UpdatedAt     time.Time              `json:"updatedAt"`
+	Config        map[string]interface{} `json:"config,omitempty"`
+	AutoUpdate    bool                   `json:"autoUpdate"`
+	LatestVersion string                 `json:"latestVersion,omitempty"`
+	HasUpdate     bool                   `json:"hasUpdate"`
 }
 
 // PluginManifest represents a plugin manifest file
 type PluginManifest struct {
-	APIVersion   string            `json:"apiVersion" yaml:"apiVersion"`
-	Kind         string            `json:"kind" yaml:"kind"`
-	Name         string            `json:"name" yaml:"name"`
-	Version      string            `json:"version" yaml:"version"`
-	Description  string            `json:"description" yaml:"description"`
-	Author       Author            `json:"author" yaml:"author"`
-	License      string            `json:"license" yaml:"license"`
-	Homepage     string            `json:"homepage,omitempty" yaml:"homepage,omitempty"`
-	Repository   string            `json:"repository,omitempty" yaml:"repository,omitempty"`
-	Keywords     []string          `json:"keywords,omitempty" yaml:"keywords,omitempty"`
-	Categories   []string          `json:"categories,omitempty" yaml:"categories,omitempty"`
-	MinVersion   string            `json:"minVersion,omitempty" yaml:"minVersion,omitempty"`
-	Capabilities []string          `json:"capabilities,omitempty" yaml:"capabilities,omitempty"`
-	Hooks        PluginHooks       `json:"hooks,omitempty" yaml:"hooks,omitempty"`
-	Commands     []PluginCommand   `json:"commands,omitempty" yaml:"commands,omitempty"`
-	Config       PluginConfig      `json:"config,omitempty" yaml:"config,omitempty"`
+	APIVersion   string          `json:"apiVersion" yaml:"apiVersion"`
+	Kind         string          `json:"kind" yaml:"kind"`
+	Name         string          `json:"name" yaml:"name"`
+	Version      string          `json:"version" yaml:"version"`
+	Description  string          `json:"description" yaml:"description"`
+	Author       Author          `json:"author" yaml:"author"`
+	License      string          `json:"license" yaml:"license"`
+	Homepage     string          `json:"homepage,omitempty" yaml:"homepage,omitempty"`
+	Repository   string          `json:"repository,omitempty" yaml:"repository,omitempty"`
+	Keywords     []string        `json:"keywords,omitempty" yaml:"keywords,omitempty"`
+	Categories   []string        `json:"categories,omitempty" yaml:"categories,omitempty"`
+	MinVersion   string          `json:"minVersion,omitempty" yaml:"minVersion,omitempty"`
+	Capabilities []string        `json:"capabilities,omitempty" yaml:"capabilities,omitempty"`
+	Hooks        PluginHooks     `json:"hooks,omitempty" yaml:"hooks,omitempty"`
+	Commands     []PluginCommand `json:"commands,omitempty" yaml:"commands,omitempty"`
+	Config       PluginConfig    `json:"config,omitempty" yaml:"config,omitempty"`
 }
 
 // PluginHooks defines plugin lifecycle hooks
@@ -185,11 +185,11 @@ type Publisher struct {
 
 // SecurityScan represents plugin security scan results
 type SecurityScan struct {
-	PluginName  string    `json:"pluginName"`
-	Version     string    `json:"version"`
-	ScannedAt   time.Time `json:"scannedAt"`
-	Status      string    `json:"status"` // passed, warning, failed
-	Issues      []SecurityIssue `json:"issues,omitempty"`
+	PluginName string          `json:"pluginName"`
+	Version    string          `json:"version"`
+	ScannedAt  time.Time       `json:"scannedAt"`
+	Status     string          `json:"status"` // passed, warning, failed
+	Issues     []SecurityIssue `json:"issues,omitempty"`
 }
 
 // SecurityIssue represents a security issue found in a plugin

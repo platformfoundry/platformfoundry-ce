@@ -25,45 +25,45 @@ type DataPoint struct {
 
 // Predictor performs time-series predictions for scaling
 type Predictor struct {
-	config           *PredictorConfig
-	metricsProvider  MetricsProvider
-	models           map[string]*TrainedModel
-	patterns         map[string]*TrafficPattern
-	mu               sync.RWMutex
+	config          *PredictorConfig
+	metricsProvider MetricsProvider
+	models          map[string]*TrainedModel
+	patterns        map[string]*TrafficPattern
+	mu              sync.RWMutex
 }
 
 // PredictorConfig configures the predictor
 type PredictorConfig struct {
-	DefaultModel       PredictionModel `json:"defaultModel"`
-	TrainingWindow     time.Duration   `json:"trainingWindow"`
-	MinDataPoints      int             `json:"minDataPoints"`
-	UpdateInterval     time.Duration   `json:"updateInterval"`
-	ConfidenceThreshold float64        `json:"confidenceThreshold"`
+	DefaultModel        PredictionModel `json:"defaultModel"`
+	TrainingWindow      time.Duration   `json:"trainingWindow"`
+	MinDataPoints       int             `json:"minDataPoints"`
+	UpdateInterval      time.Duration   `json:"updateInterval"`
+	ConfidenceThreshold float64         `json:"confidenceThreshold"`
 }
 
 // DefaultPredictorConfig returns default predictor configuration
 func DefaultPredictorConfig() *PredictorConfig {
 	return &PredictorConfig{
-		DefaultModel:       ModelHoltWinter,
-		TrainingWindow:     7 * 24 * time.Hour, // 7 days
-		MinDataPoints:      100,
-		UpdateInterval:     1 * time.Hour,
+		DefaultModel:        ModelHoltWinter,
+		TrainingWindow:      7 * 24 * time.Hour, // 7 days
+		MinDataPoints:       100,
+		UpdateInterval:      1 * time.Hour,
 		ConfidenceThreshold: 0.7,
 	}
 }
 
 // TrainedModel holds a trained prediction model
 type TrainedModel struct {
-	Name          string          `json:"name"`
-	ModelType     PredictionModel `json:"modelType"`
-	TrainedAt     time.Time       `json:"trainedAt"`
-	DataPoints    int             `json:"dataPoints"`
-	Coefficients  []float64       `json:"coefficients,omitempty"`
-	Seasonality   *SeasonalPattern `json:"seasonality,omitempty"`
-	Trend         float64         `json:"trend,omitempty"`
-	Level         float64         `json:"level,omitempty"`
-	MAE           float64         `json:"mae"`
-	RMSE          float64         `json:"rmse"`
+	Name         string           `json:"name"`
+	ModelType    PredictionModel  `json:"modelType"`
+	TrainedAt    time.Time        `json:"trainedAt"`
+	DataPoints   int              `json:"dataPoints"`
+	Coefficients []float64        `json:"coefficients,omitempty"`
+	Seasonality  *SeasonalPattern `json:"seasonality,omitempty"`
+	Trend        float64          `json:"trend,omitempty"`
+	Level        float64          `json:"level,omitempty"`
+	MAE          float64          `json:"mae"`
+	RMSE         float64          `json:"rmse"`
 }
 
 // NewPredictor creates a new predictor
@@ -207,9 +207,9 @@ func (p *Predictor) trainHoltWinters(name string, data []DataPoint) (*TrainedMod
 	}
 
 	// Parameters
-	alpha := 0.3 // Level smoothing
-	beta := 0.1  // Trend smoothing
-	gamma := 0.1 // Seasonal smoothing
+	alpha := 0.3        // Level smoothing
+	beta := 0.1         // Trend smoothing
+	gamma := 0.1        // Seasonal smoothing
 	seasonLength := 288 // 24 hours at 5-minute intervals
 
 	if n < seasonLength*2 {

@@ -20,8 +20,8 @@ type Metadata struct {
 
 // SharingConfig defines how a resource is shared across organizations
 type SharingConfig struct {
-	Enabled       bool                   `yaml:"enabled" json:"enabled"`
-	Organizations []OrganizationAccess   `yaml:"organizations,omitempty" json:"organizations,omitempty"`
+	Enabled       bool                 `yaml:"enabled" json:"enabled"`
+	Organizations []OrganizationAccess `yaml:"organizations,omitempty" json:"organizations,omitempty"`
 }
 
 // OrganizationAccess defines organization-specific access

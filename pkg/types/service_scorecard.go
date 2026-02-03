@@ -7,36 +7,36 @@ import (
 
 // ServiceScorecard represents a scorecard for a service
 type ServiceScorecard struct {
-	APIVersion string                   `yaml:"apiVersion" json:"apiVersion"`
-	Kind       string                   `yaml:"kind" json:"kind"`
-	Metadata   Metadata                 `yaml:"metadata" json:"metadata"`
-	Spec       ServiceScorecardSpec     `yaml:"spec" json:"spec"`
-	Status     ServiceScorecardStatus   `yaml:"status,omitempty" json:"status,omitempty"`
+	APIVersion string                 `yaml:"apiVersion" json:"apiVersion"`
+	Kind       string                 `yaml:"kind" json:"kind"`
+	Metadata   Metadata               `yaml:"metadata" json:"metadata"`
+	Spec       ServiceScorecardSpec   `yaml:"spec" json:"spec"`
+	Status     ServiceScorecardStatus `yaml:"status,omitempty" json:"status,omitempty"`
 }
 
 // ServiceScorecardSpec defines the service scorecard specification
 type ServiceScorecardSpec struct {
-	ServiceRef  string  `yaml:"serviceRef" json:"serviceRef"` // Reference to service name
-	Checks      []Check `yaml:"checks" json:"checks"`
+	ServiceRef string  `yaml:"serviceRef" json:"serviceRef"` // Reference to service name
+	Checks     []Check `yaml:"checks" json:"checks"`
 }
 
 // ServiceScorecardStatus represents the current status of the scorecard
 type ServiceScorecardStatus struct {
-	Score        int           `yaml:"score" json:"score"`                             // Overall score (0-100)
-	Grade        ScorecardGrade `yaml:"grade" json:"grade"`                            // Letter grade
-	PassedChecks int           `yaml:"passedChecks" json:"passedChecks"`
-	FailedChecks int           `yaml:"failedChecks" json:"failedChecks"`
-	TotalChecks  int           `yaml:"totalChecks" json:"totalChecks"`
-	EvaluatedAt  time.Time     `yaml:"evaluatedAt" json:"evaluatedAt"`
+	Score        int            `yaml:"score" json:"score"` // Overall score (0-100)
+	Grade        ScorecardGrade `yaml:"grade" json:"grade"` // Letter grade
+	PassedChecks int            `yaml:"passedChecks" json:"passedChecks"`
+	FailedChecks int            `yaml:"failedChecks" json:"failedChecks"`
+	TotalChecks  int            `yaml:"totalChecks" json:"totalChecks"`
+	EvaluatedAt  time.Time      `yaml:"evaluatedAt" json:"evaluatedAt"`
 }
 
 // Check represents a single check in the scorecard
 type Check struct {
 	Name        string        `yaml:"name" json:"name"`
 	Category    CheckCategory `yaml:"category" json:"category"`
-	Weight      int           `yaml:"weight" json:"weight"`         // Importance weight (1-20)
+	Weight      int           `yaml:"weight" json:"weight"` // Importance weight (1-20)
 	Status      CheckStatus   `yaml:"status" json:"status"`
-	Score       int           `yaml:"score" json:"score"`           // Score for this check (0-100)
+	Score       int           `yaml:"score" json:"score"` // Score for this check (0-100)
 	Message     string        `yaml:"message,omitempty" json:"message,omitempty"`
 	Details     string        `yaml:"details,omitempty" json:"details,omitempty"`
 	EvaluatedAt time.Time     `yaml:"evaluatedAt" json:"evaluatedAt"`
@@ -45,7 +45,7 @@ type Check struct {
 // CheckResult is returned by check evaluation
 type CheckResult struct {
 	Status  CheckStatus
-	Score   int    // 0-100
+	Score   int // 0-100
 	Message string
 	Details string
 }

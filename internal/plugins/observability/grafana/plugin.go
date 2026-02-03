@@ -11,9 +11,9 @@ type Plugin struct{}
 
 // GrafanaConfig represents Grafana configuration
 type GrafanaConfig struct {
-	Provider       string              `yaml:"provider" json:"provider" validate:"required,oneof=grafana"`
-	ClusterRef     string              `yaml:"clusterRef" json:"clusterRef" validate:"required"`
-	Visualization  VisualizationConfig `yaml:"visualization" json:"visualization" validate:"required"`
+	Provider      string              `yaml:"provider" json:"provider" validate:"required,oneof=grafana"`
+	ClusterRef    string              `yaml:"clusterRef" json:"clusterRef" validate:"required"`
+	Visualization VisualizationConfig `yaml:"visualization" json:"visualization" validate:"required"`
 }
 
 // VisualizationConfig represents visualization configuration

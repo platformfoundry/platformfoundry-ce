@@ -73,11 +73,11 @@ var ssoLoginCmd = &cobra.Command{
 }
 
 var ssoCallbackCmd = &cobra.Command{
-	Use:   "callback",
-	Short: "Handle SSO callback (internal use)",
-	Long:  `Handle OAuth callback from SSO provider. This is called automatically by the browser.`,
+	Use:    "callback",
+	Short:  "Handle SSO callback (internal use)",
+	Long:   `Handle OAuth callback from SSO provider. This is called automatically by the browser.`,
 	Hidden: true,
-	RunE: runSSOCallback,
+	RunE:   runSSOCallback,
 }
 
 func init() {

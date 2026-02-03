@@ -71,14 +71,14 @@ func (m *Manager) RegisterPolicy(ctx context.Context, policy *FinOpsPolicy) erro
 	// Initialize budget status
 	for _, budget := range policy.Spec.Budgets {
 		status := BudgetStatus{
-			Name:        budget.Name,
-			Scope:       string(budget.Scope),
-			Amount:      budget.Amount,
-			Spent:       0,
+			Name:         budget.Name,
+			Scope:        string(budget.Scope),
+			Amount:       budget.Amount,
+			Spent:        0,
 			SpentPercent: 0,
-			Status:      "on_track",
-			PeriodStart: getBudgetPeriodStart(budget.Period),
-			PeriodEnd:   getBudgetPeriodEnd(budget.Period),
+			Status:       "on_track",
+			PeriodStart:  getBudgetPeriodStart(budget.Period),
+			PeriodEnd:    getBudgetPeriodEnd(budget.Period),
 		}
 		policy.Status.BudgetStatus = append(policy.Status.BudgetStatus, status)
 	}
@@ -388,15 +388,15 @@ func (m *Manager) GenerateReport(ctx context.Context, start, end time.Time) (*Co
 	defer m.mu.RUnlock()
 
 	report := &CostReport{
-		GeneratedAt:  time.Now(),
-		PeriodStart:  start,
-		PeriodEnd:    end,
-		Currency:     "USD",
-		ByTeam:       make(map[string]float64),
-		ByApplication: make(map[string]float64),
-		ByEnvironment: make(map[string]float64),
-		ByService:    make(map[string]float64),
-		TopSpenders:  make([]CostItem, 0),
+		GeneratedAt:     time.Now(),
+		PeriodStart:     start,
+		PeriodEnd:       end,
+		Currency:        "USD",
+		ByTeam:          make(map[string]float64),
+		ByApplication:   make(map[string]float64),
+		ByEnvironment:   make(map[string]float64),
+		ByService:       make(map[string]float64),
+		TopSpenders:     make([]CostItem, 0),
 		Recommendations: make([]Recommendation, 0),
 	}
 

@@ -37,10 +37,10 @@ func NewDefaultPricingDB() *PricingDB {
 		Region:            "us-east-1",
 		ResourceType:      ResourceTypeCompute,
 		Currency:          "USD",
-		CPUPerHour:        0.05,    // ~$36/month per vCPU
-		MemoryGBPerHour:   0.01,    // ~$7.3/month per GB
-		StorageGBPerMonth: 0.10,    // EBS pricing
-		K8sClusterPerHour: 0.10,    // EKS control plane
+		CPUPerHour:        0.05, // ~$36/month per vCPU
+		MemoryGBPerHour:   0.01, // ~$7.3/month per GB
+		StorageGBPerMonth: 0.10, // EBS pricing
+		K8sClusterPerHour: 0.10, // EKS control plane
 	}
 
 	db.Prices["aws:us-west-2:compute"] = &Pricing{

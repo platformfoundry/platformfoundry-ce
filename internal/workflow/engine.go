@@ -11,9 +11,9 @@ import (
 
 // Engine manages workflow execution
 type Engine struct {
-	workflows    map[string]*Workflow
-	executions   map[string]*WorkflowExecution
-	mu           sync.RWMutex
+	workflows  map[string]*Workflow
+	executions map[string]*WorkflowExecution
+	mu         sync.RWMutex
 
 	conditionCheckers map[ConditionType]ConditionChecker
 	notifiers         map[string]Notifier

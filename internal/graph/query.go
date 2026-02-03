@@ -10,13 +10,13 @@ import (
 
 // Resource represents a node in the resource graph (extends Node with additional fields)
 type Resource struct {
-	ID         string                 `json:"id"`
-	Name       string                 `json:"name"`
-	Type       string                 `json:"type"`
-	Namespace  string                 `json:"namespace,omitempty"`
-	Labels     map[string]string      `json:"labels,omitempty"`
-	Spec       map[string]interface{} `json:"spec,omitempty"`
-	Status     string                 `json:"status,omitempty"`
+	ID        string                 `json:"id"`
+	Name      string                 `json:"name"`
+	Type      string                 `json:"type"`
+	Namespace string                 `json:"namespace,omitempty"`
+	Labels    map[string]string      `json:"labels,omitempty"`
+	Spec      map[string]interface{} `json:"spec,omitempty"`
+	Status    string                 `json:"status,omitempty"`
 }
 
 // ResourceGraph represents a directed graph of resources and their relationships
@@ -131,11 +131,11 @@ func (g *ResourceGraph) FindBySelector(selector Selector) []*Resource {
 
 // Selector represents criteria for selecting resources
 type Selector struct {
-	Type       string            `json:"type,omitempty"`
-	Name       string            `json:"name,omitempty"`
-	Namespace  string            `json:"namespace,omitempty"`
-	Labels     map[string]string `json:"labels,omitempty"`
-	NameRegex  *regexp.Regexp    `json:"-"`
+	Type      string            `json:"type,omitempty"`
+	Name      string            `json:"name,omitempty"`
+	Namespace string            `json:"namespace,omitempty"`
+	Labels    map[string]string `json:"labels,omitempty"`
+	NameRegex *regexp.Regexp    `json:"-"`
 }
 
 // Matches checks if a resource matches the selector
@@ -179,11 +179,11 @@ func NewQueryEngine(graph *ResourceGraph) *QueryEngine {
 
 // Query represents a parsed graph query
 type Query struct {
-	Source      Selector
-	Target      Selector
-	EdgeType    string // depends, owns, references, or empty for any
-	Direction   string // forward (->), reverse (<-), or bidirectional (<->)
-	Depth       int    // max traversal depth, 0 = unlimited
+	Source    Selector
+	Target    Selector
+	EdgeType  string // depends, owns, references, or empty for any
+	Direction string // forward (->), reverse (<-), or bidirectional (<->)
+	Depth     int    // max traversal depth, 0 = unlimited
 }
 
 // Execute executes a query and returns matching resources

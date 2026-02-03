@@ -14,11 +14,11 @@ import (
 
 // Workload represents a Score workload specification
 type Workload struct {
-	APIVersion string            `yaml:"apiVersion" json:"apiVersion"`
-	Metadata   WorkloadMetadata  `yaml:"metadata" json:"metadata"`
+	APIVersion string               `yaml:"apiVersion" json:"apiVersion"`
+	Metadata   WorkloadMetadata     `yaml:"metadata" json:"metadata"`
 	Containers map[string]Container `yaml:"containers" json:"containers"`
 	Resources  map[string]Resource  `yaml:"resources,omitempty" json:"resources,omitempty"`
-	Service    *ServiceSpec      `yaml:"service,omitempty" json:"service,omitempty"`
+	Service    *ServiceSpec         `yaml:"service,omitempty" json:"service,omitempty"`
 }
 
 // WorkloadMetadata contains workload metadata
@@ -30,15 +30,15 @@ type WorkloadMetadata struct {
 
 // Container defines a container within the workload
 type Container struct {
-	Image           string                 `yaml:"image" json:"image"`
-	Command         []string               `yaml:"command,omitempty" json:"command,omitempty"`
-	Args            []string               `yaml:"args,omitempty" json:"args,omitempty"`
-	Variables       map[string]string      `yaml:"variables,omitempty" json:"variables,omitempty"`
-	Files           []FileMount            `yaml:"files,omitempty" json:"files,omitempty"`
-	Volumes         []VolumeMount          `yaml:"volumes,omitempty" json:"volumes,omitempty"`
-	Resources       *ResourceRequirements  `yaml:"resources,omitempty" json:"resources,omitempty"`
-	LivenessProbe   *Probe                 `yaml:"livenessProbe,omitempty" json:"livenessProbe,omitempty"`
-	ReadinessProbe  *Probe                 `yaml:"readinessProbe,omitempty" json:"readinessProbe,omitempty"`
+	Image          string                `yaml:"image" json:"image"`
+	Command        []string              `yaml:"command,omitempty" json:"command,omitempty"`
+	Args           []string              `yaml:"args,omitempty" json:"args,omitempty"`
+	Variables      map[string]string     `yaml:"variables,omitempty" json:"variables,omitempty"`
+	Files          []FileMount           `yaml:"files,omitempty" json:"files,omitempty"`
+	Volumes        []VolumeMount         `yaml:"volumes,omitempty" json:"volumes,omitempty"`
+	Resources      *ResourceRequirements `yaml:"resources,omitempty" json:"resources,omitempty"`
+	LivenessProbe  *Probe                `yaml:"livenessProbe,omitempty" json:"livenessProbe,omitempty"`
+	ReadinessProbe *Probe                `yaml:"readinessProbe,omitempty" json:"readinessProbe,omitempty"`
 }
 
 // FileMount defines a file to be mounted in the container
@@ -247,10 +247,10 @@ func (p *Parser) registerDefaultTypes() {
 		Name:        "S3 Bucket",
 		Description: "S3-compatible object storage",
 		Outputs: map[string]Output{
-			"bucket":           {Type: "string", Description: "Bucket name"},
-			"region":           {Type: "string", Description: "Bucket region"},
-			"endpoint":         {Type: "string", Description: "S3 endpoint"},
-			"access_key_id":    {Type: "string", Description: "Access key ID", Secret: true},
+			"bucket":            {Type: "string", Description: "Bucket name"},
+			"region":            {Type: "string", Description: "Bucket region"},
+			"endpoint":          {Type: "string", Description: "S3 endpoint"},
+			"access_key_id":     {Type: "string", Description: "Access key ID", Secret: true},
 			"secret_access_key": {Type: "string", Description: "Secret access key", Secret: true},
 		},
 	})
@@ -350,8 +350,8 @@ func (p *Parser) ParseAndValidate(data []byte) (*Workload, []ValidationError, er
 
 // ValidationError represents a validation error
 type ValidationError struct {
-	Field   string `json:"field"`
-	Message string `json:"message"`
+	Field    string `json:"field"`
+	Message  string `json:"message"`
 	Severity string `json:"severity"` // error, warning
 }
 

@@ -23,9 +23,9 @@ var serviceCmd = &cobra.Command{
 }
 
 var serviceListCmd = &cobra.Command{
-	Use:     "list",
-	Short:   "List services",
-	Long:    `List all services in the current organization.`,
+	Use:   "list",
+	Short: "List services",
+	Long:  `List all services in the current organization.`,
 	Example: `  pf service list
   pf service list --org acme-corp
   pf service list --team platform-team
@@ -34,9 +34,9 @@ var serviceListCmd = &cobra.Command{
 }
 
 var serviceGetCmd = &cobra.Command{
-	Use:     "get [name]",
-	Short:   "Get a service",
-	Long:    `Get detailed information about a specific service.`,
+	Use:   "get [name]",
+	Short: "Get a service",
+	Long:  `Get detailed information about a specific service.`,
 	Example: `  pf service get user-api
   pf service get user-api --org acme-corp`,
 	Args: cobra.ExactArgs(1),
@@ -44,27 +44,27 @@ var serviceGetCmd = &cobra.Command{
 }
 
 var serviceCreateCmd = &cobra.Command{
-	Use:     "create",
-	Short:   "Create a service",
-	Long:    `Create a new service from a YAML file.`,
+	Use:   "create",
+	Short: "Create a service",
+	Long:  `Create a new service from a YAML file.`,
 	Example: `  pf service create -f service.yaml
   pf service create -f service.yaml --org acme-corp`,
 	RunE: RunServiceCreate,
 }
 
 var serviceUpdateCmd = &cobra.Command{
-	Use:     "update",
-	Short:   "Update a service",
-	Long:    `Update an existing service from a YAML file.`,
+	Use:   "update",
+	Short: "Update a service",
+	Long:  `Update an existing service from a YAML file.`,
 	Example: `  pf service update -f service.yaml
   pf service update -f service.yaml --org acme-corp`,
 	RunE: RunServiceUpdate,
 }
 
 var serviceDeleteCmd = &cobra.Command{
-	Use:     "delete [name]",
-	Short:   "Delete a service",
-	Long:    `Delete a service by name.`,
+	Use:   "delete [name]",
+	Short: "Delete a service",
+	Long:  `Delete a service by name.`,
 	Example: `  pf service delete user-api
   pf service delete user-api --org acme-corp`,
 	Args: cobra.ExactArgs(1),
@@ -72,9 +72,9 @@ var serviceDeleteCmd = &cobra.Command{
 }
 
 var serviceScorecardCmd = &cobra.Command{
-	Use:     "scorecard [name]",
-	Short:   "View or calculate service scorecard",
-	Long:    `View the quality scorecard for a service, showing scores across various quality dimensions.`,
+	Use:   "scorecard [name]",
+	Short: "View or calculate service scorecard",
+	Long:  `View the quality scorecard for a service, showing scores across various quality dimensions.`,
 	Example: `  pf service scorecard user-api
   pf service scorecard user-api --org acme-corp
   pf service scorecard user-api --calculate
@@ -84,9 +84,9 @@ var serviceScorecardCmd = &cobra.Command{
 }
 
 var serviceScaffoldCmd = &cobra.Command{
-	Use:     "scaffold [template]",
-	Short:   "Scaffold a service from a template",
-	Long:    `Generate a new service from a template with parameters.`,
+	Use:   "scaffold [template]",
+	Short: "Scaffold a service from a template",
+	Long:  `Generate a new service from a template with parameters.`,
 	Example: `  pf service scaffold nodejs-express --name my-api --team platform-team
   pf service scaffold python-fastapi --name analytics-api --port 8080
   pf service scaffold --list-templates`,
@@ -534,9 +534,9 @@ func runServiceScaffold(cmd *cobra.Command, args []string) error {
 		}
 
 		var result struct {
-			Success bool                     `json:"success"`
-			Data    []types.ServiceTemplate  `json:"data"`
-			Error   string                   `json:"error"`
+			Success bool                    `json:"success"`
+			Data    []types.ServiceTemplate `json:"data"`
+			Error   string                  `json:"error"`
 		}
 
 		if err := json.Unmarshal(resp, &result); err != nil {

@@ -8,19 +8,19 @@ import (
 type CloudProvider string
 
 const (
-	CloudProviderAWS     CloudProvider = "aws"
-	CloudProviderAzure   CloudProvider = "azure"
-	CloudProviderGCP     CloudProvider = "gcp"
+	CloudProviderAWS          CloudProvider = "aws"
+	CloudProviderAzure        CloudProvider = "azure"
+	CloudProviderGCP          CloudProvider = "gcp"
 	CloudProviderDigitalOcean CloudProvider = "digitalocean"
-	CloudProviderOnPrem  CloudProvider = "on-prem"
+	CloudProviderOnPrem       CloudProvider = "on-prem"
 )
 
 // CloudAccount represents a cloud provider account
 type CloudAccount struct {
-	APIVersion string             `yaml:"apiVersion" json:"apiVersion"`
-	Kind       string             `yaml:"kind" json:"kind"`
-	Metadata   CloudMetadata      `yaml:"metadata" json:"metadata"`
-	Spec       CloudAccountSpec   `yaml:"spec" json:"spec"`
+	APIVersion string              `yaml:"apiVersion" json:"apiVersion"`
+	Kind       string              `yaml:"kind" json:"kind"`
+	Metadata   CloudMetadata       `yaml:"metadata" json:"metadata"`
+	Spec       CloudAccountSpec    `yaml:"spec" json:"spec"`
 	Status     *CloudAccountStatus `yaml:"status,omitempty" json:"status,omitempty"`
 }
 
@@ -33,27 +33,27 @@ type CloudMetadata struct {
 
 // CloudAccountSpec defines cloud account configuration
 type CloudAccountSpec struct {
-	Provider    CloudProvider         `yaml:"provider" json:"provider"`
-	Credentials CloudCredentials      `yaml:"credentials" json:"credentials"`
-	Regions     []string              `yaml:"regions,omitempty" json:"regions,omitempty"`
-	DefaultRegion string              `yaml:"defaultRegion,omitempty" json:"defaultRegion,omitempty"`
-	Tags        map[string]string     `yaml:"tags,omitempty" json:"tags,omitempty"`
+	Provider      CloudProvider     `yaml:"provider" json:"provider"`
+	Credentials   CloudCredentials  `yaml:"credentials" json:"credentials"`
+	Regions       []string          `yaml:"regions,omitempty" json:"regions,omitempty"`
+	DefaultRegion string            `yaml:"defaultRegion,omitempty" json:"defaultRegion,omitempty"`
+	Tags          map[string]string `yaml:"tags,omitempty" json:"tags,omitempty"`
 }
 
 // CloudCredentials defines how to authenticate with a cloud provider
 type CloudCredentials struct {
-	Type        string `yaml:"type" json:"type"` // secret, iam-role, service-account, env
-	SecretRef   string `yaml:"secretRef,omitempty" json:"secretRef,omitempty"`
-	RoleARN     string `yaml:"roleArn,omitempty" json:"roleArn,omitempty"`
-	ProjectID   string `yaml:"projectId,omitempty" json:"projectId,omitempty"`
+	Type      string `yaml:"type" json:"type"` // secret, iam-role, service-account, env
+	SecretRef string `yaml:"secretRef,omitempty" json:"secretRef,omitempty"`
+	RoleARN   string `yaml:"roleArn,omitempty" json:"roleArn,omitempty"`
+	ProjectID string `yaml:"projectId,omitempty" json:"projectId,omitempty"`
 }
 
 // CloudAccountStatus represents account status
 type CloudAccountStatus struct {
-	Connected     bool              `yaml:"connected" json:"connected"`
-	LastVerified  *time.Time        `yaml:"lastVerified,omitempty" json:"lastVerified,omitempty"`
-	Regions       []RegionStatus    `yaml:"regions,omitempty" json:"regions,omitempty"`
-	Message       string            `yaml:"message,omitempty" json:"message,omitempty"`
+	Connected    bool           `yaml:"connected" json:"connected"`
+	LastVerified *time.Time     `yaml:"lastVerified,omitempty" json:"lastVerified,omitempty"`
+	Regions      []RegionStatus `yaml:"regions,omitempty" json:"regions,omitempty"`
+	Message      string         `yaml:"message,omitempty" json:"message,omitempty"`
 }
 
 // RegionStatus represents the status of a region
@@ -64,20 +64,20 @@ type RegionStatus struct {
 
 // UnifiedResource represents a cloud-agnostic resource
 type UnifiedResource struct {
-	APIVersion string                `yaml:"apiVersion" json:"apiVersion"`
-	Kind       string                `yaml:"kind" json:"kind"`
-	Metadata   CloudMetadata         `yaml:"metadata" json:"metadata"`
-	Spec       UnifiedResourceSpec   `yaml:"spec" json:"spec"`
+	APIVersion string                 `yaml:"apiVersion" json:"apiVersion"`
+	Kind       string                 `yaml:"kind" json:"kind"`
+	Metadata   CloudMetadata          `yaml:"metadata" json:"metadata"`
+	Spec       UnifiedResourceSpec    `yaml:"spec" json:"spec"`
 	Status     *UnifiedResourceStatus `yaml:"status,omitempty" json:"status,omitempty"`
 }
 
 // UnifiedResourceSpec defines a cloud-agnostic resource spec
 type UnifiedResourceSpec struct {
-	Type         UnifiedResourceType   `yaml:"type" json:"type"`
-	AccountRef   string                `yaml:"accountRef" json:"accountRef"`
-	Region       string                `yaml:"region,omitempty" json:"region,omitempty"`
-	Size         string                `yaml:"size,omitempty" json:"size,omitempty"`
-	Config       map[string]interface{} `yaml:"config,omitempty" json:"config,omitempty"`
+	Type              UnifiedResourceType                      `yaml:"type" json:"type"`
+	AccountRef        string                                   `yaml:"accountRef" json:"accountRef"`
+	Region            string                                   `yaml:"region,omitempty" json:"region,omitempty"`
+	Size              string                                   `yaml:"size,omitempty" json:"size,omitempty"`
+	Config            map[string]interface{}                   `yaml:"config,omitempty" json:"config,omitempty"`
 	ProviderOverrides map[CloudProvider]map[string]interface{} `yaml:"providerOverrides,omitempty" json:"providerOverrides,omitempty"`
 }
 
@@ -86,15 +86,15 @@ type UnifiedResourceType string
 
 const (
 	// Compute resources
-	UnifiedResourceVM          UnifiedResourceType = "virtual-machine"
-	UnifiedResourceContainer   UnifiedResourceType = "container"
-	UnifiedResourceKubernetes  UnifiedResourceType = "kubernetes-cluster"
-	UnifiedResourceServerless  UnifiedResourceType = "serverless-function"
+	UnifiedResourceVM         UnifiedResourceType = "virtual-machine"
+	UnifiedResourceContainer  UnifiedResourceType = "container"
+	UnifiedResourceKubernetes UnifiedResourceType = "kubernetes-cluster"
+	UnifiedResourceServerless UnifiedResourceType = "serverless-function"
 
 	// Database resources
-	UnifiedResourceRDBMS       UnifiedResourceType = "relational-database"
-	UnifiedResourceNoSQL       UnifiedResourceType = "nosql-database"
-	UnifiedResourceCache       UnifiedResourceType = "cache"
+	UnifiedResourceRDBMS UnifiedResourceType = "relational-database"
+	UnifiedResourceNoSQL UnifiedResourceType = "nosql-database"
+	UnifiedResourceCache UnifiedResourceType = "cache"
 
 	// Storage resources
 	UnifiedResourceObjectStorage UnifiedResourceType = "object-storage"
@@ -102,10 +102,10 @@ const (
 	UnifiedResourceFileStorage   UnifiedResourceType = "file-storage"
 
 	// Network resources
-	UnifiedResourceVPC         UnifiedResourceType = "vpc"
+	UnifiedResourceVPC          UnifiedResourceType = "vpc"
 	UnifiedResourceLoadBalancer UnifiedResourceType = "load-balancer"
-	UnifiedResourceDNS         UnifiedResourceType = "dns-zone"
-	UnifiedResourceCDN         UnifiedResourceType = "cdn"
+	UnifiedResourceDNS          UnifiedResourceType = "dns-zone"
+	UnifiedResourceCDN          UnifiedResourceType = "cdn"
 
 	// Security resources
 	UnifiedResourceSecurityGroup UnifiedResourceType = "security-group"
@@ -134,9 +134,9 @@ type Endpoint struct {
 
 // ResourceMapping maps unified resource types to provider-specific types
 type ResourceMapping struct {
-	UnifiedType    UnifiedResourceType       `yaml:"unifiedType" json:"unifiedType"`
-	ProviderTypes  map[CloudProvider]string  `yaml:"providerTypes" json:"providerTypes"`
-	SizeMapping    map[string]ProviderSizes  `yaml:"sizeMapping,omitempty" json:"sizeMapping,omitempty"`
+	UnifiedType   UnifiedResourceType      `yaml:"unifiedType" json:"unifiedType"`
+	ProviderTypes map[CloudProvider]string `yaml:"providerTypes" json:"providerTypes"`
+	SizeMapping   map[string]ProviderSizes `yaml:"sizeMapping,omitempty" json:"sizeMapping,omitempty"`
 }
 
 // ProviderSizes maps size names to provider-specific instance types
@@ -148,19 +148,19 @@ type ProviderSizes struct {
 
 // MultiCloudDeployment represents a deployment across multiple clouds
 type MultiCloudDeployment struct {
-	APIVersion string                     `yaml:"apiVersion" json:"apiVersion"`
-	Kind       string                     `yaml:"kind" json:"kind"`
-	Metadata   CloudMetadata              `yaml:"metadata" json:"metadata"`
-	Spec       MultiCloudDeploymentSpec   `yaml:"spec" json:"spec"`
+	APIVersion string                      `yaml:"apiVersion" json:"apiVersion"`
+	Kind       string                      `yaml:"kind" json:"kind"`
+	Metadata   CloudMetadata               `yaml:"metadata" json:"metadata"`
+	Spec       MultiCloudDeploymentSpec    `yaml:"spec" json:"spec"`
 	Status     *MultiCloudDeploymentStatus `yaml:"status,omitempty" json:"status,omitempty"`
 }
 
 // MultiCloudDeploymentSpec defines multi-cloud deployment configuration
 type MultiCloudDeploymentSpec struct {
-	Strategy     DeploymentStrategy      `yaml:"strategy" json:"strategy"`
-	Targets      []DeploymentTarget      `yaml:"targets" json:"targets"`
-	Resources    []UnifiedResourceSpec   `yaml:"resources" json:"resources"`
-	TrafficSplit map[string]int          `yaml:"trafficSplit,omitempty" json:"trafficSplit,omitempty"`
+	Strategy     DeploymentStrategy    `yaml:"strategy" json:"strategy"`
+	Targets      []DeploymentTarget    `yaml:"targets" json:"targets"`
+	Resources    []UnifiedResourceSpec `yaml:"resources" json:"resources"`
+	TrafficSplit map[string]int        `yaml:"trafficSplit,omitempty" json:"trafficSplit,omitempty"`
 }
 
 // DeploymentStrategy defines how to deploy across clouds
@@ -183,9 +183,9 @@ type DeploymentTarget struct {
 
 // MultiCloudDeploymentStatus represents deployment status
 type MultiCloudDeploymentStatus struct {
-	Phase      string                `yaml:"phase" json:"phase"`
-	Targets    []TargetStatus        `yaml:"targets,omitempty" json:"targets,omitempty"`
-	Message    string                `yaml:"message,omitempty" json:"message,omitempty"`
+	Phase   string         `yaml:"phase" json:"phase"`
+	Targets []TargetStatus `yaml:"targets,omitempty" json:"targets,omitempty"`
+	Message string         `yaml:"message,omitempty" json:"message,omitempty"`
 }
 
 // TargetStatus represents the status of a deployment target
@@ -199,12 +199,12 @@ type TargetStatus struct {
 
 // CloudCost represents cost data from a cloud provider
 type CloudCost struct {
-	Provider   CloudProvider          `json:"provider"`
-	Account    string                 `json:"account"`
-	Period     string                 `json:"period"`
-	Total      float64                `json:"total"`
-	Currency   string                 `json:"currency"`
-	ByService  map[string]float64     `json:"byService,omitempty"`
-	ByRegion   map[string]float64     `json:"byRegion,omitempty"`
-	ByResource map[string]float64     `json:"byResource,omitempty"`
+	Provider   CloudProvider      `json:"provider"`
+	Account    string             `json:"account"`
+	Period     string             `json:"period"`
+	Total      float64            `json:"total"`
+	Currency   string             `json:"currency"`
+	ByService  map[string]float64 `json:"byService,omitempty"`
+	ByRegion   map[string]float64 `json:"byRegion,omitempty"`
+	ByResource map[string]float64 `json:"byResource,omitempty"`
 }

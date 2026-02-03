@@ -60,13 +60,13 @@ var envExtendCmd = &cobra.Command{
 }
 
 var (
-	envOrg        string
+	envOrg          string
 	envStatusFilter string
-	envBranch     string
-	envRepo       string
-	envPRNumber   int
-	envTTL        time.Duration
-	envExtendBy   time.Duration
+	envBranch       string
+	envRepo         string
+	envPRNumber     int
+	envTTL          time.Duration
+	envExtendBy     time.Duration
 )
 
 func init() {

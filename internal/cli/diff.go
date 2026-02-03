@@ -148,8 +148,8 @@ func loadStateFromEnvironment(env string) (*diff.PlatformState, error) {
 			"sync":      "automated",
 		}
 		state.Resources["prometheus"] = map[string]interface{}{
-			"retention":  "7d",
-			"replicas":   float64(1),
+			"retention":      "7d",
+			"replicas":       float64(1),
 			"scrapeInterval": "30s",
 		}
 		state.Resources["web-api"] = map[string]interface{}{
@@ -168,8 +168,8 @@ func loadStateFromEnvironment(env string) (*diff.PlatformState, error) {
 			"sync":      "manual",
 		}
 		state.Resources["prometheus"] = map[string]interface{}{
-			"retention":  "30d",
-			"replicas":   float64(2),
+			"retention":      "30d",
+			"replicas":       float64(2),
 			"scrapeInterval": "15s",
 		}
 		state.Resources["web-api"] = map[string]interface{}{

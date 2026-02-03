@@ -164,9 +164,9 @@ func runTemplateGet(cmd *cobra.Command, args []string) error {
 	}
 
 	var result struct {
-		Success bool                   `json:"success"`
-		Data    types.ServiceTemplate  `json:"data"`
-		Error   string                 `json:"error"`
+		Success bool                  `json:"success"`
+		Data    types.ServiceTemplate `json:"data"`
+		Error   string                `json:"error"`
 	}
 
 	if err := json.Unmarshal(resp, &result); err != nil {

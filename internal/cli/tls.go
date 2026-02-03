@@ -12,15 +12,15 @@ import (
 )
 
 var (
-	tlsDomain       string
-	tlsEmail        string
-	tlsOrg          string
-	tlsDNSNames     []string
-	tlsIPAddresses  []string
-	tlsValidFor     string
-	tlsStaging      bool
-	tlsAcceptTOS    bool
-	tlsRenewBefore  string
+	tlsDomain      string
+	tlsEmail       string
+	tlsOrg         string
+	tlsDNSNames    []string
+	tlsIPAddresses []string
+	tlsValidFor    string
+	tlsStaging     bool
+	tlsAcceptTOS   bool
+	tlsRenewBefore string
 )
 
 var tlsCmd = &cobra.Command{

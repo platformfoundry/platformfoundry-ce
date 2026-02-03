@@ -83,13 +83,13 @@ func (h *Handler) CreateWorkload(w http.ResponseWriter, r *http.Request) {
 	// If dry run, return plan
 	if req.DryRun {
 		h.JSON(w, http.StatusOK, map[string]interface{}{
-			"dryRun":      true,
-			"deployment":  result.Deployment,
-			"service":     result.Service,
-			"hpa":         result.HPA,
-			"ingress":     result.Ingress,
+			"dryRun":         true,
+			"deployment":     result.Deployment,
+			"service":        result.Service,
+			"hpa":            result.HPA,
+			"ingress":        result.Ingress,
 			"infraResources": result.InfraResources,
-			"outputs":     result.Outputs,
+			"outputs":        result.Outputs,
 		})
 		return
 	}

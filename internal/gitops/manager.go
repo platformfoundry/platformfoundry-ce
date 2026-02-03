@@ -49,12 +49,12 @@ type PRClient interface {
 
 // CreatePROptions contains options for creating a pull request
 type CreatePROptions struct {
-	Title       string
-	Body        string
+	Title        string
+	Body         string
 	SourceBranch string
 	TargetBranch string
-	Labels      []string
-	Reviewers   []string
+	Labels       []string
+	Reviewers    []string
 }
 
 // Notifier interface for sending notifications

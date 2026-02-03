@@ -137,9 +137,9 @@ func (c *DefaultConfig) Has(key string) bool {
 
 // DefaultEventBus is a simple in-memory event bus
 type DefaultEventBus struct {
-	mu           sync.RWMutex
-	subscribers  []subscriber
-	nextSubID    int
+	mu          sync.RWMutex
+	subscribers []subscriber
+	nextSubID   int
 }
 
 type subscriber struct {

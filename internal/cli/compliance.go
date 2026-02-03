@@ -10,10 +10,10 @@ import (
 )
 
 var (
-	complianceFramework string
-	complianceChecksDir string
+	complianceFramework  string
+	complianceChecksDir  string
 	complianceReportsDir string
-	complianceShowAll   bool
+	complianceShowAll    bool
 )
 
 var complianceCmd = &cobra.Command{
@@ -53,11 +53,11 @@ var complianceListCmd = &cobra.Command{
 }
 
 var complianceFrameworksCmd = &cobra.Command{
-	Use:   "frameworks",
-	Short: "List supported frameworks",
-	Long:  `List all supported compliance frameworks.`,
+	Use:     "frameworks",
+	Short:   "List supported frameworks",
+	Long:    `List all supported compliance frameworks.`,
 	Example: `  pf compliance frameworks`,
-	RunE: runComplianceFrameworks,
+	RunE:    runComplianceFrameworks,
 }
 
 var complianceChecksCmd = &cobra.Command{
@@ -538,12 +538,12 @@ func runComplianceFrameworks(cmd *cobra.Command, args []string) error {
 	fmt.Println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
 
 	descriptions := map[compliance.Framework]string{
-		compliance.FrameworkSOC2:    "SOC 2 - Service Organization Control 2",
-		compliance.FrameworkHIPAA:   "HIPAA - Health Insurance Portability and Accountability Act",
-		compliance.FrameworkPCIDSS:  "PCI-DSS - Payment Card Industry Data Security Standard",
-		compliance.FrameworkGDPR:    "GDPR - General Data Protection Regulation",
+		compliance.FrameworkSOC2:     "SOC 2 - Service Organization Control 2",
+		compliance.FrameworkHIPAA:    "HIPAA - Health Insurance Portability and Accountability Act",
+		compliance.FrameworkPCIDSS:   "PCI-DSS - Payment Card Industry Data Security Standard",
+		compliance.FrameworkGDPR:     "GDPR - General Data Protection Regulation",
 		compliance.FrameworkISO27001: "ISO 27001 - Information Security Management",
-		compliance.FrameworkNIST:    "NIST - National Institute of Standards and Technology",
+		compliance.FrameworkNIST:     "NIST - National Institute of Standards and Technology",
 	}
 
 	for i, f := range frameworks {

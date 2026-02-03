@@ -8,37 +8,37 @@ import (
 
 // Config represents GitLab CI configuration
 type Config struct {
-	Provider    string              `yaml:"provider" json:"provider" validate:"required,oneof=gitlab-ci"`
-	Project     string              `yaml:"project" json:"project" validate:"required"`
-	Group       string              `yaml:"group,omitempty" json:"group,omitempty"`
-	GitLabURL   string              `yaml:"gitlabUrl,omitempty" json:"gitlabUrl,omitempty"`
-	Pipeline    *PipelineConfig     `yaml:"pipeline,omitempty" json:"pipeline,omitempty"`
+	Provider     string              `yaml:"provider" json:"provider" validate:"required,oneof=gitlab-ci"`
+	Project      string              `yaml:"project" json:"project" validate:"required"`
+	Group        string              `yaml:"group,omitempty" json:"group,omitempty"`
+	GitLabURL    string              `yaml:"gitlabUrl,omitempty" json:"gitlabUrl,omitempty"`
+	Pipeline     *PipelineConfig     `yaml:"pipeline,omitempty" json:"pipeline,omitempty"`
 	Environments []EnvironmentConfig `yaml:"environments,omitempty" json:"environments,omitempty"`
-	Variables   []VariableConfig    `yaml:"variables,omitempty" json:"variables,omitempty"`
-	Runners     *RunnersConfig      `yaml:"runners,omitempty" json:"runners,omitempty"`
+	Variables    []VariableConfig    `yaml:"variables,omitempty" json:"variables,omitempty"`
+	Runners      *RunnersConfig      `yaml:"runners,omitempty" json:"runners,omitempty"`
 }
 
 // PipelineConfig represents GitLab CI pipeline configuration
 type PipelineConfig struct {
-	Stages     []string               `yaml:"stages" json:"stages"`
-	Default    *DefaultConfig         `yaml:"default,omitempty" json:"default,omitempty"`
-	Variables  map[string]interface{} `yaml:"variables,omitempty" json:"variables,omitempty"`
-	Include    []IncludeConfig        `yaml:"include,omitempty" json:"include,omitempty"`
-	Workflow   *WorkflowConfig        `yaml:"workflow,omitempty" json:"workflow,omitempty"`
-	Jobs       map[string]JobConfig   `yaml:"jobs,omitempty" json:"jobs,omitempty"`
+	Stages    []string               `yaml:"stages" json:"stages"`
+	Default   *DefaultConfig         `yaml:"default,omitempty" json:"default,omitempty"`
+	Variables map[string]interface{} `yaml:"variables,omitempty" json:"variables,omitempty"`
+	Include   []IncludeConfig        `yaml:"include,omitempty" json:"include,omitempty"`
+	Workflow  *WorkflowConfig        `yaml:"workflow,omitempty" json:"workflow,omitempty"`
+	Jobs      map[string]JobConfig   `yaml:"jobs,omitempty" json:"jobs,omitempty"`
 }
 
 // DefaultConfig defines default job settings
 type DefaultConfig struct {
-	Image        string            `yaml:"image,omitempty" json:"image,omitempty"`
-	Services     []ServiceConfig   `yaml:"services,omitempty" json:"services,omitempty"`
-	BeforeScript []string          `yaml:"before_script,omitempty" json:"before_script,omitempty"`
-	AfterScript  []string          `yaml:"after_script,omitempty" json:"after_script,omitempty"`
-	Tags         []string          `yaml:"tags,omitempty" json:"tags,omitempty"`
-	Artifacts    *ArtifactsConfig  `yaml:"artifacts,omitempty" json:"artifacts,omitempty"`
-	Cache        *CacheConfig      `yaml:"cache,omitempty" json:"cache,omitempty"`
-	Retry        *RetryConfig      `yaml:"retry,omitempty" json:"retry,omitempty"`
-	Timeout      string            `yaml:"timeout,omitempty" json:"timeout,omitempty"`
+	Image         string           `yaml:"image,omitempty" json:"image,omitempty"`
+	Services      []ServiceConfig  `yaml:"services,omitempty" json:"services,omitempty"`
+	BeforeScript  []string         `yaml:"before_script,omitempty" json:"before_script,omitempty"`
+	AfterScript   []string         `yaml:"after_script,omitempty" json:"after_script,omitempty"`
+	Tags          []string         `yaml:"tags,omitempty" json:"tags,omitempty"`
+	Artifacts     *ArtifactsConfig `yaml:"artifacts,omitempty" json:"artifacts,omitempty"`
+	Cache         *CacheConfig     `yaml:"cache,omitempty" json:"cache,omitempty"`
+	Retry         *RetryConfig     `yaml:"retry,omitempty" json:"retry,omitempty"`
+	Timeout       string           `yaml:"timeout,omitempty" json:"timeout,omitempty"`
 	Interruptible bool             `yaml:"interruptible,omitempty" json:"interruptible,omitempty"`
 }
 
@@ -66,15 +66,15 @@ type ArtifactsConfig struct {
 
 // Reports defines CI report artifacts
 type Reports struct {
-	CoverageReport   *CoverageReport `yaml:"coverage_report,omitempty" json:"coverage_report,omitempty"`
-	Junit            string          `yaml:"junit,omitempty" json:"junit,omitempty"`
-	Cobertura        string          `yaml:"cobertura,omitempty" json:"cobertura,omitempty"`
-	SAST             string          `yaml:"sast,omitempty" json:"sast,omitempty"`
-	DependencyScanning string        `yaml:"dependency_scanning,omitempty" json:"dependency_scanning,omitempty"`
-	ContainerScanning string         `yaml:"container_scanning,omitempty" json:"container_scanning,omitempty"`
-	DAST             string          `yaml:"dast,omitempty" json:"dast,omitempty"`
-	SecretDetection  string          `yaml:"secret_detection,omitempty" json:"secret_detection,omitempty"`
-	Terraform        string          `yaml:"terraform,omitempty" json:"terraform,omitempty"`
+	CoverageReport     *CoverageReport `yaml:"coverage_report,omitempty" json:"coverage_report,omitempty"`
+	Junit              string          `yaml:"junit,omitempty" json:"junit,omitempty"`
+	Cobertura          string          `yaml:"cobertura,omitempty" json:"cobertura,omitempty"`
+	SAST               string          `yaml:"sast,omitempty" json:"sast,omitempty"`
+	DependencyScanning string          `yaml:"dependency_scanning,omitempty" json:"dependency_scanning,omitempty"`
+	ContainerScanning  string          `yaml:"container_scanning,omitempty" json:"container_scanning,omitempty"`
+	DAST               string          `yaml:"dast,omitempty" json:"dast,omitempty"`
+	SecretDetection    string          `yaml:"secret_detection,omitempty" json:"secret_detection,omitempty"`
+	Terraform          string          `yaml:"terraform,omitempty" json:"terraform,omitempty"`
 }
 
 // CoverageReport defines coverage report
@@ -116,54 +116,54 @@ type WorkflowConfig struct {
 
 // RuleConfig defines pipeline/job rules
 type RuleConfig struct {
-	If           string                 `yaml:"if,omitempty" json:"if,omitempty"`
-	Changes      []string               `yaml:"changes,omitempty" json:"changes,omitempty"`
-	Exists       []string               `yaml:"exists,omitempty" json:"exists,omitempty"`
-	Variables    map[string]string      `yaml:"variables,omitempty" json:"variables,omitempty"`
-	When         string                 `yaml:"when,omitempty" json:"when,omitempty" validate:"omitempty,oneof=on_success on_failure always never manual delayed"`
-	AllowFailure bool                   `yaml:"allow_failure,omitempty" json:"allow_failure,omitempty"`
-	StartIn      string                 `yaml:"start_in,omitempty" json:"start_in,omitempty"`
+	If           string            `yaml:"if,omitempty" json:"if,omitempty"`
+	Changes      []string          `yaml:"changes,omitempty" json:"changes,omitempty"`
+	Exists       []string          `yaml:"exists,omitempty" json:"exists,omitempty"`
+	Variables    map[string]string `yaml:"variables,omitempty" json:"variables,omitempty"`
+	When         string            `yaml:"when,omitempty" json:"when,omitempty" validate:"omitempty,oneof=on_success on_failure always never manual delayed"`
+	AllowFailure bool              `yaml:"allow_failure,omitempty" json:"allow_failure,omitempty"`
+	StartIn      string            `yaml:"start_in,omitempty" json:"start_in,omitempty"`
 }
 
 // JobConfig represents a GitLab CI job
 type JobConfig struct {
-	Stage        string                 `yaml:"stage,omitempty" json:"stage,omitempty"`
-	Image        interface{}            `yaml:"image,omitempty" json:"image,omitempty"` // string or ImageConfig
-	Services     []ServiceConfig        `yaml:"services,omitempty" json:"services,omitempty"`
-	BeforeScript []string               `yaml:"before_script,omitempty" json:"before_script,omitempty"`
-	Script       []string               `yaml:"script" json:"script" validate:"required"`
-	AfterScript  []string               `yaml:"after_script,omitempty" json:"after_script,omitempty"`
-	Variables    map[string]interface{} `yaml:"variables,omitempty" json:"variables,omitempty"`
-	Rules        []RuleConfig           `yaml:"rules,omitempty" json:"rules,omitempty"`
-	Only         interface{}            `yaml:"only,omitempty" json:"only,omitempty"`
-	Except       interface{}            `yaml:"except,omitempty" json:"except,omitempty"`
-	Tags         []string               `yaml:"tags,omitempty" json:"tags,omitempty"`
-	AllowFailure interface{}            `yaml:"allow_failure,omitempty" json:"allow_failure,omitempty"`
-	When         string                 `yaml:"when,omitempty" json:"when,omitempty"`
-	Environment  interface{}            `yaml:"environment,omitempty" json:"environment,omitempty"`
-	Artifacts    *ArtifactsConfig       `yaml:"artifacts,omitempty" json:"artifacts,omitempty"`
-	Cache        *CacheConfig           `yaml:"cache,omitempty" json:"cache,omitempty"`
-	Dependencies []string               `yaml:"dependencies,omitempty" json:"dependencies,omitempty"`
-	Needs        []interface{}          `yaml:"needs,omitempty" json:"needs,omitempty"`
-	Retry        *RetryConfig           `yaml:"retry,omitempty" json:"retry,omitempty"`
-	Timeout      string                 `yaml:"timeout,omitempty" json:"timeout,omitempty"`
-	Parallel     interface{}            `yaml:"parallel,omitempty" json:"parallel,omitempty"`
-	Trigger      interface{}            `yaml:"trigger,omitempty" json:"trigger,omitempty"`
-	Extends      interface{}            `yaml:"extends,omitempty" json:"extends,omitempty"`
-	Resource_group string               `yaml:"resource_group,omitempty" json:"resource_group,omitempty"`
-	Release      *ReleaseConfig         `yaml:"release,omitempty" json:"release,omitempty"`
-	Coverage     string                 `yaml:"coverage,omitempty" json:"coverage,omitempty"`
-	Secrets      map[string]SecretRef   `yaml:"secrets,omitempty" json:"secrets,omitempty"`
+	Stage          string                 `yaml:"stage,omitempty" json:"stage,omitempty"`
+	Image          interface{}            `yaml:"image,omitempty" json:"image,omitempty"` // string or ImageConfig
+	Services       []ServiceConfig        `yaml:"services,omitempty" json:"services,omitempty"`
+	BeforeScript   []string               `yaml:"before_script,omitempty" json:"before_script,omitempty"`
+	Script         []string               `yaml:"script" json:"script" validate:"required"`
+	AfterScript    []string               `yaml:"after_script,omitempty" json:"after_script,omitempty"`
+	Variables      map[string]interface{} `yaml:"variables,omitempty" json:"variables,omitempty"`
+	Rules          []RuleConfig           `yaml:"rules,omitempty" json:"rules,omitempty"`
+	Only           interface{}            `yaml:"only,omitempty" json:"only,omitempty"`
+	Except         interface{}            `yaml:"except,omitempty" json:"except,omitempty"`
+	Tags           []string               `yaml:"tags,omitempty" json:"tags,omitempty"`
+	AllowFailure   interface{}            `yaml:"allow_failure,omitempty" json:"allow_failure,omitempty"`
+	When           string                 `yaml:"when,omitempty" json:"when,omitempty"`
+	Environment    interface{}            `yaml:"environment,omitempty" json:"environment,omitempty"`
+	Artifacts      *ArtifactsConfig       `yaml:"artifacts,omitempty" json:"artifacts,omitempty"`
+	Cache          *CacheConfig           `yaml:"cache,omitempty" json:"cache,omitempty"`
+	Dependencies   []string               `yaml:"dependencies,omitempty" json:"dependencies,omitempty"`
+	Needs          []interface{}          `yaml:"needs,omitempty" json:"needs,omitempty"`
+	Retry          *RetryConfig           `yaml:"retry,omitempty" json:"retry,omitempty"`
+	Timeout        string                 `yaml:"timeout,omitempty" json:"timeout,omitempty"`
+	Parallel       interface{}            `yaml:"parallel,omitempty" json:"parallel,omitempty"`
+	Trigger        interface{}            `yaml:"trigger,omitempty" json:"trigger,omitempty"`
+	Extends        interface{}            `yaml:"extends,omitempty" json:"extends,omitempty"`
+	Resource_group string                 `yaml:"resource_group,omitempty" json:"resource_group,omitempty"`
+	Release        *ReleaseConfig         `yaml:"release,omitempty" json:"release,omitempty"`
+	Coverage       string                 `yaml:"coverage,omitempty" json:"coverage,omitempty"`
+	Secrets        map[string]SecretRef   `yaml:"secrets,omitempty" json:"secrets,omitempty"`
 }
 
 // ReleaseConfig for release jobs
 type ReleaseConfig struct {
-	TagName     string      `yaml:"tag_name" json:"tag_name"`
-	Description string      `yaml:"description,omitempty" json:"description,omitempty"`
-	Name        string      `yaml:"name,omitempty" json:"name,omitempty"`
-	Ref         string      `yaml:"ref,omitempty" json:"ref,omitempty"`
-	Milestones  []string    `yaml:"milestones,omitempty" json:"milestones,omitempty"`
-	ReleasedAt  string      `yaml:"released_at,omitempty" json:"released_at,omitempty"`
+	TagName     string        `yaml:"tag_name" json:"tag_name"`
+	Description string        `yaml:"description,omitempty" json:"description,omitempty"`
+	Name        string        `yaml:"name,omitempty" json:"name,omitempty"`
+	Ref         string        `yaml:"ref,omitempty" json:"ref,omitempty"`
+	Milestones  []string      `yaml:"milestones,omitempty" json:"milestones,omitempty"`
+	ReleasedAt  string        `yaml:"released_at,omitempty" json:"released_at,omitempty"`
 	Assets      *AssetsConfig `yaml:"assets,omitempty" json:"assets,omitempty"`
 }
 
@@ -200,30 +200,30 @@ type EngineConfig struct {
 
 // EnvironmentConfig defines GitLab environment
 type EnvironmentConfig struct {
-	Name          string `yaml:"name" json:"name" validate:"required"`
-	URL           string `yaml:"url,omitempty" json:"url,omitempty"`
-	Action        string `yaml:"action,omitempty" json:"action,omitempty" validate:"omitempty,oneof=start stop prepare verify access"`
-	AutoStopIn    string `yaml:"auto_stop_in,omitempty" json:"auto_stop_in,omitempty"`
-	OnStop        string `yaml:"on_stop,omitempty" json:"on_stop,omitempty"`
-	Tier          string `yaml:"deployment_tier,omitempty" json:"deployment_tier,omitempty" validate:"omitempty,oneof=production staging testing development other"`
+	Name       string `yaml:"name" json:"name" validate:"required"`
+	URL        string `yaml:"url,omitempty" json:"url,omitempty"`
+	Action     string `yaml:"action,omitempty" json:"action,omitempty" validate:"omitempty,oneof=start stop prepare verify access"`
+	AutoStopIn string `yaml:"auto_stop_in,omitempty" json:"auto_stop_in,omitempty"`
+	OnStop     string `yaml:"on_stop,omitempty" json:"on_stop,omitempty"`
+	Tier       string `yaml:"deployment_tier,omitempty" json:"deployment_tier,omitempty" validate:"omitempty,oneof=production staging testing development other"`
 }
 
 // VariableConfig defines CI/CD variables
 type VariableConfig struct {
-	Key         string `yaml:"key" json:"key" validate:"required"`
-	Value       string `yaml:"value" json:"value"`
-	Protected   bool   `yaml:"protected,omitempty" json:"protected,omitempty"`
-	Masked      bool   `yaml:"masked,omitempty" json:"masked,omitempty"`
-	Environment string `yaml:"environment_scope,omitempty" json:"environment_scope,omitempty"`
-	Description string `yaml:"description,omitempty" json:"description,omitempty"`
+	Key          string `yaml:"key" json:"key" validate:"required"`
+	Value        string `yaml:"value" json:"value"`
+	Protected    bool   `yaml:"protected,omitempty" json:"protected,omitempty"`
+	Masked       bool   `yaml:"masked,omitempty" json:"masked,omitempty"`
+	Environment  string `yaml:"environment_scope,omitempty" json:"environment_scope,omitempty"`
+	Description  string `yaml:"description,omitempty" json:"description,omitempty"`
 	VariableType string `yaml:"variable_type,omitempty" json:"variable_type,omitempty" validate:"omitempty,oneof=env_var file"`
 }
 
 // RunnersConfig defines GitLab Runner configuration
 type RunnersConfig struct {
-	Tags        []string           `yaml:"tags,omitempty" json:"tags,omitempty"`
-	Shared      bool               `yaml:"shared,omitempty" json:"shared,omitempty"`
-	GroupRunners []GroupRunner     `yaml:"groupRunners,omitempty" json:"groupRunners,omitempty"`
+	Tags           []string        `yaml:"tags,omitempty" json:"tags,omitempty"`
+	Shared         bool            `yaml:"shared,omitempty" json:"shared,omitempty"`
+	GroupRunners   []GroupRunner   `yaml:"groupRunners,omitempty" json:"groupRunners,omitempty"`
 	ProjectRunners []ProjectRunner `yaml:"projectRunners,omitempty" json:"projectRunners,omitempty"`
 }
 

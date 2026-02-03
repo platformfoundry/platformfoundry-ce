@@ -32,8 +32,8 @@ const (
 // CategoryScore represents the score for a single category
 type CategoryScore struct {
 	Name       string  `json:"name"`
-	Score      int     `json:"score"`       // 0-100
-	Weight     float64 `json:"weight"`      // Contribution to overall (0.0-1.0)
+	Score      int     `json:"score"`  // 0-100
+	Weight     float64 `json:"weight"` // Contribution to overall (0.0-1.0)
 	Status     Status  `json:"status"`
 	IssueCount int     `json:"issue_count"`
 	Message    string  `json:"message,omitempty"`
@@ -63,7 +63,7 @@ type Recommendation struct {
 
 // Score represents the overall health score
 type Score struct {
-	Overall         int                      `json:"overall"`          // 0-100
+	Overall         int                      `json:"overall"` // 0-100
 	Status          Status                   `json:"status"`
 	Categories      map[string]CategoryScore `json:"categories"`
 	Issues          []Issue                  `json:"issues"`
@@ -520,16 +520,16 @@ func (c *Checker) generateRecommendations(score *Score) []Recommendation {
 // isSecurityRule checks if a lint rule is security-related
 func isSecurityRule(rule string) bool {
 	securityRules := map[string]bool{
-		"hardcoded-secrets":  true,
-		"security-context":   true,
-		"privileged-mode":    true,
-		"host-network":       true,
-		"host-pid":           true,
-		"root-user":          true,
-		"missing-seccomp":    true,
-		"missing-apparmor":   true,
-		"insecure-port":      true,
-		"plaintext-secret":   true,
+		"hardcoded-secrets": true,
+		"security-context":  true,
+		"privileged-mode":   true,
+		"host-network":      true,
+		"host-pid":          true,
+		"root-user":         true,
+		"missing-seccomp":   true,
+		"missing-apparmor":  true,
+		"insecure-port":     true,
+		"plaintext-secret":  true,
 	}
 	return securityRules[rule]
 }

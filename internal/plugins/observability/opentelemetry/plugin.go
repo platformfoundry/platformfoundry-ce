@@ -8,21 +8,21 @@ import (
 
 // Config represents OpenTelemetry configuration
 type Config struct {
-	Provider   string           `yaml:"provider" json:"provider" validate:"required,oneof=opentelemetry"`
-	ClusterRef string           `yaml:"clusterRef" json:"clusterRef" validate:"required"`
-	Collector  *CollectorConfig `yaml:"collector,omitempty" json:"collector,omitempty"`
-	Exporters  *ExportersConfig `yaml:"exporters,omitempty" json:"exporters,omitempty"`
-	Receivers  *ReceiversConfig `yaml:"receivers,omitempty" json:"receivers,omitempty"`
-	Processors []string         `yaml:"processors,omitempty" json:"processors,omitempty"`
+	Provider            string                     `yaml:"provider" json:"provider" validate:"required,oneof=opentelemetry"`
+	ClusterRef          string                     `yaml:"clusterRef" json:"clusterRef" validate:"required"`
+	Collector           *CollectorConfig           `yaml:"collector,omitempty" json:"collector,omitempty"`
+	Exporters           *ExportersConfig           `yaml:"exporters,omitempty" json:"exporters,omitempty"`
+	Receivers           *ReceiversConfig           `yaml:"receivers,omitempty" json:"receivers,omitempty"`
+	Processors          []string                   `yaml:"processors,omitempty" json:"processors,omitempty"`
 	AutoInstrumentation *AutoInstrumentationConfig `yaml:"autoInstrumentation,omitempty" json:"autoInstrumentation,omitempty"`
 }
 
 // CollectorConfig represents OTel Collector configuration
 type CollectorConfig struct {
-	Mode      string            `yaml:"mode" json:"mode" validate:"required,oneof=deployment daemonset sidecar"`
-	Replicas  int               `yaml:"replicas,omitempty" json:"replicas,omitempty"`
-	Resources *ResourcesConfig  `yaml:"resources,omitempty" json:"resources,omitempty"`
-	Image     string            `yaml:"image,omitempty" json:"image,omitempty"`
+	Mode      string                 `yaml:"mode" json:"mode" validate:"required,oneof=deployment daemonset sidecar"`
+	Replicas  int                    `yaml:"replicas,omitempty" json:"replicas,omitempty"`
+	Resources *ResourcesConfig       `yaml:"resources,omitempty" json:"resources,omitempty"`
+	Image     string                 `yaml:"image,omitempty" json:"image,omitempty"`
 	Config    map[string]interface{} `yaml:"config,omitempty" json:"config,omitempty"`
 }
 
@@ -62,9 +62,9 @@ type JaegerExporter struct {
 
 // PrometheusExporter configures Prometheus export
 type PrometheusExporter struct {
-	Endpoint       string `yaml:"endpoint" json:"endpoint"`
-	Namespace      string `yaml:"namespace,omitempty" json:"namespace,omitempty"`
-	ConstLabels    map[string]string `yaml:"constLabels,omitempty" json:"constLabels,omitempty"`
+	Endpoint    string            `yaml:"endpoint" json:"endpoint"`
+	Namespace   string            `yaml:"namespace,omitempty" json:"namespace,omitempty"`
+	ConstLabels map[string]string `yaml:"constLabels,omitempty" json:"constLabels,omitempty"`
 }
 
 // ZipkinExporter configures Zipkin export
@@ -87,12 +87,12 @@ type TLSConfig struct {
 
 // ReceiversConfig defines telemetry receivers
 type ReceiversConfig struct {
-	OTLP       *OTLPReceiver       `yaml:"otlp,omitempty" json:"otlp,omitempty"`
-	Jaeger     *JaegerReceiver     `yaml:"jaeger,omitempty" json:"jaeger,omitempty"`
-	Zipkin     *ZipkinReceiver     `yaml:"zipkin,omitempty" json:"zipkin,omitempty"`
-	Prometheus *PrometheusReceiver `yaml:"prometheus,omitempty" json:"prometheus,omitempty"`
+	OTLP        *OTLPReceiver        `yaml:"otlp,omitempty" json:"otlp,omitempty"`
+	Jaeger      *JaegerReceiver      `yaml:"jaeger,omitempty" json:"jaeger,omitempty"`
+	Zipkin      *ZipkinReceiver      `yaml:"zipkin,omitempty" json:"zipkin,omitempty"`
+	Prometheus  *PrometheusReceiver  `yaml:"prometheus,omitempty" json:"prometheus,omitempty"`
 	HostMetrics *HostMetricsReceiver `yaml:"hostMetrics,omitempty" json:"hostMetrics,omitempty"`
-	Kubelet    *KubeletReceiver    `yaml:"kubeletstats,omitempty" json:"kubeletstats,omitempty"`
+	Kubelet     *KubeletReceiver     `yaml:"kubeletstats,omitempty" json:"kubeletstats,omitempty"`
 }
 
 // OTLPReceiver configures OTLP receiver

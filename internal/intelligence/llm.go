@@ -22,18 +22,18 @@ const (
 
 // LLMConfig represents LLM configuration
 type LLMConfig struct {
-	Provider   LLMProvider
-	APIKey     string
-	APIBaseURL string
-	Model      string
-	MaxTokens  int
+	Provider    LLMProvider
+	APIKey      string
+	APIBaseURL  string
+	Model       string
+	MaxTokens   int
 	Temperature float64
 }
 
 // LLMRecommender provides LLM-powered portal recommendations
 type LLMRecommender struct {
-	config           LLMConfig
-	httpClient       *http.Client
+	config              LLMConfig
+	httpClient          *http.Client
 	fallbackRecommender *Recommender
 }
 

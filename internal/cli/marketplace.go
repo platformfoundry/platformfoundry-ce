@@ -74,10 +74,10 @@ var marketplaceCategoriesCmd = &cobra.Command{
 }
 
 var (
-	mpCategory   string
-	mpVerified   bool
-	mpSortBy     string
-	mpLimit      int
+	mpCategory string
+	mpVerified bool
+	mpSortBy   string
+	mpLimit    int
 )
 
 func init() {

@@ -43,14 +43,14 @@ type PREvent struct {
 
 // WebhookConfig contains configuration for the webhook handler
 type WebhookConfig struct {
-	Secret              string
-	DefaultTTL          time.Duration
-	BaseEnvironmentMap  map[string]string // target branch -> base environment
-	EnabledLabels       []string          // labels that trigger preview creation
-	DisabledLabels      []string          // labels that skip preview creation
-	AutoDeleteOnMerge   bool
-	AutoDeleteOnClose   bool
-	CommentOnPR         bool
+	Secret             string
+	DefaultTTL         time.Duration
+	BaseEnvironmentMap map[string]string // target branch -> base environment
+	EnabledLabels      []string          // labels that trigger preview creation
+	DisabledLabels     []string          // labels that skip preview creation
+	AutoDeleteOnMerge  bool
+	AutoDeleteOnClose  bool
+	CommentOnPR        bool
 }
 
 // WebhookHandler handles incoming webhooks from git providers
@@ -419,8 +419,8 @@ func (h *WebhookHandler) parseGitHubEvent(r *http.Request, body []byte) (*PREven
 	}
 
 	var payload struct {
-		Action string `json:"action"`
-		Number int    `json:"number"`
+		Action      string `json:"action"`
+		Number      int    `json:"number"`
 		PullRequest struct {
 			Merged bool   `json:"merged"`
 			Title  string `json:"title"`

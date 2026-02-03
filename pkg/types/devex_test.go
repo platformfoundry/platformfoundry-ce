@@ -395,10 +395,10 @@ func TestBrandingConfig(t *testing.T) {
 
 func TestThemeConfig(t *testing.T) {
 	tests := []struct {
-		name         string
-		theme        *ThemeConfig
-		wantColor    string
-		wantMode     string
+		name      string
+		theme     *ThemeConfig
+		wantColor string
+		wantMode  string
 	}{
 		{
 			name:      "light theme",

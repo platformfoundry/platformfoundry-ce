@@ -259,11 +259,11 @@ type Phase struct {
 type PhaseStatus string
 
 const (
-	PhasePending    PhaseStatus = "pending"
-	PhaseRunning    PhaseStatus = "running"
-	PhaseCompleted  PhaseStatus = "completed"
-	PhaseFailed     PhaseStatus = "failed"
-	PhaseSkipped    PhaseStatus = "skipped"
+	PhasePending   PhaseStatus = "pending"
+	PhaseRunning   PhaseStatus = "running"
+	PhaseCompleted PhaseStatus = "completed"
+	PhaseFailed    PhaseStatus = "failed"
+	PhaseSkipped   PhaseStatus = "skipped"
 )
 
 // PhaseTracker tracks progress through multiple phases

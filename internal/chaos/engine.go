@@ -12,12 +12,12 @@ import (
 
 // Engine manages chaos experiments
 type Engine struct {
-	executor     Executor
+	executor      Executor
 	healthChecker HealthChecker
-	experiments  map[string]*types.ChaosExperiment
-	activeRuns   map[string]*ExperimentRun
-	mu           sync.RWMutex
-	eventChan    chan ChaosEvent
+	experiments   map[string]*types.ChaosExperiment
+	activeRuns    map[string]*ExperimentRun
+	mu            sync.RWMutex
+	eventChan     chan ChaosEvent
 }
 
 // Executor executes chaos actions
@@ -35,29 +35,29 @@ type HealthChecker interface {
 
 // ExperimentRun represents an active experiment run
 type ExperimentRun struct {
-	ID           string
-	Experiment   *types.ChaosExperiment
-	StartTime    time.Time
-	Actions      []types.ActionResult
+	ID            string
+	Experiment    *types.ChaosExperiment
+	StartTime     time.Time
+	Actions       []types.ActionResult
 	CurrentAction int
-	Status       string
-	StopChan     chan struct{}
+	Status        string
+	StopChan      chan struct{}
 }
 
 // ChaosEvent represents an event during chaos execution
 type ChaosEvent struct {
-	Type       string    `json:"type"` // started, action_started, action_completed, health_check, completed, failed
-	Experiment string    `json:"experiment"`
-	Action     string    `json:"action,omitempty"`
-	Timestamp  time.Time `json:"timestamp"`
-	Message    string    `json:"message"`
+	Type       string                 `json:"type"` // started, action_started, action_completed, health_check, completed, failed
+	Experiment string                 `json:"experiment"`
+	Action     string                 `json:"action,omitempty"`
+	Timestamp  time.Time              `json:"timestamp"`
+	Message    string                 `json:"message"`
 	Metadata   map[string]interface{} `json:"metadata,omitempty"`
 }
 
 // EngineConfig configures the chaos engine
 type EngineConfig struct {
-	Executor      Executor
-	HealthChecker HealthChecker
+	Executor        Executor
+	HealthChecker   HealthChecker
 	EventBufferSize int
 }
 
@@ -69,11 +69,11 @@ func NewEngine(cfg EngineConfig) *Engine {
 	}
 
 	return &Engine{
-		executor:     cfg.Executor,
+		executor:      cfg.Executor,
 		healthChecker: cfg.HealthChecker,
-		experiments:  make(map[string]*types.ChaosExperiment),
-		activeRuns:   make(map[string]*ExperimentRun),
-		eventChan:    make(chan ChaosEvent, bufferSize),
+		experiments:   make(map[string]*types.ChaosExperiment),
+		activeRuns:    make(map[string]*ExperimentRun),
+		eventChan:     make(chan ChaosEvent, bufferSize),
 	}
 }
 
@@ -245,11 +245,11 @@ func (e *Engine) StopExperiment(name string) error {
 func (e *Engine) executeExperiment(ctx context.Context, run *ExperimentRun) (*types.ChaosReport, error) {
 	exp := run.Experiment
 	report := &types.ChaosReport{
-		Experiment:  exp.Metadata.Name,
-		Environment: exp.Spec.Target.Environment,
-		StartTime:   run.StartTime,
+		Experiment:   exp.Metadata.Name,
+		Environment:  exp.Spec.Target.Environment,
+		StartTime:    run.StartTime,
 		TotalActions: len(exp.Spec.Experiments),
-		Findings:    make([]types.ChaosFinding, 0),
+		Findings:     make([]types.ChaosFinding, 0),
 	}
 
 	// Initial health check

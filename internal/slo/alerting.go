@@ -9,38 +9,38 @@ import (
 
 // AlertingEngine manages SLO-based alerting
 type AlertingEngine struct {
-	engine          *Engine
-	budgetTracker   *BudgetTracker
-	alertManager    AlertManager
-	alertRules      map[string]*AlertRule
-	activeAlerts    map[string]*Alert
-	silences        map[string]*Silence
-	mu              sync.RWMutex
+	engine        *Engine
+	budgetTracker *BudgetTracker
+	alertManager  AlertManager
+	alertRules    map[string]*AlertRule
+	activeAlerts  map[string]*Alert
+	silences      map[string]*Silence
+	mu            sync.RWMutex
 }
 
 // AlertRule defines when to fire alerts
 type AlertRule struct {
-	ID          string        `json:"id"`
-	Name        string        `json:"name"`
-	Description string        `json:"description"`
-	SLOID       string        `json:"sloId"`
-	Type        AlertRuleType `json:"type"`
-	Threshold   float64       `json:"threshold"`
-	Duration    time.Duration `json:"duration"`  // How long condition must be true
-	Severity    string        `json:"severity"`
+	ID          string            `json:"id"`
+	Name        string            `json:"name"`
+	Description string            `json:"description"`
+	SLOID       string            `json:"sloId"`
+	Type        AlertRuleType     `json:"type"`
+	Threshold   float64           `json:"threshold"`
+	Duration    time.Duration     `json:"duration"` // How long condition must be true
+	Severity    string            `json:"severity"`
 	Labels      map[string]string `json:"labels,omitempty"`
 	Annotations map[string]string `json:"annotations,omitempty"`
-	Enabled     bool          `json:"enabled"`
+	Enabled     bool              `json:"enabled"`
 }
 
 // AlertRuleType defines the type of alert rule
 type AlertRuleType string
 
 const (
-	AlertRuleTypeBudgetThreshold  AlertRuleType = "budget_threshold"
-	AlertRuleTypeBurnRate         AlertRuleType = "burn_rate"
-	AlertRuleTypeSLIBreach        AlertRuleType = "sli_breach"
-	AlertRuleTypeTrendPrediction  AlertRuleType = "trend_prediction"
+	AlertRuleTypeBudgetThreshold AlertRuleType = "budget_threshold"
+	AlertRuleTypeBurnRate        AlertRuleType = "burn_rate"
+	AlertRuleTypeSLIBreach       AlertRuleType = "sli_breach"
+	AlertRuleTypeTrendPrediction AlertRuleType = "trend_prediction"
 )
 
 // Silence represents an alert silence period

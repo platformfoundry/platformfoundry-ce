@@ -67,14 +67,14 @@ type DependsOnSpec struct {
 
 // HelmReleaseConfig represents a Flux HelmRelease
 type HelmReleaseConfig struct {
-	Name         string                 `yaml:"name" json:"name" validate:"required"`
-	Namespace    string                 `yaml:"namespace" json:"namespace"`
-	Chart        HelmChartSpec          `yaml:"chart" json:"chart"`
-	Interval     string                 `yaml:"interval" json:"interval"`
-	Values       map[string]interface{} `yaml:"values,omitempty" json:"values,omitempty"`
-	ValuesFrom   []ValuesFromSpec       `yaml:"valuesFrom,omitempty" json:"valuesFrom,omitempty"`
-	Install      *InstallSpec           `yaml:"install,omitempty" json:"install,omitempty"`
-	Upgrade      *UpgradeSpec           `yaml:"upgrade,omitempty" json:"upgrade,omitempty"`
+	Name       string                 `yaml:"name" json:"name" validate:"required"`
+	Namespace  string                 `yaml:"namespace" json:"namespace"`
+	Chart      HelmChartSpec          `yaml:"chart" json:"chart"`
+	Interval   string                 `yaml:"interval" json:"interval"`
+	Values     map[string]interface{} `yaml:"values,omitempty" json:"values,omitempty"`
+	ValuesFrom []ValuesFromSpec       `yaml:"valuesFrom,omitempty" json:"valuesFrom,omitempty"`
+	Install    *InstallSpec           `yaml:"install,omitempty" json:"install,omitempty"`
+	Upgrade    *UpgradeSpec           `yaml:"upgrade,omitempty" json:"upgrade,omitempty"`
 }
 
 // HelmChartSpec specifies the Helm chart
@@ -98,7 +98,7 @@ type ValuesFromSpec struct {
 
 // InstallSpec configures Helm install behavior
 type InstallSpec struct {
-	CreateNamespace bool `yaml:"createNamespace" json:"createNamespace"`
+	CreateNamespace bool             `yaml:"createNamespace" json:"createNamespace"`
 	Remediation     *RemediationSpec `yaml:"remediation,omitempty" json:"remediation,omitempty"`
 }
 
@@ -114,10 +114,10 @@ type RemediationSpec struct {
 
 // ImagePolicyConfig represents a Flux ImagePolicy for auto-updates
 type ImagePolicyConfig struct {
-	Name       string           `yaml:"name" json:"name" validate:"required"`
-	Namespace  string           `yaml:"namespace" json:"namespace"`
-	ImageRef   ImageRefSpec     `yaml:"imageRepositoryRef" json:"imageRepositoryRef"`
-	Policy     ImagePolicySpec  `yaml:"policy" json:"policy"`
+	Name      string          `yaml:"name" json:"name" validate:"required"`
+	Namespace string          `yaml:"namespace" json:"namespace"`
+	ImageRef  ImageRefSpec    `yaml:"imageRepositoryRef" json:"imageRepositoryRef"`
+	Policy    ImagePolicySpec `yaml:"policy" json:"policy"`
 }
 
 // ImageRefSpec references an ImageRepository
@@ -127,9 +127,9 @@ type ImageRefSpec struct {
 
 // ImagePolicySpec defines image selection policy
 type ImagePolicySpec struct {
-	SemVer    *SemVerPolicy    `yaml:"semver,omitempty" json:"semver,omitempty"`
+	SemVer       *SemVerPolicy       `yaml:"semver,omitempty" json:"semver,omitempty"`
 	Alphabetical *AlphabeticalPolicy `yaml:"alphabetical,omitempty" json:"alphabetical,omitempty"`
-	Numerical *NumericalPolicy `yaml:"numerical,omitempty" json:"numerical,omitempty"`
+	Numerical    *NumericalPolicy    `yaml:"numerical,omitempty" json:"numerical,omitempty"`
 }
 
 // SemVerPolicy selects based on semver
@@ -155,16 +155,16 @@ type NotificationConfig struct {
 
 // ProviderConfig defines a notification provider
 type ProviderConfig struct {
-	Name      string `yaml:"name" json:"name" validate:"required"`
-	Type      string `yaml:"type" json:"type" validate:"required,oneof=slack msteams discord github gitlab"`
+	Name      string         `yaml:"name" json:"name" validate:"required"`
+	Type      string         `yaml:"type" json:"type" validate:"required,oneof=slack msteams discord github gitlab"`
 	SecretRef *SecretRefSpec `yaml:"secretRef,omitempty" json:"secretRef,omitempty"`
-	Channel   string `yaml:"channel,omitempty" json:"channel,omitempty"`
+	Channel   string         `yaml:"channel,omitempty" json:"channel,omitempty"`
 }
 
 // AlertConfig defines notification alerts
 type AlertConfig struct {
-	Name        string        `yaml:"name" json:"name" validate:"required"`
-	ProviderRef string        `yaml:"providerRef" json:"providerRef" validate:"required"`
+	Name         string        `yaml:"name" json:"name" validate:"required"`
+	ProviderRef  string        `yaml:"providerRef" json:"providerRef" validate:"required"`
 	EventSources []EventSource `yaml:"eventSources" json:"eventSources"`
 }
 

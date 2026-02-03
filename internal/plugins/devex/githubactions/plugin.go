@@ -20,12 +20,12 @@ type Config struct {
 
 // WorkflowConfig represents a GitHub Actions workflow
 type WorkflowConfig struct {
-	Name     string              `yaml:"name" json:"name" validate:"required"`
-	Path     string              `yaml:"path" json:"path"`
-	On       WorkflowTrigger     `yaml:"on" json:"on"`
+	Name     string               `yaml:"name" json:"name" validate:"required"`
+	Path     string               `yaml:"path" json:"path"`
+	On       WorkflowTrigger      `yaml:"on" json:"on"`
 	Jobs     map[string]JobConfig `yaml:"jobs" json:"jobs"`
-	Env      map[string]string   `yaml:"env,omitempty" json:"env,omitempty"`
-	Defaults *DefaultsConfig     `yaml:"defaults,omitempty" json:"defaults,omitempty"`
+	Env      map[string]string    `yaml:"env,omitempty" json:"env,omitempty"`
+	Defaults *DefaultsConfig      `yaml:"defaults,omitempty" json:"defaults,omitempty"`
 }
 
 // WorkflowTrigger defines workflow triggers
@@ -91,19 +91,19 @@ type SecretInput struct {
 
 // JobConfig represents a workflow job
 type JobConfig struct {
-	Name           string                 `yaml:"name,omitempty" json:"name,omitempty"`
-	RunsOn         interface{}            `yaml:"runs-on" json:"runs-on"` // string or []string
-	Needs          []string               `yaml:"needs,omitempty" json:"needs,omitempty"`
-	If             string                 `yaml:"if,omitempty" json:"if,omitempty"`
-	Environment    interface{}            `yaml:"environment,omitempty" json:"environment,omitempty"` // string or EnvironmentRef
-	Concurrency    *ConcurrencyConfig     `yaml:"concurrency,omitempty" json:"concurrency,omitempty"`
-	Outputs        map[string]string      `yaml:"outputs,omitempty" json:"outputs,omitempty"`
-	Env            map[string]string      `yaml:"env,omitempty" json:"env,omitempty"`
-	Steps          []StepConfig           `yaml:"steps" json:"steps"`
-	Strategy       *StrategyConfig        `yaml:"strategy,omitempty" json:"strategy,omitempty"`
-	Container      *ContainerConfig       `yaml:"container,omitempty" json:"container,omitempty"`
+	Name           string                   `yaml:"name,omitempty" json:"name,omitempty"`
+	RunsOn         interface{}              `yaml:"runs-on" json:"runs-on"` // string or []string
+	Needs          []string                 `yaml:"needs,omitempty" json:"needs,omitempty"`
+	If             string                   `yaml:"if,omitempty" json:"if,omitempty"`
+	Environment    interface{}              `yaml:"environment,omitempty" json:"environment,omitempty"` // string or EnvironmentRef
+	Concurrency    *ConcurrencyConfig       `yaml:"concurrency,omitempty" json:"concurrency,omitempty"`
+	Outputs        map[string]string        `yaml:"outputs,omitempty" json:"outputs,omitempty"`
+	Env            map[string]string        `yaml:"env,omitempty" json:"env,omitempty"`
+	Steps          []StepConfig             `yaml:"steps" json:"steps"`
+	Strategy       *StrategyConfig          `yaml:"strategy,omitempty" json:"strategy,omitempty"`
+	Container      *ContainerConfig         `yaml:"container,omitempty" json:"container,omitempty"`
 	Services       map[string]ServiceConfig `yaml:"services,omitempty" json:"services,omitempty"`
-	TimeoutMinutes int                    `yaml:"timeout-minutes,omitempty" json:"timeout-minutes,omitempty"`
+	TimeoutMinutes int                      `yaml:"timeout-minutes,omitempty" json:"timeout-minutes,omitempty"`
 }
 
 // ConcurrencyConfig manages concurrent workflow runs
@@ -114,17 +114,17 @@ type ConcurrencyConfig struct {
 
 // StepConfig represents a job step
 type StepConfig struct {
-	Name            string            `yaml:"name,omitempty" json:"name,omitempty"`
-	ID              string            `yaml:"id,omitempty" json:"id,omitempty"`
-	Uses            string            `yaml:"uses,omitempty" json:"uses,omitempty"`
-	Run             string            `yaml:"run,omitempty" json:"run,omitempty"`
-	With            map[string]string `yaml:"with,omitempty" json:"with,omitempty"`
-	Env             map[string]string `yaml:"env,omitempty" json:"env,omitempty"`
-	If              string            `yaml:"if,omitempty" json:"if,omitempty"`
-	ContinueOnError bool              `yaml:"continue-on-error,omitempty" json:"continue-on-error,omitempty"`
-	TimeoutMinutes  int               `yaml:"timeout-minutes,omitempty" json:"timeout-minutes,omitempty"`
-	Shell           string            `yaml:"shell,omitempty" json:"shell,omitempty"`
-	WorkingDirectory string           `yaml:"working-directory,omitempty" json:"working-directory,omitempty"`
+	Name             string            `yaml:"name,omitempty" json:"name,omitempty"`
+	ID               string            `yaml:"id,omitempty" json:"id,omitempty"`
+	Uses             string            `yaml:"uses,omitempty" json:"uses,omitempty"`
+	Run              string            `yaml:"run,omitempty" json:"run,omitempty"`
+	With             map[string]string `yaml:"with,omitempty" json:"with,omitempty"`
+	Env              map[string]string `yaml:"env,omitempty" json:"env,omitempty"`
+	If               string            `yaml:"if,omitempty" json:"if,omitempty"`
+	ContinueOnError  bool              `yaml:"continue-on-error,omitempty" json:"continue-on-error,omitempty"`
+	TimeoutMinutes   int               `yaml:"timeout-minutes,omitempty" json:"timeout-minutes,omitempty"`
+	Shell            string            `yaml:"shell,omitempty" json:"shell,omitempty"`
+	WorkingDirectory string            `yaml:"working-directory,omitempty" json:"working-directory,omitempty"`
 }
 
 // StrategyConfig defines job matrix strategy
@@ -136,12 +136,12 @@ type StrategyConfig struct {
 
 // ContainerConfig defines container settings for a job
 type ContainerConfig struct {
-	Image       string            `yaml:"image" json:"image"`
+	Image       string             `yaml:"image" json:"image"`
 	Credentials *CredentialsConfig `yaml:"credentials,omitempty" json:"credentials,omitempty"`
-	Env         map[string]string `yaml:"env,omitempty" json:"env,omitempty"`
-	Ports       []int             `yaml:"ports,omitempty" json:"ports,omitempty"`
-	Volumes     []string          `yaml:"volumes,omitempty" json:"volumes,omitempty"`
-	Options     string            `yaml:"options,omitempty" json:"options,omitempty"`
+	Env         map[string]string  `yaml:"env,omitempty" json:"env,omitempty"`
+	Ports       []int              `yaml:"ports,omitempty" json:"ports,omitempty"`
+	Volumes     []string           `yaml:"volumes,omitempty" json:"volumes,omitempty"`
+	Options     string             `yaml:"options,omitempty" json:"options,omitempty"`
 }
 
 // CredentialsConfig for container registry
@@ -152,12 +152,12 @@ type CredentialsConfig struct {
 
 // ServiceConfig defines service containers
 type ServiceConfig struct {
-	Image       string            `yaml:"image" json:"image"`
+	Image       string             `yaml:"image" json:"image"`
 	Credentials *CredentialsConfig `yaml:"credentials,omitempty" json:"credentials,omitempty"`
-	Env         map[string]string `yaml:"env,omitempty" json:"env,omitempty"`
-	Ports       []string          `yaml:"ports,omitempty" json:"ports,omitempty"`
-	Volumes     []string          `yaml:"volumes,omitempty" json:"volumes,omitempty"`
-	Options     string            `yaml:"options,omitempty" json:"options,omitempty"`
+	Env         map[string]string  `yaml:"env,omitempty" json:"env,omitempty"`
+	Ports       []string           `yaml:"ports,omitempty" json:"ports,omitempty"`
+	Volumes     []string           `yaml:"volumes,omitempty" json:"volumes,omitempty"`
+	Options     string             `yaml:"options,omitempty" json:"options,omitempty"`
 }
 
 // DefaultsConfig defines job defaults

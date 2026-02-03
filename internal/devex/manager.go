@@ -10,13 +10,13 @@ import (
 
 // Manager handles developer experience analytics
 type Manager struct {
-	teams           map[string]*DeveloperMetrics
-	doraMetrics     map[string]*DORAMetrics
-	adoption        *PlatformAdoption
-	journeys        map[string]*DeveloperJourney
-	surveys         []Survey
-	frictionPoints  []FrictionPoint
-	mu              sync.RWMutex
+	teams          map[string]*DeveloperMetrics
+	doraMetrics    map[string]*DORAMetrics
+	adoption       *PlatformAdoption
+	journeys       map[string]*DeveloperJourney
+	surveys        []Survey
+	frictionPoints []FrictionPoint
+	mu             sync.RWMutex
 }
 
 // NewManager creates a new DevEx manager

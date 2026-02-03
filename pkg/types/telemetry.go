@@ -123,17 +123,17 @@ type MetricData struct {
 // TelemetryStats represents collected telemetry statistics
 type TelemetryStats struct {
 	// Tracing stats
-	TracesCollected  int64 `json:"traces_collected"`
-	SpansCollected   int64 `json:"spans_collected"`
-	TracesExported   int64 `json:"traces_exported"`
+	TracesCollected   int64 `json:"traces_collected"`
+	SpansCollected    int64 `json:"spans_collected"`
+	TracesExported    int64 `json:"traces_exported"`
 	TraceExportErrors int64 `json:"trace_export_errors"`
 
 	// Metrics stats
-	MetricsCollected int64 `json:"metrics_collected"`
-	MetricsExported  int64 `json:"metrics_exported"`
+	MetricsCollected   int64 `json:"metrics_collected"`
+	MetricsExported    int64 `json:"metrics_exported"`
 	MetricExportErrors int64 `json:"metric_export_errors"`
 
 	// General
-	StartTime        time.Time `json:"start_time"`
-	Uptime           time.Duration `json:"uptime"`
+	StartTime time.Time     `json:"start_time"`
+	Uptime    time.Duration `json:"uptime"`
 }

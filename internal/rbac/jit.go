@@ -44,24 +44,24 @@ type JITAuditLogger interface {
 
 // JITRequest represents a just-in-time access request
 type JITRequest struct {
-	ID            string            `json:"id"`
-	Requester     string            `json:"requester"`
-	RequesterEmail string           `json:"requesterEmail,omitempty"`
-	Resource      string            `json:"resource"`
-	ResourceType  string            `json:"resourceType"`
-	Role          string            `json:"role"`
-	Justification string            `json:"justification"`
-	Duration      time.Duration     `json:"duration"`
-	Status        JITStatus         `json:"status"`
-	ApprovedBy    string            `json:"approvedBy,omitempty"`
-	DeniedBy      string            `json:"deniedBy,omitempty"`
-	DenialReason  string            `json:"denialReason,omitempty"`
-	CreatedAt     time.Time         `json:"createdAt"`
-	UpdatedAt     time.Time         `json:"updatedAt"`
-	ExpiresAt     time.Time         `json:"expiresAt,omitempty"`
-	GrantedAt     *time.Time        `json:"grantedAt,omitempty"`
-	Labels        map[string]string `json:"labels,omitempty"`
-	PolicyID      string            `json:"policyId,omitempty"`
+	ID             string            `json:"id"`
+	Requester      string            `json:"requester"`
+	RequesterEmail string            `json:"requesterEmail,omitempty"`
+	Resource       string            `json:"resource"`
+	ResourceType   string            `json:"resourceType"`
+	Role           string            `json:"role"`
+	Justification  string            `json:"justification"`
+	Duration       time.Duration     `json:"duration"`
+	Status         JITStatus         `json:"status"`
+	ApprovedBy     string            `json:"approvedBy,omitempty"`
+	DeniedBy       string            `json:"deniedBy,omitempty"`
+	DenialReason   string            `json:"denialReason,omitempty"`
+	CreatedAt      time.Time         `json:"createdAt"`
+	UpdatedAt      time.Time         `json:"updatedAt"`
+	ExpiresAt      time.Time         `json:"expiresAt,omitempty"`
+	GrantedAt      *time.Time        `json:"grantedAt,omitempty"`
+	Labels         map[string]string `json:"labels,omitempty"`
+	PolicyID       string            `json:"policyId,omitempty"`
 }
 
 // JITStatus represents the status of a JIT request
@@ -110,14 +110,14 @@ type JITPolicy struct {
 
 // JITAuditEvent represents an audit event for JIT access
 type JITAuditEvent struct {
-	Type        string                 `json:"type"` // request_created, request_approved, request_denied, access_granted, access_revoked, access_expired
-	Timestamp   time.Time              `json:"timestamp"`
-	Actor       string                 `json:"actor"`
-	RequestID   string                 `json:"requestId,omitempty"`
-	GrantID     string                 `json:"grantId,omitempty"`
-	Resource    string                 `json:"resource"`
-	Role        string                 `json:"role"`
-	Details     map[string]interface{} `json:"details,omitempty"`
+	Type      string                 `json:"type"` // request_created, request_approved, request_denied, access_granted, access_revoked, access_expired
+	Timestamp time.Time              `json:"timestamp"`
+	Actor     string                 `json:"actor"`
+	RequestID string                 `json:"requestId,omitempty"`
+	GrantID   string                 `json:"grantId,omitempty"`
+	Resource  string                 `json:"resource"`
+	Role      string                 `json:"role"`
+	Details   map[string]interface{} `json:"details,omitempty"`
 }
 
 // NewJITManager creates a new JITManager
@@ -755,11 +755,11 @@ func ProductionJITPolicy() *JITPolicy {
 
 // JITSummary provides a summary of JIT access state
 type JITSummary struct {
-	PendingRequests int       `json:"pendingRequests"`
-	ActiveGrants    int       `json:"activeGrants"`
+	PendingRequests int            `json:"pendingRequests"`
+	ActiveGrants    int            `json:"activeGrants"`
 	GrantsByRole    map[string]int `json:"grantsByRole"`
-	ExpiringNoon    int       `json:"expiringSoon"` // Expiring in next hour
-	GeneratedAt     time.Time `json:"generatedAt"`
+	ExpiringNoon    int            `json:"expiringSoon"` // Expiring in next hour
+	GeneratedAt     time.Time      `json:"generatedAt"`
 }
 
 // GetSummary returns a summary of JIT access state
@@ -768,8 +768,8 @@ func (m *JITManager) GetSummary(ctx context.Context) *JITSummary {
 	defer m.mu.RUnlock()
 
 	summary := &JITSummary{
-		GrantsByRole:  make(map[string]int),
-		GeneratedAt:   time.Now(),
+		GrantsByRole: make(map[string]int),
+		GeneratedAt:  time.Now(),
 	}
 
 	// Count pending requests

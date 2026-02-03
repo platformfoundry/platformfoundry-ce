@@ -15,12 +15,12 @@ import (
 type PreviewStatus string
 
 const (
-	StatusPending     PreviewStatus = "pending"
+	StatusPending      PreviewStatus = "pending"
 	StatusProvisioning PreviewStatus = "provisioning"
-	StatusReady       PreviewStatus = "ready"
-	StatusFailed      PreviewStatus = "failed"
-	StatusDeleting    PreviewStatus = "deleting"
-	StatusDeleted     PreviewStatus = "deleted"
+	StatusReady        PreviewStatus = "ready"
+	StatusFailed       PreviewStatus = "failed"
+	StatusDeleting     PreviewStatus = "deleting"
+	StatusDeleted      PreviewStatus = "deleted"
 )
 
 // DatabaseStrategy defines how to handle database for preview environments
@@ -91,11 +91,11 @@ type Orchestrator interface {
 
 // ManagerConfig contains configuration for the preview manager
 type ManagerConfig struct {
-	DefaultTTL       time.Duration
-	MaxTTL           time.Duration
-	URLPattern       string // e.g., "pr-{{.PR}}.preview.example.com"
-	CleanupInterval  time.Duration
-	MaxConcurrent    int
+	DefaultTTL      time.Duration
+	MaxTTL          time.Duration
+	URLPattern      string // e.g., "pr-{{.PR}}.preview.example.com"
+	CleanupInterval time.Duration
+	MaxConcurrent   int
 }
 
 // Manager manages preview environments

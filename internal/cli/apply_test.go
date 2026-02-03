@@ -14,13 +14,13 @@ import (
 
 func TestApplyCommand(t *testing.T) {
 	tests := []struct {
-		name           string
-		args           []string
-		fileContent    string
-		wantErr        bool
-		errContains    string
-		setupFunc      func(t *testing.T) string // Returns temp file path
-		cleanupFunc    func(string)
+		name        string
+		args        []string
+		fileContent string
+		wantErr     bool
+		errContains string
+		setupFunc   func(t *testing.T) string // Returns temp file path
+		cleanupFunc func(string)
 	}{
 		{
 			name: "apply with valid platform file",

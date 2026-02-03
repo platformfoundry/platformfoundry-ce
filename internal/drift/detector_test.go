@@ -139,7 +139,7 @@ func TestDetectAddedDrift(t *testing.T) {
 				"replicas": 3,
 			},
 			Actual: map[string]interface{}{
-				"replicas":  3,
+				"replicas":   3,
 				"extraField": "unexpected", // Added field
 			},
 		},

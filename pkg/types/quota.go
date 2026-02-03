@@ -6,10 +6,10 @@ import (
 
 // ResourceQuota defines resource limits for a scope (org, team, environment)
 type ResourceQuota struct {
-	APIVersion string             `yaml:"apiVersion" json:"apiVersion"`
-	Kind       string             `yaml:"kind" json:"kind"`
-	Metadata   QuotaMetadata      `yaml:"metadata" json:"metadata"`
-	Spec       ResourceQuotaSpec  `yaml:"spec" json:"spec"`
+	APIVersion string               `yaml:"apiVersion" json:"apiVersion"`
+	Kind       string               `yaml:"kind" json:"kind"`
+	Metadata   QuotaMetadata        `yaml:"metadata" json:"metadata"`
+	Spec       ResourceQuotaSpec    `yaml:"spec" json:"spec"`
 	Status     *ResourceQuotaStatus `yaml:"status,omitempty" json:"status,omitempty"`
 }
 

@@ -81,12 +81,12 @@ func TestNewManager(t *testing.T) {
 
 func TestParseSecretReference(t *testing.T) {
 	tests := []struct {
-		name      string
-		ref       string
-		wantErr   bool
-		provider  string
-		path      string
-		key       string
+		name     string
+		ref      string
+		wantErr  bool
+		provider string
+		path     string
+		key      string
 	}{
 		{
 			name:     "valid reference with key",

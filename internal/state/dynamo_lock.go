@@ -14,13 +14,13 @@ import (
 
 // DynamoLock implements distributed locking using DynamoDB
 type DynamoLock struct {
-	client     *dynamodb.Client
-	tableName  string
-	lockKey    string
-	sessionID  string
-	ttl        time.Duration
-	heartbeat  *time.Ticker
-	stop       chan struct{}
+	client    *dynamodb.Client
+	tableName string
+	lockKey   string
+	sessionID string
+	ttl       time.Duration
+	heartbeat *time.Ticker
+	stop      chan struct{}
 }
 
 // DynamoLockConfig represents DynamoDB lock configuration
@@ -153,7 +153,7 @@ func (l *DynamoLock) startHeartbeat(ctx context.Context) {
 					Key: map[string]types.AttributeValue{
 						"lockKey": &types.AttributeValueMemberS{Value: l.lockKey},
 					},
-					UpdateExpression: aws.String("SET #ttl = :newTTL"),
+					UpdateExpression:    aws.String("SET #ttl = :newTTL"),
 					ConditionExpression: aws.String("sessionID = :sessionID"),
 					ExpressionAttributeNames: map[string]string{
 						"#ttl": "ttl",

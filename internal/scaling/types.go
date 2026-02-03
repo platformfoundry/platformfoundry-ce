@@ -54,19 +54,19 @@ type ScalingPolicyMeta struct {
 
 // ScalingPolicySpec defines the scaling policy specification
 type ScalingPolicySpec struct {
-	Target       ScalingTarget       `yaml:"target" json:"target"`
-	Strategy     ScalingStrategy     `yaml:"strategy" json:"strategy"`
-	Metrics      []MetricSource      `yaml:"metrics" json:"metrics"`
-	Predictions  *PredictionConfig   `yaml:"predictions,omitempty" json:"predictions,omitempty"`
-	Constraints  ScalingConstraints  `yaml:"constraints" json:"constraints"`
-	Behavior     *ScalingBehavior    `yaml:"behavior,omitempty" json:"behavior,omitempty"`
-	CostPolicy   *CostPolicy         `yaml:"costPolicy,omitempty" json:"costPolicy,omitempty"`
-	Schedule     []ScheduledScaling  `yaml:"schedule,omitempty" json:"schedule,omitempty"`
+	Target      ScalingTarget      `yaml:"target" json:"target"`
+	Strategy    ScalingStrategy    `yaml:"strategy" json:"strategy"`
+	Metrics     []MetricSource     `yaml:"metrics" json:"metrics"`
+	Predictions *PredictionConfig  `yaml:"predictions,omitempty" json:"predictions,omitempty"`
+	Constraints ScalingConstraints `yaml:"constraints" json:"constraints"`
+	Behavior    *ScalingBehavior   `yaml:"behavior,omitempty" json:"behavior,omitempty"`
+	CostPolicy  *CostPolicy        `yaml:"costPolicy,omitempty" json:"costPolicy,omitempty"`
+	Schedule    []ScheduledScaling `yaml:"schedule,omitempty" json:"schedule,omitempty"`
 }
 
 // ScalingTarget defines what to scale
 type ScalingTarget struct {
-	Kind      string `yaml:"kind" json:"kind"`           // Deployment, StatefulSet, etc.
+	Kind      string `yaml:"kind" json:"kind"` // Deployment, StatefulSet, etc.
 	Name      string `yaml:"name" json:"name"`
 	Namespace string `yaml:"namespace,omitempty" json:"namespace,omitempty"`
 	Cluster   string `yaml:"cluster,omitempty" json:"cluster,omitempty"`
@@ -74,13 +74,13 @@ type ScalingTarget struct {
 
 // MetricSource defines a metric to use for scaling decisions
 type MetricSource struct {
-	Type       string            `yaml:"type" json:"type"`     // cpu, memory, custom, external
-	Name       string            `yaml:"name" json:"name"`     // Metric name
-	Source     string            `yaml:"source" json:"source"` // prometheus, datadog, cloudwatch
-	Query      string            `yaml:"query,omitempty" json:"query,omitempty"`
-	Target     MetricTarget      `yaml:"target" json:"target"`
-	Weight     float64           `yaml:"weight,omitempty" json:"weight,omitempty"` // For multi-metric decisions
-	Labels     map[string]string `yaml:"labels,omitempty" json:"labels,omitempty"`
+	Type   string            `yaml:"type" json:"type"`     // cpu, memory, custom, external
+	Name   string            `yaml:"name" json:"name"`     // Metric name
+	Source string            `yaml:"source" json:"source"` // prometheus, datadog, cloudwatch
+	Query  string            `yaml:"query,omitempty" json:"query,omitempty"`
+	Target MetricTarget      `yaml:"target" json:"target"`
+	Weight float64           `yaml:"weight,omitempty" json:"weight,omitempty"` // For multi-metric decisions
+	Labels map[string]string `yaml:"labels,omitempty" json:"labels,omitempty"`
 }
 
 // MetricTarget defines the target value for a metric
@@ -93,14 +93,14 @@ type MetricTarget struct {
 
 // PredictionConfig configures predictive scaling
 type PredictionConfig struct {
-	Enabled           bool            `yaml:"enabled" json:"enabled"`
-	Model             PredictionModel `yaml:"model" json:"model"`
-	Horizon           string          `yaml:"horizon" json:"horizon"`                                       // How far ahead to predict (e.g., "1h", "6h")
-	TrainingWindow    string          `yaml:"trainingWindow,omitempty" json:"trainingWindow,omitempty"`     // Historical data window
-	UpdateInterval    string          `yaml:"updateInterval,omitempty" json:"updateInterval,omitempty"`     // Model update frequency
-	ConfidenceLevel   float64         `yaml:"confidenceLevel,omitempty" json:"confidenceLevel,omitempty"`   // Min confidence to act
-	SeasonalityMode   string          `yaml:"seasonalityMode,omitempty" json:"seasonalityMode,omitempty"`   // daily, weekly, yearly
-	BufferPercentage  float64         `yaml:"bufferPercentage,omitempty" json:"bufferPercentage,omitempty"` // Extra capacity buffer
+	Enabled          bool            `yaml:"enabled" json:"enabled"`
+	Model            PredictionModel `yaml:"model" json:"model"`
+	Horizon          string          `yaml:"horizon" json:"horizon"`                                       // How far ahead to predict (e.g., "1h", "6h")
+	TrainingWindow   string          `yaml:"trainingWindow,omitempty" json:"trainingWindow,omitempty"`     // Historical data window
+	UpdateInterval   string          `yaml:"updateInterval,omitempty" json:"updateInterval,omitempty"`     // Model update frequency
+	ConfidenceLevel  float64         `yaml:"confidenceLevel,omitempty" json:"confidenceLevel,omitempty"`   // Min confidence to act
+	SeasonalityMode  string          `yaml:"seasonalityMode,omitempty" json:"seasonalityMode,omitempty"`   // daily, weekly, yearly
+	BufferPercentage float64         `yaml:"bufferPercentage,omitempty" json:"bufferPercentage,omitempty"` // Extra capacity buffer
 }
 
 // ScalingConstraints defines scaling limits
@@ -133,12 +133,12 @@ type ScalePolicy struct {
 
 // CostPolicy defines cost-aware scaling rules
 type CostPolicy struct {
-	MaxHourlyCost     float64 `yaml:"maxHourlyCost,omitempty" json:"maxHourlyCost,omitempty"`
-	MaxDailyCost      float64 `yaml:"maxDailyCost,omitempty" json:"maxDailyCost,omitempty"`
-	MaxMonthlyCost    float64 `yaml:"maxMonthlyCost,omitempty" json:"maxMonthlyCost,omitempty"`
-	PreferSpot        bool    `yaml:"preferSpot,omitempty" json:"preferSpot,omitempty"`
-	SpotPercentage    int     `yaml:"spotPercentage,omitempty" json:"spotPercentage,omitempty"`
-	OptimizeForCost   bool    `yaml:"optimizeForCost,omitempty" json:"optimizeForCost,omitempty"`
+	MaxHourlyCost   float64 `yaml:"maxHourlyCost,omitempty" json:"maxHourlyCost,omitempty"`
+	MaxDailyCost    float64 `yaml:"maxDailyCost,omitempty" json:"maxDailyCost,omitempty"`
+	MaxMonthlyCost  float64 `yaml:"maxMonthlyCost,omitempty" json:"maxMonthlyCost,omitempty"`
+	PreferSpot      bool    `yaml:"preferSpot,omitempty" json:"preferSpot,omitempty"`
+	SpotPercentage  int     `yaml:"spotPercentage,omitempty" json:"spotPercentage,omitempty"`
+	OptimizeForCost bool    `yaml:"optimizeForCost,omitempty" json:"optimizeForCost,omitempty"`
 }
 
 // ScheduledScaling defines time-based scaling
@@ -154,24 +154,24 @@ type ScheduledScaling struct {
 
 // ScalingPolicyStatus holds current policy status
 type ScalingPolicyStatus struct {
-	CurrentReplicas  int               `json:"currentReplicas"`
-	DesiredReplicas  int               `json:"desiredReplicas"`
-	LastScaleTime    *time.Time        `json:"lastScaleTime,omitempty"`
-	LastPrediction   *PredictionResult `json:"lastPrediction,omitempty"`
-	Conditions       []PolicyCondition `json:"conditions,omitempty"`
-	CurrentMetrics   []MetricValue     `json:"currentMetrics,omitempty"`
-	CostEstimate     *CostEstimate     `json:"costEstimate,omitempty"`
+	CurrentReplicas int               `json:"currentReplicas"`
+	DesiredReplicas int               `json:"desiredReplicas"`
+	LastScaleTime   *time.Time        `json:"lastScaleTime,omitempty"`
+	LastPrediction  *PredictionResult `json:"lastPrediction,omitempty"`
+	Conditions      []PolicyCondition `json:"conditions,omitempty"`
+	CurrentMetrics  []MetricValue     `json:"currentMetrics,omitempty"`
+	CostEstimate    *CostEstimate     `json:"costEstimate,omitempty"`
 }
 
 // PredictionResult holds prediction output
 type PredictionResult struct {
-	Timestamp       time.Time        `json:"timestamp"`
-	Horizon         string           `json:"horizon"`
-	PredictedLoad   float64          `json:"predictedLoad"`
-	ConfidenceLevel float64          `json:"confidenceLevel"`
-	RecommendedPods int              `json:"recommendedPods"`
-	Forecast        []ForecastPoint  `json:"forecast,omitempty"`
-	ModelMetrics    *ModelMetrics    `json:"modelMetrics,omitempty"`
+	Timestamp       time.Time       `json:"timestamp"`
+	Horizon         string          `json:"horizon"`
+	PredictedLoad   float64         `json:"predictedLoad"`
+	ConfidenceLevel float64         `json:"confidenceLevel"`
+	RecommendedPods int             `json:"recommendedPods"`
+	Forecast        []ForecastPoint `json:"forecast,omitempty"`
+	ModelMetrics    *ModelMetrics   `json:"modelMetrics,omitempty"`
 }
 
 // ForecastPoint represents a single forecast data point
@@ -184,10 +184,10 @@ type ForecastPoint struct {
 
 // ModelMetrics holds model performance metrics
 type ModelMetrics struct {
-	MAE         float64 `json:"mae"`          // Mean Absolute Error
-	RMSE        float64 `json:"rmse"`         // Root Mean Square Error
-	MAPE        float64 `json:"mape"`         // Mean Absolute Percentage Error
-	TrainingAge string  `json:"trainingAge"`  // Time since last training
+	MAE         float64 `json:"mae"`         // Mean Absolute Error
+	RMSE        float64 `json:"rmse"`        // Root Mean Square Error
+	MAPE        float64 `json:"mape"`        // Mean Absolute Percentage Error
+	TrainingAge string  `json:"trainingAge"` // Time since last training
 }
 
 // PolicyCondition represents a condition of the scaling policy
@@ -234,19 +234,19 @@ type ScalingEvent struct {
 
 // TrafficPattern represents learned traffic patterns
 type TrafficPattern struct {
-	Name          string           `json:"name"`
-	DayOfWeek     []DayPattern     `json:"dayOfWeek,omitempty"`
-	Seasonality   *SeasonalPattern `json:"seasonality,omitempty"`
-	Anomalies     []AnomalyPeriod  `json:"anomalies,omitempty"`
-	LastUpdated   time.Time        `json:"lastUpdated"`
+	Name        string           `json:"name"`
+	DayOfWeek   []DayPattern     `json:"dayOfWeek,omitempty"`
+	Seasonality *SeasonalPattern `json:"seasonality,omitempty"`
+	Anomalies   []AnomalyPeriod  `json:"anomalies,omitempty"`
+	LastUpdated time.Time        `json:"lastUpdated"`
 }
 
 // DayPattern represents traffic pattern for a day
 type DayPattern struct {
-	Day         string         `json:"day"` // Monday, Tuesday, etc.
-	HourlyLoad  []float64      `json:"hourlyLoad"` // 24 values
-	PeakHours   []int          `json:"peakHours"`
-	TroughHours []int          `json:"troughHours"`
+	Day         string    `json:"day"`        // Monday, Tuesday, etc.
+	HourlyLoad  []float64 `json:"hourlyLoad"` // 24 values
+	PeakHours   []int     `json:"peakHours"`
+	TroughHours []int     `json:"troughHours"`
 }
 
 // SeasonalPattern represents seasonal variations

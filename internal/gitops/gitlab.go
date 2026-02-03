@@ -750,63 +750,63 @@ type gitlabProject struct {
 }
 
 type gitlabMergeRequest struct {
-	ID           int64      `json:"id"`
-	IID          int        `json:"iid"`
-	Title        string     `json:"title"`
-	Description  string     `json:"description"`
-	State        string     `json:"state"`
-	WebURL       string     `json:"web_url"`
-	SourceBranch string     `json:"source_branch"`
-	TargetBranch string     `json:"target_branch"`
+	ID           int64  `json:"id"`
+	IID          int    `json:"iid"`
+	Title        string `json:"title"`
+	Description  string `json:"description"`
+	State        string `json:"state"`
+	WebURL       string `json:"web_url"`
+	SourceBranch string `json:"source_branch"`
+	TargetBranch string `json:"target_branch"`
 	Author       struct {
 		Username string `json:"username"`
 	} `json:"author"`
-	Draft           bool       `json:"draft"`
-	MergeStatus     string     `json:"merge_status"`
-	CreatedAt       time.Time  `json:"created_at"`
-	UpdatedAt       time.Time  `json:"updated_at"`
-	MergedAt        *time.Time `json:"merged_at"`
-	MergedBy        *struct {
+	Draft       bool       `json:"draft"`
+	MergeStatus string     `json:"merge_status"`
+	CreatedAt   time.Time  `json:"created_at"`
+	UpdatedAt   time.Time  `json:"updated_at"`
+	MergedAt    *time.Time `json:"merged_at"`
+	MergedBy    *struct {
 		Username string `json:"username"`
 	} `json:"merged_by"`
-	SHA             string   `json:"sha"`
-	Labels          []string `json:"labels"`
+	SHA    string   `json:"sha"`
+	Labels []string `json:"labels"`
 }
 
 type gitlabCommit struct {
-	ID             string    `json:"id"`
-	ShortID        string    `json:"short_id"`
-	Title          string    `json:"title"`
-	Message        string    `json:"message"`
-	AuthorName     string    `json:"author_name"`
-	CommitterName  string    `json:"committer_name"`
-	WebURL         string    `json:"web_url"`
-	CreatedAt      time.Time `json:"created_at"`
-	ParentIDs      []string  `json:"parent_ids"`
+	ID            string    `json:"id"`
+	ShortID       string    `json:"short_id"`
+	Title         string    `json:"title"`
+	Message       string    `json:"message"`
+	AuthorName    string    `json:"author_name"`
+	CommitterName string    `json:"committer_name"`
+	WebURL        string    `json:"web_url"`
+	CreatedAt     time.Time `json:"created_at"`
+	ParentIDs     []string  `json:"parent_ids"`
 }
 
 type gitlabBranch struct {
-	Name      string `json:"name"`
-	Commit    struct {
+	Name   string `json:"name"`
+	Commit struct {
 		ID string `json:"id"`
 	} `json:"commit"`
-	Protected bool   `json:"protected"`
-	Default   bool   `json:"default"`
+	Protected bool `json:"protected"`
+	Default   bool `json:"default"`
 }
 
 type gitlabWebhook struct {
-	ID                    int64     `json:"id"`
-	URL                   string    `json:"url"`
-	PushEvents            bool      `json:"push_events"`
-	MergeRequestsEvents   bool      `json:"merge_requests_events"`
-	IssuesEvents          bool      `json:"issues_events"`
-	CreatedAt             time.Time `json:"created_at"`
+	ID                  int64     `json:"id"`
+	URL                 string    `json:"url"`
+	PushEvents          bool      `json:"push_events"`
+	MergeRequestsEvents bool      `json:"merge_requests_events"`
+	IssuesEvents        bool      `json:"issues_events"`
+	CreatedAt           time.Time `json:"created_at"`
 }
 
 type gitlabNote struct {
-	ID        int64     `json:"id"`
-	Body      string    `json:"body"`
-	Author    struct {
+	ID     int64  `json:"id"`
+	Body   string `json:"body"`
+	Author struct {
 		Username string `json:"username"`
 	} `json:"author"`
 	CreatedAt time.Time `json:"created_at"`

@@ -577,7 +577,7 @@ func (m *mockPlugin) Type() string {
 	}
 	return "Test"
 }
-func (m *mockPlugin) Version() string { return "1.0.0" }
+func (m *mockPlugin) Version() string         { return "1.0.0" }
 func (m *mockPlugin) ConfigType() interface{} { return nil }
 
 func (m *mockPlugin) Validate(spec map[string]interface{}) error {

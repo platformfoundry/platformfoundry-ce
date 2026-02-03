@@ -46,16 +46,16 @@ type ResourceState struct {
 type ResourceStatus string
 
 const (
-	ResourceStatusUnknown    ResourceStatus = "unknown"
-	ResourceStatusPending    ResourceStatus = "pending"
-	ResourceStatusCreating   ResourceStatus = "creating"
-	ResourceStatusUpdating   ResourceStatus = "updating"
-	ResourceStatusDeleting   ResourceStatus = "deleting"
-	ResourceStatusReady      ResourceStatus = "ready"
-	ResourceStatusError      ResourceStatus = "error"
-	ResourceStatusDegraded   ResourceStatus = "degraded"
-	ResourceStatusNotFound   ResourceStatus = "not_found"
-	ResourceStatusTainted    ResourceStatus = "tainted"
+	ResourceStatusUnknown  ResourceStatus = "unknown"
+	ResourceStatusPending  ResourceStatus = "pending"
+	ResourceStatusCreating ResourceStatus = "creating"
+	ResourceStatusUpdating ResourceStatus = "updating"
+	ResourceStatusDeleting ResourceStatus = "deleting"
+	ResourceStatusReady    ResourceStatus = "ready"
+	ResourceStatusError    ResourceStatus = "error"
+	ResourceStatusDegraded ResourceStatus = "degraded"
+	ResourceStatusNotFound ResourceStatus = "not_found"
+	ResourceStatusTainted  ResourceStatus = "tainted"
 )
 
 // Plan represents the changes that will be made to a resource

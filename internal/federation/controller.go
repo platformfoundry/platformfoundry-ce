@@ -83,15 +83,15 @@ const (
 
 // ClusterHealth represents the health of a cluster
 type ClusterHealth struct {
-	Status      ClusterStatus `json:"status"`
-	Message     string        `json:"message,omitempty"`
-	Latency     time.Duration `json:"latency"`
-	CheckedAt   time.Time     `json:"checkedAt"`
-	NodeCount   int           `json:"nodeCount"`
-	HealthyNodes int          `json:"healthyNodes"`
-	CPUUsage    float64       `json:"cpuUsage"`
-	MemoryUsage float64       `json:"memoryUsage"`
-	DiskUsage   float64       `json:"diskUsage"`
+	Status       ClusterStatus `json:"status"`
+	Message      string        `json:"message,omitempty"`
+	Latency      time.Duration `json:"latency"`
+	CheckedAt    time.Time     `json:"checkedAt"`
+	NodeCount    int           `json:"nodeCount"`
+	HealthyNodes int           `json:"healthyNodes"`
+	CPUUsage     float64       `json:"cpuUsage"`
+	MemoryUsage  float64       `json:"memoryUsage"`
+	DiskUsage    float64       `json:"diskUsage"`
 }
 
 // Federation represents a group of federated clusters
@@ -110,50 +110,50 @@ type Federation struct {
 // ClusterRef references a cluster in a federation
 type ClusterRef struct {
 	Name     string `json:"name" yaml:"name"`
-	Priority int    `json:"priority" yaml:"priority"` // Higher priority = preferred
+	Priority int    `json:"priority" yaml:"priority"`                 // Higher priority = preferred
 	Weight   int    `json:"weight,omitempty" yaml:"weight,omitempty"` // For weighted traffic
 }
 
 // FailoverPolicy defines how failover should be handled
 type FailoverPolicy struct {
-	Automatic       bool          `json:"automatic" yaml:"automatic"`
-	MinHealthy      int           `json:"minHealthy" yaml:"minHealthy"`         // Minimum healthy clusters
-	FailureThreshold int          `json:"failureThreshold" yaml:"failureThreshold"` // Failures before failover
-	CooldownPeriod  time.Duration `json:"cooldownPeriod" yaml:"cooldownPeriod"`
-	PreferRegion    bool          `json:"preferRegion" yaml:"preferRegion"` // Prefer same region for failover
+	Automatic        bool          `json:"automatic" yaml:"automatic"`
+	MinHealthy       int           `json:"minHealthy" yaml:"minHealthy"`             // Minimum healthy clusters
+	FailureThreshold int           `json:"failureThreshold" yaml:"failureThreshold"` // Failures before failover
+	CooldownPeriod   time.Duration `json:"cooldownPeriod" yaml:"cooldownPeriod"`
+	PreferRegion     bool          `json:"preferRegion" yaml:"preferRegion"` // Prefer same region for failover
 }
 
 // TrafficPolicy defines how traffic should be distributed
 type TrafficPolicy struct {
-	Distribution string         `json:"distribution" yaml:"distribution"` // latency-based, geo, weighted, failover
-	Weights      map[string]int `json:"weights,omitempty" yaml:"weights,omitempty"`
+	Distribution string            `json:"distribution" yaml:"distribution"` // latency-based, geo, weighted, failover
+	Weights      map[string]int    `json:"weights,omitempty" yaml:"weights,omitempty"`
 	HealthCheck  HealthCheckConfig `json:"healthCheck" yaml:"healthCheck"`
 }
 
 // HealthCheckConfig defines health check settings
 type HealthCheckConfig struct {
-	Interval    time.Duration `json:"interval" yaml:"interval"`
-	Timeout     time.Duration `json:"timeout" yaml:"timeout"`
-	Threshold   int           `json:"threshold" yaml:"threshold"`
-	Path        string        `json:"path,omitempty" yaml:"path,omitempty"`
+	Interval  time.Duration `json:"interval" yaml:"interval"`
+	Timeout   time.Duration `json:"timeout" yaml:"timeout"`
+	Threshold int           `json:"threshold" yaml:"threshold"`
+	Path      string        `json:"path,omitempty" yaml:"path,omitempty"`
 }
 
 // ReplicationPolicy defines how data should be replicated
 type ReplicationPolicy struct {
-	Mode          string   `json:"mode" yaml:"mode"` // sync, async, none
-	Targets       []string `json:"targets,omitempty" yaml:"targets,omitempty"`
-	Resources     []string `json:"resources,omitempty" yaml:"resources,omitempty"` // Resource types to replicate
+	Mode          string            `json:"mode" yaml:"mode"` // sync, async, none
+	Targets       []string          `json:"targets,omitempty" yaml:"targets,omitempty"`
+	Resources     []string          `json:"resources,omitempty" yaml:"resources,omitempty"` // Resource types to replicate
 	ExcludeLabels map[string]string `json:"excludeLabels,omitempty" yaml:"excludeLabels,omitempty"`
 }
 
 // Workload represents a workload that can be migrated
 type Workload struct {
-	Name        string            `json:"name"`
-	Namespace   string            `json:"namespace"`
-	Type        string            `json:"type"` // deployment, statefulset, etc.
-	Replicas    int               `json:"replicas"`
-	Labels      map[string]string `json:"labels,omitempty"`
-	Cluster     string            `json:"cluster"`
+	Name      string            `json:"name"`
+	Namespace string            `json:"namespace"`
+	Type      string            `json:"type"` // deployment, statefulset, etc.
+	Replicas  int               `json:"replicas"`
+	Labels    map[string]string `json:"labels,omitempty"`
+	Cluster   string            `json:"cluster"`
 }
 
 // ErrClusterNotFound is returned when a cluster is not found
@@ -563,12 +563,12 @@ func (c *Controller) GetFederationSummary(ctx context.Context) *FederationSummar
 
 // FederationSummary provides a summary of federation state
 type FederationSummary struct {
-	TotalClusters    int                      `json:"totalClusters"`
-	HealthyClusters  int                      `json:"healthyClusters"`
-	TotalFederations int                      `json:"totalFederations"`
-	ClustersByStatus map[ClusterStatus]int    `json:"clustersByStatus"`
-	ClustersByRegion map[string]int           `json:"clustersByRegion"`
-	GeneratedAt      time.Time                `json:"generatedAt"`
+	TotalClusters    int                   `json:"totalClusters"`
+	HealthyClusters  int                   `json:"healthyClusters"`
+	TotalFederations int                   `json:"totalFederations"`
+	ClustersByStatus map[ClusterStatus]int `json:"clustersByStatus"`
+	ClustersByRegion map[string]int        `json:"clustersByRegion"`
+	GeneratedAt      time.Time             `json:"generatedAt"`
 }
 
 // DefaultFailoverPolicy returns a default failover policy

@@ -14,7 +14,7 @@ type PlatformGenerator struct{}
 type PlatformConfig struct {
 	Name         string
 	Organization string
-	Type         string   // kubernetes, serverless, hybrid
+	Type         string // kubernetes, serverless, hybrid
 	Environments []string
 }
 

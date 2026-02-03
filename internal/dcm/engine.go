@@ -33,9 +33,9 @@ type StateBackend interface {
 
 // EngineConfig contains engine configuration
 type EngineConfig struct {
-	DefaultTimeout      time.Duration
+	DefaultTimeout       time.Duration
 	ParallelProvisioning int
-	DryRunDefault       bool
+	DryRunDefault        bool
 }
 
 // NewEngine creates a new DCM engine

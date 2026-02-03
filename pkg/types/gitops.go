@@ -7,11 +7,11 @@ import (
 // GitOpsConfigV2 defines an advanced GitOps configuration for platform state management
 // This extends the basic GitOpsConfig with full workflow support
 type GitOpsConfigV2 struct {
-	APIVersion string              `yaml:"apiVersion" json:"apiVersion"`
-	Kind       string              `yaml:"kind" json:"kind"`
-	Metadata   GitOpsMetadata      `yaml:"metadata" json:"metadata"`
-	Spec       GitOpsSpecV2        `yaml:"spec" json:"spec"`
-	Status     *GitOpsStatusV2     `yaml:"status,omitempty" json:"status,omitempty"`
+	APIVersion string          `yaml:"apiVersion" json:"apiVersion"`
+	Kind       string          `yaml:"kind" json:"kind"`
+	Metadata   GitOpsMetadata  `yaml:"metadata" json:"metadata"`
+	Spec       GitOpsSpecV2    `yaml:"spec" json:"spec"`
+	Status     *GitOpsStatusV2 `yaml:"status,omitempty" json:"status,omitempty"`
 }
 
 // GitOpsMetadata contains metadata for the GitOps configuration
@@ -24,21 +24,21 @@ type GitOpsMetadata struct {
 
 // GitOpsSpecV2 defines the desired GitOps configuration (advanced version)
 type GitOpsSpecV2 struct {
-	Repository       GitOpsRepository      `yaml:"repository" json:"repository"`
-	PullRequest      PullRequestConfig     `yaml:"pullRequest,omitempty" json:"pullRequest,omitempty"`
-	Sync             GitOpsSyncConfig      `yaml:"sync" json:"sync"`
-	Notifications    GitOpsNotifications   `yaml:"notifications,omitempty" json:"notifications,omitempty"`
-	Environments     []GitOpsEnvironment   `yaml:"environments,omitempty" json:"environments,omitempty"`
+	Repository    GitOpsRepository    `yaml:"repository" json:"repository"`
+	PullRequest   PullRequestConfig   `yaml:"pullRequest,omitempty" json:"pullRequest,omitempty"`
+	Sync          GitOpsSyncConfig    `yaml:"sync" json:"sync"`
+	Notifications GitOpsNotifications `yaml:"notifications,omitempty" json:"notifications,omitempty"`
+	Environments  []GitOpsEnvironment `yaml:"environments,omitempty" json:"environments,omitempty"`
 }
 
 // GitOpsRepository defines the Git repository settings
 type GitOpsRepository struct {
-	URL           string               `yaml:"url" json:"url"`
-	Branch        string               `yaml:"branch" json:"branch"`
-	Path          string               `yaml:"path,omitempty" json:"path,omitempty"`
-	SecretRef     string               `yaml:"secretRef,omitempty" json:"secretRef,omitempty"`
-	Provider      string               `yaml:"provider,omitempty" json:"provider,omitempty"` // github, gitlab, bitbucket
-	Authentication *GitOpsAuthConfig   `yaml:"authentication,omitempty" json:"authentication,omitempty"`
+	URL            string            `yaml:"url" json:"url"`
+	Branch         string            `yaml:"branch" json:"branch"`
+	Path           string            `yaml:"path,omitempty" json:"path,omitempty"`
+	SecretRef      string            `yaml:"secretRef,omitempty" json:"secretRef,omitempty"`
+	Provider       string            `yaml:"provider,omitempty" json:"provider,omitempty"` // github, gitlab, bitbucket
+	Authentication *GitOpsAuthConfig `yaml:"authentication,omitempty" json:"authentication,omitempty"`
 }
 
 // GitOpsAuthConfig defines authentication settings for the repository
@@ -62,13 +62,13 @@ type PullRequestConfig struct {
 
 // GitOpsSyncConfig defines synchronization settings
 type GitOpsSyncConfig struct {
-	Interval      string             `yaml:"interval" json:"interval"` // e.g., "5m", "1h"
-	Prune         bool               `yaml:"prune" json:"prune"`
-	SelfHeal      bool               `yaml:"selfHeal" json:"selfHeal"`
-	DryRun        bool               `yaml:"dryRun" json:"dryRun"`
-	Timeout       string             `yaml:"timeout,omitempty" json:"timeout,omitempty"`
-	RetryPolicy   *GitOpsRetryPolicy `yaml:"retryPolicy,omitempty" json:"retryPolicy,omitempty"`
-	IgnoreDiffs   []GitOpsIgnoreDiff `yaml:"ignoreDiffs,omitempty" json:"ignoreDiffs,omitempty"`
+	Interval    string             `yaml:"interval" json:"interval"` // e.g., "5m", "1h"
+	Prune       bool               `yaml:"prune" json:"prune"`
+	SelfHeal    bool               `yaml:"selfHeal" json:"selfHeal"`
+	DryRun      bool               `yaml:"dryRun" json:"dryRun"`
+	Timeout     string             `yaml:"timeout,omitempty" json:"timeout,omitempty"`
+	RetryPolicy *GitOpsRetryPolicy `yaml:"retryPolicy,omitempty" json:"retryPolicy,omitempty"`
+	IgnoreDiffs []GitOpsIgnoreDiff `yaml:"ignoreDiffs,omitempty" json:"ignoreDiffs,omitempty"`
 }
 
 // GitOpsRetryPolicy defines retry behavior for sync operations
@@ -142,26 +142,26 @@ type GitOpsPromotionConfig struct {
 
 // GitOpsStatusV2 represents the current state of a GitOps configuration
 type GitOpsStatusV2 struct {
-	Phase           GitOpsPhase         `yaml:"phase" json:"phase"`
-	LastSyncTime    *time.Time          `yaml:"lastSyncTime,omitempty" json:"lastSyncTime,omitempty"`
-	LastSyncCommit  string              `yaml:"lastSyncCommit,omitempty" json:"lastSyncCommit,omitempty"`
-	SyncStatus      GitOpsSyncStatus    `yaml:"syncStatus" json:"syncStatus"`
-	HealthStatus    GitOpsHealthStatus  `yaml:"healthStatus" json:"healthStatus"`
-	Conditions      []GitOpsCondition   `yaml:"conditions,omitempty" json:"conditions,omitempty"`
-	ObservedGen     int64               `yaml:"observedGeneration,omitempty" json:"observedGeneration,omitempty"`
+	Phase          GitOpsPhase        `yaml:"phase" json:"phase"`
+	LastSyncTime   *time.Time         `yaml:"lastSyncTime,omitempty" json:"lastSyncTime,omitempty"`
+	LastSyncCommit string             `yaml:"lastSyncCommit,omitempty" json:"lastSyncCommit,omitempty"`
+	SyncStatus     GitOpsSyncStatus   `yaml:"syncStatus" json:"syncStatus"`
+	HealthStatus   GitOpsHealthStatus `yaml:"healthStatus" json:"healthStatus"`
+	Conditions     []GitOpsCondition  `yaml:"conditions,omitempty" json:"conditions,omitempty"`
+	ObservedGen    int64              `yaml:"observedGeneration,omitempty" json:"observedGeneration,omitempty"`
 }
 
 // GitOpsPhase represents the phase of a GitOps configuration
 type GitOpsPhase string
 
 const (
-	GitOpsPhaseUnknown     GitOpsPhase = "Unknown"
-	GitOpsPhasePending     GitOpsPhase = "Pending"
-	GitOpsPhaseRunning     GitOpsPhase = "Running"
-	GitOpsPhaseSynced      GitOpsPhase = "Synced"
-	GitOpsPhaseOutOfSync   GitOpsPhase = "OutOfSync"
-	GitOpsPhaseFailed      GitOpsPhase = "Failed"
-	GitOpsPhaseSuspended   GitOpsPhase = "Suspended"
+	GitOpsPhaseUnknown   GitOpsPhase = "Unknown"
+	GitOpsPhasePending   GitOpsPhase = "Pending"
+	GitOpsPhaseRunning   GitOpsPhase = "Running"
+	GitOpsPhaseSynced    GitOpsPhase = "Synced"
+	GitOpsPhaseOutOfSync GitOpsPhase = "OutOfSync"
+	GitOpsPhaseFailed    GitOpsPhase = "Failed"
+	GitOpsPhaseSuspended GitOpsPhase = "Suspended"
 )
 
 // GitOpsSyncStatus represents the synchronization status
@@ -224,13 +224,13 @@ type GitOpsChange struct {
 
 // GitOpsSyncResult represents the result of a sync operation
 type GitOpsSyncResult struct {
-	Success      bool           `json:"success"`
-	Revision     string         `json:"revision"`
-	Message      string         `json:"message"`
-	Resources    []SyncedResource `json:"resources,omitempty"`
-	Errors       []string       `json:"errors,omitempty"`
-	Duration     time.Duration  `json:"duration"`
-	CompletedAt  time.Time      `json:"completedAt"`
+	Success     bool             `json:"success"`
+	Revision    string           `json:"revision"`
+	Message     string           `json:"message"`
+	Resources   []SyncedResource `json:"resources,omitempty"`
+	Errors      []string         `json:"errors,omitempty"`
+	Duration    time.Duration    `json:"duration"`
+	CompletedAt time.Time        `json:"completedAt"`
 }
 
 // SyncedResource represents a resource that was synced

@@ -31,21 +31,21 @@ type DiagnosisResult struct {
 
 // Evidence represents evidence supporting a diagnosis
 type Evidence struct {
-	Type        string    `json:"type"` // log, metric, event, config
-	Source      string    `json:"source"`
-	Description string    `json:"description"`
-	Timestamp   time.Time `json:"timestamp"`
+	Type        string      `json:"type"` // log, metric, event, config
+	Source      string      `json:"source"`
+	Description string      `json:"description"`
+	Timestamp   time.Time   `json:"timestamp"`
 	Data        interface{} `json:"data,omitempty"`
-	Relevance   float64   `json:"relevance"` // 0-1 how relevant this evidence is
+	Relevance   float64     `json:"relevance"` // 0-1 how relevant this evidence is
 }
 
 // SuggestedFix represents a suggested fix for an issue
 type SuggestedFix struct {
-	Description  string    `json:"description"`
-	Command      string    `json:"command,omitempty"`
-	ActionPlan   *ActionPlan `json:"actionPlan,omitempty"`
-	Confidence   float64   `json:"confidence"`
-	RiskLevel    RiskLevel `json:"riskLevel"`
+	Description   string        `json:"description"`
+	Command       string        `json:"command,omitempty"`
+	ActionPlan    *ActionPlan   `json:"actionPlan,omitempty"`
+	Confidence    float64       `json:"confidence"`
+	RiskLevel     RiskLevel     `json:"riskLevel"`
 	EstimatedTime time.Duration `json:"estimatedTime"`
 }
 
@@ -62,10 +62,10 @@ type Incident struct {
 
 // TimelineEvent represents an event in the troubleshooting timeline
 type TimelineEvent struct {
-	Timestamp   time.Time `json:"timestamp"`
-	Type        string    `json:"type"`
-	Description string    `json:"description"`
-	Source      string    `json:"source"`
+	Timestamp   time.Time     `json:"timestamp"`
+	Type        string        `json:"type"`
+	Description string        `json:"description"`
+	Source      string        `json:"source"`
 	Severity    SeverityLevel `json:"severity"`
 }
 
@@ -77,9 +77,9 @@ type HealthChecker interface {
 
 // HealthStatus represents the health status of a component
 type HealthStatus struct {
-	Status    string    `json:"status"` // healthy, degraded, unhealthy
-	Message   string    `json:"message,omitempty"`
-	LastCheck time.Time `json:"lastCheck"`
+	Status    string             `json:"status"` // healthy, degraded, unhealthy
+	Message   string             `json:"message,omitempty"`
+	LastCheck time.Time          `json:"lastCheck"`
 	Metrics   map[string]float64 `json:"metrics,omitempty"`
 }
 
@@ -98,31 +98,31 @@ type MetricsClient interface {
 
 // MetricResult represents a metric query result
 type MetricResult struct {
-	Name      string    `json:"name"`
-	Value     float64   `json:"value"`
-	Timestamp time.Time `json:"timestamp"`
+	Name      string            `json:"name"`
+	Value     float64           `json:"value"`
+	Timestamp time.Time         `json:"timestamp"`
 	Labels    map[string]string `json:"labels"`
 }
 
 // Anomaly represents a detected anomaly
 type Anomaly struct {
-	Metric    string    `json:"metric"`
-	Expected  float64   `json:"expected"`
-	Actual    float64   `json:"actual"`
-	Deviation float64   `json:"deviation"`
-	Timestamp time.Time `json:"timestamp"`
+	Metric    string        `json:"metric"`
+	Expected  float64       `json:"expected"`
+	Actual    float64       `json:"actual"`
+	Deviation float64       `json:"deviation"`
+	Timestamp time.Time     `json:"timestamp"`
 	Severity  SeverityLevel `json:"severity"`
 }
 
 // KnownIssue represents a known issue pattern
 type KnownIssue struct {
-	ID          string   `json:"id"`
-	Pattern     string   `json:"pattern"`
-	Keywords    []string `json:"keywords"`
-	RootCause   string   `json:"rootCause"`
-	Resolution  string   `json:"resolution"`
-	Commands    []string `json:"commands,omitempty"`
-	Severity    SeverityLevel `json:"severity"`
+	ID         string        `json:"id"`
+	Pattern    string        `json:"pattern"`
+	Keywords   []string      `json:"keywords"`
+	RootCause  string        `json:"rootCause"`
+	Resolution string        `json:"resolution"`
+	Commands   []string      `json:"commands,omitempty"`
+	Severity   SeverityLevel `json:"severity"`
 }
 
 // KnowledgeBase interface for known issues

@@ -48,12 +48,12 @@ type Resource struct {
 
 // Component represents a reusable component definition
 type Component struct {
-	Name        string                 `json:"name" yaml:"name"`
-	Version     string                 `json:"version" yaml:"version"`
-	Description string                 `json:"description,omitempty" yaml:"description,omitempty"`
-	Resources   []Resource             `json:"resources" yaml:"resources"`
-	Config      map[string]interface{} `json:"config,omitempty" yaml:"config,omitempty"`
-	Dependencies []string              `json:"dependencies,omitempty" yaml:"dependencies,omitempty"`
+	Name         string                 `json:"name" yaml:"name"`
+	Version      string                 `json:"version" yaml:"version"`
+	Description  string                 `json:"description,omitempty" yaml:"description,omitempty"`
+	Resources    []Resource             `json:"resources" yaml:"resources"`
+	Config       map[string]interface{} `json:"config,omitempty" yaml:"config,omitempty"`
+	Dependencies []string               `json:"dependencies,omitempty" yaml:"dependencies,omitempty"`
 }
 
 // ResolvedEnvironment represents a fully resolved environment with all inheritance applied
@@ -371,10 +371,10 @@ func (e *CompositionEngine) GetInheritanceChain(ctx context.Context, envName str
 // Diff compares two environments and returns differences
 func (e *CompositionEngine) Diff(env1, env2 *ResolvedEnvironment) *EnvironmentDiff {
 	diff := &EnvironmentDiff{
-		AddedResources:   make([]string, 0),
-		RemovedResources: make([]string, 0),
+		AddedResources:    make([]string, 0),
+		RemovedResources:  make([]string, 0),
 		ModifiedResources: make([]string, 0),
-		ConfigChanges:    make(map[string]ConfigChange),
+		ConfigChanges:     make(map[string]ConfigChange),
 	}
 
 	// Check for added/removed resources
@@ -409,9 +409,9 @@ func (e *CompositionEngine) Diff(env1, env2 *ResolvedEnvironment) *EnvironmentDi
 
 // EnvironmentDiff represents differences between two environments
 type EnvironmentDiff struct {
-	AddedResources    []string               `json:"addedResources"`
-	RemovedResources  []string               `json:"removedResources"`
-	ModifiedResources []string               `json:"modifiedResources"`
+	AddedResources    []string                `json:"addedResources"`
+	RemovedResources  []string                `json:"removedResources"`
+	ModifiedResources []string                `json:"modifiedResources"`
 	ConfigChanges     map[string]ConfigChange `json:"configChanges"`
 }
 

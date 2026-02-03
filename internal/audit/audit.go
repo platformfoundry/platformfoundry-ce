@@ -28,15 +28,15 @@ const (
 type ResourceType string
 
 const (
-	ResourcePlatform      ResourceType = "Platform"
-	ResourceInfrastructure ResourceType = "Infrastructure"
-	ResourceOrchestrator  ResourceType = "Orchestrator"
-	ResourceObservability ResourceType = "Observability"
-	ResourceDevEx         ResourceType = "DevEx"
-	ResourcePipeline      ResourceType = "Pipeline"
-	ResourceMesh          ResourceType = "Mesh"
-	ResourceSecurity      ResourceType = "Security"
-	ResourceCompliance    ResourceType = "Compliance"
+	ResourcePlatform        ResourceType = "Platform"
+	ResourceInfrastructure  ResourceType = "Infrastructure"
+	ResourceOrchestrator    ResourceType = "Orchestrator"
+	ResourceObservability   ResourceType = "Observability"
+	ResourceDevEx           ResourceType = "DevEx"
+	ResourcePipeline        ResourceType = "Pipeline"
+	ResourceMesh            ResourceType = "Mesh"
+	ResourceSecurity        ResourceType = "Security"
+	ResourceCompliance      ResourceType = "Compliance"
 	ResourceJob             ResourceType = "Job"
 	ResourcePlugin          ResourceType = "Plugin"
 	ResourceUser            ResourceType = "User"
@@ -63,13 +63,13 @@ type Event struct {
 
 // Logger manages audit logging
 type Logger struct {
-	destination  string // file path, syslog, etc.
-	destType     string // file, syslog, cloud
-	file         *os.File
-	mu           sync.Mutex
-	buffer       []Event
+	destination   string // file path, syslog, etc.
+	destType      string // file, syslog, cloud
+	file          *os.File
+	mu            sync.Mutex
+	buffer        []Event
 	maxBufferSize int
-	retention    time.Duration
+	retention     time.Duration
 }
 
 // Config represents audit logger configuration

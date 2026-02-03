@@ -22,12 +22,12 @@ const (
 type ResourceType string
 
 const (
-	ResourceTypeCompute     ResourceType = "compute"
-	ResourceTypeStorage     ResourceType = "storage"
-	ResourceTypeDatabase    ResourceType = "database"
-	ResourceTypeNetwork     ResourceType = "network"
+	ResourceTypeCompute      ResourceType = "compute"
+	ResourceTypeStorage      ResourceType = "storage"
+	ResourceTypeDatabase     ResourceType = "database"
+	ResourceTypeNetwork      ResourceType = "network"
 	ResourceTypeLoadBalancer ResourceType = "load_balancer"
-	ResourceTypeKubernetes  ResourceType = "kubernetes"
+	ResourceTypeKubernetes   ResourceType = "kubernetes"
 )
 
 // Resource represents a cloud resource with cost information
@@ -64,7 +64,7 @@ type Budget struct {
 	ID          string    `json:"id"`
 	Name        string    `json:"name"`
 	Amount      float64   `json:"amount"`
-	Period      string    `json:"period"` // hourly, daily, monthly, yearly
+	Period      string    `json:"period"`    // hourly, daily, monthly, yearly
 	Threshold   float64   `json:"threshold"` // percentage for alerts (e.g., 80%)
 	Currency    string    `json:"currency"`
 	NotifyEmail string    `json:"notifyEmail,omitempty"`
@@ -137,8 +137,8 @@ func (e *Estimator) EstimateResource(ctx context.Context, resource *Resource) (*
 	hourlyCost := e.calculateResourceCost(resource, pricing)
 
 	resource.HourlyCost = hourlyCost
-	resource.MonthlyCost = hourlyCost * 730  // Average hours per month
-	resource.YearlyCost = hourlyCost * 8760  // Hours per year
+	resource.MonthlyCost = hourlyCost * 730 // Average hours per month
+	resource.YearlyCost = hourlyCost * 8760 // Hours per year
 	resource.Currency = pricing.Currency
 
 	return resource, nil
@@ -190,12 +190,12 @@ func (e *Estimator) calculateResourceCost(resource *Resource, pricing *Pricing) 
 // EstimatePlatform creates a cost estimate for an entire platform
 func (e *Estimator) EstimatePlatform(ctx context.Context, platformName string, provider Provider, resources []*Resource) (*Estimate, error) {
 	estimate := &Estimate{
-		ID:           generateEstimateID(),
-		PlatformName: platformName,
-		Provider:     provider,
-		Timestamp:    time.Now(),
-		Resources:    make([]*Resource, 0, len(resources)),
-		Currency:     "USD",
+		ID:              generateEstimateID(),
+		PlatformName:    platformName,
+		Provider:        provider,
+		Timestamp:       time.Now(),
+		Resources:       make([]*Resource, 0, len(resources)),
+		Currency:        "USD",
 		Recommendations: make([]string, 0),
 	}
 

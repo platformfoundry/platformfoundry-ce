@@ -22,13 +22,13 @@ const (
 
 // Check represents a single health check
 type Check struct {
-	Name        string      `json:"name"`
-	Category    string      `json:"category"`
-	Status      CheckStatus `json:"status"`
-	Message     string      `json:"message"`
-	Details     string      `json:"details,omitempty"`
+	Name        string        `json:"name"`
+	Category    string        `json:"category"`
+	Status      CheckStatus   `json:"status"`
+	Message     string        `json:"message"`
+	Details     string        `json:"details,omitempty"`
 	Duration    time.Duration `json:"duration"`
-	Remediation string      `json:"remediation,omitempty"`
+	Remediation string        `json:"remediation,omitempty"`
 }
 
 // Report contains all health check results

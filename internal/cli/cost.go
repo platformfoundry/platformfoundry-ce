@@ -9,15 +9,15 @@ import (
 )
 
 var (
-	costProvider      string
-	costRegion        string
-	costPricingFile   string
-	costEstimatesDir  string
-	costBudgetsDir    string
-	costBudgetAmount  float64
-	costBudgetPeriod  string
+	costProvider        string
+	costRegion          string
+	costPricingFile     string
+	costEstimatesDir    string
+	costBudgetsDir      string
+	costBudgetAmount    float64
+	costBudgetPeriod    string
 	costBudgetThreshold float64
-	costBudgetEmail   string
+	costBudgetEmail     string
 )
 
 var costCmd = &cobra.Command{
@@ -36,20 +36,20 @@ var costEstimateCmd = &cobra.Command{
 }
 
 var costListCmd = &cobra.Command{
-	Use:   "list",
-	Short: "List cost estimates",
-	Long:  `List all cost estimates.`,
+	Use:     "list",
+	Short:   "List cost estimates",
+	Long:    `List all cost estimates.`,
 	Example: `  pf cost list`,
-	RunE: runCostList,
+	RunE:    runCostList,
 }
 
 var costShowCmd = &cobra.Command{
-	Use:   "show <estimate-id>",
-	Short: "Show cost estimate details",
-	Long:  `Show detailed cost estimate.`,
+	Use:     "show <estimate-id>",
+	Short:   "Show cost estimate details",
+	Long:    `Show detailed cost estimate.`,
 	Example: `  pf cost show platform-20240115-120000.json`,
-	Args: cobra.ExactArgs(1),
-	RunE: runCostShow,
+	Args:    cobra.ExactArgs(1),
+	RunE:    runCostShow,
 }
 
 var budgetCreateCmd = &cobra.Command{
@@ -63,11 +63,11 @@ var budgetCreateCmd = &cobra.Command{
 }
 
 var budgetListCmd = &cobra.Command{
-	Use:   "list",
-	Short: "List budgets",
-	Long:  `List all cost budgets.`,
+	Use:     "list",
+	Short:   "List budgets",
+	Long:    `List all cost budgets.`,
 	Example: `  pf budget list`,
-	RunE: runBudgetList,
+	RunE:    runBudgetList,
 }
 
 var budgetCmd = &cobra.Command{

@@ -328,8 +328,8 @@ func TestOrganization_Validate(t *testing.T) {
 
 func TestContactInfo(t *testing.T) {
 	tests := []struct {
-		name    string
-		contact ContactInfo
+		name      string
+		contact   ContactInfo
 		wantEmail string
 		wantSlack string
 	}{
@@ -374,10 +374,10 @@ func TestContactInfo(t *testing.T) {
 
 func TestResourceQuotas(t *testing.T) {
 	tests := []struct {
-		name            string
-		quotas          *ResourceQuotas
-		wantPlatforms   int
-		wantClusters    int
+		name             string
+		quotas           *ResourceQuotas
+		wantPlatforms    int
+		wantClusters     int
 		wantEnvironments int
 	}{
 		{
@@ -387,8 +387,8 @@ func TestResourceQuotas(t *testing.T) {
 				MaxClusters:     50,
 				MaxEnvironments: 30,
 			},
-			wantPlatforms:   10,
-			wantClusters:    50,
+			wantPlatforms:    10,
+			wantClusters:     50,
 			wantEnvironments: 30,
 		},
 		{
@@ -398,8 +398,8 @@ func TestResourceQuotas(t *testing.T) {
 				MaxClusters:     1000,
 				MaxEnvironments: 500,
 			},
-			wantPlatforms:   100,
-			wantClusters:    1000,
+			wantPlatforms:    100,
+			wantClusters:     1000,
 			wantEnvironments: 500,
 		},
 		{
@@ -409,8 +409,8 @@ func TestResourceQuotas(t *testing.T) {
 				MaxClusters:     0,
 				MaxEnvironments: 0,
 			},
-			wantPlatforms:   0,
-			wantClusters:    0,
+			wantPlatforms:    0,
+			wantClusters:     0,
 			wantEnvironments: 0,
 		},
 	}

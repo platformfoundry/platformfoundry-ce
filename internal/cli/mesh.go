@@ -123,11 +123,11 @@ var meshGraphCmd = &cobra.Command{
 }
 
 var (
-	meshFile        string
-	meshWeights     []string
-	meshFaultDelay  string
-	meshFaultAbort  int
-	meshFaultPct    float64
+	meshFile       string
+	meshWeights    []string
+	meshFaultDelay string
+	meshFaultAbort int
+	meshFaultPct   float64
 )
 
 func init() {

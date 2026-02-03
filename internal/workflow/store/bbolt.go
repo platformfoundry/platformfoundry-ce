@@ -11,9 +11,9 @@ import (
 )
 
 const (
-	workflowBucket   = "dag-workflows"
-	executionBucket  = "dag-executions"
-	stepExecBucket   = "dag-step-executions"
+	workflowBucket  = "dag-workflows"
+	executionBucket = "dag-executions"
+	stepExecBucket  = "dag-step-executions"
 )
 
 // BoltStore implements Store using BoltDB

@@ -52,24 +52,24 @@ type Drift struct {
 
 // Report contains all detected drifts
 type Report struct {
-	ID           string        `json:"id"`
-	Drifts       []Drift       `json:"drifts"`
-	Summary      Summary       `json:"summary"`
-	StartedAt    time.Time     `json:"started_at"`
-	CompletedAt  time.Time     `json:"completed_at"`
-	Duration     time.Duration `json:"duration"`
-	ResourcesChecked int       `json:"resources_checked"`
+	ID               string        `json:"id"`
+	Drifts           []Drift       `json:"drifts"`
+	Summary          Summary       `json:"summary"`
+	StartedAt        time.Time     `json:"started_at"`
+	CompletedAt      time.Time     `json:"completed_at"`
+	Duration         time.Duration `json:"duration"`
+	ResourcesChecked int           `json:"resources_checked"`
 }
 
 // Summary provides drift statistics
 type Summary struct {
-	Total      int `json:"total"`
-	Critical   int `json:"critical"`
-	High       int `json:"high"`
-	Medium     int `json:"medium"`
-	Low        int `json:"low"`
-	Info       int `json:"info"`
-	ByType     map[DriftType]int `json:"by_type"`
+	Total    int               `json:"total"`
+	Critical int               `json:"critical"`
+	High     int               `json:"high"`
+	Medium   int               `json:"medium"`
+	Low      int               `json:"low"`
+	Info     int               `json:"info"`
+	ByType   map[DriftType]int `json:"by_type"`
 }
 
 // Resource represents a resource to check for drift
@@ -89,9 +89,9 @@ type StateProvider interface {
 
 // DetectorConfig configures the drift detector
 type DetectorConfig struct {
-	IgnorePaths     []string      // Paths to ignore during comparison
+	IgnorePaths     []string                 // Paths to ignore during comparison
 	SeverityMapping map[string]DriftSeverity // Path -> severity mapping
-	Concurrency     int           // Number of concurrent checks
+	Concurrency     int                      // Number of concurrent checks
 }
 
 // Detector detects drift between desired and actual state

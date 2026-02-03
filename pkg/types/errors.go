@@ -24,7 +24,7 @@ var (
 	ErrQuotaExceeded          = errors.New("organization quota exceeded")
 
 	// Quota errors
-	ErrInvalidScope           = errors.New("invalid quota scope")
-	ErrQuotaNotFound          = errors.New("quota not found")
-	ErrResourceNotInQuota     = errors.New("resource not defined in quota")
+	ErrInvalidScope       = errors.New("invalid quota scope")
+	ErrQuotaNotFound      = errors.New("quota not found")
+	ErrResourceNotInQuota = errors.New("resource not defined in quota")
 )

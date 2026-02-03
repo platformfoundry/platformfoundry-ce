@@ -29,12 +29,12 @@ type ACMEConfig struct {
 
 // AutoCertManager wraps autocert.Manager with additional functionality
 type AutoCertManager struct {
-	manager  *autocert.Manager
-	certDir  string
-	acmeDir  string
-	email    string
-	domains  []string
-	client   *acme.Client
+	manager *autocert.Manager
+	certDir string
+	acmeDir string
+	email   string
+	domains []string
+	client  *acme.Client
 }
 
 // NewAutoCertManager creates a new automatic certificate manager
@@ -76,12 +76,12 @@ func (m *Manager) NewAutoCertManager(config *ACMEConfig) (*AutoCertManager, erro
 	}
 
 	return &AutoCertManager{
-		manager:  manager,
-		certDir:  m.certDir,
-		acmeDir:  acmeDir,
-		email:    config.Email,
-		domains:  []string{config.Domain},
-		client:   client,
+		manager: manager,
+		certDir: m.certDir,
+		acmeDir: acmeDir,
+		email:   config.Email,
+		domains: []string{config.Domain},
+		client:  client,
 	}, nil
 }
 

@@ -27,14 +27,14 @@ type TenantMetadata struct {
 
 // TenantSpec defines tenant configuration
 type TenantSpec struct {
-	Isolation    IsolationLevel   `json:"isolation" yaml:"isolation"`
-	Quotas       *ResourceQuotas  `json:"quotas,omitempty" yaml:"quotas,omitempty"`
-	Networks     *NetworkConfig   `json:"networks,omitempty" yaml:"networks,omitempty"`
+	Isolation    IsolationLevel    `json:"isolation" yaml:"isolation"`
+	Quotas       *ResourceQuotas   `json:"quotas,omitempty" yaml:"quotas,omitempty"`
+	Networks     *NetworkConfig    `json:"networks,omitempty" yaml:"networks,omitempty"`
 	Compliance   *TenantCompliance `json:"compliance,omitempty" yaml:"compliance,omitempty"`
-	CostCenter   string           `json:"costCenter,omitempty" yaml:"costCenter,omitempty"`
-	BillingEmail string           `json:"billingEmail,omitempty" yaml:"billingEmail,omitempty"`
-	Owners       []string         `json:"owners,omitempty" yaml:"owners,omitempty"`
-	Clusters     []string         `json:"clusters,omitempty" yaml:"clusters,omitempty"`
+	CostCenter   string            `json:"costCenter,omitempty" yaml:"costCenter,omitempty"`
+	BillingEmail string            `json:"billingEmail,omitempty" yaml:"billingEmail,omitempty"`
+	Owners       []string          `json:"owners,omitempty" yaml:"owners,omitempty"`
+	Clusters     []string          `json:"clusters,omitempty" yaml:"clusters,omitempty"`
 }
 
 // IsolationLevel defines tenant isolation
@@ -48,15 +48,15 @@ const (
 
 // ResourceQuotas defines resource limits for a tenant
 type ResourceQuotas struct {
-	CPU          string `json:"cpu,omitempty" yaml:"cpu,omitempty"`               // Total CPU cores
-	Memory       string `json:"memory,omitempty" yaml:"memory,omitempty"`         // Total memory
-	Storage      string `json:"storage,omitempty" yaml:"storage,omitempty"`       // Total storage
-	Pods         int    `json:"pods,omitempty" yaml:"pods,omitempty"`             // Max pods
-	Services     int    `json:"services,omitempty" yaml:"services,omitempty"`     // Max services
+	CPU          string `json:"cpu,omitempty" yaml:"cpu,omitempty"`                   // Total CPU cores
+	Memory       string `json:"memory,omitempty" yaml:"memory,omitempty"`             // Total memory
+	Storage      string `json:"storage,omitempty" yaml:"storage,omitempty"`           // Total storage
+	Pods         int    `json:"pods,omitempty" yaml:"pods,omitempty"`                 // Max pods
+	Services     int    `json:"services,omitempty" yaml:"services,omitempty"`         // Max services
 	Environments int    `json:"environments,omitempty" yaml:"environments,omitempty"` // Max environments
-	Secrets      int    `json:"secrets,omitempty" yaml:"secrets,omitempty"`       // Max secrets
-	ConfigMaps   int    `json:"configMaps,omitempty" yaml:"configMaps,omitempty"` // Max configmaps
-	PVCs         int    `json:"pvcs,omitempty" yaml:"pvcs,omitempty"`             // Max PVCs
+	Secrets      int    `json:"secrets,omitempty" yaml:"secrets,omitempty"`           // Max secrets
+	ConfigMaps   int    `json:"configMaps,omitempty" yaml:"configMaps,omitempty"`     // Max configmaps
+	PVCs         int    `json:"pvcs,omitempty" yaml:"pvcs,omitempty"`                 // Max PVCs
 }
 
 // NetworkConfig defines tenant network configuration
@@ -86,10 +86,10 @@ type TenantCompliance struct {
 
 // TenantStatus tracks tenant state
 type TenantStatus struct {
-	Phase        TenantPhase       `json:"phase" yaml:"phase"`
-	Conditions   []TenantCondition `json:"conditions,omitempty" yaml:"conditions,omitempty"`
-	ResourceUsage *ResourceUsage   `json:"resourceUsage,omitempty" yaml:"resourceUsage,omitempty"`
-	CostSummary   *CostSummary     `json:"costSummary,omitempty" yaml:"costSummary,omitempty"`
+	Phase         TenantPhase       `json:"phase" yaml:"phase"`
+	Conditions    []TenantCondition `json:"conditions,omitempty" yaml:"conditions,omitempty"`
+	ResourceUsage *ResourceUsage    `json:"resourceUsage,omitempty" yaml:"resourceUsage,omitempty"`
+	CostSummary   *CostSummary      `json:"costSummary,omitempty" yaml:"costSummary,omitempty"`
 }
 
 // TenantPhase indicates tenant lifecycle phase
@@ -151,15 +151,15 @@ type RoleMetadata struct {
 
 // RoleSpec defines role permissions
 type RoleSpec struct {
-	Permissions  []Permission  `json:"permissions" yaml:"permissions"`
-	Constraints  []Constraint  `json:"constraints,omitempty" yaml:"constraints,omitempty"`
-	InheritFrom  []string      `json:"inheritFrom,omitempty" yaml:"inheritFrom,omitempty"`
+	Permissions []Permission `json:"permissions" yaml:"permissions"`
+	Constraints []Constraint `json:"constraints,omitempty" yaml:"constraints,omitempty"`
+	InheritFrom []string     `json:"inheritFrom,omitempty" yaml:"inheritFrom,omitempty"`
 }
 
 // Permission defines what actions can be performed on which resources
 type Permission struct {
-	Resources    []string `json:"resources" yaml:"resources"`         // deployment, service, secret, etc.
-	Verbs        []string `json:"verbs" yaml:"verbs"`                 // get, list, create, update, delete
+	Resources    []string `json:"resources" yaml:"resources"`                           // deployment, service, secret, etc.
+	Verbs        []string `json:"verbs" yaml:"verbs"`                                   // get, list, create, update, delete
 	Environments []string `json:"environments,omitempty" yaml:"environments,omitempty"` // dev, staging, production
 	Namespaces   []string `json:"namespaces,omitempty" yaml:"namespaces,omitempty"`     // specific namespaces
 	Condition    string   `json:"condition,omitempty" yaml:"condition,omitempty"`       // OPA/CEL condition
@@ -207,17 +207,17 @@ type Subject struct {
 
 // JITAccessRequest represents just-in-time access
 type JITAccessRequest struct {
-	ID           string        `json:"id" yaml:"id"`
-	Requester    string        `json:"requester" yaml:"requester"`
-	Tenant       string        `json:"tenant" yaml:"tenant"`
-	Role         string        `json:"role" yaml:"role"`
-	Reason       string        `json:"reason" yaml:"reason"`
-	Duration     time.Duration `json:"duration" yaml:"duration"`
-	Status       JITStatus     `json:"status" yaml:"status"`
-	RequestedAt  time.Time     `json:"requestedAt" yaml:"requestedAt"`
-	ApprovedBy   string        `json:"approvedBy,omitempty" yaml:"approvedBy,omitempty"`
-	ApprovedAt   *time.Time    `json:"approvedAt,omitempty" yaml:"approvedAt,omitempty"`
-	ExpiresAt    *time.Time    `json:"expiresAt,omitempty" yaml:"expiresAt,omitempty"`
+	ID          string        `json:"id" yaml:"id"`
+	Requester   string        `json:"requester" yaml:"requester"`
+	Tenant      string        `json:"tenant" yaml:"tenant"`
+	Role        string        `json:"role" yaml:"role"`
+	Reason      string        `json:"reason" yaml:"reason"`
+	Duration    time.Duration `json:"duration" yaml:"duration"`
+	Status      JITStatus     `json:"status" yaml:"status"`
+	RequestedAt time.Time     `json:"requestedAt" yaml:"requestedAt"`
+	ApprovedBy  string        `json:"approvedBy,omitempty" yaml:"approvedBy,omitempty"`
+	ApprovedAt  *time.Time    `json:"approvedAt,omitempty" yaml:"approvedAt,omitempty"`
+	ExpiresAt   *time.Time    `json:"expiresAt,omitempty" yaml:"expiresAt,omitempty"`
 }
 
 // JITStatus represents JIT request status
@@ -233,23 +233,23 @@ const (
 
 // AccessReview represents an access review request
 type AccessReview struct {
-	ID         string       `json:"id" yaml:"id"`
-	Tenant     string       `json:"tenant" yaml:"tenant"`
-	Type       ReviewType   `json:"type" yaml:"type"`
-	Status     ReviewStatus `json:"status" yaml:"status"`
-	StartedAt  time.Time    `json:"startedAt" yaml:"startedAt"`
-	DueDate    time.Time    `json:"dueDate" yaml:"dueDate"`
-	CompletedAt *time.Time  `json:"completedAt,omitempty" yaml:"completedAt,omitempty"`
-	Reviewer   string       `json:"reviewer,omitempty" yaml:"reviewer,omitempty"`
-	Entries    []ReviewEntry `json:"entries" yaml:"entries"`
+	ID          string        `json:"id" yaml:"id"`
+	Tenant      string        `json:"tenant" yaml:"tenant"`
+	Type        ReviewType    `json:"type" yaml:"type"`
+	Status      ReviewStatus  `json:"status" yaml:"status"`
+	StartedAt   time.Time     `json:"startedAt" yaml:"startedAt"`
+	DueDate     time.Time     `json:"dueDate" yaml:"dueDate"`
+	CompletedAt *time.Time    `json:"completedAt,omitempty" yaml:"completedAt,omitempty"`
+	Reviewer    string        `json:"reviewer,omitempty" yaml:"reviewer,omitempty"`
+	Entries     []ReviewEntry `json:"entries" yaml:"entries"`
 }
 
 // ReviewType defines access review type
 type ReviewType string
 
 const (
-	ReviewTypePeriodic ReviewType = "periodic"
-	ReviewTypeOnDemand ReviewType = "on_demand"
+	ReviewTypePeriodic  ReviewType = "periodic"
+	ReviewTypeOnDemand  ReviewType = "on_demand"
 	ReviewTypePromotion ReviewType = "promotion"
 )
 
@@ -257,19 +257,19 @@ const (
 type ReviewStatus string
 
 const (
-	ReviewStatusPending   ReviewStatus = "pending"
+	ReviewStatusPending    ReviewStatus = "pending"
 	ReviewStatusInProgress ReviewStatus = "in_progress"
-	ReviewStatusCompleted ReviewStatus = "completed"
-	ReviewStatusOverdue   ReviewStatus = "overdue"
+	ReviewStatusCompleted  ReviewStatus = "completed"
+	ReviewStatusOverdue    ReviewStatus = "overdue"
 )
 
 // ReviewEntry is a single item in an access review
 type ReviewEntry struct {
-	Subject      Subject     `json:"subject" yaml:"subject"`
-	Role         string      `json:"role" yaml:"role"`
-	LastUsed     *time.Time  `json:"lastUsed,omitempty" yaml:"lastUsed,omitempty"`
-	Decision     string      `json:"decision,omitempty" yaml:"decision,omitempty"` // keep, revoke, modify
-	DecidedBy    string      `json:"decidedBy,omitempty" yaml:"decidedBy,omitempty"`
-	DecidedAt    *time.Time  `json:"decidedAt,omitempty" yaml:"decidedAt,omitempty"`
-	Notes        string      `json:"notes,omitempty" yaml:"notes,omitempty"`
+	Subject   Subject    `json:"subject" yaml:"subject"`
+	Role      string     `json:"role" yaml:"role"`
+	LastUsed  *time.Time `json:"lastUsed,omitempty" yaml:"lastUsed,omitempty"`
+	Decision  string     `json:"decision,omitempty" yaml:"decision,omitempty"` // keep, revoke, modify
+	DecidedBy string     `json:"decidedBy,omitempty" yaml:"decidedBy,omitempty"`
+	DecidedAt *time.Time `json:"decidedAt,omitempty" yaml:"decidedAt,omitempty"`
+	Notes     string     `json:"notes,omitempty" yaml:"notes,omitempty"`
 }

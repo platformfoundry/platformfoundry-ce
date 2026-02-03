@@ -89,9 +89,9 @@ func (p *Plugin) Validate(spec map[string]interface{}) error {
 	}
 
 	var result struct {
-		Valid        bool   `json:"valid"`
-		ErrorCount   int    `json:"error_count"`
-		WarningCount int    `json:"warning_count"`
+		Valid        bool `json:"valid"`
+		ErrorCount   int  `json:"error_count"`
+		WarningCount int  `json:"warning_count"`
 	}
 	if err := json.Unmarshal(output, &result); err != nil {
 		return fmt.Errorf("failed to parse validate output: %w", err)
@@ -385,8 +385,8 @@ func (p *Plugin) parsePlanOutput(output []byte) (*plugin.Plan, error) {
 		}
 
 		var msg struct {
-			Type    string `json:"type"`
-			Change  *struct {
+			Type   string `json:"type"`
+			Change *struct {
 				Resource struct {
 					Addr string `json:"addr"`
 				} `json:"resource"`

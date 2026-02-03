@@ -148,10 +148,10 @@ type EngineConfig struct {
 
 // MockConfig configures mock behavior
 type MockConfig struct {
-	Mode            MockMode
-	SimulatedDelay  time.Duration
-	FailureRate     float64
-	FailureTools    []string
+	Mode             MockMode
+	SimulatedDelay   time.Duration
+	FailureRate      float64
+	FailureTools     []string
 	ResponseOverride map[string]interface{}
 }
 

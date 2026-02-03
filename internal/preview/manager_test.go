@@ -241,7 +241,7 @@ func TestCleanupWorker(t *testing.T) {
 
 	// Test scheduling
 	w.Schedule("preview-1", time.Now().Add(time.Hour))
-	w.Schedule("preview-2", time.Now().Add(2 * time.Hour))
+	w.Schedule("preview-2", time.Now().Add(2*time.Hour))
 
 	assert.Equal(t, 2, w.GetScheduledCount())
 	assert.True(t, w.IsScheduled("preview-1"))
@@ -293,9 +293,9 @@ func TestHelperFunctions(t *testing.T) {
 
 	t.Run("getInt", func(t *testing.T) {
 		m := map[string]interface{}{
-			"int":     42,
-			"float":   42.5,
-			"string":  "42",
+			"int":    42,
+			"float":  42.5,
+			"string": "42",
 		}
 
 		assert.Equal(t, 42, getInt(m, "int"))

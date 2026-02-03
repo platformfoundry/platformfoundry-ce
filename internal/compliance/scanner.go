@@ -11,11 +11,11 @@ import (
 
 // Scanner performs compliance scans
 type Scanner struct {
-	policies     map[string]*types.CompliancePolicy
-	checkers     map[types.CheckType]Checker
+	policies        map[string]*types.CompliancePolicy
+	checkers        map[types.CheckType]Checker
 	resourceFetcher ResourceFetcher
-	results      map[string]*types.ComplianceScanResult
-	mu           sync.RWMutex
+	results         map[string]*types.ComplianceScanResult
+	mu              sync.RWMutex
 }
 
 // Checker interface for compliance checks

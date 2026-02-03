@@ -6,10 +6,10 @@ import (
 
 // ChaosExperiment defines a chaos engineering experiment
 type ChaosExperiment struct {
-	APIVersion string               `yaml:"apiVersion" json:"apiVersion"`
-	Kind       string               `yaml:"kind" json:"kind"`
-	Metadata   ChaosMetadata        `yaml:"metadata" json:"metadata"`
-	Spec       ChaosExperimentSpec  `yaml:"spec" json:"spec"`
+	APIVersion string                 `yaml:"apiVersion" json:"apiVersion"`
+	Kind       string                 `yaml:"kind" json:"kind"`
+	Metadata   ChaosMetadata          `yaml:"metadata" json:"metadata"`
+	Spec       ChaosExperimentSpec    `yaml:"spec" json:"spec"`
 	Status     *ChaosExperimentStatus `yaml:"status,omitempty" json:"status,omitempty"`
 }
 
@@ -52,8 +52,8 @@ type ChaosActionType string
 
 const (
 	// Pod chaos
-	ChaosActionPodKill      ChaosActionType = "pod-kill"
-	ChaosActionPodFailure   ChaosActionType = "pod-failure"
+	ChaosActionPodKill       ChaosActionType = "pod-kill"
+	ChaosActionPodFailure    ChaosActionType = "pod-failure"
 	ChaosActionContainerKill ChaosActionType = "container-kill"
 
 	// Network chaos
@@ -74,9 +74,9 @@ const (
 	ChaosActionHTTPDelay          ChaosActionType = "http-delay"
 
 	// Infrastructure chaos
-	ChaosActionNodeDrain    ChaosActionType = "node-drain"
-	ChaosActionNodeFailure  ChaosActionType = "node-failure"
-	ChaosActionZoneFailure  ChaosActionType = "zone-failure"
+	ChaosActionNodeDrain   ChaosActionType = "node-drain"
+	ChaosActionNodeFailure ChaosActionType = "node-failure"
+	ChaosActionZoneFailure ChaosActionType = "zone-failure"
 
 	// DNS chaos
 	ChaosActionDNSError ChaosActionType = "dns-error"
@@ -94,13 +94,13 @@ type ChaosSchedule struct {
 
 // ChaosSafetyRules defines safety controls
 type ChaosSafetyRules struct {
-	MaxImpact           string           `yaml:"maxImpact" json:"maxImpact"` // percentage
-	RollbackOnError     bool             `yaml:"rollbackOnError" json:"rollbackOnError"`
-	HealthCheckInterval string           `yaml:"healthCheckInterval" json:"healthCheckInterval"`
+	MaxImpact           string            `yaml:"maxImpact" json:"maxImpact"` // percentage
+	RollbackOnError     bool              `yaml:"rollbackOnError" json:"rollbackOnError"`
+	HealthCheckInterval string            `yaml:"healthCheckInterval" json:"healthCheckInterval"`
 	HealthCheck         *ChaosHealthCheck `yaml:"healthCheck,omitempty" json:"healthCheck,omitempty"`
-	Paused              bool             `yaml:"paused,omitempty" json:"paused,omitempty"`
-	StopOnFailure       bool             `yaml:"stopOnFailure,omitempty" json:"stopOnFailure,omitempty"`
-	ConcurrencyPolicy   string           `yaml:"concurrencyPolicy,omitempty" json:"concurrencyPolicy,omitempty"` // Forbid, Allow
+	Paused              bool              `yaml:"paused,omitempty" json:"paused,omitempty"`
+	StopOnFailure       bool              `yaml:"stopOnFailure,omitempty" json:"stopOnFailure,omitempty"`
+	ConcurrencyPolicy   string            `yaml:"concurrencyPolicy,omitempty" json:"concurrencyPolicy,omitempty"` // Forbid, Allow
 }
 
 // ChaosHealthCheck defines how to verify system health
@@ -113,16 +113,16 @@ type ChaosHealthCheck struct {
 
 // ChaosExperimentStatus represents the current state
 type ChaosExperimentStatus struct {
-	Phase           ChaosPhase        `yaml:"phase" json:"phase"`
-	StartTime       *time.Time        `yaml:"startTime,omitempty" json:"startTime,omitempty"`
-	EndTime         *time.Time        `yaml:"endTime,omitempty" json:"endTime,omitempty"`
-	SuccessfulRuns  int               `yaml:"successfulRuns" json:"successfulRuns"`
-	FailedRuns      int               `yaml:"failedRuns" json:"failedRuns"`
-	LastRunTime     *time.Time        `yaml:"lastRunTime,omitempty" json:"lastRunTime,omitempty"`
-	LastRunResult   string            `yaml:"lastRunResult,omitempty" json:"lastRunResult,omitempty"`
-	CurrentAction   string            `yaml:"currentAction,omitempty" json:"currentAction,omitempty"`
-	Conditions      []ChaosCondition  `yaml:"conditions,omitempty" json:"conditions,omitempty"`
-	History         []ChaosRunHistory `yaml:"history,omitempty" json:"history,omitempty"`
+	Phase          ChaosPhase        `yaml:"phase" json:"phase"`
+	StartTime      *time.Time        `yaml:"startTime,omitempty" json:"startTime,omitempty"`
+	EndTime        *time.Time        `yaml:"endTime,omitempty" json:"endTime,omitempty"`
+	SuccessfulRuns int               `yaml:"successfulRuns" json:"successfulRuns"`
+	FailedRuns     int               `yaml:"failedRuns" json:"failedRuns"`
+	LastRunTime    *time.Time        `yaml:"lastRunTime,omitempty" json:"lastRunTime,omitempty"`
+	LastRunResult  string            `yaml:"lastRunResult,omitempty" json:"lastRunResult,omitempty"`
+	CurrentAction  string            `yaml:"currentAction,omitempty" json:"currentAction,omitempty"`
+	Conditions     []ChaosCondition  `yaml:"conditions,omitempty" json:"conditions,omitempty"`
+	History        []ChaosRunHistory `yaml:"history,omitempty" json:"history,omitempty"`
 }
 
 // ChaosPhase represents the experiment phase
@@ -149,38 +149,38 @@ type ChaosCondition struct {
 
 // ChaosRunHistory records past experiment runs
 type ChaosRunHistory struct {
-	RunID     string     `yaml:"runId" json:"runId"`
-	StartTime time.Time  `yaml:"startTime" json:"startTime"`
-	EndTime   *time.Time `yaml:"endTime,omitempty" json:"endTime,omitempty"`
-	Result    string     `yaml:"result" json:"result"` // success, failed, aborted
+	RunID     string         `yaml:"runId" json:"runId"`
+	StartTime time.Time      `yaml:"startTime" json:"startTime"`
+	EndTime   *time.Time     `yaml:"endTime,omitempty" json:"endTime,omitempty"`
+	Result    string         `yaml:"result" json:"result"` // success, failed, aborted
 	Actions   []ActionResult `yaml:"actions" json:"actions"`
-	Message   string     `yaml:"message,omitempty" json:"message,omitempty"`
+	Message   string         `yaml:"message,omitempty" json:"message,omitempty"`
 }
 
 // ActionResult records the result of a chaos action
 type ActionResult struct {
-	Name      string    `yaml:"name" json:"name"`
-	Type      string    `yaml:"type" json:"type"`
-	StartTime time.Time `yaml:"startTime" json:"startTime"`
-	EndTime   time.Time `yaml:"endTime" json:"endTime"`
-	Result    string    `yaml:"result" json:"result"`
-	Message   string    `yaml:"message,omitempty" json:"message,omitempty"`
+	Name      string                 `yaml:"name" json:"name"`
+	Type      string                 `yaml:"type" json:"type"`
+	StartTime time.Time              `yaml:"startTime" json:"startTime"`
+	EndTime   time.Time              `yaml:"endTime" json:"endTime"`
+	Result    string                 `yaml:"result" json:"result"`
+	Message   string                 `yaml:"message,omitempty" json:"message,omitempty"`
 	Metrics   map[string]interface{} `yaml:"metrics,omitempty" json:"metrics,omitempty"`
 }
 
 // ChaosReport summarizes experiment results
 type ChaosReport struct {
-	Experiment      string    `json:"experiment"`
-	Environment     string    `json:"environment"`
-	StartTime       time.Time `json:"startTime"`
-	EndTime         time.Time `json:"endTime"`
-	Duration        string    `json:"duration"`
-	TotalActions    int       `json:"totalActions"`
-	SuccessfulActions int     `json:"successfulActions"`
-	FailedActions   int       `json:"failedActions"`
-	OverallResult   string    `json:"overallResult"`
-	Findings        []ChaosFinding `json:"findings"`
-	Recommendations []string  `json:"recommendations"`
+	Experiment        string         `json:"experiment"`
+	Environment       string         `json:"environment"`
+	StartTime         time.Time      `json:"startTime"`
+	EndTime           time.Time      `json:"endTime"`
+	Duration          string         `json:"duration"`
+	TotalActions      int            `json:"totalActions"`
+	SuccessfulActions int            `json:"successfulActions"`
+	FailedActions     int            `json:"failedActions"`
+	OverallResult     string         `json:"overallResult"`
+	Findings          []ChaosFinding `json:"findings"`
+	Recommendations   []string       `json:"recommendations"`
 }
 
 // ChaosFinding represents a discovery from the experiment

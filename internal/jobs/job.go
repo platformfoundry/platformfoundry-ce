@@ -83,8 +83,8 @@ type Queue struct {
 }
 
 type jobWork struct {
-	job  *Job
-	fn   JobFunc
+	job *Job
+	fn  JobFunc
 }
 
 // JobListener interface for job events

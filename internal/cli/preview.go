@@ -85,12 +85,12 @@ var previewRefreshCmd = &cobra.Command{
 
 // Flags
 var (
-	previewRepo            string
-	previewPR              int
-	previewBaseEnv         string
-	previewTTL             time.Duration
+	previewRepo             string
+	previewPR               int
+	previewBaseEnv          string
+	previewTTL              time.Duration
 	previewDatabaseStrategy string
-	previewWait            bool
+	previewWait             bool
 )
 
 func init() {

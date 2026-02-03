@@ -26,15 +26,15 @@ type EventRecorder interface {
 
 // Engine orchestrates predictive scaling
 type Engine struct {
-	config      *EngineConfig
-	predictor   *Predictor
-	scaler      Scaler
-	metrics     MetricsProvider
-	recorder    EventRecorder
-	policies    map[string]*ScalingPolicy
-	stopCh      map[string]chan struct{}
-	mu          sync.RWMutex
-	running     bool
+	config    *EngineConfig
+	predictor *Predictor
+	scaler    Scaler
+	metrics   MetricsProvider
+	recorder  EventRecorder
+	policies  map[string]*ScalingPolicy
+	stopCh    map[string]chan struct{}
+	mu        sync.RWMutex
+	running   bool
 }
 
 // EngineConfig configures the scaling engine

@@ -53,27 +53,27 @@ type DataPoint struct {
 
 // SLO represents a Service Level Objective
 type SLO struct {
-	ID             string           `json:"id" yaml:"id"`
-	Name           string           `json:"name" yaml:"name"`
-	Description    string           `json:"description,omitempty" yaml:"description,omitempty"`
-	Service        string           `json:"service" yaml:"service"`
-	Indicator      SLI              `json:"indicator" yaml:"indicator"`
-	Objective      float64          `json:"objective" yaml:"objective"` // e.g., 99.9
-	Window         time.Duration    `json:"window" yaml:"window"`       // e.g., 30 days
-	BurnRateAlerts []BurnRateAlert  `json:"burnRateAlerts,omitempty" yaml:"burnRateAlerts,omitempty"`
+	ID             string            `json:"id" yaml:"id"`
+	Name           string            `json:"name" yaml:"name"`
+	Description    string            `json:"description,omitempty" yaml:"description,omitempty"`
+	Service        string            `json:"service" yaml:"service"`
+	Indicator      SLI               `json:"indicator" yaml:"indicator"`
+	Objective      float64           `json:"objective" yaml:"objective"` // e.g., 99.9
+	Window         time.Duration     `json:"window" yaml:"window"`       // e.g., 30 days
+	BurnRateAlerts []BurnRateAlert   `json:"burnRateAlerts,omitempty" yaml:"burnRateAlerts,omitempty"`
 	ErrorBudget    ErrorBudgetConfig `json:"errorBudget,omitempty" yaml:"errorBudget,omitempty"`
 	Labels         map[string]string `json:"labels,omitempty" yaml:"labels,omitempty"`
-	CreatedAt      time.Time        `json:"createdAt" yaml:"createdAt"`
-	UpdatedAt      time.Time        `json:"updatedAt" yaml:"updatedAt"`
+	CreatedAt      time.Time         `json:"createdAt" yaml:"createdAt"`
+	UpdatedAt      time.Time         `json:"updatedAt" yaml:"updatedAt"`
 }
 
 // SLI represents a Service Level Indicator
 type SLI struct {
-	Type        SLIType  `json:"type" yaml:"type"` // availability, latency, throughput, error_rate
-	GoodQuery   string   `json:"goodQuery" yaml:"goodQuery"`     // Query for good events
-	TotalQuery  string   `json:"totalQuery" yaml:"totalQuery"`   // Query for total events
-	Threshold   float64  `json:"threshold,omitempty" yaml:"threshold,omitempty"` // For latency SLIs (e.g., 200ms)
-	Percentile  float64  `json:"percentile,omitempty" yaml:"percentile,omitempty"` // For latency SLIs (e.g., 0.99)
+	Type       SLIType `json:"type" yaml:"type"`                                 // availability, latency, throughput, error_rate
+	GoodQuery  string  `json:"goodQuery" yaml:"goodQuery"`                       // Query for good events
+	TotalQuery string  `json:"totalQuery" yaml:"totalQuery"`                     // Query for total events
+	Threshold  float64 `json:"threshold,omitempty" yaml:"threshold,omitempty"`   // For latency SLIs (e.g., 200ms)
+	Percentile float64 `json:"percentile,omitempty" yaml:"percentile,omitempty"` // For latency SLIs (e.g., 0.99)
 }
 
 // SLIType represents the type of SLI
@@ -88,11 +88,11 @@ const (
 
 // BurnRateAlert defines when to alert based on error budget burn rate
 type BurnRateAlert struct {
-	Name       string        `json:"name" yaml:"name"`
+	Name        string        `json:"name" yaml:"name"`
 	ShortWindow time.Duration `json:"shortWindow" yaml:"shortWindow"` // e.g., 5m
 	LongWindow  time.Duration `json:"longWindow" yaml:"longWindow"`   // e.g., 1h
-	BurnRate   float64       `json:"burnRate" yaml:"burnRate"`       // e.g., 14.4 (will exhaust budget in 5 days)
-	Severity   string        `json:"severity" yaml:"severity"`       // critical, warning, info
+	BurnRate    float64       `json:"burnRate" yaml:"burnRate"`       // e.g., 14.4 (will exhaust budget in 5 days)
+	Severity    string        `json:"severity" yaml:"severity"`       // critical, warning, info
 }
 
 // ErrorBudgetConfig defines error budget notification settings
@@ -103,31 +103,31 @@ type ErrorBudgetConfig struct {
 
 // SLIResult represents the result of an SLI calculation
 type SLIResult struct {
-	SLO         string    `json:"slo"`
-	Service     string    `json:"service"`
-	Value       float64   `json:"value"`       // Current SLI value (e.g., 99.95)
-	Objective   float64   `json:"objective"`   // Target (e.g., 99.9)
-	InBudget    bool      `json:"inBudget"`
-	BudgetSpent float64   `json:"budgetSpent"` // Percentage of error budget consumed
-	BudgetLeft  float64   `json:"budgetLeft"`  // Percentage remaining
-	Window      time.Duration `json:"window"`
-	CalculatedAt time.Time `json:"calculatedAt"`
-	GoodEvents   float64   `json:"goodEvents"`
-	TotalEvents  float64   `json:"totalEvents"`
+	SLO          string        `json:"slo"`
+	Service      string        `json:"service"`
+	Value        float64       `json:"value"`     // Current SLI value (e.g., 99.95)
+	Objective    float64       `json:"objective"` // Target (e.g., 99.9)
+	InBudget     bool          `json:"inBudget"`
+	BudgetSpent  float64       `json:"budgetSpent"` // Percentage of error budget consumed
+	BudgetLeft   float64       `json:"budgetLeft"`  // Percentage remaining
+	Window       time.Duration `json:"window"`
+	CalculatedAt time.Time     `json:"calculatedAt"`
+	GoodEvents   float64       `json:"goodEvents"`
+	TotalEvents  float64       `json:"totalEvents"`
 }
 
 // Alert represents an SLO alert
 type Alert struct {
-	ID        string            `json:"id"`
-	SLO       string            `json:"slo"`
-	Service   string            `json:"service"`
-	Severity  string            `json:"severity"`
-	Message   string            `json:"message"`
-	Value     float64           `json:"value"`
-	Threshold float64           `json:"threshold"`
-	Labels    map[string]string `json:"labels,omitempty"`
-	FiredAt   time.Time         `json:"firedAt"`
-	ResolvedAt *time.Time       `json:"resolvedAt,omitempty"`
+	ID         string            `json:"id"`
+	SLO        string            `json:"slo"`
+	Service    string            `json:"service"`
+	Severity   string            `json:"severity"`
+	Message    string            `json:"message"`
+	Value      float64           `json:"value"`
+	Threshold  float64           `json:"threshold"`
+	Labels     map[string]string `json:"labels,omitempty"`
+	FiredAt    time.Time         `json:"firedAt"`
+	ResolvedAt *time.Time        `json:"resolvedAt,omitempty"`
 }
 
 // NewEngine creates a new SLO Engine

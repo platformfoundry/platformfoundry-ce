@@ -8,12 +8,12 @@ import (
 
 // Config represents AWS CDK configuration
 type Config struct {
-	Provider    string         `yaml:"provider" json:"provider" validate:"required,oneof=aws-cdk"`
-	Language    string         `yaml:"language" json:"language" validate:"required,oneof=typescript javascript python java csharp go"`
-	Account     string         `yaml:"account,omitempty" json:"account,omitempty"`
-	Region      string         `yaml:"region" json:"region" validate:"required"`
-	Stacks      []StackConfig  `yaml:"stacks,omitempty" json:"stacks,omitempty"`
-	Environment *EnvConfig     `yaml:"environment,omitempty" json:"environment,omitempty"`
+	Provider    string        `yaml:"provider" json:"provider" validate:"required,oneof=aws-cdk"`
+	Language    string        `yaml:"language" json:"language" validate:"required,oneof=typescript javascript python java csharp go"`
+	Account     string        `yaml:"account,omitempty" json:"account,omitempty"`
+	Region      string        `yaml:"region" json:"region" validate:"required"`
+	Stacks      []StackConfig `yaml:"stacks,omitempty" json:"stacks,omitempty"`
+	Environment *EnvConfig    `yaml:"environment,omitempty" json:"environment,omitempty"`
 }
 
 // StackConfig represents CDK stack configuration
@@ -31,10 +31,10 @@ type EnvConfig struct {
 
 // VPCConfig represents VPC configuration for CDK
 type VPCConfig struct {
-	MaxAZs           int      `yaml:"maxAzs" json:"maxAzs"`
-	CIDR             string   `yaml:"cidr" json:"cidr"`
-	NatGateways      int      `yaml:"natGateways" json:"natGateways"`
-	SubnetConfig     []Subnet `yaml:"subnetConfiguration,omitempty" json:"subnetConfiguration,omitempty"`
+	MaxAZs       int      `yaml:"maxAzs" json:"maxAzs"`
+	CIDR         string   `yaml:"cidr" json:"cidr"`
+	NatGateways  int      `yaml:"natGateways" json:"natGateways"`
+	SubnetConfig []Subnet `yaml:"subnetConfiguration,omitempty" json:"subnetConfiguration,omitempty"`
 }
 
 // Subnet represents subnet configuration
@@ -46,20 +46,20 @@ type Subnet struct {
 
 // EKSConfig represents EKS cluster configuration
 type EKSConfig struct {
-	ClusterName    string            `yaml:"clusterName" json:"clusterName" validate:"required"`
-	Version        string            `yaml:"version,omitempty" json:"version,omitempty"`
-	DefaultCapacity int              `yaml:"defaultCapacity" json:"defaultCapacity"`
-	NodeGroups     []NodeGroupConfig `yaml:"nodeGroups,omitempty" json:"nodeGroups,omitempty"`
+	ClusterName     string            `yaml:"clusterName" json:"clusterName" validate:"required"`
+	Version         string            `yaml:"version,omitempty" json:"version,omitempty"`
+	DefaultCapacity int               `yaml:"defaultCapacity" json:"defaultCapacity"`
+	NodeGroups      []NodeGroupConfig `yaml:"nodeGroups,omitempty" json:"nodeGroups,omitempty"`
 }
 
 // NodeGroupConfig represents managed node group configuration
 type NodeGroupConfig struct {
-	Name         string   `yaml:"name" json:"name" validate:"required"`
+	Name          string   `yaml:"name" json:"name" validate:"required"`
 	InstanceTypes []string `yaml:"instanceTypes" json:"instanceTypes"`
-	MinSize      int      `yaml:"minSize" json:"minSize"`
-	MaxSize      int      `yaml:"maxSize" json:"maxSize"`
-	DesiredSize  int      `yaml:"desiredSize" json:"desiredSize"`
-	DiskSize     int      `yaml:"diskSize" json:"diskSize"`
+	MinSize       int      `yaml:"minSize" json:"minSize"`
+	MaxSize       int      `yaml:"maxSize" json:"maxSize"`
+	DesiredSize   int      `yaml:"desiredSize" json:"desiredSize"`
+	DiskSize      int      `yaml:"diskSize" json:"diskSize"`
 }
 
 // Plugin implements the AWS CDK plugin

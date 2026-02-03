@@ -72,28 +72,28 @@ type Repository struct {
 
 // PullRequest represents a pull request / merge request
 type PullRequest struct {
-	ID            int64      `json:"id"`
-	Number        int        `json:"number"`
-	Title         string     `json:"title"`
-	Body          string     `json:"body"`
-	State         string     `json:"state"` // open, closed, merged
-	URL           string     `json:"url"`
-	SourceBranch  string     `json:"sourceBranch"`
-	TargetBranch  string     `json:"targetBranch"`
-	Author        string     `json:"author"`
-	Assignees     []string   `json:"assignees,omitempty"`
-	Reviewers     []string   `json:"reviewers,omitempty"`
-	Labels        []string   `json:"labels,omitempty"`
-	Draft         bool       `json:"draft"`
-	Mergeable     bool       `json:"mergeable"`
-	MergeableState string    `json:"mergeableState,omitempty"`
-	Approvals     int        `json:"approvals"`
-	CreatedAt     time.Time  `json:"createdAt"`
-	UpdatedAt     time.Time  `json:"updatedAt"`
-	MergedAt      *time.Time `json:"mergedAt,omitempty"`
-	MergedBy      string     `json:"mergedBy,omitempty"`
-	HeadSHA       string     `json:"headSha"`
-	BaseSHA       string     `json:"baseSha"`
+	ID             int64      `json:"id"`
+	Number         int        `json:"number"`
+	Title          string     `json:"title"`
+	Body           string     `json:"body"`
+	State          string     `json:"state"` // open, closed, merged
+	URL            string     `json:"url"`
+	SourceBranch   string     `json:"sourceBranch"`
+	TargetBranch   string     `json:"targetBranch"`
+	Author         string     `json:"author"`
+	Assignees      []string   `json:"assignees,omitempty"`
+	Reviewers      []string   `json:"reviewers,omitempty"`
+	Labels         []string   `json:"labels,omitempty"`
+	Draft          bool       `json:"draft"`
+	Mergeable      bool       `json:"mergeable"`
+	MergeableState string     `json:"mergeableState,omitempty"`
+	Approvals      int        `json:"approvals"`
+	CreatedAt      time.Time  `json:"createdAt"`
+	UpdatedAt      time.Time  `json:"updatedAt"`
+	MergedAt       *time.Time `json:"mergedAt,omitempty"`
+	MergedBy       string     `json:"mergedBy,omitempty"`
+	HeadSHA        string     `json:"headSha"`
+	BaseSHA        string     `json:"baseSha"`
 }
 
 // Commit represents a Git commit
@@ -117,10 +117,10 @@ type Branch struct {
 
 // Webhook represents a repository webhook
 type Webhook struct {
-	ID        int64    `json:"id"`
-	URL       string   `json:"url"`
-	Events    []string `json:"events"`
-	Active    bool     `json:"active"`
+	ID        int64     `json:"id"`
+	URL       string    `json:"url"`
+	Events    []string  `json:"events"`
+	Active    bool      `json:"active"`
 	CreatedAt time.Time `json:"createdAt"`
 }
 
@@ -151,13 +151,13 @@ type FileCommit struct {
 
 // CommitComparison represents a comparison between two commits
 type CommitComparison struct {
-	BaseCommit   *Commit   `json:"baseCommit"`
-	HeadCommit   *Commit   `json:"headCommit"`
-	Commits      []*Commit `json:"commits"`
+	BaseCommit   *Commit     `json:"baseCommit"`
+	HeadCommit   *Commit     `json:"headCommit"`
+	Commits      []*Commit   `json:"commits"`
 	Files        []*FileDiff `json:"files"`
-	TotalCommits int       `json:"totalCommits"`
-	AheadBy      int       `json:"aheadBy"`
-	BehindBy     int       `json:"behindBy"`
+	TotalCommits int         `json:"totalCommits"`
+	AheadBy      int         `json:"aheadBy"`
+	BehindBy     int         `json:"behindBy"`
 }
 
 // FileDiff represents a file diff in a comparison
@@ -205,11 +205,11 @@ type UpdatePullRequestOpts struct {
 
 // ListPullRequestOpts contains options for listing pull requests
 type ListPullRequestOpts struct {
-	State  string `json:"state,omitempty"` // open, closed, all
-	Sort   string `json:"sort,omitempty"`  // created, updated
-	Order  string `json:"order,omitempty"` // asc, desc
-	Limit  int    `json:"limit,omitempty"`
-	Page   int    `json:"page,omitempty"`
+	State string `json:"state,omitempty"` // open, closed, all
+	Sort  string `json:"sort,omitempty"`  // created, updated
+	Order string `json:"order,omitempty"` // asc, desc
+	Limit int    `json:"limit,omitempty"`
+	Page  int    `json:"page,omitempty"`
 }
 
 // MergeOpts contains options for merging a pull request
@@ -240,17 +240,17 @@ type DeleteFileOpts struct {
 
 // ListCommitsOpts contains options for listing commits
 type ListCommitsOpts struct {
-	SHA    string     `json:"sha,omitempty"`
-	Path   string     `json:"path,omitempty"`
-	Since  *time.Time `json:"since,omitempty"`
-	Until  *time.Time `json:"until,omitempty"`
-	Limit  int        `json:"limit,omitempty"`
-	Page   int        `json:"page,omitempty"`
+	SHA   string     `json:"sha,omitempty"`
+	Path  string     `json:"path,omitempty"`
+	Since *time.Time `json:"since,omitempty"`
+	Until *time.Time `json:"until,omitempty"`
+	Limit int        `json:"limit,omitempty"`
+	Page  int        `json:"page,omitempty"`
 }
 
 // CreateBranchOpts contains options for creating a branch
 type CreateBranchOpts struct {
-	Name   string `json:"name"`
+	Name    string `json:"name"`
 	FromRef string `json:"fromRef"` // SHA or branch name
 }
 
@@ -266,8 +266,8 @@ type CreateWebhookOpts struct {
 
 // CreateReviewOpts contains options for creating a review
 type CreateReviewOpts struct {
-	Body   string `json:"body,omitempty"`
-	Event  string `json:"event"` // APPROVE, REQUEST_CHANGES, COMMENT
+	Body      string `json:"body,omitempty"`
+	Event     string `json:"event"` // APPROVE, REQUEST_CHANGES, COMMENT
 	CommitSHA string `json:"commitSha,omitempty"`
 }
 

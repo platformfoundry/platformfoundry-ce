@@ -16,10 +16,10 @@ type Config struct {
 
 // CompositionConfig represents a Crossplane composition
 type CompositionConfig struct {
-	Name      string                 `yaml:"name" json:"name" validate:"required"`
-	Namespace string                 `yaml:"namespace,omitempty" json:"namespace,omitempty"`
+	Name             string           `yaml:"name" json:"name" validate:"required"`
+	Namespace        string           `yaml:"namespace,omitempty" json:"namespace,omitempty"`
 	CompositeTypeRef CompositeTypeRef `yaml:"compositeTypeRef" json:"compositeTypeRef"`
-	Resources []ResourceConfig       `yaml:"resources,omitempty" json:"resources,omitempty"`
+	Resources        []ResourceConfig `yaml:"resources,omitempty" json:"resources,omitempty"`
 }
 
 // CompositeTypeRef references the composite resource type
@@ -42,7 +42,7 @@ type ProviderConfig struct {
 
 // CredentialsConfig represents credentials configuration
 type CredentialsConfig struct {
-	Source    string `yaml:"source" json:"source" validate:"required,oneof=Secret InjectedIdentity Environment"`
+	Source    string     `yaml:"source" json:"source" validate:"required,oneof=Secret InjectedIdentity Environment"`
 	SecretRef *SecretRef `yaml:"secretRef,omitempty" json:"secretRef,omitempty"`
 }
 

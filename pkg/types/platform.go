@@ -41,10 +41,10 @@ type GlobalConfig struct {
 
 // PlatformStatus represents the platform status
 type PlatformStatus struct {
-	Phase      Phase              `json:"phase"`
-	Conditions []PlatformCondition `json:"conditions,omitempty"`
-	Message    string             `json:"message,omitempty"`
-	LastApplied *time.Time        `json:"lastApplied,omitempty"`
+	Phase       Phase               `json:"phase"`
+	Conditions  []PlatformCondition `json:"conditions,omitempty"`
+	Message     string              `json:"message,omitempty"`
+	LastApplied *time.Time          `json:"lastApplied,omitempty"`
 }
 
 // Phase represents the platform lifecycle phase
@@ -59,9 +59,9 @@ const (
 
 // PlatformCondition represents a platform condition
 type PlatformCondition struct {
-	Type    string    `json:"type"`
-	Status  string    `json:"status"`
-	Message string    `json:"message,omitempty"`
+	Type               string    `json:"type"`
+	Status             string    `json:"status"`
+	Message            string    `json:"message,omitempty"`
 	LastTransitionTime time.Time `json:"lastTransitionTime,omitempty"`
 }
 

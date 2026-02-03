@@ -50,5 +50,3 @@ func (g *Generator) generateEnvironments(config ScaffoldConfig) (*GenerateResult
 
 	return result, nil
 }
-
-

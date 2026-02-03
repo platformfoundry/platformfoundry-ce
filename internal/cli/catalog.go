@@ -73,13 +73,13 @@ var catalogQuotaCmd = &cobra.Command{
 
 // Flags
 var (
-	catalogFormat      string
-	catalogCategory    string
-	catalogTeam        string
-	catalogApp         string
-	catalogEnv         string
-	catalogName        string
-	catalogInputs      []string
+	catalogFormat       string
+	catalogCategory     string
+	catalogTeam         string
+	catalogApp          string
+	catalogEnv          string
+	catalogName         string
+	catalogInputs       []string
 	catalogRejectReason string
 )
 

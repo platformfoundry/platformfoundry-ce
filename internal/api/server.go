@@ -400,11 +400,11 @@ func (s *Server) handlePlanPlatform(w http.ResponseWriter, r *http.Request) {
 	}
 	// Placeholder
 	s.writeJSON(w, http.StatusOK, map[string]interface{}{
-		"platform":  name,
-		"plan":      "no changes",
-		"toCreate":  0,
-		"toUpdate":  0,
-		"toDelete":  0,
+		"platform": name,
+		"plan":     "no changes",
+		"toCreate": 0,
+		"toUpdate": 0,
+		"toDelete": 0,
 	})
 }
 
@@ -663,4 +663,3 @@ func (rw *responseWriter) WriteHeader(code int) {
 	rw.statusCode = code
 	rw.ResponseWriter.WriteHeader(code)
 }
-

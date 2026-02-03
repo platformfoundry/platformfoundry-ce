@@ -35,8 +35,8 @@ func TestVerifyChecksum(t *testing.T) {
 		shouldPass       bool
 	}{
 		{
-			name:             "valid checksum",
-			data:             []byte("test data"),
+			name: "valid checksum",
+			data: []byte("test data"),
 			expectedChecksum: func() string {
 				h := sha256.Sum256([]byte("test data"))
 				return hex.EncodeToString(h[:])
@@ -50,8 +50,8 @@ func TestVerifyChecksum(t *testing.T) {
 			shouldPass:       false,
 		},
 		{
-			name:             "empty data",
-			data:             []byte{},
+			name: "empty data",
+			data: []byte{},
 			expectedChecksum: func() string {
 				h := sha256.Sum256([]byte{})
 				return hex.EncodeToString(h[:])

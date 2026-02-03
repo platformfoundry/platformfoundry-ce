@@ -32,12 +32,12 @@ type ResourceDriver interface {
 
 // TranslationResult contains the translated output
 type TranslationResult struct {
-	Target      TranslationTarget        `json:"target"`
-	Workload    *Workload                `json:"workload"`
-	Manifests   map[string]interface{}   `json:"manifests"`
-	Resources   map[string]interface{}   `json:"resources"`
-	Outputs     map[string]map[string]string `json:"outputs"`
-	Warnings    []string                 `json:"warnings,omitempty"`
+	Target    TranslationTarget            `json:"target"`
+	Workload  *Workload                    `json:"workload"`
+	Manifests map[string]interface{}       `json:"manifests"`
+	Resources map[string]interface{}       `json:"resources"`
+	Outputs   map[string]map[string]string `json:"outputs"`
+	Warnings  []string                     `json:"warnings,omitempty"`
 }
 
 // NewTranslator creates a new Score translator

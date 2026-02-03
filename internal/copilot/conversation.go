@@ -30,10 +30,10 @@ const (
 
 // Message represents a conversation message
 type Message struct {
-	Role      string    `json:"role"` // user, assistant, system
-	Content   string    `json:"content"`
-	Timestamp time.Time `json:"timestamp"`
-	Actions   []Action  `json:"actions,omitempty"`
+	Role      string                 `json:"role"` // user, assistant, system
+	Content   string                 `json:"content"`
+	Timestamp time.Time              `json:"timestamp"`
+	Actions   []Action               `json:"actions,omitempty"`
 	Metadata  map[string]interface{} `json:"metadata,omitempty"`
 }
 
@@ -68,13 +68,13 @@ type Intent struct {
 
 // PlatformContext represents the current state of the platform
 type PlatformContext struct {
-	CurrentOrg      string                   `json:"currentOrg"`
-	CurrentEnv      string                   `json:"currentEnv"`
-	RecentEvents    []Event                  `json:"recentEvents"`
-	ActiveResources []Resource               `json:"activeResources"`
-	PendingJobs     []Job                    `json:"pendingJobs"`
-	HealthStatus    map[string]string        `json:"healthStatus"`
-	Metrics         map[string]float64       `json:"metrics"`
+	CurrentOrg      string             `json:"currentOrg"`
+	CurrentEnv      string             `json:"currentEnv"`
+	RecentEvents    []Event            `json:"recentEvents"`
+	ActiveResources []Resource         `json:"activeResources"`
+	PendingJobs     []Job              `json:"pendingJobs"`
+	HealthStatus    map[string]string  `json:"healthStatus"`
+	Metrics         map[string]float64 `json:"metrics"`
 }
 
 // Event represents a platform event
@@ -113,11 +113,11 @@ type Response struct {
 
 // EngineConfig contains configuration for the conversation engine
 type EngineConfig struct {
-	LLMConfig       intelligence.LLMConfig
-	MaxHistory      int
-	SystemPrompt    string
-	SafetyEnabled   bool
-	AutoExecute     bool // If true, execute low-risk actions automatically
+	LLMConfig     intelligence.LLMConfig
+	MaxHistory    int
+	SystemPrompt  string
+	SafetyEnabled bool
+	AutoExecute   bool // If true, execute low-risk actions automatically
 }
 
 // ConversationEngine manages AI-powered conversations

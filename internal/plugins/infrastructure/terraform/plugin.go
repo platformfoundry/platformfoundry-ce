@@ -17,10 +17,10 @@ type TerraformConfig struct {
 
 // CloudConfig represents cloud provider configuration
 type CloudConfig struct {
-	Provider string      `yaml:"provider" json:"provider" validate:"required,oneof=aws gcp azure"`
-	Region   string      `yaml:"region" json:"region" validate:"required"`
-	VPC      *VPCConfig  `yaml:"vpc,omitempty" json:"vpc,omitempty"`
-	Cluster  ClusterConfig `yaml:"cluster,omitempty" json:"cluster,omitempty"`
+	Provider string          `yaml:"provider" json:"provider" validate:"required,oneof=aws gcp azure"`
+	Region   string          `yaml:"region" json:"region" validate:"required"`
+	VPC      *VPCConfig      `yaml:"vpc,omitempty" json:"vpc,omitempty"`
+	Cluster  ClusterConfig   `yaml:"cluster,omitempty" json:"cluster,omitempty"`
 	Registry *RegistryConfig `yaml:"registry,omitempty" json:"registry,omitempty"`
 }
 
@@ -39,9 +39,9 @@ type SubnetConfig struct {
 
 // ClusterConfig represents cluster configuration
 type ClusterConfig struct {
-	Name       string           `yaml:"name" json:"name" validate:"required"`
-	Type       string           `yaml:"type" json:"type" validate:"required,oneof=eks gke aks"`
-	Version    string           `yaml:"version,omitempty" json:"version,omitempty"`
+	Name       string            `yaml:"name" json:"name" validate:"required"`
+	Type       string            `yaml:"type" json:"type" validate:"required,oneof=eks gke aks"`
+	Version    string            `yaml:"version,omitempty" json:"version,omitempty"`
 	NodeGroups []NodeGroupConfig `yaml:"nodeGroups,omitempty" json:"nodeGroups,omitempty" validate:"dive"`
 }
 

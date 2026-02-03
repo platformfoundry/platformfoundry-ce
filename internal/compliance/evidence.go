@@ -90,11 +90,11 @@ type EvidenceCollectorConfig struct {
 
 // EvidenceCollector collects compliance evidence
 type EvidenceCollector struct {
-	stateBackend  StateBackendInterface
-	auditLog      AuditLoggerInterface
-	policyEngine  PolicyEngineInterface
-	storage       StorageBackendInterface
-	config        EvidenceCollectorConfig
+	stateBackend StateBackendInterface
+	auditLog     AuditLoggerInterface
+	policyEngine PolicyEngineInterface
+	storage      StorageBackendInterface
+	config       EvidenceCollectorConfig
 }
 
 // NewEvidenceCollector creates a new evidence collector

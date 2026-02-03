@@ -16,10 +16,10 @@ import (
 
 // BitbucketProvider implements Provider for Bitbucket Cloud
 type BitbucketProvider struct {
-	username   string
+	username    string
 	appPassword string
-	baseURL    string
-	httpClient *http.Client
+	baseURL     string
+	httpClient  *http.Client
 }
 
 // BitbucketConfig contains Bitbucket configuration
@@ -651,8 +651,8 @@ type bitbucketPullRequest struct {
 	ClosedBy *struct {
 		DisplayName string `json:"display_name"`
 	} `json:"closed_by"`
-	CreatedOn time.Time  `json:"created_on"`
-	UpdatedOn time.Time  `json:"updated_on"`
+	CreatedOn time.Time `json:"created_on"`
+	UpdatedOn time.Time `json:"updated_on"`
 }
 
 type bitbucketCommit struct {

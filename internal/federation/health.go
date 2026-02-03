@@ -9,20 +9,20 @@ import (
 
 // DefaultHealthMonitor implements health monitoring for federated clusters
 type DefaultHealthMonitor struct {
-	clusters    map[string]*monitoredCluster
-	callback    HealthCallback
-	httpClient  *http.Client
+	clusters      map[string]*monitoredCluster
+	callback      HealthCallback
+	httpClient    *http.Client
 	checkInterval time.Duration
-	mu          sync.RWMutex
-	stopCh      chan struct{}
-	running     bool
+	mu            sync.RWMutex
+	stopCh        chan struct{}
+	running       bool
 }
 
 type monitoredCluster struct {
-	cluster  *Cluster
-	health   *ClusterHealth
-	stopCh   chan struct{}
-	running  bool
+	cluster *Cluster
+	health  *ClusterHealth
+	stopCh  chan struct{}
+	running bool
 }
 
 // HealthMonitorConfig configures the health monitor

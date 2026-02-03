@@ -1,85 +1,85 @@
 package cli
 
 import (
-    "fmt"
+	"fmt"
 
-    "github.com/spf13/cobra"
-    "github.com/platformfoundry/pf-ce/internal/scaffold"
+	"github.com/platformfoundry/pf-ce/internal/scaffold"
+	"github.com/spf13/cobra"
 )
 
 func NewScaffoldCommand() *cobra.Command {
-    cmd := &cobra.Command{
-        Use:   "scaffold",
-        Short: "Generate scaffold configurations for platform components",
-        Long:  `Generate starter configurations for rapid platform setup`,
-    }
+	cmd := &cobra.Command{
+		Use:   "scaffold",
+		Short: "Generate scaffold configurations for platform components",
+		Long:  `Generate starter configurations for rapid platform setup`,
+	}
 
-    cmd.AddCommand(newScaffoldPlatformCmd())
-    cmd.AddCommand(newScaffoldComponentCmd())
-    cmd.AddCommand(newScaffoldFullCmd())
+	cmd.AddCommand(newScaffoldPlatformCmd())
+	cmd.AddCommand(newScaffoldComponentCmd())
+	cmd.AddCommand(newScaffoldFullCmd())
 
-    return cmd
+	return cmd
 }
 
 func newScaffoldFullCmd() *cobra.Command {
-    var (
-        name        string
-        outputDir   string
-        provider    string
-        mockMode    bool
-        environment string
-    )
+	var (
+		name        string
+		outputDir   string
+		provider    string
+		mockMode    bool
+		environment string
+	)
 
-    cmd := &cobra.Command{
-        Use:   "full",
-        Short: "Generate a complete platform scaffold",
-        Example: `  # Generate a full platform scaffold with mock mode
+	cmd := &cobra.Command{
+		Use:   "full",
+		Short: "Generate a complete platform scaffold",
+		Example: `  # Generate a full platform scaffold with mock mode
   pf scaffold full --name my-platform --provider aws --mock
 
   # Generate production-ready scaffold
   pf scaffold full --name my-platform --provider aws --env prod`,
-        RunE: func(cmd *cobra.Command, args []string) error {
-            gen := scaffold.NewGenerator()
+		RunE: func(cmd *cobra.Command, args []string) error {
+			gen := scaffold.NewGenerator()
 
-            config := scaffold.ScaffoldConfig{
-                Type:          scaffold.ScaffoldFull,
-                Name:          name,
-                OutputDir:     outputDir,
-                CloudProvider: provider,
-                MockMode:      mockMode,
-                Environment:   environment,
-            }
+			config := scaffold.ScaffoldConfig{
+				Type:          scaffold.ScaffoldFull,
+				Name:          name,
+				OutputDir:     outputDir,
+				CloudProvider: provider,
+				MockMode:      mockMode,
+				Environment:   environment,
+			}
 
-            if _, err := gen.Generate(config); err != nil {
-                return err
-            }
+			if _, err := gen.Generate(config); err != nil {
+				return err
+			}
 
-            fmt.Printf("Generated platform scaffold in %s\n", outputDir)
-            fmt.Println("\nNext steps:")
-            if mockMode {
-                fmt.Println("  1. Review generated files in", outputDir)
-                fmt.Println("  2. Run: pf apply -f", outputDir+"/platform.yaml", "--mock")
-                fmt.Println("  3. Test your platform locally")
-            } else {
-                fmt.Println("  1. Review and customize generated files in", outputDir)
-                fmt.Println("  2. Set required environment variables")
-                fmt.Println("  3. Run: pf plan -f", outputDir+"/platform.yaml")
-                fmt.Println("  4. Run: pf apply -f", outputDir+"/platform.yaml")
-            }
+			fmt.Printf("Generated platform scaffold in %s\n", outputDir)
+			fmt.Println("\nNext steps:")
+			if mockMode {
+				fmt.Println("  1. Review generated files in", outputDir)
+				fmt.Println("  2. Run: pf apply -f", outputDir+"/platform.yaml", "--mock")
+				fmt.Println("  3. Test your platform locally")
+			} else {
+				fmt.Println("  1. Review and customize generated files in", outputDir)
+				fmt.Println("  2. Set required environment variables")
+				fmt.Println("  3. Run: pf plan -f", outputDir+"/platform.yaml")
+				fmt.Println("  4. Run: pf apply -f", outputDir+"/platform.yaml")
+			}
 
-            return nil
-        },
-    }
+			return nil
+		},
+	}
 
-    cmd.Flags().StringVar(&name, "name", "", "Platform name (required)")
-    cmd.Flags().StringVar(&outputDir, "output", "./platform", "Output directory")
-    cmd.Flags().StringVar(&provider, "provider", "aws", "Cloud provider (aws, gcp, azure)")
-    cmd.Flags().BoolVar(&mockMode, "mock", false, "Generate with mock providers")
-    cmd.Flags().StringVar(&environment, "env", "dev", "Target environment (dev, staging, prod)")
+	cmd.Flags().StringVar(&name, "name", "", "Platform name (required)")
+	cmd.Flags().StringVar(&outputDir, "output", "./platform", "Output directory")
+	cmd.Flags().StringVar(&provider, "provider", "aws", "Cloud provider (aws, gcp, azure)")
+	cmd.Flags().BoolVar(&mockMode, "mock", false, "Generate with mock providers")
+	cmd.Flags().StringVar(&environment, "env", "dev", "Target environment (dev, staging, prod)")
 
-    cmd.MarkFlagRequired("name")
+	cmd.MarkFlagRequired("name")
 
-    return cmd
+	return cmd
 }
 
 func newScaffoldPlatformCmd() *cobra.Command {

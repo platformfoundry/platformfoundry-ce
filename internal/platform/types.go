@@ -36,27 +36,27 @@ type PlatformSpec struct {
 
 // GoldenPath defines a standardized way to build applications
 type GoldenPath struct {
-	Name          string            `json:"name" yaml:"name"`
-	Description   string            `json:"description,omitempty" yaml:"description,omitempty"`
-	Template      string            `json:"template" yaml:"template"`
-	Language      string            `json:"language,omitempty" yaml:"language,omitempty"`
-	Framework     string            `json:"framework,omitempty" yaml:"framework,omitempty"`
-	Resources     []ResourceType    `json:"resources,omitempty" yaml:"resources,omitempty"`
-	Pipelines     []string          `json:"pipelines,omitempty" yaml:"pipelines,omitempty"`
-	Observability []string          `json:"observability,omitempty" yaml:"observability,omitempty"`
-	Security      *SecurityConfig   `json:"security,omitempty" yaml:"security,omitempty"`
+	Name          string                 `json:"name" yaml:"name"`
+	Description   string                 `json:"description,omitempty" yaml:"description,omitempty"`
+	Template      string                 `json:"template" yaml:"template"`
+	Language      string                 `json:"language,omitempty" yaml:"language,omitempty"`
+	Framework     string                 `json:"framework,omitempty" yaml:"framework,omitempty"`
+	Resources     []ResourceType         `json:"resources,omitempty" yaml:"resources,omitempty"`
+	Pipelines     []string               `json:"pipelines,omitempty" yaml:"pipelines,omitempty"`
+	Observability []string               `json:"observability,omitempty" yaml:"observability,omitempty"`
+	Security      *SecurityConfig        `json:"security,omitempty" yaml:"security,omitempty"`
 	Defaults      map[string]interface{} `json:"defaults,omitempty" yaml:"defaults,omitempty"`
-	Tags          []string          `json:"tags,omitempty" yaml:"tags,omitempty"`
+	Tags          []string               `json:"tags,omitempty" yaml:"tags,omitempty"`
 }
 
 // ResourceType defines a resource that can be provisioned
 type ResourceType struct {
-	Type       string                 `json:"type" yaml:"type"`
-	Name       string                 `json:"name,omitempty" yaml:"name,omitempty"`
-	Provider   string                 `json:"provider,omitempty" yaml:"provider,omitempty"`
-	Config     map[string]interface{} `json:"config,omitempty" yaml:"config,omitempty"`
-	Required   bool                   `json:"required,omitempty" yaml:"required,omitempty"`
-	Shareable  bool                   `json:"shareable,omitempty" yaml:"shareable,omitempty"`
+	Type      string                 `json:"type" yaml:"type"`
+	Name      string                 `json:"name,omitempty" yaml:"name,omitempty"`
+	Provider  string                 `json:"provider,omitempty" yaml:"provider,omitempty"`
+	Config    map[string]interface{} `json:"config,omitempty" yaml:"config,omitempty"`
+	Required  bool                   `json:"required,omitempty" yaml:"required,omitempty"`
+	Shareable bool                   `json:"shareable,omitempty" yaml:"shareable,omitempty"`
 }
 
 // SecurityConfig defines security requirements
@@ -71,16 +71,16 @@ type SecurityConfig struct {
 
 // PlatformCapabilities defines platform integrations
 type PlatformCapabilities struct {
-	Secrets      string `json:"secrets,omitempty" yaml:"secrets,omitempty"`           // vault, aws-secrets-manager
-	GitOps       string `json:"gitops,omitempty" yaml:"gitops,omitempty"`             // argocd, flux
-	CI           string `json:"ci,omitempty" yaml:"ci,omitempty"`                     // github-actions, gitlab-ci
-	Monitoring   string `json:"monitoring,omitempty" yaml:"monitoring,omitempty"`     // prometheus, datadog
-	Logging      string `json:"logging,omitempty" yaml:"logging,omitempty"`           // elasticsearch, loki
-	Tracing      string `json:"tracing,omitempty" yaml:"tracing,omitempty"`           // jaeger, tempo
-	ServiceMesh  string `json:"serviceMesh,omitempty" yaml:"serviceMesh,omitempty"`   // istio, linkerd
-	DNS          string `json:"dns,omitempty" yaml:"dns,omitempty"`                   // route53, cloudflare
-	CDN          string `json:"cdn,omitempty" yaml:"cdn,omitempty"`                   // cloudfront, fastly
-	Registry     string `json:"registry,omitempty" yaml:"registry,omitempty"`         // ecr, gcr, dockerhub
+	Secrets       string `json:"secrets,omitempty" yaml:"secrets,omitempty"`             // vault, aws-secrets-manager
+	GitOps        string `json:"gitops,omitempty" yaml:"gitops,omitempty"`               // argocd, flux
+	CI            string `json:"ci,omitempty" yaml:"ci,omitempty"`                       // github-actions, gitlab-ci
+	Monitoring    string `json:"monitoring,omitempty" yaml:"monitoring,omitempty"`       // prometheus, datadog
+	Logging       string `json:"logging,omitempty" yaml:"logging,omitempty"`             // elasticsearch, loki
+	Tracing       string `json:"tracing,omitempty" yaml:"tracing,omitempty"`             // jaeger, tempo
+	ServiceMesh   string `json:"serviceMesh,omitempty" yaml:"serviceMesh,omitempty"`     // istio, linkerd
+	DNS           string `json:"dns,omitempty" yaml:"dns,omitempty"`                     // route53, cloudflare
+	CDN           string `json:"cdn,omitempty" yaml:"cdn,omitempty"`                     // cloudfront, fastly
+	Registry      string `json:"registry,omitempty" yaml:"registry,omitempty"`           // ecr, gcr, dockerhub
 	Notifications string `json:"notifications,omitempty" yaml:"notifications,omitempty"` // slack, teams
 }
 
@@ -94,14 +94,14 @@ type PlatformPolicies struct {
 
 // SecurityPolicies defines security requirements
 type SecurityPolicies struct {
-	ImageScanning      string   `json:"imageScanning,omitempty" yaml:"imageScanning,omitempty"`     // required, recommended, disabled
-	SecretsInEnv       string   `json:"secretsInEnv,omitempty" yaml:"secretsInEnv,omitempty"`       // denied, warn, allowed
-	PublicEndpoints    string   `json:"publicEndpoints,omitempty" yaml:"publicEndpoints,omitempty"` // require-auth, allow, deny
-	PrivilegedPods     string   `json:"privilegedPods,omitempty" yaml:"privilegedPods,omitempty"`   // denied, restricted, allowed
-	RootUser           string   `json:"rootUser,omitempty" yaml:"rootUser,omitempty"`               // denied, warn, allowed
-	AllowedRegistries  []string `json:"allowedRegistries,omitempty" yaml:"allowedRegistries,omitempty"`
-	DeniedImages       []string `json:"deniedImages,omitempty" yaml:"deniedImages,omitempty"`
-	RequiredLabels     []string `json:"requiredLabels,omitempty" yaml:"requiredLabels,omitempty"`
+	ImageScanning     string   `json:"imageScanning,omitempty" yaml:"imageScanning,omitempty"`     // required, recommended, disabled
+	SecretsInEnv      string   `json:"secretsInEnv,omitempty" yaml:"secretsInEnv,omitempty"`       // denied, warn, allowed
+	PublicEndpoints   string   `json:"publicEndpoints,omitempty" yaml:"publicEndpoints,omitempty"` // require-auth, allow, deny
+	PrivilegedPods    string   `json:"privilegedPods,omitempty" yaml:"privilegedPods,omitempty"`   // denied, restricted, allowed
+	RootUser          string   `json:"rootUser,omitempty" yaml:"rootUser,omitempty"`               // denied, warn, allowed
+	AllowedRegistries []string `json:"allowedRegistries,omitempty" yaml:"allowedRegistries,omitempty"`
+	DeniedImages      []string `json:"deniedImages,omitempty" yaml:"deniedImages,omitempty"`
+	RequiredLabels    []string `json:"requiredLabels,omitempty" yaml:"requiredLabels,omitempty"`
 }
 
 // CostPolicies defines cost management rules
@@ -124,20 +124,20 @@ type CompliancePolicies struct {
 
 // NetworkPolicies defines network requirements
 type NetworkPolicies struct {
-	DefaultDeny    bool     `json:"defaultDeny,omitempty" yaml:"defaultDeny,omitempty"`
-	AllowedEgress  []string `json:"allowedEgress,omitempty" yaml:"allowedEgress,omitempty"`
-	RequireTLS     bool     `json:"requireTLS,omitempty" yaml:"requireTLS,omitempty"`
-	MinTLSVersion  string   `json:"minTLSVersion,omitempty" yaml:"minTLSVersion,omitempty"`
+	DefaultDeny   bool     `json:"defaultDeny,omitempty" yaml:"defaultDeny,omitempty"`
+	AllowedEgress []string `json:"allowedEgress,omitempty" yaml:"allowedEgress,omitempty"`
+	RequireTLS    bool     `json:"requireTLS,omitempty" yaml:"requireTLS,omitempty"`
+	MinTLSVersion string   `json:"minTLSVersion,omitempty" yaml:"minTLSVersion,omitempty"`
 }
 
 // EnvironmentDefinition defines an environment
 type EnvironmentDefinition struct {
-	Name        string                 `json:"name" yaml:"name"`
-	Type        string                 `json:"type" yaml:"type"` // dev, staging, production
-	Cluster     string                 `json:"cluster,omitempty" yaml:"cluster,omitempty"`
-	Namespace   string                 `json:"namespace,omitempty" yaml:"namespace,omitempty"`
-	Overrides   map[string]interface{} `json:"overrides,omitempty" yaml:"overrides,omitempty"`
-	Promotion   *PromotionConfig       `json:"promotion,omitempty" yaml:"promotion,omitempty"`
+	Name      string                 `json:"name" yaml:"name"`
+	Type      string                 `json:"type" yaml:"type"` // dev, staging, production
+	Cluster   string                 `json:"cluster,omitempty" yaml:"cluster,omitempty"`
+	Namespace string                 `json:"namespace,omitempty" yaml:"namespace,omitempty"`
+	Overrides map[string]interface{} `json:"overrides,omitempty" yaml:"overrides,omitempty"`
+	Promotion *PromotionConfig       `json:"promotion,omitempty" yaml:"promotion,omitempty"`
 }
 
 // PromotionConfig defines how to promote to this environment
@@ -175,11 +175,11 @@ type PlatformStatus struct {
 type PlatformPhase string
 
 const (
-	PlatformPhaseActive      PlatformPhase = "Active"
-	PlatformPhasePending     PlatformPhase = "Pending"
-	PlatformPhaseUpgrading   PlatformPhase = "Upgrading"
-	PlatformPhaseDegraded    PlatformPhase = "Degraded"
-	PlatformPhaseFailed      PlatformPhase = "Failed"
+	PlatformPhaseActive    PlatformPhase = "Active"
+	PlatformPhasePending   PlatformPhase = "Pending"
+	PlatformPhaseUpgrading PlatformPhase = "Upgrading"
+	PlatformPhaseDegraded  PlatformPhase = "Degraded"
+	PlatformPhaseFailed    PlatformPhase = "Failed"
 )
 
 // PlatformCondition represents a platform condition
@@ -230,19 +230,19 @@ type ApplicationSpec struct {
 
 // ResourceInstance represents a provisioned resource
 type ResourceInstance struct {
-	Name     string                 `json:"name" yaml:"name"`
-	Type     string                 `json:"type" yaml:"type"`
-	Config   map[string]interface{} `json:"config,omitempty" yaml:"config,omitempty"`
-	Shared   bool                   `json:"shared,omitempty" yaml:"shared,omitempty"`
-	SharedFrom string               `json:"sharedFrom,omitempty" yaml:"sharedFrom,omitempty"`
+	Name       string                 `json:"name" yaml:"name"`
+	Type       string                 `json:"type" yaml:"type"`
+	Config     map[string]interface{} `json:"config,omitempty" yaml:"config,omitempty"`
+	Shared     bool                   `json:"shared,omitempty" yaml:"shared,omitempty"`
+	SharedFrom string                 `json:"sharedFrom,omitempty" yaml:"sharedFrom,omitempty"`
 }
 
 // ApplicationStatus tracks application state
 type ApplicationStatus struct {
-	Phase       string                    `json:"phase" yaml:"phase"`
-	Deployments map[string]DeploymentInfo `json:"deployments,omitempty" yaml:"deployments,omitempty"`
-	Resources   []ResourceStatus          `json:"resources,omitempty" yaml:"resources,omitempty"`
-	LastDeployed time.Time                `json:"lastDeployed,omitempty" yaml:"lastDeployed,omitempty"`
+	Phase        string                    `json:"phase" yaml:"phase"`
+	Deployments  map[string]DeploymentInfo `json:"deployments,omitempty" yaml:"deployments,omitempty"`
+	Resources    []ResourceStatus          `json:"resources,omitempty" yaml:"resources,omitempty"`
+	LastDeployed time.Time                 `json:"lastDeployed,omitempty" yaml:"lastDeployed,omitempty"`
 }
 
 // DeploymentInfo tracks deployment in an environment
@@ -257,9 +257,9 @@ type DeploymentInfo struct {
 
 // ResourceStatus tracks resource provisioning
 type ResourceStatus struct {
-	Name       string    `json:"name" yaml:"name"`
-	Type       string    `json:"type" yaml:"type"`
-	Status     string    `json:"status" yaml:"status"`
-	Endpoint   string    `json:"endpoint,omitempty" yaml:"endpoint,omitempty"`
-	CreatedAt  time.Time `json:"createdAt,omitempty" yaml:"createdAt,omitempty"`
+	Name      string    `json:"name" yaml:"name"`
+	Type      string    `json:"type" yaml:"type"`
+	Status    string    `json:"status" yaml:"status"`
+	Endpoint  string    `json:"endpoint,omitempty" yaml:"endpoint,omitempty"`
+	CreatedAt time.Time `json:"createdAt,omitempty" yaml:"createdAt,omitempty"`
 }

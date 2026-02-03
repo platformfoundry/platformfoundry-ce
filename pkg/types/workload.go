@@ -52,17 +52,17 @@ type WorkloadSpec struct {
 
 // Container defines a container in the workload
 type Container struct {
-	Name       string               `yaml:"name" json:"name"`
-	Image      string               `yaml:"image" json:"image"`
-	Command    []string             `yaml:"command,omitempty" json:"command,omitempty"`
-	Args       []string             `yaml:"args,omitempty" json:"args,omitempty"`
-	Env        map[string]string    `yaml:"env,omitempty" json:"env,omitempty"`
-	EnvFrom    []EnvFromSource      `yaml:"envFrom,omitempty" json:"envFrom,omitempty"`
-	Resources  *ContainerResources  `yaml:"resources,omitempty" json:"resources,omitempty"`
-	Ports      []PortSpec           `yaml:"ports,omitempty" json:"ports,omitempty"`
-	LivenessProbe  *ProbeSpec       `yaml:"livenessProbe,omitempty" json:"livenessProbe,omitempty"`
-	ReadinessProbe *ProbeSpec       `yaml:"readinessProbe,omitempty" json:"readinessProbe,omitempty"`
-	VolumeMounts   []VolumeMount    `yaml:"volumeMounts,omitempty" json:"volumeMounts,omitempty"`
+	Name           string              `yaml:"name" json:"name"`
+	Image          string              `yaml:"image" json:"image"`
+	Command        []string            `yaml:"command,omitempty" json:"command,omitempty"`
+	Args           []string            `yaml:"args,omitempty" json:"args,omitempty"`
+	Env            map[string]string   `yaml:"env,omitempty" json:"env,omitempty"`
+	EnvFrom        []EnvFromSource     `yaml:"envFrom,omitempty" json:"envFrom,omitempty"`
+	Resources      *ContainerResources `yaml:"resources,omitempty" json:"resources,omitempty"`
+	Ports          []PortSpec          `yaml:"ports,omitempty" json:"ports,omitempty"`
+	LivenessProbe  *ProbeSpec          `yaml:"livenessProbe,omitempty" json:"livenessProbe,omitempty"`
+	ReadinessProbe *ProbeSpec          `yaml:"readinessProbe,omitempty" json:"readinessProbe,omitempty"`
+	VolumeMounts   []VolumeMount       `yaml:"volumeMounts,omitempty" json:"volumeMounts,omitempty"`
 }
 
 // EnvFromSource defines environment variable sources
@@ -87,12 +87,12 @@ type PortSpec struct {
 
 // ProbeSpec defines health probe configuration
 type ProbeSpec struct {
-	HTTPGet             *HTTPGetAction `yaml:"httpGet,omitempty" json:"httpGet,omitempty"`
+	HTTPGet             *HTTPGetAction   `yaml:"httpGet,omitempty" json:"httpGet,omitempty"`
 	TCPSocket           *TCPSocketAction `yaml:"tcpSocket,omitempty" json:"tcpSocket,omitempty"`
-	InitialDelaySeconds int            `yaml:"initialDelaySeconds,omitempty" json:"initialDelaySeconds,omitempty"`
-	PeriodSeconds       int            `yaml:"periodSeconds,omitempty" json:"periodSeconds,omitempty"`
-	TimeoutSeconds      int            `yaml:"timeoutSeconds,omitempty" json:"timeoutSeconds,omitempty"`
-	FailureThreshold    int            `yaml:"failureThreshold,omitempty" json:"failureThreshold,omitempty"`
+	InitialDelaySeconds int              `yaml:"initialDelaySeconds,omitempty" json:"initialDelaySeconds,omitempty"`
+	PeriodSeconds       int              `yaml:"periodSeconds,omitempty" json:"periodSeconds,omitempty"`
+	TimeoutSeconds      int              `yaml:"timeoutSeconds,omitempty" json:"timeoutSeconds,omitempty"`
+	FailureThreshold    int              `yaml:"failureThreshold,omitempty" json:"failureThreshold,omitempty"`
 }
 
 // HTTPGetAction describes an action based on HTTP Get requests
@@ -116,18 +116,18 @@ type VolumeMount struct {
 
 // WorkloadDependency defines an external dependency
 type WorkloadDependency struct {
-	Type     string                 `yaml:"type" json:"type"`     // postgres, redis, s3, kafka, elasticsearch, etc.
-	Name     string                 `yaml:"name" json:"name"`     // Logical name for this dependency
+	Type     string                 `yaml:"type" json:"type"` // postgres, redis, s3, kafka, elasticsearch, etc.
+	Name     string                 `yaml:"name" json:"name"` // Logical name for this dependency
 	Config   map[string]interface{} `yaml:"config,omitempty" json:"config,omitempty"`
 	Required bool                   `yaml:"required,omitempty" json:"required,omitempty"`
 }
 
 // ScalingSpec defines auto-scaling configuration
 type ScalingSpec struct {
-	Min        int `yaml:"min" json:"min"`
-	Max        int `yaml:"max" json:"max"`
-	TargetCPU  int `yaml:"targetCPU,omitempty" json:"targetCPU,omitempty"`   // Target CPU utilization %
-	TargetMem  int `yaml:"targetMem,omitempty" json:"targetMem,omitempty"`   // Target memory utilization %
+	Min       int `yaml:"min" json:"min"`
+	Max       int `yaml:"max" json:"max"`
+	TargetCPU int `yaml:"targetCPU,omitempty" json:"targetCPU,omitempty"` // Target CPU utilization %
+	TargetMem int `yaml:"targetMem,omitempty" json:"targetMem,omitempty"` // Target memory utilization %
 }
 
 // NetworkSpec defines networking configuration
@@ -186,13 +186,13 @@ type LifecycleHook struct {
 
 // WorkloadStatus represents the runtime status of a workload
 type WorkloadStatus struct {
-	State            WorkloadState  `yaml:"state" json:"state"`
-	Replicas         int            `yaml:"replicas" json:"replicas"`
-	ReadyReplicas    int            `yaml:"readyReplicas" json:"readyReplicas"`
-	AvailableReplicas int           `yaml:"availableReplicas" json:"availableReplicas"`
-	DependencyStatus map[string]DependencyStatus `yaml:"dependencyStatus,omitempty" json:"dependencyStatus,omitempty"`
-	LastUpdated      string         `yaml:"lastUpdated,omitempty" json:"lastUpdated,omitempty"`
-	Message          string         `yaml:"message,omitempty" json:"message,omitempty"`
+	State             WorkloadState               `yaml:"state" json:"state"`
+	Replicas          int                         `yaml:"replicas" json:"replicas"`
+	ReadyReplicas     int                         `yaml:"readyReplicas" json:"readyReplicas"`
+	AvailableReplicas int                         `yaml:"availableReplicas" json:"availableReplicas"`
+	DependencyStatus  map[string]DependencyStatus `yaml:"dependencyStatus,omitempty" json:"dependencyStatus,omitempty"`
+	LastUpdated       string                      `yaml:"lastUpdated,omitempty" json:"lastUpdated,omitempty"`
+	Message           string                      `yaml:"message,omitempty" json:"message,omitempty"`
 }
 
 // WorkloadState represents the state of a workload
@@ -208,9 +208,9 @@ const (
 
 // DependencyStatus represents the status of a dependency
 type DependencyStatus struct {
-	Ready      bool   `yaml:"ready" json:"ready"`
-	Endpoint   string `yaml:"endpoint,omitempty" json:"endpoint,omitempty"`
-	Message    string `yaml:"message,omitempty" json:"message,omitempty"`
+	Ready    bool   `yaml:"ready" json:"ready"`
+	Endpoint string `yaml:"endpoint,omitempty" json:"endpoint,omitempty"`
+	Message  string `yaml:"message,omitempty" json:"message,omitempty"`
 }
 
 var (

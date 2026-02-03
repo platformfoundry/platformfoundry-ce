@@ -485,12 +485,12 @@ func (p *Plugin) createElastiCache(ctx context.Context, res Resource, tags map[s
 	ecTags = append(ecTags, ectypes.Tag{Key: aws.String("Name"), Value: aws.String(res.Name)})
 
 	out, err := p.elasticacheClient.CreateCacheCluster(ctx, &elasticache.CreateCacheClusterInput{
-		CacheClusterId:   aws.String(res.Name),
-		Engine:           aws.String(engine),
-		CacheNodeType:    aws.String(nodeType),
-		NumCacheNodes:    aws.Int32(numNodes),
-		Port:             aws.Int32(port),
-		Tags:             ecTags,
+		CacheClusterId: aws.String(res.Name),
+		Engine:         aws.String(engine),
+		CacheNodeType:  aws.String(nodeType),
+		NumCacheNodes:  aws.Int32(numNodes),
+		Port:           aws.Int32(port),
+		Tags:           ecTags,
 	})
 	if err != nil {
 		return nil, fmt.Errorf("failed to create ElastiCache cluster: %w", err)

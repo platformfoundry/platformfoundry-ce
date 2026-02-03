@@ -10,11 +10,11 @@ import (
 var validateFile string
 
 var validateCmd = &cobra.Command{
-	Use:   "validate -f <file>",
-	Short: "Validate a YAML file",
-	Long:  `Parse and validate a YAML file without applying resources.`,
+	Use:     "validate -f <file>",
+	Short:   "Validate a YAML file",
+	Long:    `Parse and validate a YAML file without applying resources.`,
 	Example: `  pf validate -f platform.yaml`,
-	RunE: runValidate,
+	RunE:    runValidate,
 }
 
 func init() {

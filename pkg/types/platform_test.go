@@ -6,10 +6,10 @@ import (
 
 func TestPlatform_Validate(t *testing.T) {
 	tests := []struct {
-		name    string
+		name     string
 		platform Platform
-		wantErr bool
-		errType error
+		wantErr  bool
+		errType  error
 	}{
 		{
 			name: "valid platform with infrastructure",
@@ -122,9 +122,9 @@ func TestPlatform_GetComponentNames(t *testing.T) {
 	}
 
 	expected := map[string]bool{
-		"aws-infra":  true,
-		"argocd":     true,
-		"backstage":  true,
+		"aws-infra": true,
+		"argocd":    true,
+		"backstage": true,
 	}
 
 	for _, name := range names {

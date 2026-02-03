@@ -29,8 +29,8 @@ type WebhookSubscription struct {
 	ID          string            `json:"id"`
 	Name        string            `json:"name"`
 	URL         string            `json:"url"`
-	Events      []string          `json:"events"`      // Event types to subscribe to
-	Secret      string            `json:"secret"`      // For HMAC signing
+	Events      []string          `json:"events"` // Event types to subscribe to
+	Secret      string            `json:"secret"` // For HMAC signing
 	Headers     map[string]string `json:"headers,omitempty"`
 	Filters     []Filter          `json:"filters,omitempty"`
 	Enabled     bool              `json:"enabled"`
@@ -48,10 +48,10 @@ type Filter struct {
 
 // RetryPolicy defines retry behavior for failed deliveries
 type RetryPolicy struct {
-	MaxRetries     int           `json:"maxRetries"`
-	InitialDelay   time.Duration `json:"initialDelay"`
-	MaxDelay       time.Duration `json:"maxDelay"`
-	BackoffFactor  float64       `json:"backoffFactor"`
+	MaxRetries    int           `json:"maxRetries"`
+	InitialDelay  time.Duration `json:"initialDelay"`
+	MaxDelay      time.Duration `json:"maxDelay"`
+	BackoffFactor float64       `json:"backoffFactor"`
 }
 
 // DeliveryResult represents the result of a webhook delivery attempt
@@ -510,14 +510,14 @@ func getNestedValue(data map[string]interface{}, path []string) interface{} {
 
 // Common event types
 const (
-	EventResourceCreated    = "resource.created"
-	EventResourceUpdated    = "resource.updated"
-	EventResourceDeleted    = "resource.deleted"
-	EventDeploymentStarted  = "deployment.started"
+	EventResourceCreated     = "resource.created"
+	EventResourceUpdated     = "resource.updated"
+	EventResourceDeleted     = "resource.deleted"
+	EventDeploymentStarted   = "deployment.started"
 	EventDeploymentCompleted = "deployment.completed"
-	EventDeploymentFailed   = "deployment.failed"
-	EventAlertFired         = "alert.fired"
-	EventAlertResolved      = "alert.resolved"
-	EventPolicyViolation    = "policy.violation"
-	EventComplianceCheck    = "compliance.check"
+	EventDeploymentFailed    = "deployment.failed"
+	EventAlertFired          = "alert.fired"
+	EventAlertResolved       = "alert.resolved"
+	EventPolicyViolation     = "policy.violation"
+	EventComplianceCheck     = "compliance.check"
 )

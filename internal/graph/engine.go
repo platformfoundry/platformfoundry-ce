@@ -12,8 +12,8 @@ import (
 
 // Engine provides resource graph operations
 type Engine struct {
-	mu     sync.RWMutex
-	graph  *types.ResourceGraph
+	mu       sync.RWMutex
+	graph    *types.ResourceGraph
 	inEdges  map[string][]*types.ResourceEdge // target -> edges
 	outEdges map[string][]*types.ResourceEdge // source -> edges
 }

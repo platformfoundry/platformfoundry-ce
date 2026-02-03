@@ -17,37 +17,37 @@ type DeployStrategy struct {
 
 // ProgressStep represents a step in progressive delivery
 type ProgressStep struct {
-	Weight      int           `yaml:"weight" json:"weight"`                   // Traffic percentage (0-100)
-	WaitTime    time.Duration `yaml:"waitTime" json:"waitTime"`               // Time to wait before next step
-	Analysis    bool          `yaml:"analysis" json:"analysis"`               // Whether to run analysis
-	SetHeader   string        `yaml:"setHeader,omitempty" json:"setHeader"`   // Header-based routing
-	SetWeight   int           `yaml:"setWeight,omitempty" json:"setWeight"`   // Explicit weight override
-	Pause       *PauseConfig  `yaml:"pause,omitempty" json:"pause,omitempty"` // Step-specific pause
+	Weight    int           `yaml:"weight" json:"weight"`                   // Traffic percentage (0-100)
+	WaitTime  time.Duration `yaml:"waitTime" json:"waitTime"`               // Time to wait before next step
+	Analysis  bool          `yaml:"analysis" json:"analysis"`               // Whether to run analysis
+	SetHeader string        `yaml:"setHeader,omitempty" json:"setHeader"`   // Header-based routing
+	SetWeight int           `yaml:"setWeight,omitempty" json:"setWeight"`   // Explicit weight override
+	Pause     *PauseConfig  `yaml:"pause,omitempty" json:"pause,omitempty"` // Step-specific pause
 }
 
 // PauseConfig defines when to pause during deployment
 type PauseConfig struct {
-	Duration       time.Duration `yaml:"duration,omitempty" json:"duration,omitempty"`
-	RequireApproval bool         `yaml:"requireApproval,omitempty" json:"requireApproval,omitempty"`
+	Duration        time.Duration `yaml:"duration,omitempty" json:"duration,omitempty"`
+	RequireApproval bool          `yaml:"requireApproval,omitempty" json:"requireApproval,omitempty"`
 }
 
 // RollbackConfig defines rollback behavior
 type RollbackConfig struct {
-	Automatic      bool          `yaml:"automatic" json:"automatic"`
-	MaxRetries     int           `yaml:"maxRetries" json:"maxRetries"`
-	BackoffDelay   time.Duration `yaml:"backoffDelay" json:"backoffDelay"`
-	OnFailure      string        `yaml:"onFailure" json:"onFailure"` // abort, rollback, pause
+	Automatic    bool          `yaml:"automatic" json:"automatic"`
+	MaxRetries   int           `yaml:"maxRetries" json:"maxRetries"`
+	BackoffDelay time.Duration `yaml:"backoffDelay" json:"backoffDelay"`
+	OnFailure    string        `yaml:"onFailure" json:"onFailure"` // abort, rollback, pause
 }
 
 // AnalysisRule defines a metric-based analysis rule
 type AnalysisRule struct {
-	Name          string            `yaml:"name" json:"name"`
-	MetricName    string            `yaml:"metricName" json:"metricName"`
-	Query         string            `yaml:"query" json:"query"`         // PromQL or custom query
-	Threshold     float64           `yaml:"threshold" json:"threshold"`
-	Operator      string            `yaml:"operator" json:"operator"`   // lt, lte, gt, gte, eq
-	FailureLimit  int               `yaml:"failureLimit" json:"failureLimit"`
-	Labels        map[string]string `yaml:"labels,omitempty" json:"labels,omitempty"`
+	Name         string            `yaml:"name" json:"name"`
+	MetricName   string            `yaml:"metricName" json:"metricName"`
+	Query        string            `yaml:"query" json:"query"` // PromQL or custom query
+	Threshold    float64           `yaml:"threshold" json:"threshold"`
+	Operator     string            `yaml:"operator" json:"operator"` // lt, lte, gt, gte, eq
+	FailureLimit int               `yaml:"failureLimit" json:"failureLimit"`
+	Labels       map[string]string `yaml:"labels,omitempty" json:"labels,omitempty"`
 }
 
 // DeploymentIntent represents the desired deployment state
@@ -123,13 +123,13 @@ type QueryResult struct {
 
 // MetricValue represents a metric value with metadata
 type MetricValue struct {
-	Avg    float64
-	Min    float64
-	Max    float64
-	P50    float64
-	P95    float64
-	P99    float64
-	Count  int64
+	Avg   float64
+	Min   float64
+	Max   float64
+	P50   float64
+	P95   float64
+	P99   float64
+	Count int64
 }
 
 // IntentNotifier interface for sending deployment notifications

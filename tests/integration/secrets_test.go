@@ -219,10 +219,10 @@ func TestSecrets_ReferenceResolution(t *testing.T) {
 	}
 
 	tests := []struct {
-		name           string
-		secretRef      string
-		expectedValue  string
-		shouldResolve  bool
+		name          string
+		secretRef     string
+		expectedValue string
+		shouldResolve bool
 	}{
 		{
 			name:          "Simple secret reference",

@@ -462,7 +462,7 @@ func TestAPIKeyFormat(t *testing.T) {
 		// Should only contain base64 URL-safe characters
 		for _, ch := range keyPart {
 			if !((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z') ||
-				 (ch >= '0' && ch <= '9') || ch == '-' || ch == '_' || ch == '=') {
+				(ch >= '0' && ch <= '9') || ch == '-' || ch == '_' || ch == '=') {
 				t.Errorf("Invalid character in key: %c", ch)
 			}
 		}

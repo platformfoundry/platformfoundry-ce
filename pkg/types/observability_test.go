@@ -201,10 +201,10 @@ func TestObservability_Validate(t *testing.T) {
 
 func TestMonitoringConfig(t *testing.T) {
 	tests := []struct {
-		name           string
-		config         *MonitoringConfig
-		wantRetention  string
-		wantStorage    string
+		name          string
+		config        *MonitoringConfig
+		wantRetention string
+		wantStorage   string
 	}{
 		{
 			name: "short retention",
@@ -242,9 +242,9 @@ func TestMonitoringConfig(t *testing.T) {
 
 func TestVisualizationConfig(t *testing.T) {
 	tests := []struct {
-		name            string
-		config          *VisualizationConfig
-		wantDashboards  int
+		name           string
+		config         *VisualizationConfig
+		wantDashboards int
 	}{
 		{
 			name: "single dashboard",

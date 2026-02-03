@@ -49,11 +49,11 @@ type CompletionRequest struct {
 
 // Message represents a conversation message
 type Message struct {
-	Role      string     `json:"role"` // system, user, assistant, tool
-	Content   string     `json:"content"`
-	Name      string     `json:"name,omitempty"`
-	ToolCalls []ToolCall `json:"tool_calls,omitempty"`
-	ToolCallID string    `json:"tool_call_id,omitempty"` // For tool responses
+	Role       string     `json:"role"` // system, user, assistant, tool
+	Content    string     `json:"content"`
+	Name       string     `json:"name,omitempty"`
+	ToolCalls  []ToolCall `json:"tool_calls,omitempty"`
+	ToolCallID string     `json:"tool_call_id,omitempty"` // For tool responses
 }
 
 // ToolDefinition defines a tool the LLM can use
@@ -125,9 +125,9 @@ type ParameterSchema struct {
 
 // Property defines a single parameter property
 type Property struct {
-	Type        string   `json:"type"`
-	Description string   `json:"description,omitempty"`
-	Enum        []string `json:"enum,omitempty"`
+	Type        string      `json:"type"`
+	Description string      `json:"description,omitempty"`
+	Enum        []string    `json:"enum,omitempty"`
 	Default     interface{} `json:"default,omitempty"`
 }
 

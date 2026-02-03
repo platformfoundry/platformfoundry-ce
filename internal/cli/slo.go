@@ -389,16 +389,16 @@ type sloDetail struct {
 }
 
 type budgetInfo struct {
-	SLO          string  `json:"slo"`
-	Service      string  `json:"service"`
-	Total        float64 `json:"total"`
-	Consumed     float64 `json:"consumed"`
-	Remaining    float64 `json:"remaining"`
-	ConsumedPct  float64 `json:"consumedPct"`
-	RemainingPct float64 `json:"remainingPct"`
-	BurnRate     float64 `json:"burnRate"`
-	Status       string  `json:"status"`
-	TimeToExhaust string `json:"timeToExhaust,omitempty"`
+	SLO           string  `json:"slo"`
+	Service       string  `json:"service"`
+	Total         float64 `json:"total"`
+	Consumed      float64 `json:"consumed"`
+	Remaining     float64 `json:"remaining"`
+	ConsumedPct   float64 `json:"consumedPct"`
+	RemainingPct  float64 `json:"remainingPct"`
+	BurnRate      float64 `json:"burnRate"`
+	Status        string  `json:"status"`
+	TimeToExhaust string  `json:"timeToExhaust,omitempty"`
 }
 
 type reportInfo struct {

@@ -7,43 +7,43 @@ import (
 
 // ControlMapping maps compliance controls to platform features
 type ControlMapping struct {
-	controls  map[string]*Control
-	mappings  map[string][]PlatformFeature
-	coverage  map[string]*ControlCoverage
+	controls map[string]*Control
+	mappings map[string][]PlatformFeature
+	coverage map[string]*ControlCoverage
 }
 
 // Control represents a compliance control
 type Control struct {
-	ID           string              `json:"id" yaml:"id"`
-	Framework    string              `json:"framework" yaml:"framework"`
-	Category     string              `json:"category" yaml:"category"`
-	Name         string              `json:"name" yaml:"name"`
-	Description  string              `json:"description" yaml:"description"`
-	Requirement  string              `json:"requirement" yaml:"requirement"`
-	Guidance     string              `json:"guidance,omitempty" yaml:"guidance,omitempty"`
-	References   []string            `json:"references,omitempty" yaml:"references,omitempty"`
-	SubControls  []string            `json:"subControls,omitempty" yaml:"subControls,omitempty"`
+	ID          string   `json:"id" yaml:"id"`
+	Framework   string   `json:"framework" yaml:"framework"`
+	Category    string   `json:"category" yaml:"category"`
+	Name        string   `json:"name" yaml:"name"`
+	Description string   `json:"description" yaml:"description"`
+	Requirement string   `json:"requirement" yaml:"requirement"`
+	Guidance    string   `json:"guidance,omitempty" yaml:"guidance,omitempty"`
+	References  []string `json:"references,omitempty" yaml:"references,omitempty"`
+	SubControls []string `json:"subControls,omitempty" yaml:"subControls,omitempty"`
 }
 
 // PlatformFeature represents a platform capability
 type PlatformFeature struct {
-	ID          string            `json:"id" yaml:"id"`
-	Name        string            `json:"name" yaml:"name"`
-	Component   string            `json:"component" yaml:"component"`
-	Description string            `json:"description" yaml:"description"`
-	ConfigPath  string            `json:"configPath,omitempty" yaml:"configPath,omitempty"`
-	Status      FeatureStatus     `json:"status" yaml:"status"`
-	Coverage    CoverageLevel     `json:"coverage" yaml:"coverage"`
-	Automation  AutomationLevel   `json:"automation" yaml:"automation"`
+	ID          string          `json:"id" yaml:"id"`
+	Name        string          `json:"name" yaml:"name"`
+	Component   string          `json:"component" yaml:"component"`
+	Description string          `json:"description" yaml:"description"`
+	ConfigPath  string          `json:"configPath,omitempty" yaml:"configPath,omitempty"`
+	Status      FeatureStatus   `json:"status" yaml:"status"`
+	Coverage    CoverageLevel   `json:"coverage" yaml:"coverage"`
+	Automation  AutomationLevel `json:"automation" yaml:"automation"`
 }
 
 // FeatureStatus indicates feature implementation status
 type FeatureStatus string
 
 const (
-	FeatureStatusActive      FeatureStatus = "active"
-	FeatureStatusPartial     FeatureStatus = "partial"
-	FeatureStatusPlanned     FeatureStatus = "planned"
+	FeatureStatusActive       FeatureStatus = "active"
+	FeatureStatusPartial      FeatureStatus = "partial"
+	FeatureStatusPlanned      FeatureStatus = "planned"
 	FeatureStatusNotAvailable FeatureStatus = "not_available"
 )
 
@@ -61,10 +61,10 @@ const (
 type AutomationLevel string
 
 const (
-	AutomationFull       AutomationLevel = "full"
-	AutomationPartial    AutomationLevel = "partial"
-	AutomationManual     AutomationLevel = "manual"
-	AutomationAssisted   AutomationLevel = "assisted"
+	AutomationFull     AutomationLevel = "full"
+	AutomationPartial  AutomationLevel = "partial"
+	AutomationManual   AutomationLevel = "manual"
+	AutomationAssisted AutomationLevel = "assisted"
 )
 
 // ControlCoverage tracks coverage for a control
@@ -587,12 +587,12 @@ type CoverageReport struct {
 
 // CoverageSummary provides coverage statistics
 type CoverageSummary struct {
-	TotalControls     int                        `json:"totalControls"`
-	FullCoverage      int                        `json:"fullCoverage"`
-	PartialCoverage   int                        `json:"partialCoverage"`
-	MinimalCoverage   int                        `json:"minimalCoverage"`
-	NoCoverage        int                        `json:"noCoverage"`
-	OverallPercentage float64                    `json:"overallPercentage"`
+	TotalControls     int                         `json:"totalControls"`
+	FullCoverage      int                         `json:"fullCoverage"`
+	PartialCoverage   int                         `json:"partialCoverage"`
+	MinimalCoverage   int                         `json:"minimalCoverage"`
+	NoCoverage        int                         `json:"noCoverage"`
+	OverallPercentage float64                     `json:"overallPercentage"`
 	ByCategory        map[string]CategoryCoverage `json:"byCategory"`
 }
 

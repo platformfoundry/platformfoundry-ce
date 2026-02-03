@@ -415,25 +415,25 @@ func (m *Manager) UpdateMTLS(meshName string, mode MTLSMode) error {
 // GetTrafficMetrics returns traffic metrics for a service (simulated)
 func (m *Manager) GetTrafficMetrics(service string) map[string]interface{} {
 	return map[string]interface{}{
-		"requestsPerSecond":  125.5,
-		"p50LatencyMs":       45.2,
-		"p99LatencyMs":       230.5,
-		"errorRate":          0.02,
-		"successRate":        99.98,
-		"activeConnections":  85,
-		"bytesIn":            15234000,
-		"bytesOut":           42156000,
+		"requestsPerSecond": 125.5,
+		"p50LatencyMs":      45.2,
+		"p99LatencyMs":      230.5,
+		"errorRate":         0.02,
+		"successRate":       99.98,
+		"activeConnections": 85,
+		"bytesIn":           15234000,
+		"bytesOut":          42156000,
 	}
 }
 
 // GetServiceGraph returns service dependency graph (simulated)
 func (m *Manager) GetServiceGraph() map[string][]string {
 	return map[string][]string{
-		"api-gateway":   {"auth-service", "user-service", "product-service"},
-		"auth-service":  {"user-service", "redis"},
-		"user-service":  {"postgres", "redis"},
+		"api-gateway":     {"auth-service", "user-service", "product-service"},
+		"auth-service":    {"user-service", "redis"},
+		"user-service":    {"postgres", "redis"},
 		"product-service": {"postgres", "elasticsearch"},
-		"order-service": {"user-service", "product-service", "payment-service"},
+		"order-service":   {"user-service", "product-service", "payment-service"},
 		"payment-service": {"stripe-api"},
 	}
 }

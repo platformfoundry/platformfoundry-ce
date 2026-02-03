@@ -64,12 +64,12 @@ type ResourceResult struct {
 
 // WorkloadState represents stored workload state
 type WorkloadState struct {
-	Name        string                 `json:"name"`
-	Namespace   string                 `json:"namespace"`
-	Version     string                 `json:"version"`
-	Outputs     map[string]interface{} `json:"outputs"`
-	AppliedAt   time.Time              `json:"appliedAt"`
-	Resources   []ResourceResult       `json:"resources"`
+	Name        string                      `json:"name"`
+	Namespace   string                      `json:"namespace"`
+	Version     string                      `json:"version"`
+	Outputs     map[string]interface{}      `json:"outputs"`
+	AppliedAt   time.Time                   `json:"appliedAt"`
+	Resources   []ResourceResult            `json:"resources"`
 	Translation *workload.TranslationResult `json:"translation,omitempty"`
 }
 

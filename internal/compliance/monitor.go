@@ -11,14 +11,14 @@ import (
 
 // ContinuousMonitor provides continuous compliance monitoring
 type ContinuousMonitor struct {
-	scanner         *Scanner
-	config          *MonitorConfig
-	alerts          []ComplianceAlert
-	driftHistory    map[string]*DriftRecord
-	callbacks       []AlertCallback
-	mu              sync.RWMutex
-	stopCh          chan struct{}
-	running         bool
+	scanner      *Scanner
+	config       *MonitorConfig
+	alerts       []ComplianceAlert
+	driftHistory map[string]*DriftRecord
+	callbacks    []AlertCallback
+	mu           sync.RWMutex
+	stopCh       chan struct{}
+	running      bool
 }
 
 // MonitorConfig configures continuous monitoring
@@ -43,17 +43,17 @@ func DefaultMonitorConfig() *MonitorConfig {
 
 // ComplianceAlert represents a compliance alert
 type ComplianceAlert struct {
-	ID           string            `json:"id"`
-	Type         AlertType         `json:"type"`
-	Severity     AlertSeverity     `json:"severity"`
-	PolicyName   string            `json:"policyName"`
-	Framework    string            `json:"framework"`
-	Message      string            `json:"message"`
+	ID           string                 `json:"id"`
+	Type         AlertType              `json:"type"`
+	Severity     AlertSeverity          `json:"severity"`
+	PolicyName   string                 `json:"policyName"`
+	Framework    string                 `json:"framework"`
+	Message      string                 `json:"message"`
 	Details      map[string]interface{} `json:"details,omitempty"`
-	Timestamp    time.Time         `json:"timestamp"`
-	Acknowledged bool              `json:"acknowledged"`
-	AckedBy      string            `json:"ackedBy,omitempty"`
-	AckedAt      *time.Time        `json:"ackedAt,omitempty"`
+	Timestamp    time.Time              `json:"timestamp"`
+	Acknowledged bool                   `json:"acknowledged"`
+	AckedBy      string                 `json:"ackedBy,omitempty"`
+	AckedAt      *time.Time             `json:"ackedAt,omitempty"`
 }
 
 // AlertType defines types of compliance alerts
@@ -93,9 +93,9 @@ type DriftRecord struct {
 type DriftDirection string
 
 const (
-	DriftDirectionImproving  DriftDirection = "improving"
-	DriftDirectionDegrading  DriftDirection = "degrading"
-	DriftDirectionStable     DriftDirection = "stable"
+	DriftDirectionImproving DriftDirection = "improving"
+	DriftDirectionDegrading DriftDirection = "degrading"
+	DriftDirectionStable    DriftDirection = "stable"
 )
 
 // DriftDataPoint represents a point in drift history
@@ -467,14 +467,14 @@ func (m *ContinuousMonitor) Status() map[string]interface{} {
 	}
 
 	return map[string]interface{}{
-		"running":            m.running,
-		"totalAlerts":        len(m.alerts),
-		"unackedCritical":    unackedCritical,
-		"unackedHigh":        unackedHigh,
-		"monitoredPolicies":  len(m.driftHistory),
-		"degradingPolicies":  degradingPolicies,
-		"scanInterval":       m.config.ScanInterval.String(),
-		"alertThreshold":     m.config.AlertThreshold,
-		"criticalThreshold":  m.config.CriticalThreshold,
+		"running":           m.running,
+		"totalAlerts":       len(m.alerts),
+		"unackedCritical":   unackedCritical,
+		"unackedHigh":       unackedHigh,
+		"monitoredPolicies": len(m.driftHistory),
+		"degradingPolicies": degradingPolicies,
+		"scanInterval":      m.config.ScanInterval.String(),
+		"alertThreshold":    m.config.AlertThreshold,
+		"criticalThreshold": m.config.CriticalThreshold,
 	}
 }

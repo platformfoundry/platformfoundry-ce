@@ -34,7 +34,7 @@ PowerShell:
 	DisableFlagsInUseLine: true,
 	ValidArgs:             []string{"bash", "zsh", "fish", "powershell"},
 	Args:                  cobra.ExactValidArgs(1),
-	RunE: runCompletion,
+	RunE:                  runCompletion,
 }
 
 func init() {

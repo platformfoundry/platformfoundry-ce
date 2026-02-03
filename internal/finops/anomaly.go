@@ -47,35 +47,35 @@ type CostAnomaly struct {
 	Team         string    `json:"team,omitempty"`
 	ExpectedCost float64   `json:"expectedCost"`
 	ActualCost   float64   `json:"actualCost"`
-	Deviation    float64   `json:"deviation"`      // Percentage deviation
-	DeviationAbs float64   `json:"deviationAbs"`   // Absolute deviation
-	Severity     string    `json:"severity"`       // info, warning, critical
-	Type         string    `json:"type"`           // spike, drop, trend_change
+	Deviation    float64   `json:"deviation"`    // Percentage deviation
+	DeviationAbs float64   `json:"deviationAbs"` // Absolute deviation
+	Severity     string    `json:"severity"`     // info, warning, critical
+	Type         string    `json:"type"`         // spike, drop, trend_change
 	Description  string    `json:"description"`
 	Acknowledged bool      `json:"acknowledged"`
-	Status       string    `json:"status,omitempty"`    // new, investigating, resolved
+	Status       string    `json:"status,omitempty"` // new, investigating, resolved
 	RootCause    string    `json:"rootCause,omitempty"`
 }
 
 // Baseline represents statistical baseline for a resource
 type Baseline struct {
-	Mean      float64   `json:"mean"`
-	StdDev    float64   `json:"stdDev"`
-	Min       float64   `json:"min"`
-	Max       float64   `json:"max"`
-	Trend     float64   `json:"trend"`     // Daily trend (positive = increasing)
-	DataPoints int      `json:"dataPoints"`
-	UpdatedAt time.Time `json:"updatedAt"`
+	Mean       float64   `json:"mean"`
+	StdDev     float64   `json:"stdDev"`
+	Min        float64   `json:"min"`
+	Max        float64   `json:"max"`
+	Trend      float64   `json:"trend"` // Daily trend (positive = increasing)
+	DataPoints int       `json:"dataPoints"`
+	UpdatedAt  time.Time `json:"updatedAt"`
 }
 
 // AnomalyDetectorConfig contains configuration for anomaly detection
 type AnomalyDetectorConfig struct {
-	BaselinePeriod      time.Duration `json:"baselinePeriod"`      // Period for baseline calculation (default 30 days)
-	SigmaThreshold      float64       `json:"sigmaThreshold"`      // Standard deviations for anomaly (default 2)
-	MinDataPoints       int           `json:"minDataPoints"`       // Minimum data points for baseline (default 7)
-	CriticalThreshold   float64       `json:"criticalThreshold"`   // Deviation % for critical (default 100)
-	WarningThreshold    float64       `json:"warningThreshold"`    // Deviation % for warning (default 50)
-	CheckInterval       time.Duration `json:"checkInterval"`       // How often to check (default 1 hour)
+	BaselinePeriod      time.Duration `json:"baselinePeriod"`    // Period for baseline calculation (default 30 days)
+	SigmaThreshold      float64       `json:"sigmaThreshold"`    // Standard deviations for anomaly (default 2)
+	MinDataPoints       int           `json:"minDataPoints"`     // Minimum data points for baseline (default 7)
+	CriticalThreshold   float64       `json:"criticalThreshold"` // Deviation % for critical (default 100)
+	WarningThreshold    float64       `json:"warningThreshold"`  // Deviation % for warning (default 50)
+	CheckInterval       time.Duration `json:"checkInterval"`     // How often to check (default 1 hour)
 	EnableNotifications bool          `json:"enableNotifications"`
 }
 
@@ -431,10 +431,10 @@ func (d *AnomalyDetector) ForecastCost(resource string, days int) (float64, erro
 
 // GetAnomalySummary returns a summary of anomalies
 type AnomalySummary struct {
-	Total     int     `json:"total"`
-	Critical  int     `json:"critical"`
-	Warning   int     `json:"warning"`
-	Info      int     `json:"info"`
+	Total           int     `json:"total"`
+	Critical        int     `json:"critical"`
+	Warning         int     `json:"warning"`
+	Info            int     `json:"info"`
 	TotalCostImpact float64 `json:"totalCostImpact"`
 }
 

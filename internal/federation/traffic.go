@@ -9,11 +9,11 @@ import (
 
 // GlobalTrafficManager manages traffic distribution across federated clusters
 type GlobalTrafficManager struct {
-	dnsProvider     DNSProvider
-	loadBalancer    LoadBalancerProvider
-	metricsClient   MetricsClient
-	routes          map[string]*ServiceRoute
-	mu              sync.RWMutex
+	dnsProvider   DNSProvider
+	loadBalancer  LoadBalancerProvider
+	metricsClient MetricsClient
+	routes        map[string]*ServiceRoute
+	mu            sync.RWMutex
 }
 
 // DNSProvider interface for DNS management
@@ -26,11 +26,11 @@ type DNSProvider interface {
 
 // DNSRecordOpts represents options for creating/updating DNS records
 type DNSRecordOpts struct {
-	Name          string            `json:"name"`
-	Type          string            `json:"type"` // A, AAAA, CNAME
-	Target        string            `json:"target"`
-	TTL           int               `json:"ttl"`
-	RoutingPolicy RoutingPolicy     `json:"routingPolicy"`
+	Name          string             `json:"name"`
+	Type          string             `json:"type"` // A, AAAA, CNAME
+	Target        string             `json:"target"`
+	TTL           int                `json:"ttl"`
+	RoutingPolicy RoutingPolicy      `json:"routingPolicy"`
 	HealthCheck   *HealthCheckConfig `json:"healthCheck,omitempty"`
 }
 
@@ -46,13 +46,13 @@ type DNSRecord struct {
 
 // RoutingPolicy defines DNS-based routing
 type RoutingPolicy struct {
-	Type       string            `json:"type"` // simple, weighted, latency, geolocation, failover
-	Weight     int               `json:"weight,omitempty"`
-	Region     string            `json:"region,omitempty"`
-	Location   string            `json:"location,omitempty"`
-	SetID      string            `json:"setId,omitempty"`
-	Primary    bool              `json:"primary,omitempty"`
-	Failover   string            `json:"failover,omitempty"` // primary or secondary
+	Type     string `json:"type"` // simple, weighted, latency, geolocation, failover
+	Weight   int    `json:"weight,omitempty"`
+	Region   string `json:"region,omitempty"`
+	Location string `json:"location,omitempty"`
+	SetID    string `json:"setId,omitempty"`
+	Primary  bool   `json:"primary,omitempty"`
+	Failover string `json:"failover,omitempty"` // primary or secondary
 }
 
 // LoadBalancerProvider interface for load balancer management
@@ -66,18 +66,18 @@ type LoadBalancerProvider interface {
 
 // Backend represents a load balancer backend
 type Backend struct {
-	Name     string `json:"name"`
-	Address  string `json:"address"`
-	Port     int    `json:"port"`
-	Weight   int    `json:"weight"`
-	Enabled  bool   `json:"enabled"`
+	Name    string `json:"name"`
+	Address string `json:"address"`
+	Port    int    `json:"port"`
+	Weight  int    `json:"weight"`
+	Enabled bool   `json:"enabled"`
 }
 
 // BackendHealth represents the health of a backend
 type BackendHealth struct {
-	Status     string    `json:"status"` // healthy, unhealthy, draining
-	LastCheck  time.Time `json:"lastCheck"`
-	FailCount  int       `json:"failCount"`
+	Status    string    `json:"status"` // healthy, unhealthy, draining
+	LastCheck time.Time `json:"lastCheck"`
+	FailCount int       `json:"failCount"`
 }
 
 // MetricsClient interface for querying metrics
@@ -89,11 +89,11 @@ type MetricsClient interface {
 
 // ServiceRoute represents the routing configuration for a service
 type ServiceRoute struct {
-	Service      string              `json:"service"`
-	Distribution DistributionType    `json:"distribution"`
-	Clusters     []ClusterRoute      `json:"clusters"`
-	HealthCheck  HealthCheckConfig   `json:"healthCheck"`
-	UpdatedAt    time.Time           `json:"updatedAt"`
+	Service      string            `json:"service"`
+	Distribution DistributionType  `json:"distribution"`
+	Clusters     []ClusterRoute    `json:"clusters"`
+	HealthCheck  HealthCheckConfig `json:"healthCheck"`
+	UpdatedAt    time.Time         `json:"updatedAt"`
 }
 
 // DistributionType defines how traffic is distributed
@@ -109,12 +109,12 @@ const (
 
 // ClusterRoute represents routing configuration for a cluster
 type ClusterRoute struct {
-	ClusterName string  `json:"clusterName"`
-	Endpoint    string  `json:"endpoint"`
-	Weight      int     `json:"weight"`
-	Region      string  `json:"region,omitempty"`
-	Enabled     bool    `json:"enabled"`
-	IsPrimary   bool    `json:"isPrimary,omitempty"`
+	ClusterName string `json:"clusterName"`
+	Endpoint    string `json:"endpoint"`
+	Weight      int    `json:"weight"`
+	Region      string `json:"region,omitempty"`
+	Enabled     bool   `json:"enabled"`
+	IsPrimary   bool   `json:"isPrimary,omitempty"`
 }
 
 // NewGlobalTrafficManager creates a new GlobalTrafficManager
@@ -435,8 +435,8 @@ func (m *GlobalTrafficManager) GetRouteMetrics(ctx context.Context, service stri
 	}
 
 	metrics := &RouteMetrics{
-		Service:    service,
-		Clusters:   make([]ClusterMetrics, 0, len(route.Clusters)),
+		Service:     service,
+		Clusters:    make([]ClusterMetrics, 0, len(route.Clusters)),
 		RetrievedAt: time.Now(),
 	}
 

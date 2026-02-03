@@ -15,43 +15,43 @@ type ServiceTemplate struct {
 
 // ServiceTemplateSpec defines the service template specification
 type ServiceTemplateSpec struct {
-	DisplayName string                 `yaml:"displayName" json:"displayName"`
-	Description string                 `yaml:"description,omitempty" json:"description,omitempty"`
-	Category    TemplateCategory       `yaml:"category" json:"category"`
-	Tags        []string               `yaml:"tags,omitempty" json:"tags,omitempty"`
-	Icon        string                 `yaml:"icon,omitempty" json:"icon,omitempty"`
-	Parameters  []TemplateParameter    `yaml:"parameters,omitempty" json:"parameters,omitempty"`
-	Template    string                 `yaml:"template" json:"template"` // Go template for service.yaml
-	Files       []TemplateFile         `yaml:"files,omitempty" json:"files,omitempty"`
-	Hooks       *TemplateHooks         `yaml:"hooks,omitempty" json:"hooks,omitempty"`
+	DisplayName string              `yaml:"displayName" json:"displayName"`
+	Description string              `yaml:"description,omitempty" json:"description,omitempty"`
+	Category    TemplateCategory    `yaml:"category" json:"category"`
+	Tags        []string            `yaml:"tags,omitempty" json:"tags,omitempty"`
+	Icon        string              `yaml:"icon,omitempty" json:"icon,omitempty"`
+	Parameters  []TemplateParameter `yaml:"parameters,omitempty" json:"parameters,omitempty"`
+	Template    string              `yaml:"template" json:"template"` // Go template for service.yaml
+	Files       []TemplateFile      `yaml:"files,omitempty" json:"files,omitempty"`
+	Hooks       *TemplateHooks      `yaml:"hooks,omitempty" json:"hooks,omitempty"`
 }
 
 // TemplateCategory represents the category of a template
 type TemplateCategory string
 
 const (
-	TemplateCategoryBackend   TemplateCategory = "backend"
-	TemplateCategoryFrontend  TemplateCategory = "frontend"
-	TemplateCategoryDatabase  TemplateCategory = "database"
-	TemplateCategoryCache     TemplateCategory = "cache"
-	TemplateCategoryQueue     TemplateCategory = "queue"
+	TemplateCategoryBackend    TemplateCategory = "backend"
+	TemplateCategoryFrontend   TemplateCategory = "frontend"
+	TemplateCategoryDatabase   TemplateCategory = "database"
+	TemplateCategoryCache      TemplateCategory = "cache"
+	TemplateCategoryQueue      TemplateCategory = "queue"
 	TemplateCategoryMonitoring TemplateCategory = "monitoring"
-	TemplateCategoryCI        TemplateCategory = "ci"
+	TemplateCategoryCI         TemplateCategory = "ci"
 )
 
 // TemplateParameter defines a parameter for the template
 type TemplateParameter struct {
-	Name        string              `yaml:"name" json:"name"`
-	Type        ParameterType       `yaml:"type" json:"type"`
-	Description string              `yaml:"description,omitempty" json:"description,omitempty"`
-	Required    bool                `yaml:"required,omitempty" json:"required,omitempty"`
-	Default     interface{}         `yaml:"default,omitempty" json:"default,omitempty"`
-	Enum        []string            `yaml:"enum,omitempty" json:"enum,omitempty"`
-	Pattern     string              `yaml:"pattern,omitempty" json:"pattern,omitempty"`
-	MinLength   int                 `yaml:"minLength,omitempty" json:"minLength,omitempty"`
-	MaxLength   int                 `yaml:"maxLength,omitempty" json:"maxLength,omitempty"`
-	Min         *float64            `yaml:"min,omitempty" json:"min,omitempty"`
-	Max         *float64            `yaml:"max,omitempty" json:"max,omitempty"`
+	Name        string        `yaml:"name" json:"name"`
+	Type        ParameterType `yaml:"type" json:"type"`
+	Description string        `yaml:"description,omitempty" json:"description,omitempty"`
+	Required    bool          `yaml:"required,omitempty" json:"required,omitempty"`
+	Default     interface{}   `yaml:"default,omitempty" json:"default,omitempty"`
+	Enum        []string      `yaml:"enum,omitempty" json:"enum,omitempty"`
+	Pattern     string        `yaml:"pattern,omitempty" json:"pattern,omitempty"`
+	MinLength   int           `yaml:"minLength,omitempty" json:"minLength,omitempty"`
+	MaxLength   int           `yaml:"maxLength,omitempty" json:"maxLength,omitempty"`
+	Min         *float64      `yaml:"min,omitempty" json:"min,omitempty"`
+	Max         *float64      `yaml:"max,omitempty" json:"max,omitempty"`
 }
 
 // ParameterType represents the type of a template parameter
@@ -68,9 +68,9 @@ const (
 // TemplateFile defines a file to be generated from the template
 type TemplateFile struct {
 	Path     string `yaml:"path" json:"path"`
-	Content  string `yaml:"content" json:"content"` // Go template for file content
+	Content  string `yaml:"content" json:"content"`                       // Go template for file content
 	Encoding string `yaml:"encoding,omitempty" json:"encoding,omitempty"` // base64, plain (default)
-	Mode     string `yaml:"mode,omitempty" json:"mode,omitempty"` // file permissions (e.g., "0755")
+	Mode     string `yaml:"mode,omitempty" json:"mode,omitempty"`         // file permissions (e.g., "0755")
 }
 
 // TemplateHooks defines lifecycle hooks for template instantiation

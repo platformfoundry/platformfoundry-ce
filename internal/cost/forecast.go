@@ -32,10 +32,10 @@ type ForecastModel interface {
 
 // CostDataPoint represents a historical cost measurement
 type CostDataPoint struct {
-	Timestamp time.Time `json:"timestamp"`
-	Cost      float64   `json:"cost"`
-	Resource  string    `json:"resource,omitempty"`
-	Category  string    `json:"category,omitempty"`
+	Timestamp time.Time         `json:"timestamp"`
+	Cost      float64           `json:"cost"`
+	Resource  string            `json:"resource,omitempty"`
+	Category  string            `json:"category,omitempty"`
 	Tags      map[string]string `json:"tags,omitempty"`
 }
 
@@ -50,18 +50,18 @@ type ForecastPoint struct {
 
 // CostForecast contains forecast results
 type CostForecast struct {
-	Resource        string                    `json:"resource"`
-	Period          string                    `json:"period"`
-	CurrentCost     float64                   `json:"current_cost"`
-	PredictedCost   float64                   `json:"predicted_cost"`
-	CostChange      float64                   `json:"cost_change"`
-	CostChangePercent float64                 `json:"cost_change_percent"`
-	Trend           string                    `json:"trend"` // increasing, stable, decreasing
-	Confidence      float64                   `json:"confidence"`
-	Forecasts       []ForecastPoint           `json:"forecasts"`
-	BreakdownBy     map[string]float64        `json:"breakdown,omitempty"`
-	Recommendations []CostRecommendation      `json:"recommendations,omitempty"`
-	GeneratedAt     time.Time                 `json:"generated_at"`
+	Resource          string               `json:"resource"`
+	Period            string               `json:"period"`
+	CurrentCost       float64              `json:"current_cost"`
+	PredictedCost     float64              `json:"predicted_cost"`
+	CostChange        float64              `json:"cost_change"`
+	CostChangePercent float64              `json:"cost_change_percent"`
+	Trend             string               `json:"trend"` // increasing, stable, decreasing
+	Confidence        float64              `json:"confidence"`
+	Forecasts         []ForecastPoint      `json:"forecasts"`
+	BreakdownBy       map[string]float64   `json:"breakdown,omitempty"`
+	Recommendations   []CostRecommendation `json:"recommendations,omitempty"`
+	GeneratedAt       time.Time            `json:"generated_at"`
 }
 
 // CostRecommendation suggests cost optimization actions

@@ -69,19 +69,19 @@ func TestS3Backend_CreateS3Key(t *testing.T) {
 	}
 
 	tests := []struct {
-		name string
+		name     string
 		resource string
-		want string
+		want     string
 	}{
 		{
-			name: "simple resource name",
+			name:     "simple resource name",
 			resource: "my-platform",
-			want: "state/resources/my-platform.json",
+			want:     "state/resources/my-platform.json",
 		},
 		{
-			name: "resource with dashes",
+			name:     "resource with dashes",
 			resource: "my-test-cluster",
-			want: "state/resources/my-test-cluster.json",
+			want:     "state/resources/my-test-cluster.json",
 		},
 	}
 

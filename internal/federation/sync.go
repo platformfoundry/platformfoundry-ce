@@ -11,38 +11,38 @@ import (
 
 // ConfigSyncManager manages federated configuration synchronization
 type ConfigSyncManager struct {
-	controller    *Controller
-	syncPolicies  map[string]*SyncPolicy
-	syncStatus    map[string]*SyncStatus
+	controller      *Controller
+	syncPolicies    map[string]*SyncPolicy
+	syncStatus      map[string]*SyncStatus
 	conflictHandler ConflictHandler
-	mu            sync.RWMutex
-	stopCh        chan struct{}
-	running       bool
+	mu              sync.RWMutex
+	stopCh          chan struct{}
+	running         bool
 }
 
 // SyncPolicy defines how resources should be synchronized
 type SyncPolicy struct {
-	ID              string            `json:"id" yaml:"id"`
-	Name            string            `json:"name" yaml:"name"`
-	SourceCluster   string            `json:"sourceCluster" yaml:"sourceCluster"`
-	TargetClusters  []string          `json:"targetClusters" yaml:"targetClusters"`
-	Resources       []SyncResource    `json:"resources" yaml:"resources"`
-	Mode            SyncMode          `json:"mode" yaml:"mode"`
-	Interval        time.Duration     `json:"interval" yaml:"interval"`
-	ConflictPolicy  ConflictPolicy    `json:"conflictPolicy" yaml:"conflictPolicy"`
-	Enabled         bool              `json:"enabled" yaml:"enabled"`
-	CreatedAt       time.Time         `json:"createdAt" yaml:"createdAt"`
-	UpdatedAt       time.Time         `json:"updatedAt" yaml:"updatedAt"`
+	ID             string         `json:"id" yaml:"id"`
+	Name           string         `json:"name" yaml:"name"`
+	SourceCluster  string         `json:"sourceCluster" yaml:"sourceCluster"`
+	TargetClusters []string       `json:"targetClusters" yaml:"targetClusters"`
+	Resources      []SyncResource `json:"resources" yaml:"resources"`
+	Mode           SyncMode       `json:"mode" yaml:"mode"`
+	Interval       time.Duration  `json:"interval" yaml:"interval"`
+	ConflictPolicy ConflictPolicy `json:"conflictPolicy" yaml:"conflictPolicy"`
+	Enabled        bool           `json:"enabled" yaml:"enabled"`
+	CreatedAt      time.Time      `json:"createdAt" yaml:"createdAt"`
+	UpdatedAt      time.Time      `json:"updatedAt" yaml:"updatedAt"`
 }
 
 // SyncResource defines a resource to synchronize
 type SyncResource struct {
-	Kind           string            `json:"kind" yaml:"kind"`       // ConfigMap, Secret, etc.
-	Namespace      string            `json:"namespace" yaml:"namespace"`
-	NamePattern    string            `json:"namePattern,omitempty" yaml:"namePattern,omitempty"` // Regex pattern
-	LabelSelector  map[string]string `json:"labelSelector,omitempty" yaml:"labelSelector,omitempty"`
-	ExcludeNames   []string          `json:"excludeNames,omitempty" yaml:"excludeNames,omitempty"`
-	Transform      *TransformConfig  `json:"transform,omitempty" yaml:"transform,omitempty"`
+	Kind          string            `json:"kind" yaml:"kind"` // ConfigMap, Secret, etc.
+	Namespace     string            `json:"namespace" yaml:"namespace"`
+	NamePattern   string            `json:"namePattern,omitempty" yaml:"namePattern,omitempty"` // Regex pattern
+	LabelSelector map[string]string `json:"labelSelector,omitempty" yaml:"labelSelector,omitempty"`
+	ExcludeNames  []string          `json:"excludeNames,omitempty" yaml:"excludeNames,omitempty"`
+	Transform     *TransformConfig  `json:"transform,omitempty" yaml:"transform,omitempty"`
 }
 
 // TransformConfig defines transformations to apply during sync
@@ -57,8 +57,8 @@ type TransformConfig struct {
 type SyncMode string
 
 const (
-	SyncModePush       SyncMode = "push"       // Push from source to targets
-	SyncModePull       SyncMode = "pull"       // Targets pull from source
+	SyncModePush          SyncMode = "push"          // Push from source to targets
+	SyncModePull          SyncMode = "pull"          // Targets pull from source
 	SyncModeBidirectional SyncMode = "bidirectional" // Two-way sync
 )
 
@@ -74,14 +74,14 @@ const (
 
 // SyncStatus tracks synchronization status
 type SyncStatus struct {
-	PolicyID       string       `json:"policyId"`
-	LastSyncTime   *time.Time   `json:"lastSyncTime,omitempty"`
-	NextSyncTime   *time.Time   `json:"nextSyncTime,omitempty"`
-	Status         string       `json:"status"` // syncing, synced, error, pending
-	Error          string       `json:"error,omitempty"`
-	ResourcesSync  int          `json:"resourcesSynced"`
-	Conflicts      []Conflict   `json:"conflicts,omitempty"`
-	ClusterStatus  map[string]string `json:"clusterStatus"`
+	PolicyID      string            `json:"policyId"`
+	LastSyncTime  *time.Time        `json:"lastSyncTime,omitempty"`
+	NextSyncTime  *time.Time        `json:"nextSyncTime,omitempty"`
+	Status        string            `json:"status"` // syncing, synced, error, pending
+	Error         string            `json:"error,omitempty"`
+	ResourcesSync int               `json:"resourcesSynced"`
+	Conflicts     []Conflict        `json:"conflicts,omitempty"`
+	ClusterStatus map[string]string `json:"clusterStatus"`
 }
 
 // Conflict represents a sync conflict
@@ -97,14 +97,14 @@ type Conflict struct {
 
 // SyncedResource represents a synchronized resource
 type SyncedResource struct {
-	Kind         string                 `json:"kind"`
-	Name         string                 `json:"name"`
-	Namespace    string                 `json:"namespace"`
-	Cluster      string                 `json:"cluster"`
-	Version      string                 `json:"version"`
-	Hash         string                 `json:"hash"`
-	Data         map[string]interface{} `json:"data,omitempty"`
-	SyncedAt     time.Time              `json:"syncedAt"`
+	Kind      string                 `json:"kind"`
+	Name      string                 `json:"name"`
+	Namespace string                 `json:"namespace"`
+	Cluster   string                 `json:"cluster"`
+	Version   string                 `json:"version"`
+	Hash      string                 `json:"hash"`
+	Data      map[string]interface{} `json:"data,omitempty"`
+	SyncedAt  time.Time              `json:"syncedAt"`
 }
 
 // ConflictHandler interface for handling sync conflicts

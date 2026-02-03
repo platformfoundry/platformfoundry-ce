@@ -13,12 +13,12 @@ import (
 type Framework string
 
 const (
-	FrameworkSOC2    Framework = "SOC2"
-	FrameworkHIPAA   Framework = "HIPAA"
-	FrameworkPCIDSS  Framework = "PCI-DSS"
-	FrameworkGDPR    Framework = "GDPR"
+	FrameworkSOC2     Framework = "SOC2"
+	FrameworkHIPAA    Framework = "HIPAA"
+	FrameworkPCIDSS   Framework = "PCI-DSS"
+	FrameworkGDPR     Framework = "GDPR"
 	FrameworkISO27001 Framework = "ISO27001"
-	FrameworkNIST    Framework = "NIST"
+	FrameworkNIST     Framework = "NIST"
 )
 
 // CheckStatus represents the status of a compliance check
@@ -48,24 +48,24 @@ type Check struct {
 
 // Report represents a compliance report
 type Report struct {
-	ID            string           `json:"id"`
-	Framework     Framework        `json:"framework"`
-	Timestamp     time.Time        `json:"timestamp"`
-	TotalChecks   int              `json:"totalChecks"`
-	PassedChecks  int              `json:"passedChecks"`
-	FailedChecks  int              `json:"failedChecks"`
-	WarningChecks int              `json:"warningChecks"`
-	SkippedChecks int              `json:"skippedChecks"`
-	Compliance    float64          `json:"compliance"` // percentage
-	Checks        []*Check         `json:"checks"`
+	ID            string            `json:"id"`
+	Framework     Framework         `json:"framework"`
+	Timestamp     time.Time         `json:"timestamp"`
+	TotalChecks   int               `json:"totalChecks"`
+	PassedChecks  int               `json:"passedChecks"`
+	FailedChecks  int               `json:"failedChecks"`
+	WarningChecks int               `json:"warningChecks"`
+	SkippedChecks int               `json:"skippedChecks"`
+	Compliance    float64           `json:"compliance"` // percentage
+	Checks        []*Check          `json:"checks"`
 	Metadata      map[string]string `json:"metadata,omitempty"`
 }
 
 // Manager handles compliance checks and reporting
 type Manager struct {
-	checksDir   string
-	reportsDir  string
-	frameworks  map[Framework][]*Check
+	checksDir  string
+	reportsDir string
+	frameworks map[Framework][]*Check
 }
 
 // Config represents compliance manager configuration

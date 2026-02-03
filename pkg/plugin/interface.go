@@ -47,7 +47,7 @@ type Result struct {
 
 // Status represents the current status of a resource
 type Status struct {
-	State   string            `json:"state"`  // pending, running, ready, failed
+	State   string            `json:"state"` // pending, running, ready, failed
 	Ready   bool              `json:"ready"`
 	Message string            `json:"message,omitempty"`
 	Details map[string]string `json:"details,omitempty"`

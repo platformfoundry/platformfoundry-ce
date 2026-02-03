@@ -12,11 +12,11 @@ type DevEx struct {
 
 // DevExSpec defines DevEx specification
 type DevExSpec struct {
-	Provider              string                           `yaml:"provider" json:"provider"` // backstage, port
-	ClusterRef            string                           `yaml:"clusterRef" json:"clusterRef"`
-	IntelligentGeneration *IntelligentGenerationConfig     `yaml:"intelligentGeneration,omitempty" json:"intelligentGeneration,omitempty"`
-	Portal                *PortalConfig                    `yaml:"portal,omitempty" json:"portal,omitempty"`
-	Customization         *CustomizationConfig             `yaml:"customization,omitempty" json:"customization,omitempty"`
+	Provider              string                       `yaml:"provider" json:"provider"` // backstage, port
+	ClusterRef            string                       `yaml:"clusterRef" json:"clusterRef"`
+	IntelligentGeneration *IntelligentGenerationConfig `yaml:"intelligentGeneration,omitempty" json:"intelligentGeneration,omitempty"`
+	Portal                *PortalConfig                `yaml:"portal,omitempty" json:"portal,omitempty"`
+	Customization         *CustomizationConfig         `yaml:"customization,omitempty" json:"customization,omitempty"`
 }
 
 // IntelligentGenerationConfig defines intelligent generation settings
@@ -45,7 +45,7 @@ type Integration struct {
 }
 
 // CustomizationConfig defines portal customization
-type CustomizationConfig struct{
+type CustomizationConfig struct {
 	Branding *BrandingConfig `yaml:"branding,omitempty" json:"branding,omitempty"`
 	Theme    *ThemeConfig    `yaml:"theme,omitempty" json:"theme,omitempty"`
 }
@@ -64,9 +64,9 @@ type ThemeConfig struct {
 
 // DevExStatus represents DevEx status
 type DevExStatus struct {
-	Phase         Phase                  `json:"phase"`
-	Message       string                 `json:"message,omitempty"`
-	PortalURL     string                 `json:"portalUrl,omitempty"`
+	Phase          Phase                 `json:"phase"`
+	Message        string                `json:"message,omitempty"`
+	PortalURL      string                `json:"portalUrl,omitempty"`
 	Recommendation *PortalRecommendation `json:"recommendation,omitempty"`
 }
 

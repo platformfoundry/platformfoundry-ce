@@ -25,20 +25,20 @@ type BudgetNotifier interface {
 
 // ErrorBudget represents the current state of an error budget
 type ErrorBudget struct {
-	SLOID         string         `json:"sloId"`
-	SLOName       string         `json:"sloName"`
-	Service       string         `json:"service"`
-	TotalBudget   float64        `json:"totalBudget"`   // In minutes or events
-	Consumed      float64        `json:"consumed"`      // Consumed budget
-	Remaining     float64        `json:"remaining"`     // Remaining budget
-	ConsumedPct   float64        `json:"consumedPct"`   // Percentage consumed
-	RemainingPct  float64        `json:"remainingPct"`  // Percentage remaining
-	BurnRate      float64        `json:"burnRate"`      // Current burn rate multiplier
-	TimeToExhaust time.Duration  `json:"timeToExhaust"` // At current burn rate
-	ResetDate     time.Time      `json:"resetDate"`     // When budget resets
-	Status        BudgetStatus   `json:"status"`
-	History       []BudgetEvent  `json:"history,omitempty"`
-	UpdatedAt     time.Time      `json:"updatedAt"`
+	SLOID         string        `json:"sloId"`
+	SLOName       string        `json:"sloName"`
+	Service       string        `json:"service"`
+	TotalBudget   float64       `json:"totalBudget"`   // In minutes or events
+	Consumed      float64       `json:"consumed"`      // Consumed budget
+	Remaining     float64       `json:"remaining"`     // Remaining budget
+	ConsumedPct   float64       `json:"consumedPct"`   // Percentage consumed
+	RemainingPct  float64       `json:"remainingPct"`  // Percentage remaining
+	BurnRate      float64       `json:"burnRate"`      // Current burn rate multiplier
+	TimeToExhaust time.Duration `json:"timeToExhaust"` // At current burn rate
+	ResetDate     time.Time     `json:"resetDate"`     // When budget resets
+	Status        BudgetStatus  `json:"status"`
+	History       []BudgetEvent `json:"history,omitempty"`
+	UpdatedAt     time.Time     `json:"updatedAt"`
 }
 
 // BudgetStatus represents the status of an error budget
@@ -299,7 +299,7 @@ func (t *BudgetTracker) StartPeriodicTracking(ctx context.Context, interval time
 type BudgetForecast struct {
 	SLOID           string    `json:"sloId"`
 	CurrentBurnRate float64   `json:"currentBurnRate"`
-	ProjectedDate   time.Time `json:"projectedDate"`   // When budget will be exhausted
+	ProjectedDate   time.Time `json:"projectedDate"` // When budget will be exhausted
 	DaysRemaining   float64   `json:"daysRemaining"`
 	Recommendation  string    `json:"recommendation"`
 }
@@ -343,21 +343,21 @@ func (t *BudgetTracker) ForecastBudget(ctx context.Context, sloID string) (*Budg
 
 // BudgetPolicy defines policies for error budget governance
 type BudgetPolicy struct {
-	Name              string    `json:"name"`
-	Description       string    `json:"description"`
-	FreezeThreshold   float64   `json:"freezeThreshold"`   // Percentage at which to freeze deploys
-	RestoreThreshold  float64   `json:"restoreThreshold"`  // Percentage at which to restore deploys
-	NotifyChannels    []string  `json:"notifyChannels"`
-	EnforceDeployFreeze bool    `json:"enforceDeployFreeze"`
+	Name                string   `json:"name"`
+	Description         string   `json:"description"`
+	FreezeThreshold     float64  `json:"freezeThreshold"`  // Percentage at which to freeze deploys
+	RestoreThreshold    float64  `json:"restoreThreshold"` // Percentage at which to restore deploys
+	NotifyChannels      []string `json:"notifyChannels"`
+	EnforceDeployFreeze bool     `json:"enforceDeployFreeze"`
 }
 
 // DefaultBudgetPolicy returns the default error budget policy
 func DefaultBudgetPolicy() *BudgetPolicy {
 	return &BudgetPolicy{
-		Name:               "default",
-		Description:        "Standard error budget policy",
-		FreezeThreshold:    90.0,  // Freeze at 90% consumed
-		RestoreThreshold:   75.0,  // Restore at 75% consumed
+		Name:                "default",
+		Description:         "Standard error budget policy",
+		FreezeThreshold:     90.0, // Freeze at 90% consumed
+		RestoreThreshold:    75.0, // Restore at 75% consumed
 		EnforceDeployFreeze: true,
 	}
 }

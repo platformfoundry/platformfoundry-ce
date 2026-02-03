@@ -39,26 +39,26 @@ type AttributeStore interface {
 
 // ABACPolicy represents an attribute-based access control policy
 type ABACPolicy struct {
-	ID          string      `json:"id" yaml:"id"`
-	Name        string      `json:"name" yaml:"name"`
-	Description string      `json:"description,omitempty" yaml:"description,omitempty"`
-	Rules       []ABACRule  `json:"rules" yaml:"rules"`
-	Priority    int         `json:"priority" yaml:"priority"` // Higher priority policies evaluated first
-	Enabled     bool        `json:"enabled" yaml:"enabled"`
-	CreatedAt   time.Time   `json:"createdAt" yaml:"createdAt"`
-	UpdatedAt   time.Time   `json:"updatedAt" yaml:"updatedAt"`
+	ID          string     `json:"id" yaml:"id"`
+	Name        string     `json:"name" yaml:"name"`
+	Description string     `json:"description,omitempty" yaml:"description,omitempty"`
+	Rules       []ABACRule `json:"rules" yaml:"rules"`
+	Priority    int        `json:"priority" yaml:"priority"` // Higher priority policies evaluated first
+	Enabled     bool       `json:"enabled" yaml:"enabled"`
+	CreatedAt   time.Time  `json:"createdAt" yaml:"createdAt"`
+	UpdatedAt   time.Time  `json:"updatedAt" yaml:"updatedAt"`
 }
 
 // ABACRule represents a single ABAC rule
 type ABACRule struct {
-	Name        string              `json:"name" yaml:"name"`
-	Description string              `json:"description,omitempty" yaml:"description,omitempty"`
-	Subject     SubjectMatcher      `json:"subject" yaml:"subject"`
-	Resource    ResourceMatcher     `json:"resource" yaml:"resource"`
-	Action      ActionMatcher       `json:"action" yaml:"action"`
-	Environment EnvironmentMatcher  `json:"environment,omitempty" yaml:"environment,omitempty"`
-	Effect      string              `json:"effect" yaml:"effect"` // allow, deny
-	Condition   string              `json:"condition,omitempty" yaml:"condition,omitempty"` // CEL or Rego expression
+	Name        string             `json:"name" yaml:"name"`
+	Description string             `json:"description,omitempty" yaml:"description,omitempty"`
+	Subject     SubjectMatcher     `json:"subject" yaml:"subject"`
+	Resource    ResourceMatcher    `json:"resource" yaml:"resource"`
+	Action      ActionMatcher      `json:"action" yaml:"action"`
+	Environment EnvironmentMatcher `json:"environment,omitempty" yaml:"environment,omitempty"`
+	Effect      string             `json:"effect" yaml:"effect"`                           // allow, deny
+	Condition   string             `json:"condition,omitempty" yaml:"condition,omitempty"` // CEL or Rego expression
 }
 
 // SubjectMatcher defines conditions for matching subjects
@@ -79,43 +79,43 @@ type ActionMatcher struct {
 
 // EnvironmentMatcher defines conditions for matching environment
 type EnvironmentMatcher struct {
-	TimeRange   *TimeRange  `json:"timeRange,omitempty" yaml:"timeRange,omitempty"`
-	IPRange     []string    `json:"ipRange,omitempty" yaml:"ipRange,omitempty"`
-	Locations   []string    `json:"locations,omitempty" yaml:"locations,omitempty"`
-	Attributes  map[string]AttributeMatcher `json:"attributes,omitempty" yaml:"attributes,omitempty"`
+	TimeRange  *TimeRange                  `json:"timeRange,omitempty" yaml:"timeRange,omitempty"`
+	IPRange    []string                    `json:"ipRange,omitempty" yaml:"ipRange,omitempty"`
+	Locations  []string                    `json:"locations,omitempty" yaml:"locations,omitempty"`
+	Attributes map[string]AttributeMatcher `json:"attributes,omitempty" yaml:"attributes,omitempty"`
 }
 
 // TimeRange defines a time window
 type TimeRange struct {
-	StartHour int      `json:"startHour" yaml:"startHour"` // 0-23
-	EndHour   int      `json:"endHour" yaml:"endHour"`     // 0-23
+	StartHour int      `json:"startHour" yaml:"startHour"`           // 0-23
+	EndHour   int      `json:"endHour" yaml:"endHour"`               // 0-23
 	Days      []string `json:"days,omitempty" yaml:"days,omitempty"` // Monday, Tuesday, etc.
 	Timezone  string   `json:"timezone,omitempty" yaml:"timezone,omitempty"`
 }
 
 // AttributeMatcher defines how to match an attribute value
 type AttributeMatcher struct {
-	Equals     interface{}   `json:"equals,omitempty" yaml:"equals,omitempty"`
-	NotEquals  interface{}   `json:"notEquals,omitempty" yaml:"notEquals,omitempty"`
-	In         []interface{} `json:"in,omitempty" yaml:"in,omitempty"`
-	NotIn      []interface{} `json:"notIn,omitempty" yaml:"notIn,omitempty"`
-	Contains   string        `json:"contains,omitempty" yaml:"contains,omitempty"`
-	StartsWith string        `json:"startsWith,omitempty" yaml:"startsWith,omitempty"`
-	EndsWith   string        `json:"endsWith,omitempty" yaml:"endsWith,omitempty"`
-	Regex      string        `json:"regex,omitempty" yaml:"regex,omitempty"`
-	GreaterThan   *float64   `json:"greaterThan,omitempty" yaml:"greaterThan,omitempty"`
-	LessThan      *float64   `json:"lessThan,omitempty" yaml:"lessThan,omitempty"`
+	Equals      interface{}   `json:"equals,omitempty" yaml:"equals,omitempty"`
+	NotEquals   interface{}   `json:"notEquals,omitempty" yaml:"notEquals,omitempty"`
+	In          []interface{} `json:"in,omitempty" yaml:"in,omitempty"`
+	NotIn       []interface{} `json:"notIn,omitempty" yaml:"notIn,omitempty"`
+	Contains    string        `json:"contains,omitempty" yaml:"contains,omitempty"`
+	StartsWith  string        `json:"startsWith,omitempty" yaml:"startsWith,omitempty"`
+	EndsWith    string        `json:"endsWith,omitempty" yaml:"endsWith,omitempty"`
+	Regex       string        `json:"regex,omitempty" yaml:"regex,omitempty"`
+	GreaterThan *float64      `json:"greaterThan,omitempty" yaml:"greaterThan,omitempty"`
+	LessThan    *float64      `json:"lessThan,omitempty" yaml:"lessThan,omitempty"`
 }
 
 // AccessRequest represents a request to access a resource
 type AccessRequest struct {
-	Subject     string                 `json:"subject"`
-	SubjectType string                 `json:"subjectType"` // user, service, group
-	Resource    string                 `json:"resource"`
-	ResourceType string                `json:"resourceType"`
-	Action      string                 `json:"action"`
-	Environment map[string]interface{} `json:"environment,omitempty"`
-	Context     map[string]interface{} `json:"context,omitempty"`
+	Subject      string                 `json:"subject"`
+	SubjectType  string                 `json:"subjectType"` // user, service, group
+	Resource     string                 `json:"resource"`
+	ResourceType string                 `json:"resourceType"`
+	Action       string                 `json:"action"`
+	Environment  map[string]interface{} `json:"environment,omitempty"`
+	Context      map[string]interface{} `json:"context,omitempty"`
 }
 
 // AccessDecision represents the result of an access request evaluation
@@ -215,10 +215,10 @@ func (e *ABACEngine) Evaluate(ctx context.Context, request AccessRequest) (*Acce
 
 	// Build evaluation context
 	evalContext := &EvaluationContext{
-		Subject:     subjectAttrs,
-		Resource:    resourceAttrs,
-		Action:      request.Action,
-		Environment: e.getEnvironmentAttributes(ctx, request.Environment),
+		Subject:        subjectAttrs,
+		Resource:       resourceAttrs,
+		Action:         request.Action,
+		Environment:    e.getEnvironmentAttributes(ctx, request.Environment),
 		RequestContext: request.Context,
 	}
 
@@ -618,7 +618,7 @@ func CommonABACPolicies() []*ABACPolicy {
 					Resource: ResourceMatcher{
 						Attributes: map[string]AttributeMatcher{},
 					},
-					Action: ActionMatcher{Actions: []string{"*"}},
+					Action:    ActionMatcher{Actions: []string{"*"}},
 					Effect:    "allow",
 					Condition: "subject.team == resource.owner_team",
 				},

@@ -12,10 +12,10 @@ import (
 
 // ResourceDefinition defines a type of resource that can be provisioned
 type ResourceDefinition struct {
-	APIVersion  string                 `json:"apiVersion" yaml:"apiVersion"`
-	Kind        string                 `json:"kind" yaml:"kind"`
-	Metadata    DefinitionMetadata     `json:"metadata" yaml:"metadata"`
-	Spec        ResourceSpec           `json:"spec" yaml:"spec"`
+	APIVersion string             `json:"apiVersion" yaml:"apiVersion"`
+	Kind       string             `json:"kind" yaml:"kind"`
+	Metadata   DefinitionMetadata `json:"metadata" yaml:"metadata"`
+	Spec       ResourceSpec       `json:"spec" yaml:"spec"`
 }
 
 // DefinitionMetadata contains resource definition metadata
@@ -29,32 +29,32 @@ type DefinitionMetadata struct {
 
 // ResourceSpec defines the resource specification
 type ResourceSpec struct {
-	Type        string          `json:"type" yaml:"type"`
-	Driver      string          `json:"driver" yaml:"driver"`
-	Inputs      []InputDef      `json:"inputs,omitempty" yaml:"inputs,omitempty"`
-	Outputs     []OutputDef     `json:"outputs,omitempty" yaml:"outputs,omitempty"`
-	Policies    []PolicyRef     `json:"policies,omitempty" yaml:"policies,omitempty"`
-	Defaults    map[string]interface{} `json:"defaults,omitempty" yaml:"defaults,omitempty"`
+	Type     string                 `json:"type" yaml:"type"`
+	Driver   string                 `json:"driver" yaml:"driver"`
+	Inputs   []InputDef             `json:"inputs,omitempty" yaml:"inputs,omitempty"`
+	Outputs  []OutputDef            `json:"outputs,omitempty" yaml:"outputs,omitempty"`
+	Policies []PolicyRef            `json:"policies,omitempty" yaml:"policies,omitempty"`
+	Defaults map[string]interface{} `json:"defaults,omitempty" yaml:"defaults,omitempty"`
 }
 
 // InputDef defines an input parameter
 type InputDef struct {
-	Name        string        `json:"name" yaml:"name"`
-	Type        string        `json:"type" yaml:"type"` // string, number, boolean, enum
-	Description string        `json:"description,omitempty" yaml:"description,omitempty"`
-	Required    bool          `json:"required,omitempty" yaml:"required,omitempty"`
-	Default     interface{}   `json:"default,omitempty" yaml:"default,omitempty"`
-	Enum        []interface{} `json:"enum,omitempty" yaml:"enum,omitempty"`
+	Name        string           `json:"name" yaml:"name"`
+	Type        string           `json:"type" yaml:"type"` // string, number, boolean, enum
+	Description string           `json:"description,omitempty" yaml:"description,omitempty"`
+	Required    bool             `json:"required,omitempty" yaml:"required,omitempty"`
+	Default     interface{}      `json:"default,omitempty" yaml:"default,omitempty"`
+	Enum        []interface{}    `json:"enum,omitempty" yaml:"enum,omitempty"`
 	Validation  *InputValidation `json:"validation,omitempty" yaml:"validation,omitempty"`
 }
 
 // InputValidation defines validation rules for an input
 type InputValidation struct {
-	Pattern   string      `json:"pattern,omitempty" yaml:"pattern,omitempty"`
-	Min       *float64    `json:"min,omitempty" yaml:"min,omitempty"`
-	Max       *float64    `json:"max,omitempty" yaml:"max,omitempty"`
-	MinLength *int        `json:"minLength,omitempty" yaml:"minLength,omitempty"`
-	MaxLength *int        `json:"maxLength,omitempty" yaml:"maxLength,omitempty"`
+	Pattern   string   `json:"pattern,omitempty" yaml:"pattern,omitempty"`
+	Min       *float64 `json:"min,omitempty" yaml:"min,omitempty"`
+	Max       *float64 `json:"max,omitempty" yaml:"max,omitempty"`
+	MinLength *int     `json:"minLength,omitempty" yaml:"minLength,omitempty"`
+	MaxLength *int     `json:"maxLength,omitempty" yaml:"maxLength,omitempty"`
 }
 
 // OutputDef defines an output value
@@ -95,44 +95,44 @@ type ResourceRequest struct {
 type RequestStatus string
 
 const (
-	RequestPending          RequestStatus = "pending"
-	RequestPendingApproval  RequestStatus = "pending_approval"
-	RequestApproved         RequestStatus = "approved"
-	RequestRejected         RequestStatus = "rejected"
-	RequestProvisioning     RequestStatus = "provisioning"
-	RequestProvisioned      RequestStatus = "provisioned"
-	RequestFailed           RequestStatus = "failed"
-	RequestDeleting         RequestStatus = "deleting"
-	RequestDeleted          RequestStatus = "deleted"
+	RequestPending         RequestStatus = "pending"
+	RequestPendingApproval RequestStatus = "pending_approval"
+	RequestApproved        RequestStatus = "approved"
+	RequestRejected        RequestStatus = "rejected"
+	RequestProvisioning    RequestStatus = "provisioning"
+	RequestProvisioned     RequestStatus = "provisioned"
+	RequestFailed          RequestStatus = "failed"
+	RequestDeleting        RequestStatus = "deleting"
+	RequestDeleted         RequestStatus = "deleted"
 )
 
 // CostEstimate represents an estimated cost for a resource
 type CostEstimate struct {
-	HourlyCost   float64 `json:"hourlyCost"`
-	MonthlyCost  float64 `json:"monthlyCost"`
-	Currency     string  `json:"currency"`
-	Breakdown    map[string]float64 `json:"breakdown,omitempty"`
+	HourlyCost  float64            `json:"hourlyCost"`
+	MonthlyCost float64            `json:"monthlyCost"`
+	Currency    string             `json:"currency"`
+	Breakdown   map[string]float64 `json:"breakdown,omitempty"`
 }
 
 // Quota defines resource quotas for a team or project
 type Quota struct {
-	ID          string            `json:"id"`
-	Team        string            `json:"team"`
-	Project     string            `json:"project,omitempty"`
-	Limits      map[string]int    `json:"limits"`       // e.g., "postgres": 5, "redis": 10
-	Used        map[string]int    `json:"used"`
-	CostLimit   float64           `json:"costLimit,omitempty"`    // Monthly cost limit
-	CostUsed    float64           `json:"costUsed,omitempty"`
-	Labels      map[string]string `json:"labels,omitempty"`
+	ID        string            `json:"id"`
+	Team      string            `json:"team"`
+	Project   string            `json:"project,omitempty"`
+	Limits    map[string]int    `json:"limits"` // e.g., "postgres": 5, "redis": 10
+	Used      map[string]int    `json:"used"`
+	CostLimit float64           `json:"costLimit,omitempty"` // Monthly cost limit
+	CostUsed  float64           `json:"costUsed,omitempty"`
+	Labels    map[string]string `json:"labels,omitempty"`
 }
 
 // Catalog manages resource definitions and requests
 type Catalog struct {
-	definitions map[string]*ResourceDefinition
-	requests    map[string]*ResourceRequest
-	quotas      map[string]*Quota
+	definitions  map[string]*ResourceDefinition
+	requests     map[string]*ResourceRequest
+	quotas       map[string]*Quota
 	stateBackend StateBackend
-	mu          sync.RWMutex
+	mu           sync.RWMutex
 }
 
 // StateBackend interface for persistence

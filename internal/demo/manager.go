@@ -15,8 +15,8 @@ type Config struct {
 
 // Manager manages the demo lifecycle
 type Manager struct {
-	config     *Config
-	cluster    *KindCluster
+	config       *Config
+	cluster      *KindCluster
 	portForwards []*PortForward
 }
 

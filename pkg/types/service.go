@@ -88,9 +88,9 @@ type ResourceRequirements struct {
 
 // SLOConfig defines Service Level Objectives
 type SLOConfig struct {
-	Availability float64 `yaml:"availability,omitempty" json:"availability,omitempty"` // e.g., 99.9
+	Availability float64     `yaml:"availability,omitempty" json:"availability,omitempty"` // e.g., 99.9
 	Latency      *LatencySLO `yaml:"latency,omitempty" json:"latency,omitempty"`
-	ErrorRate    float64 `yaml:"errorRate,omitempty" json:"errorRate,omitempty"` // e.g., 0.1 for 0.1%
+	ErrorRate    float64     `yaml:"errorRate,omitempty" json:"errorRate,omitempty"` // e.g., 0.1 for 0.1%
 }
 
 // LatencySLO defines latency SLO targets
@@ -102,12 +102,12 @@ type LatencySLO struct {
 
 // ServiceStatus represents the runtime status of a service
 type ServiceStatus struct {
-	State        ServiceState   `json:"state"`
-	Health       ServiceHealth  `json:"health"`
-	LastDeployed *time.Time     `json:"lastDeployed,omitempty"`
-	Version      string         `json:"version,omitempty"`
+	State        ServiceState    `json:"state"`
+	Health       ServiceHealth   `json:"health"`
+	LastDeployed *time.Time      `json:"lastDeployed,omitempty"`
+	Version      string          `json:"version,omitempty"`
 	Metrics      *ServiceMetrics `json:"metrics,omitempty"`
-	Message      string         `json:"message,omitempty"`
+	Message      string          `json:"message,omitempty"`
 }
 
 // ServiceState represents the lifecycle state of a service
@@ -135,14 +135,14 @@ const (
 
 // ServiceMetrics represents runtime metrics for a service
 type ServiceMetrics struct {
-	RequestRate  float64 `json:"requestRate,omitempty"`  // requests per second
-	ErrorRate    float64 `json:"errorRate,omitempty"`    // percentage
-	LatencyP50   float64 `json:"latencyP50,omitempty"`   // milliseconds
-	LatencyP95   float64 `json:"latencyP95,omitempty"`   // milliseconds
-	LatencyP99   float64 `json:"latencyP99,omitempty"`   // milliseconds
-	CPUUsage     float64 `json:"cpuUsage,omitempty"`     // percentage
-	MemoryUsage  float64 `json:"memoryUsage,omitempty"`  // bytes
-	DiskUsage    float64 `json:"diskUsage,omitempty"`    // bytes
+	RequestRate float64 `json:"requestRate,omitempty"` // requests per second
+	ErrorRate   float64 `json:"errorRate,omitempty"`   // percentage
+	LatencyP50  float64 `json:"latencyP50,omitempty"`  // milliseconds
+	LatencyP95  float64 `json:"latencyP95,omitempty"`  // milliseconds
+	LatencyP99  float64 `json:"latencyP99,omitempty"`  // milliseconds
+	CPUUsage    float64 `json:"cpuUsage,omitempty"`    // percentage
+	MemoryUsage float64 `json:"memoryUsage,omitempty"` // bytes
+	DiskUsage   float64 `json:"diskUsage,omitempty"`   // bytes
 }
 
 var (

@@ -16,11 +16,11 @@ import (
 
 // APIClientConfig represents API client configuration
 type APIClientConfig struct {
-	BaseURL     string        `yaml:"baseURL" json:"baseURL"`
-	Token       string        `yaml:"token" json:"token"`
-	Timeout     time.Duration `yaml:"timeout" json:"timeout"`
-	Insecure    bool          `yaml:"insecure" json:"insecure"`
-	Organization string       `yaml:"organization" json:"organization"`
+	BaseURL      string        `yaml:"baseURL" json:"baseURL"`
+	Token        string        `yaml:"token" json:"token"`
+	Timeout      time.Duration `yaml:"timeout" json:"timeout"`
+	Insecure     bool          `yaml:"insecure" json:"insecure"`
+	Organization string        `yaml:"organization" json:"organization"`
 }
 
 // APIClient is a simple HTTP client for API calls

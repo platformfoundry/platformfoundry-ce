@@ -74,12 +74,12 @@ var deployStatusCmd = &cobra.Command{
 
 // Flags
 var (
-	deployApp         string
-	deployEnv         string
-	deployDryRun      bool
-	deployFormat      string
-	deployWait        bool
-	deployTimeout     time.Duration
+	deployApp     string
+	deployEnv     string
+	deployDryRun  bool
+	deployFormat  string
+	deployWait    bool
+	deployTimeout time.Duration
 )
 
 func init() {

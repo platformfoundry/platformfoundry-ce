@@ -40,10 +40,10 @@ type ResourceQuotas struct {
 
 // OrganizationStatus represents organization status
 type OrganizationStatus struct {
-	Phase        Phase     `json:"phase"`
-	MemberCount  int       `json:"memberCount"`
-	PlatformCount int      `json:"platformCount"`
-	LastActivity time.Time `json:"lastActivity,omitempty"`
+	Phase         Phase     `json:"phase"`
+	MemberCount   int       `json:"memberCount"`
+	PlatformCount int       `json:"platformCount"`
+	LastActivity  time.Time `json:"lastActivity,omitempty"`
 }
 
 var (

@@ -28,11 +28,11 @@ type SSOProvider struct {
 type SSOProviderType string
 
 const (
-	SSOProviderGoogle    SSOProviderType = "google"
-	SSOProviderGitHub    SSOProviderType = "github"
-	SSOProviderOkta      SSOProviderType = "okta"
-	SSOProviderAzureAD   SSOProviderType = "azure-ad"
-	SSOProviderGeneric   SSOProviderType = "generic"
+	SSOProviderGoogle  SSOProviderType = "google"
+	SSOProviderGitHub  SSOProviderType = "github"
+	SSOProviderOkta    SSOProviderType = "okta"
+	SSOProviderAzureAD SSOProviderType = "azure-ad"
+	SSOProviderGeneric SSOProviderType = "generic"
 )
 
 // SSOConfig represents SSO configuration
@@ -41,7 +41,7 @@ type SSOConfig struct {
 	ClientID     string          `yaml:"clientId" json:"clientId"`
 	ClientSecret string          `yaml:"clientSecret" json:"clientSecret"`
 	RedirectURL  string          `yaml:"redirectUrl" json:"redirectUrl"`
-	Domain       string          `yaml:"domain,omitempty" json:"domain,omitempty"` // For Okta, Azure AD
+	Domain       string          `yaml:"domain,omitempty" json:"domain,omitempty"`     // For Okta, Azure AD
 	TenantID     string          `yaml:"tenantId,omitempty" json:"tenantId,omitempty"` // For Azure AD
 	Scopes       []string        `yaml:"scopes,omitempty" json:"scopes,omitempty"`
 }

@@ -108,9 +108,9 @@ func runScoreValidate(cmd *cobra.Command, args []string) error {
 
 	if scoreFormat == "json" {
 		result := struct {
-			Valid    bool                     `json:"valid"`
-			Workload *score.Workload          `json:"workload,omitempty"`
-			Errors   []score.ValidationError  `json:"errors,omitempty"`
+			Valid    bool                    `json:"valid"`
+			Workload *score.Workload         `json:"workload,omitempty"`
+			Errors   []score.ValidationError `json:"errors,omitempty"`
 		}{
 			Valid:    len(errors) == 0 || (!scoreStrict && !hasErrors(errors)),
 			Workload: workload,

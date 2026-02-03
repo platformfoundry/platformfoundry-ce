@@ -127,7 +127,7 @@ func (r *Recommender) matchRules(ts *TechStack) []Rule {
 	for i := 0; i < len(matched)-1; i++ {
 		for j := i + 1; j < len(matched); j++ {
 			if matched[i].Priority < matched[j].Priority ||
-			   (matched[i].Priority == matched[j].Priority && matched[i].Confidence < matched[j].Confidence) {
+				(matched[i].Priority == matched[j].Priority && matched[i].Confidence < matched[j].Confidence) {
 				matched[i], matched[j] = matched[j], matched[i]
 			}
 		}

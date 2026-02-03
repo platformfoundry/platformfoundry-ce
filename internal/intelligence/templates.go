@@ -11,11 +11,11 @@ type Template struct {
 	ID          string                 `json:"id"`
 	Name        string                 `json:"name"`
 	Description string                 `json:"description"`
-	TechStack   []string               `json:"tech_stack"`    // Required tech stack patterns
-	Features    []string               `json:"features"`      // Portal features included
-	Plugins     []string               `json:"plugins"`       // Backstage plugins
-	Config      map[string]interface{} `json:"config"`        // Template-specific config
-	Tags        []string               `json:"tags"`          // Searchable tags
+	TechStack   []string               `json:"tech_stack"` // Required tech stack patterns
+	Features    []string               `json:"features"`   // Portal features included
+	Plugins     []string               `json:"plugins"`    // Backstage plugins
+	Config      map[string]interface{} `json:"config"`     // Template-specific config
+	Tags        []string               `json:"tags"`       // Searchable tags
 }
 
 // TemplateRepository manages portal templates
@@ -146,7 +146,7 @@ func getDefaultTemplates() []Template {
 					"appLocatorMethod": "config",
 				},
 				"costInsights": map[string]interface{}{
-					"enabled": true,
+					"enabled":  true,
 					"provider": "aws",
 				},
 			},
@@ -280,7 +280,7 @@ func getDefaultTemplates() []Template {
 				"@backstage/plugin-techdocs",
 			},
 			Config: map[string]interface{}{},
-			Tags:    []string{"minimal", "starter", "basic"},
+			Tags:   []string{"minimal", "starter", "basic"},
 		},
 	}
 }

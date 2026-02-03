@@ -55,8 +55,8 @@ type APIKeyConfig struct {
 
 // OAuthConfig represents OAuth configuration
 type OAuthConfig struct {
-	Enabled   bool                       `yaml:"enabled"`
-	Providers map[string]OAuthProvider   `yaml:"providers"`
+	Enabled   bool                     `yaml:"enabled"`
+	Providers map[string]OAuthProvider `yaml:"providers"`
 }
 
 // OAuthProvider represents an OAuth provider configuration
@@ -70,22 +70,22 @@ type OAuthProvider struct {
 
 // SAMLConfig represents SAML configuration
 type SAMLConfig struct {
-	Enabled                      bool   `yaml:"enabled"`
-	EntityID                     string `yaml:"entityID"`
-	AssertionConsumerServiceURL  string `yaml:"assertionConsumerServiceURL"`
-	SingleLogoutServiceURL       string `yaml:"singleLogoutServiceURL"`
-	IDPMetadataURL               string `yaml:"idpMetadataURL"`
+	Enabled                     bool   `yaml:"enabled"`
+	EntityID                    string `yaml:"entityID"`
+	AssertionConsumerServiceURL string `yaml:"assertionConsumerServiceURL"`
+	SingleLogoutServiceURL      string `yaml:"singleLogoutServiceURL"`
+	IDPMetadataURL              string `yaml:"idpMetadataURL"`
 }
 
 // TLSConfig represents TLS configuration
 type TLSConfig struct {
-	Enabled      bool                    `yaml:"enabled"`
-	Source       string                  `yaml:"source"`
-	Manual       tls.Config              `yaml:"manual"`
-	ACME         ACMEConfig              `yaml:"acme"`
-	SelfSigned   SelfSignedConfig        `yaml:"selfsigned"`
-	MinVersion   string                  `yaml:"minVersion"`
-	CipherSuites []string                `yaml:"cipherSuites"`
+	Enabled      bool             `yaml:"enabled"`
+	Source       string           `yaml:"source"`
+	Manual       tls.Config       `yaml:"manual"`
+	ACME         ACMEConfig       `yaml:"acme"`
+	SelfSigned   SelfSignedConfig `yaml:"selfsigned"`
+	MinVersion   string           `yaml:"minVersion"`
+	CipherSuites []string         `yaml:"cipherSuites"`
 }
 
 // ACMEConfig represents ACME configuration
@@ -116,7 +116,7 @@ type SecretsConfig struct {
 
 // StateConfig represents state backend configuration
 type StateConfig struct {
-	Backend string          `yaml:"backend"`
+	Backend string           `yaml:"backend"`
 	Local   LocalStateConfig `yaml:"local"`
 	S3      S3StateConfig    `yaml:"s3"`
 }
@@ -139,15 +139,15 @@ type S3StateConfig struct {
 
 // ServerConfig represents web server configuration
 type ServerConfig struct {
-	Address       string     `yaml:"address"`
-	Port          int        `yaml:"port"`
-	HTTPSPort     int        `yaml:"httpsPort"`
-	RedirectHTTPS bool       `yaml:"redirectHTTPS"`
-	RequireAuth   bool       `yaml:"requireAuth"`
-	CORS          CORSConfig `yaml:"cors"`
-	RateLimit     RateLimitConfig `yaml:"rateLimit"`
-	Timeout       string     `yaml:"timeout"`
-	MaxRequestSize string    `yaml:"maxRequestSize"`
+	Address        string          `yaml:"address"`
+	Port           int             `yaml:"port"`
+	HTTPSPort      int             `yaml:"httpsPort"`
+	RedirectHTTPS  bool            `yaml:"redirectHTTPS"`
+	RequireAuth    bool            `yaml:"requireAuth"`
+	CORS           CORSConfig      `yaml:"cors"`
+	RateLimit      RateLimitConfig `yaml:"rateLimit"`
+	Timeout        string          `yaml:"timeout"`
+	MaxRequestSize string          `yaml:"maxRequestSize"`
 }
 
 // CORSConfig represents CORS configuration
@@ -161,20 +161,20 @@ type CORSConfig struct {
 
 // RateLimitConfig represents rate limiting configuration
 type RateLimitConfig struct {
-	Enabled            bool `yaml:"enabled"`
-	RequestsPerMinute  int  `yaml:"requestsPerMinute"`
-	Burst              int  `yaml:"burst"`
+	Enabled           bool `yaml:"enabled"`
+	RequestsPerMinute int  `yaml:"requestsPerMinute"`
+	Burst             int  `yaml:"burst"`
 }
 
 // AuditConfig represents audit logging configuration
 type AuditConfig struct {
-	Enabled       bool            `yaml:"enabled"`
-	Destination   string          `yaml:"destination"`
-	File          AuditFileConfig `yaml:"file"`
-	LogAuth       bool            `yaml:"logAuth"`
-	LogChanges    bool            `yaml:"logChanges"`
-	LogAPIAccess  bool            `yaml:"logAPIAccess"`
-	MaskSecrets   bool            `yaml:"maskSecrets"`
+	Enabled      bool            `yaml:"enabled"`
+	Destination  string          `yaml:"destination"`
+	File         AuditFileConfig `yaml:"file"`
+	LogAuth      bool            `yaml:"logAuth"`
+	LogChanges   bool            `yaml:"logChanges"`
+	LogAPIAccess bool            `yaml:"logAPIAccess"`
+	MaskSecrets  bool            `yaml:"maskSecrets"`
 }
 
 // AuditFileConfig represents audit file configuration
@@ -217,9 +217,9 @@ type CSPConfig struct {
 
 // RBACConfig represents RBAC configuration
 type RBACConfig struct {
-	Enabled     bool              `yaml:"enabled"`
-	DefaultRole string            `yaml:"defaultRole"`
-	Roles       map[string]Role   `yaml:"roles"`
+	Enabled     bool            `yaml:"enabled"`
+	DefaultRole string          `yaml:"defaultRole"`
+	Roles       map[string]Role `yaml:"roles"`
 }
 
 // Role represents a role definition
@@ -230,12 +230,12 @@ type Role struct {
 
 // ComplianceConfig represents compliance configuration
 type ComplianceConfig struct {
-	Enabled             bool              `yaml:"enabled"`
-	Frameworks          []string          `yaml:"frameworks"`
-	EncryptionAtRest    bool              `yaml:"encryptionAtRest"`
-	EncryptionInTransit bool              `yaml:"encryptionInTransit"`
-	DataRetention       DataRetention     `yaml:"dataRetention"`
-	RequireMFA          bool              `yaml:"requireMFA"`
+	Enabled             bool          `yaml:"enabled"`
+	Frameworks          []string      `yaml:"frameworks"`
+	EncryptionAtRest    bool          `yaml:"encryptionAtRest"`
+	EncryptionInTransit bool          `yaml:"encryptionInTransit"`
+	DataRetention       DataRetention `yaml:"dataRetention"`
+	RequireMFA          bool          `yaml:"requireMFA"`
 }
 
 // DataRetention represents data retention policy
@@ -254,11 +254,11 @@ type MonitoringConfig struct {
 
 // SecurityEventsConfig represents security event monitoring
 type SecurityEventsConfig struct {
-	Enabled                    bool   `yaml:"enabled"`
-	FailedLoginThreshold       int    `yaml:"failedLoginThreshold"`
-	FailedLoginWindow          string `yaml:"failedLoginWindow"`
-	UnauthorizedAccessAlert    bool   `yaml:"unauthorizedAccessAlert"`
-	PrivilegeEscalationAlert   bool   `yaml:"privilegeEscalationAlert"`
+	Enabled                  bool   `yaml:"enabled"`
+	FailedLoginThreshold     int    `yaml:"failedLoginThreshold"`
+	FailedLoginWindow        string `yaml:"failedLoginWindow"`
+	UnauthorizedAccessAlert  bool   `yaml:"unauthorizedAccessAlert"`
+	PrivilegeEscalationAlert bool   `yaml:"privilegeEscalationAlert"`
 }
 
 // CertMonitoringConfig represents certificate monitoring

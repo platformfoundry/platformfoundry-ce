@@ -518,7 +518,7 @@ func (t *noopTracer) Shutdown(ctx context.Context) error {
 // noopSpan implements SpanInterface with no-op operations
 type noopSpan struct{}
 
-func (s *noopSpan) End()                                         {}
+func (s *noopSpan) End()                                          {}
 func (s *noopSpan) SetStatus(code StatusCode, description string) {}
 func (s *noopSpan) SetAttributes(attrs ...Attribute)              {}
 func (s *noopSpan) AddEvent(name string, attrs ...Attribute)      {}
@@ -528,10 +528,16 @@ func (s *noopSpan) SpanContext() SpanContext                      { return SpanC
 // noopMeter implements MeterInterface with no-op operations
 type noopMeter struct{}
 
-func (m *noopMeter) CreateCounter(name string, opts ...MetricOption) CounterInterface   { return &noopCounter{} }
-func (m *noopMeter) CreateGauge(name string, opts ...MetricOption) GaugeInterface       { return &noopGauge{} }
-func (m *noopMeter) CreateHistogram(name string, opts ...MetricOption) HistogramInterface { return &noopHistogram{} }
-func (m *noopMeter) Shutdown(ctx context.Context) error                                   { return nil }
+func (m *noopMeter) CreateCounter(name string, opts ...MetricOption) CounterInterface {
+	return &noopCounter{}
+}
+func (m *noopMeter) CreateGauge(name string, opts ...MetricOption) GaugeInterface {
+	return &noopGauge{}
+}
+func (m *noopMeter) CreateHistogram(name string, opts ...MetricOption) HistogramInterface {
+	return &noopHistogram{}
+}
+func (m *noopMeter) Shutdown(ctx context.Context) error { return nil }
 
 type noopCounter struct{}
 
@@ -556,16 +562,16 @@ func generateSpanID() string {
 
 // Predefined metrics for Platform Foundry
 const (
-	MetricOperationsTotal     = "pf.operations.total"
-	MetricOperationsDuration  = "pf.operations.duration"
-	MetricPluginCalls         = "pf.plugin.calls"
-	MetricDriftDetected       = "pf.drift.detected"
-	MetricPromiseRequests     = "pf.promise.requests"
-	MetricHealthScore         = "pf.health.score"
-	MetricResourceCount       = "pf.resources.count"
-	MetricEventPublished      = "pf.events.published"
-	MetricAPIRequests         = "pf.api.requests"
-	MetricAPILatency          = "pf.api.latency"
+	MetricOperationsTotal    = "pf.operations.total"
+	MetricOperationsDuration = "pf.operations.duration"
+	MetricPluginCalls        = "pf.plugin.calls"
+	MetricDriftDetected      = "pf.drift.detected"
+	MetricPromiseRequests    = "pf.promise.requests"
+	MetricHealthScore        = "pf.health.score"
+	MetricResourceCount      = "pf.resources.count"
+	MetricEventPublished     = "pf.events.published"
+	MetricAPIRequests        = "pf.api.requests"
+	MetricAPILatency         = "pf.api.latency"
 )
 
 // PlatformMetrics provides platform-specific metrics

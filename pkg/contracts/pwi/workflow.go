@@ -96,12 +96,12 @@ type StepDefinition struct {
 type StepType string
 
 const (
-	StepTypeAction   StepType = "action"
-	StepTypeApproval StepType = "approval"
-	StepTypeWait     StepType = "wait"
+	StepTypeAction    StepType = "action"
+	StepTypeApproval  StepType = "approval"
+	StepTypeWait      StepType = "wait"
 	StepTypeCondition StepType = "condition"
-	StepTypeParallel StepType = "parallel"
-	StepTypeSubflow  StepType = "subflow"
+	StepTypeParallel  StepType = "parallel"
+	StepTypeSubflow   StepType = "subflow"
 )
 
 // ApprovalConfig configures approval step behavior
@@ -190,10 +190,10 @@ type Workflow struct {
 type WorkflowStatus string
 
 const (
-	WorkflowStatusDraft     WorkflowStatus = "draft"
-	WorkflowStatusActive    WorkflowStatus = "active"
-	WorkflowStatusPaused    WorkflowStatus = "paused"
-	WorkflowStatusArchived  WorkflowStatus = "archived"
+	WorkflowStatusDraft    WorkflowStatus = "draft"
+	WorkflowStatusActive   WorkflowStatus = "active"
+	WorkflowStatusPaused   WorkflowStatus = "paused"
+	WorkflowStatusArchived WorkflowStatus = "archived"
 )
 
 // WorkflowExecution represents a workflow execution instance

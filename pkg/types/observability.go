@@ -12,18 +12,18 @@ type Observability struct {
 
 // ObservabilitySpec defines observability specification
 type ObservabilitySpec struct {
-	ClusterRef     string                `yaml:"clusterRef" json:"clusterRef"`
-	Monitoring     *MonitoringConfig     `yaml:"monitoring,omitempty" json:"monitoring,omitempty"`
-	Visualization  *VisualizationConfig  `yaml:"visualization,omitempty" json:"visualization,omitempty"`
-	Logging        *LoggingConfig        `yaml:"logging,omitempty" json:"logging,omitempty"`
-	Ingress        *IngressConfig        `yaml:"ingress,omitempty" json:"ingress,omitempty"`
+	ClusterRef    string               `yaml:"clusterRef" json:"clusterRef"`
+	Monitoring    *MonitoringConfig    `yaml:"monitoring,omitempty" json:"monitoring,omitempty"`
+	Visualization *VisualizationConfig `yaml:"visualization,omitempty" json:"visualization,omitempty"`
+	Logging       *LoggingConfig       `yaml:"logging,omitempty" json:"logging,omitempty"`
+	Ingress       *IngressConfig       `yaml:"ingress,omitempty" json:"ingress,omitempty"`
 }
 
 // MonitoringConfig defines monitoring configuration
 type MonitoringConfig struct {
-	Provider      string `yaml:"provider" json:"provider"` // prometheus
-	Retention     string `yaml:"retention,omitempty" json:"retention,omitempty"`
-	StorageSize   string `yaml:"storageSize,omitempty" json:"storageSize,omitempty"`
+	Provider       string `yaml:"provider" json:"provider"` // prometheus
+	Retention      string `yaml:"retention,omitempty" json:"retention,omitempty"`
+	StorageSize    string `yaml:"storageSize,omitempty" json:"storageSize,omitempty"`
 	ScrapeInterval string `yaml:"scrapeInterval,omitempty" json:"scrapeInterval,omitempty"`
 }
 

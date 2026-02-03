@@ -17,11 +17,11 @@ type Config struct {
 
 // NamespaceConfig represents namespace configuration
 type NamespaceConfig struct {
-	Name        string            `yaml:"name" json:"name" validate:"required"`
-	Labels      map[string]string `yaml:"labels,omitempty" json:"labels,omitempty"`
-	Annotations map[string]string `yaml:"annotations,omitempty" json:"annotations,omitempty"`
-	ResourceQuota *ResourceQuota  `yaml:"resourceQuota,omitempty" json:"resourceQuota,omitempty"`
-	LimitRange    *LimitRange     `yaml:"limitRange,omitempty" json:"limitRange,omitempty"`
+	Name          string            `yaml:"name" json:"name" validate:"required"`
+	Labels        map[string]string `yaml:"labels,omitempty" json:"labels,omitempty"`
+	Annotations   map[string]string `yaml:"annotations,omitempty" json:"annotations,omitempty"`
+	ResourceQuota *ResourceQuota    `yaml:"resourceQuota,omitempty" json:"resourceQuota,omitempty"`
+	LimitRange    *LimitRange       `yaml:"limitRange,omitempty" json:"limitRange,omitempty"`
 }
 
 // ResourceQuota defines namespace resource quotas

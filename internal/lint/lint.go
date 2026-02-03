@@ -20,13 +20,13 @@ const (
 
 // Issue represents a single lint issue
 type Issue struct {
-	Severity    Severity `json:"severity"`
-	Rule        string   `json:"rule"`
-	Message     string   `json:"message"`
-	File        string   `json:"file,omitempty"`
-	Line        int      `json:"line,omitempty"`
-	Column      int      `json:"column,omitempty"`
-	Suggestion  string   `json:"suggestion,omitempty"`
+	Severity   Severity `json:"severity"`
+	Rule       string   `json:"rule"`
+	Message    string   `json:"message"`
+	File       string   `json:"file,omitempty"`
+	Line       int      `json:"line,omitempty"`
+	Column     int      `json:"column,omitempty"`
+	Suggestion string   `json:"suggestion,omitempty"`
 }
 
 // Result contains all lint issues for a file

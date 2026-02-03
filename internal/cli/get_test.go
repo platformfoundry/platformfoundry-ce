@@ -67,9 +67,9 @@ func TestGetCommand(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name:        "get unknown resource type",
-			args:        []string{"unknown-resource"},
-			wantErr:     false, // Might just show help
+			name:    "get unknown resource type",
+			args:    []string{"unknown-resource"},
+			wantErr: false, // Might just show help
 		},
 		{
 			name:    "get all resources",

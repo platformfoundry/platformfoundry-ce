@@ -15,23 +15,23 @@ import (
 type EventType string
 
 const (
-	EventDeployStarted    EventType = "deploy.started"
-	EventDeploySucceeded  EventType = "deploy.succeeded"
-	EventDeployFailed     EventType = "deploy.failed"
-	EventApprovalRequired EventType = "approval.required"
-	EventApprovalGranted  EventType = "approval.granted"
-	EventApprovalRejected EventType = "approval.rejected"
-	EventEnvCreated       EventType = "environment.created"
-	EventEnvDeleted       EventType = "environment.deleted"
-	EventEnvExpiring      EventType = "environment.expiring"
-	EventWorkflowStarted  EventType = "workflow.started"
+	EventDeployStarted     EventType = "deploy.started"
+	EventDeploySucceeded   EventType = "deploy.succeeded"
+	EventDeployFailed      EventType = "deploy.failed"
+	EventApprovalRequired  EventType = "approval.required"
+	EventApprovalGranted   EventType = "approval.granted"
+	EventApprovalRejected  EventType = "approval.rejected"
+	EventEnvCreated        EventType = "environment.created"
+	EventEnvDeleted        EventType = "environment.deleted"
+	EventEnvExpiring       EventType = "environment.expiring"
+	EventWorkflowStarted   EventType = "workflow.started"
 	EventWorkflowCompleted EventType = "workflow.completed"
-	EventWorkflowFailed   EventType = "workflow.failed"
-	EventResourceCreated  EventType = "resource.created"
-	EventResourceUpdated  EventType = "resource.updated"
-	EventResourceDeleted  EventType = "resource.deleted"
-	EventHealthCheck      EventType = "health.check"
-	EventAlertTriggered   EventType = "alert.triggered"
+	EventWorkflowFailed    EventType = "workflow.failed"
+	EventResourceCreated   EventType = "resource.created"
+	EventResourceUpdated   EventType = "resource.updated"
+	EventResourceDeleted   EventType = "resource.deleted"
+	EventHealthCheck       EventType = "health.check"
+	EventAlertTriggered    EventType = "alert.triggered"
 )
 
 // Event represents a platform event
@@ -223,9 +223,9 @@ func formatSlackMessage(event *Event, config SlackConfig) map[string]interface{}
 	message := map[string]interface{}{
 		"attachments": []map[string]interface{}{
 			{
-				"color":  color,
-				"title":  fmt.Sprintf("%s %s", emoji, event.Type),
-				"text":   event.Subject,
+				"color": color,
+				"title": fmt.Sprintf("%s %s", emoji, event.Type),
+				"text":  event.Subject,
 				"fields": []map[string]interface{}{
 					{"title": "Source", "value": event.Source, "short": true},
 					{"title": "Time", "value": event.Time.Format(time.RFC3339), "short": true},

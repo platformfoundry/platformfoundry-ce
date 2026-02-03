@@ -232,10 +232,10 @@ func TestGitOpsConfig(t *testing.T) {
 
 func TestSyncPolicy(t *testing.T) {
 	tests := []struct {
-		name          string
-		policy        *SyncPolicy
-		wantPrune     bool
-		wantSelfHeal  bool
+		name         string
+		policy       *SyncPolicy
+		wantPrune    bool
+		wantSelfHeal bool
 	}{
 		{
 			name: "automated with prune and self-heal",

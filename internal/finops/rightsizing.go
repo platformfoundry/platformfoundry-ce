@@ -30,21 +30,21 @@ type StateBackend interface {
 
 // UsageStats represents resource usage statistics
 type UsageStats struct {
-	Avg float64   `json:"avg"`
-	Min float64   `json:"min"`
-	Max float64   `json:"max"`
-	P50 float64   `json:"p50"`
-	P95 float64   `json:"p95"`
-	P99 float64   `json:"p99"`
+	Avg float64 `json:"avg"`
+	Min float64 `json:"min"`
+	Max float64 `json:"max"`
+	P50 float64 `json:"p50"`
+	P95 float64 `json:"p95"`
+	P99 float64 `json:"p99"`
 }
 
 // InstanceType represents a cloud instance type
 type InstanceType struct {
-	Name     string  `json:"name"`
-	CPUCores int     `json:"cpuCores"`
-	MemoryGB float64 `json:"memoryGB"`
+	Name        string  `json:"name"`
+	CPUCores    int     `json:"cpuCores"`
+	MemoryGB    float64 `json:"memoryGB"`
 	CostPerHour float64 `json:"costPerHour"`
-	Category string  `json:"category"` // general, compute, memory, storage
+	Category    string  `json:"category"` // general, compute, memory, storage
 }
 
 // ResourceDetails contains details about a cloud resource
@@ -69,18 +69,18 @@ type ResourceSize struct {
 
 // RightsizingRecommendation represents a recommendation to resize a resource
 type RightsizingRecommendation struct {
-	ResourceID       string       `json:"resourceId"`
-	ResourceName     string       `json:"resourceName"`
-	ResourceType     string       `json:"resourceType"`
-	Team             string       `json:"team,omitempty"`
-	CurrentSize      ResourceSize `json:"currentSize"`
-	RecommendedSize  ResourceSize `json:"recommendedSize"`
-	Action           string       `json:"action"` // downsize, upsize, terminate
-	Confidence       float64      `json:"confidence"`
-	EstimatedSavings float64      `json:"estimatedSavings"` // Monthly savings
-	Reason           string       `json:"reason"`
+	ResourceID       string        `json:"resourceId"`
+	ResourceName     string        `json:"resourceName"`
+	ResourceType     string        `json:"resourceType"`
+	Team             string        `json:"team,omitempty"`
+	CurrentSize      ResourceSize  `json:"currentSize"`
+	RecommendedSize  ResourceSize  `json:"recommendedSize"`
+	Action           string        `json:"action"` // downsize, upsize, terminate
+	Confidence       float64       `json:"confidence"`
+	EstimatedSavings float64       `json:"estimatedSavings"` // Monthly savings
+	Reason           string        `json:"reason"`
 	UsageMetrics     *UsageMetrics `json:"usageMetrics,omitempty"`
-	CreatedAt        time.Time    `json:"createdAt"`
+	CreatedAt        time.Time     `json:"createdAt"`
 }
 
 // UsageMetrics contains resource usage metrics

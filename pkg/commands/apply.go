@@ -39,11 +39,11 @@ type ApplyInput struct {
 
 // ApplyOutput contains the result of the apply command
 type ApplyOutput struct {
-	Platform    string
-	Components  []ComponentResult
-	Duration    time.Duration
-	Success     bool
-	ErrorCount  int
+	Platform   string
+	Components []ComponentResult
+	Duration   time.Duration
+	Success    bool
+	ErrorCount int
 }
 
 // ComponentResult represents the result of applying a component

@@ -336,4 +336,3 @@ func (r *ResponseRecorder) GetAll() map[string][]RecordedResponse {
 	}
 	return result
 }
-

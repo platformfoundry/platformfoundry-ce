@@ -14,13 +14,13 @@ import (
 type EphemeralEnvironmentStatus string
 
 const (
-	EphemeralStatusPending     EphemeralEnvironmentStatus = "pending"
+	EphemeralStatusPending      EphemeralEnvironmentStatus = "pending"
 	EphemeralStatusProvisioning EphemeralEnvironmentStatus = "provisioning"
-	EphemeralStatusReady       EphemeralEnvironmentStatus = "ready"
-	EphemeralStatusFailed      EphemeralEnvironmentStatus = "failed"
-	EphemeralStatusExpired     EphemeralEnvironmentStatus = "expired"
-	EphemeralStatusDeleting    EphemeralEnvironmentStatus = "deleting"
-	EphemeralStatusDeleted     EphemeralEnvironmentStatus = "deleted"
+	EphemeralStatusReady        EphemeralEnvironmentStatus = "ready"
+	EphemeralStatusFailed       EphemeralEnvironmentStatus = "failed"
+	EphemeralStatusExpired      EphemeralEnvironmentStatus = "expired"
+	EphemeralStatusDeleting     EphemeralEnvironmentStatus = "deleting"
+	EphemeralStatusDeleted      EphemeralEnvironmentStatus = "deleted"
 )
 
 // EphemeralEnvironment represents a temporary environment
@@ -31,33 +31,33 @@ type EphemeralEnvironment struct {
 	Status       EphemeralEnvironmentStatus `json:"status"`
 
 	// Source information
-	Source       EphemeralSource            `json:"source"`
+	Source EphemeralSource `json:"source"`
 
 	// Configuration
-	TTL          time.Duration              `json:"ttl"`
-	ExpiresAt    time.Time                  `json:"expiresAt"`
+	TTL       time.Duration `json:"ttl"`
+	ExpiresAt time.Time     `json:"expiresAt"`
 
 	// Resources
-	Resources    []EphemeralResource        `json:"resources"`
+	Resources []EphemeralResource `json:"resources"`
 
 	// Access
-	PreviewURL   string                     `json:"previewUrl,omitempty"`
-	Namespace    string                     `json:"namespace"`
+	PreviewURL string `json:"previewUrl,omitempty"`
+	Namespace  string `json:"namespace"`
 
 	// Lifecycle
-	CreatedAt    time.Time                  `json:"createdAt"`
-	ReadyAt      *time.Time                 `json:"readyAt,omitempty"`
-	DeletedAt    *time.Time                 `json:"deletedAt,omitempty"`
+	CreatedAt time.Time  `json:"createdAt"`
+	ReadyAt   *time.Time `json:"readyAt,omitempty"`
+	DeletedAt *time.Time `json:"deletedAt,omitempty"`
 
 	// Cleanup configuration
-	Cleanup      CleanupConfig              `json:"cleanup"`
+	Cleanup CleanupConfig `json:"cleanup"`
 
 	// Metadata
-	Labels       map[string]string          `json:"labels,omitempty"`
-	Annotations  map[string]string          `json:"annotations,omitempty"`
+	Labels      map[string]string `json:"labels,omitempty"`
+	Annotations map[string]string `json:"annotations,omitempty"`
 
 	// Error information
-	Error        string                     `json:"error,omitempty"`
+	Error string `json:"error,omitempty"`
 }
 
 // EphemeralSource defines where the environment comes from
@@ -72,28 +72,28 @@ type EphemeralSource struct {
 
 // EphemeralResource represents a resource in the ephemeral environment
 type EphemeralResource struct {
-	Service    string                 `json:"service"`
-	Image      string                 `json:"image,omitempty"`
-	Size       string                 `json:"size,omitempty"`
-	Replicas   int                    `json:"replicas,omitempty"`
-	Data       *DataConfig            `json:"data,omitempty"`
-	Status     string                 `json:"status"`
-	URL        string                 `json:"url,omitempty"`
-	Config     map[string]interface{} `json:"config,omitempty"`
+	Service  string                 `json:"service"`
+	Image    string                 `json:"image,omitempty"`
+	Size     string                 `json:"size,omitempty"`
+	Replicas int                    `json:"replicas,omitempty"`
+	Data     *DataConfig            `json:"data,omitempty"`
+	Status   string                 `json:"status"`
+	URL      string                 `json:"url,omitempty"`
+	Config   map[string]interface{} `json:"config,omitempty"`
 }
 
 // DataConfig defines data seeding configuration
 type DataConfig struct {
-	Source    string `json:"source"`    // production, staging, fixture
-	Sanitize  bool   `json:"sanitize"`  // Remove PII
-	Snapshot  string `json:"snapshot"`  // latest, specific snapshot ID
+	Source   string `json:"source"`   // production, staging, fixture
+	Sanitize bool   `json:"sanitize"` // Remove PII
+	Snapshot string `json:"snapshot"` // latest, specific snapshot ID
 }
 
 // CleanupConfig defines when to clean up the environment
 type CleanupConfig struct {
-	OnMerge   bool `json:"onMerge"`
-	OnClose   bool `json:"onClose"`
-	AfterTTL  bool `json:"afterTtl"`
+	OnMerge  bool `json:"onMerge"`
+	OnClose  bool `json:"onClose"`
+	AfterTTL bool `json:"afterTtl"`
 }
 
 // EphemeralManager manages ephemeral environments
@@ -102,17 +102,17 @@ type EphemeralManager struct {
 	mu           sync.RWMutex
 
 	// Configuration
-	defaultTTL    time.Duration
-	maxTTL        time.Duration
-	baseURL       string
+	defaultTTL time.Duration
+	maxTTL     time.Duration
+	baseURL    string
 
 	// Cleanup ticker
 	cleanupTicker *time.Ticker
 	stopCleanup   chan struct{}
 
 	// Event listeners
-	listeners     []EphemeralEventListener
-	listenerMu    sync.RWMutex
+	listeners  []EphemeralEventListener
+	listenerMu sync.RWMutex
 }
 
 // EphemeralEventListener receives ephemeral environment events
@@ -122,9 +122,9 @@ type EphemeralEventListener interface {
 
 // EphemeralManagerConfig configures the ephemeral manager
 type EphemeralManagerConfig struct {
-	DefaultTTL     time.Duration
-	MaxTTL         time.Duration
-	BaseURL        string
+	DefaultTTL      time.Duration
+	MaxTTL          time.Duration
+	BaseURL         string
 	CleanupInterval time.Duration
 }
 
@@ -180,9 +180,9 @@ func (m *EphemeralManager) CreateForPullRequest(ctx context.Context, req PREnvir
 	// Check if environment already exists for this PR
 	for _, env := range m.environments {
 		if env.Source.Type == "pull-request" &&
-		   env.Source.PRNumber == req.PRNumber &&
-		   env.Source.Repository == req.Repository &&
-		   env.Status != EphemeralStatusDeleted {
+			env.Source.PRNumber == req.PRNumber &&
+			env.Source.Repository == req.Repository &&
+			env.Status != EphemeralStatusDeleted {
 			return nil, fmt.Errorf("environment already exists for PR #%d", req.PRNumber)
 		}
 	}
@@ -347,9 +347,9 @@ func (m *EphemeralManager) GetByPR(repo string, prNumber int) (*EphemeralEnviron
 
 	for _, env := range m.environments {
 		if env.Source.Type == "pull-request" &&
-		   env.Source.PRNumber == prNumber &&
-		   env.Source.Repository == repo &&
-		   env.Status != EphemeralStatusDeleted {
+			env.Source.PRNumber == prNumber &&
+			env.Source.Repository == repo &&
+			env.Status != EphemeralStatusDeleted {
 			return env, nil
 		}
 	}
@@ -508,9 +508,9 @@ func (m *EphemeralManager) cleanupExpired() {
 	now := time.Now()
 	for _, env := range m.environments {
 		if env.Status != EphemeralStatusDeleted &&
-		   env.Status != EphemeralStatusDeleting &&
-		   env.Cleanup.AfterTTL &&
-		   now.After(env.ExpiresAt) {
+			env.Status != EphemeralStatusDeleting &&
+			env.Cleanup.AfterTTL &&
+			now.After(env.ExpiresAt) {
 			env.Status = EphemeralStatusExpired
 			m.notifyListeners(env, "expired")
 		}

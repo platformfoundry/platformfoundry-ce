@@ -71,13 +71,13 @@ const (
 
 // Workflow defines an approval workflow configuration
 type Workflow struct {
-	Name         string              `yaml:"name" json:"name"`
-	Organization string              `yaml:"organization" json:"organization"`
-	Trigger      WorkflowTrigger     `yaml:"trigger" json:"trigger"`
-	Conditions   []WorkflowCondition `yaml:"conditions" json:"conditions"`
-	Approvals    ApprovalConfig      `yaml:"approvals" json:"approvals"`
-	ChangeWindow *ChangeWindowConfig `yaml:"changeWindow,omitempty" json:"changeWindow,omitempty"`
-	Rollback     *RollbackConfig     `yaml:"rollback,omitempty" json:"rollback,omitempty"`
+	Name          string               `yaml:"name" json:"name"`
+	Organization  string               `yaml:"organization" json:"organization"`
+	Trigger       WorkflowTrigger      `yaml:"trigger" json:"trigger"`
+	Conditions    []WorkflowCondition  `yaml:"conditions" json:"conditions"`
+	Approvals     ApprovalConfig       `yaml:"approvals" json:"approvals"`
+	ChangeWindow  *ChangeWindowConfig  `yaml:"changeWindow,omitempty" json:"changeWindow,omitempty"`
+	Rollback      *RollbackConfig      `yaml:"rollback,omitempty" json:"rollback,omitempty"`
 	Notifications []NotificationConfig `yaml:"notifications,omitempty" json:"notifications,omitempty"`
 }
 
@@ -97,12 +97,12 @@ type WorkflowTarget struct {
 
 // WorkflowCondition defines a pre-deployment condition
 type WorkflowCondition struct {
-	Type       ConditionType `yaml:"type" json:"type"`
-	Required   bool          `yaml:"required" json:"required"`
-	Status     string        `yaml:"status,omitempty" json:"status,omitempty"`
-	Threshold  int           `yaml:"threshold,omitempty" json:"threshold,omitempty"`
-	MaxCritical int          `yaml:"maxCritical,omitempty" json:"maxCritical,omitempty"`
-	Custom     *CustomCondition `yaml:"custom,omitempty" json:"custom,omitempty"`
+	Type        ConditionType    `yaml:"type" json:"type"`
+	Required    bool             `yaml:"required" json:"required"`
+	Status      string           `yaml:"status,omitempty" json:"status,omitempty"`
+	Threshold   int              `yaml:"threshold,omitempty" json:"threshold,omitempty"`
+	MaxCritical int              `yaml:"maxCritical,omitempty" json:"maxCritical,omitempty"`
+	Custom      *CustomCondition `yaml:"custom,omitempty" json:"custom,omitempty"`
 }
 
 // CustomCondition allows custom condition logic
@@ -130,8 +130,8 @@ type ChangeWindowConfig struct {
 
 // TimeWindow specifies an allowed time window
 type TimeWindow struct {
-	Days   []string `yaml:"days" json:"days"`     // Mon, Tue, etc.
-	Hours  string   `yaml:"hours" json:"hours"`   // "10:00-16:00"
+	Days  []string `yaml:"days" json:"days"`   // Mon, Tue, etc.
+	Hours string   `yaml:"hours" json:"hours"` // "10:00-16:00"
 }
 
 // BlockedTime specifies blocked times
@@ -151,9 +151,9 @@ type RollbackConfig struct {
 
 // RollbackCondition defines when to trigger rollback
 type RollbackCondition struct {
-	Metric    string  `yaml:"metric" json:"metric"`       // error_rate, latency_p99, etc.
+	Metric    string  `yaml:"metric" json:"metric"` // error_rate, latency_p99, etc.
 	Threshold float64 `yaml:"threshold" json:"threshold"`
-	Unit      string  `yaml:"unit" json:"unit"`           // percent, ms, etc.
+	Unit      string  `yaml:"unit" json:"unit"` // percent, ms, etc.
 }
 
 // NotificationConfig defines notification settings
@@ -167,28 +167,28 @@ type NotificationConfig struct {
 
 // WorkflowExecution represents an instance of a workflow running
 type WorkflowExecution struct {
-	ID              string                    `json:"id"`
-	WorkflowName    string                    `json:"workflowName"`
-	Status          WorkflowStatus            `json:"status"`
-	Requester       string                    `json:"requester"`
-	RequestedAt     time.Time                 `json:"requestedAt"`
-	StartedAt       *time.Time                `json:"startedAt,omitempty"`
-	CompletedAt     *time.Time                `json:"completedAt,omitempty"`
-	Target          WorkflowTarget            `json:"target"`
-	Action          string                    `json:"action"`
-	ConditionResults []ConditionResult        `json:"conditionResults"`
-	Approvals       []ApprovalRecord          `json:"approvals"`
-	RollbackInfo    *RollbackInfo             `json:"rollbackInfo,omitempty"`
-	Metadata        map[string]interface{}    `json:"metadata,omitempty"`
-	Error           string                    `json:"error,omitempty"`
+	ID               string                 `json:"id"`
+	WorkflowName     string                 `json:"workflowName"`
+	Status           WorkflowStatus         `json:"status"`
+	Requester        string                 `json:"requester"`
+	RequestedAt      time.Time              `json:"requestedAt"`
+	StartedAt        *time.Time             `json:"startedAt,omitempty"`
+	CompletedAt      *time.Time             `json:"completedAt,omitempty"`
+	Target           WorkflowTarget         `json:"target"`
+	Action           string                 `json:"action"`
+	ConditionResults []ConditionResult      `json:"conditionResults"`
+	Approvals        []ApprovalRecord       `json:"approvals"`
+	RollbackInfo     *RollbackInfo          `json:"rollbackInfo,omitempty"`
+	Metadata         map[string]interface{} `json:"metadata,omitempty"`
+	Error            string                 `json:"error,omitempty"`
 }
 
 // ConditionResult captures the result of a condition check
 type ConditionResult struct {
-	Type      ConditionType   `json:"type"`
-	Status    ConditionStatus `json:"status"`
-	Message   string          `json:"message"`
-	CheckedAt time.Time       `json:"checkedAt"`
+	Type      ConditionType          `json:"type"`
+	Status    ConditionStatus        `json:"status"`
+	Message   string                 `json:"message"`
+	CheckedAt time.Time              `json:"checkedAt"`
 	Details   map[string]interface{} `json:"details,omitempty"`
 }
 
@@ -241,19 +241,19 @@ type DAGWorkflowSpec struct {
 
 // TriggerSpec defines a workflow trigger
 type TriggerSpec struct {
-	Type     string            `yaml:"type" json:"type"` // manual, schedule, webhook, event
-	Name     string            `yaml:"name,omitempty" json:"name,omitempty"`
-	Cron     string            `yaml:"cron,omitempty" json:"cron,omitempty"`
-	Webhook  *WebhookTrigger   `yaml:"webhook,omitempty" json:"webhook,omitempty"`
-	Event    *EventTrigger     `yaml:"event,omitempty" json:"event,omitempty"`
-	Disabled bool              `yaml:"disabled,omitempty" json:"disabled,omitempty"`
+	Type     string          `yaml:"type" json:"type"` // manual, schedule, webhook, event
+	Name     string          `yaml:"name,omitempty" json:"name,omitempty"`
+	Cron     string          `yaml:"cron,omitempty" json:"cron,omitempty"`
+	Webhook  *WebhookTrigger `yaml:"webhook,omitempty" json:"webhook,omitempty"`
+	Event    *EventTrigger   `yaml:"event,omitempty" json:"event,omitempty"`
+	Disabled bool            `yaml:"disabled,omitempty" json:"disabled,omitempty"`
 }
 
 // WebhookTrigger defines webhook trigger configuration
 type WebhookTrigger struct {
-	Path         string            `yaml:"path,omitempty" json:"path,omitempty"`
-	Secret       string            `yaml:"secret,omitempty" json:"secret,omitempty"`
-	Headers      map[string]string `yaml:"headers,omitempty" json:"headers,omitempty"`
+	Path    string            `yaml:"path,omitempty" json:"path,omitempty"`
+	Secret  string            `yaml:"secret,omitempty" json:"secret,omitempty"`
+	Headers map[string]string `yaml:"headers,omitempty" json:"headers,omitempty"`
 }
 
 // EventTrigger defines event-based trigger configuration
@@ -274,17 +274,17 @@ type InputSpec struct {
 
 // StepSpec defines a workflow step
 type StepSpec struct {
-	ID          string                 `yaml:"id" json:"id"`
-	Name        string                 `yaml:"name,omitempty" json:"name,omitempty"`
-	Type        StepType               `yaml:"type" json:"type"`
-	DependsOn   []string               `yaml:"dependsOn,omitempty" json:"dependsOn,omitempty"`
-	Condition   string                 `yaml:"condition,omitempty" json:"condition,omitempty"`
-	Config      map[string]interface{} `yaml:"config,omitempty" json:"config,omitempty"`
-	Timeout     string                 `yaml:"timeout,omitempty" json:"timeout,omitempty"`
-	Retries     *RetryConfig           `yaml:"retries,omitempty" json:"retries,omitempty"`
-	ContinueOn  *ContinueOnConfig      `yaml:"continueOn,omitempty" json:"continueOn,omitempty"`
-	Env         map[string]string      `yaml:"env,omitempty" json:"env,omitempty"`
-	Outputs     []OutputSpec           `yaml:"outputs,omitempty" json:"outputs,omitempty"`
+	ID         string                 `yaml:"id" json:"id"`
+	Name       string                 `yaml:"name,omitempty" json:"name,omitempty"`
+	Type       StepType               `yaml:"type" json:"type"`
+	DependsOn  []string               `yaml:"dependsOn,omitempty" json:"dependsOn,omitempty"`
+	Condition  string                 `yaml:"condition,omitempty" json:"condition,omitempty"`
+	Config     map[string]interface{} `yaml:"config,omitempty" json:"config,omitempty"`
+	Timeout    string                 `yaml:"timeout,omitempty" json:"timeout,omitempty"`
+	Retries    *RetryConfig           `yaml:"retries,omitempty" json:"retries,omitempty"`
+	ContinueOn *ContinueOnConfig      `yaml:"continueOn,omitempty" json:"continueOn,omitempty"`
+	Env        map[string]string      `yaml:"env,omitempty" json:"env,omitempty"`
+	Outputs    []OutputSpec           `yaml:"outputs,omitempty" json:"outputs,omitempty"`
 }
 
 // RetryConfig defines retry behavior for a step
@@ -302,8 +302,8 @@ type ContinueOnConfig struct {
 
 // OutputSpec defines a step output
 type OutputSpec struct {
-	Name  string `yaml:"name" json:"name"`
-	From  string `yaml:"from,omitempty" json:"from,omitempty"` // JSONPath or expression
+	Name string `yaml:"name" json:"name"`
+	From string `yaml:"from,omitempty" json:"from,omitempty"` // JSONPath or expression
 }
 
 // ConcurrencyConfig defines workflow concurrency settings
@@ -315,16 +315,16 @@ type ConcurrencyConfig struct {
 
 // DAGExecution represents an execution of a DAG workflow
 type DAGExecution struct {
-	ID            string                 `json:"id"`
-	WorkflowName  string                 `json:"workflowName"`
-	Status        WorkflowStatus         `json:"status"`
-	Trigger       string                 `json:"trigger"`
-	Inputs        map[string]interface{} `json:"inputs,omitempty"`
-	Steps         map[string]*StepExecution `json:"steps"`
-	StartedAt     time.Time              `json:"startedAt"`
-	CompletedAt   *time.Time             `json:"completedAt,omitempty"`
-	Error         string                 `json:"error,omitempty"`
-	Outputs       map[string]interface{} `json:"outputs,omitempty"`
+	ID           string                    `json:"id"`
+	WorkflowName string                    `json:"workflowName"`
+	Status       WorkflowStatus            `json:"status"`
+	Trigger      string                    `json:"trigger"`
+	Inputs       map[string]interface{}    `json:"inputs,omitempty"`
+	Steps        map[string]*StepExecution `json:"steps"`
+	StartedAt    time.Time                 `json:"startedAt"`
+	CompletedAt  *time.Time                `json:"completedAt,omitempty"`
+	Error        string                    `json:"error,omitempty"`
+	Outputs      map[string]interface{}    `json:"outputs,omitempty"`
 }
 
 // StepExecution represents the execution state of a single step

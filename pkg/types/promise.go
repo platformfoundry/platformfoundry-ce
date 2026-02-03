@@ -84,11 +84,11 @@ type PromiseApproval struct {
 
 // PromiseRequest represents a request to fulfill a promise
 type PromiseRequest struct {
-	APIVersion string                `yaml:"apiVersion" json:"apiVersion"`
-	Kind       string                `yaml:"kind" json:"kind"` // "PromiseRequest"
+	APIVersion string                 `yaml:"apiVersion" json:"apiVersion"`
+	Kind       string                 `yaml:"kind" json:"kind"` // "PromiseRequest"
 	Metadata   PromiseRequestMetadata `yaml:"metadata" json:"metadata"`
-	Spec       PromiseRequestSpec    `yaml:"spec" json:"spec"`
-	Status     *PromiseRequestStatus `yaml:"status,omitempty" json:"status,omitempty"`
+	Spec       PromiseRequestSpec     `yaml:"spec" json:"spec"`
+	Status     *PromiseRequestStatus  `yaml:"status,omitempty" json:"status,omitempty"`
 }
 
 // PromiseRequestMetadata contains request metadata
@@ -109,28 +109,28 @@ type PromiseRequestSpec struct {
 
 // PromiseRequestStatus represents the status of a promise request
 type PromiseRequestStatus struct {
-	State       PromiseRequestState    `yaml:"state" json:"state"`
-	Message     string                 `yaml:"message,omitempty" json:"message,omitempty"`
-	Outputs     map[string]interface{} `yaml:"outputs,omitempty" json:"outputs,omitempty"`
-	CreatedAt   time.Time              `yaml:"createdAt" json:"createdAt"`
-	UpdatedAt   time.Time              `yaml:"updatedAt" json:"updatedAt"`
-	CompletedAt *time.Time             `yaml:"completedAt,omitempty" json:"completedAt,omitempty"`
-	ApprovalInfo *ApprovalInfo         `yaml:"approvalInfo,omitempty" json:"approvalInfo,omitempty"`
+	State        PromiseRequestState    `yaml:"state" json:"state"`
+	Message      string                 `yaml:"message,omitempty" json:"message,omitempty"`
+	Outputs      map[string]interface{} `yaml:"outputs,omitempty" json:"outputs,omitempty"`
+	CreatedAt    time.Time              `yaml:"createdAt" json:"createdAt"`
+	UpdatedAt    time.Time              `yaml:"updatedAt" json:"updatedAt"`
+	CompletedAt  *time.Time             `yaml:"completedAt,omitempty" json:"completedAt,omitempty"`
+	ApprovalInfo *ApprovalInfo          `yaml:"approvalInfo,omitempty" json:"approvalInfo,omitempty"`
 }
 
 // PromiseRequestState represents the state of a promise request
 type PromiseRequestState string
 
 const (
-	PromiseRequestStatePending         PromiseRequestState = "pending"
+	PromiseRequestStatePending          PromiseRequestState = "pending"
 	PromiseRequestStateAwaitingApproval PromiseRequestState = "awaiting_approval"
-	PromiseRequestStateApproved        PromiseRequestState = "approved"
-	PromiseRequestStateRejected        PromiseRequestState = "rejected"
-	PromiseRequestStateProvisioning    PromiseRequestState = "provisioning"
-	PromiseRequestStateReady           PromiseRequestState = "ready"
-	PromiseRequestStateFailed          PromiseRequestState = "failed"
-	PromiseRequestStateDeleting        PromiseRequestState = "deleting"
-	PromiseRequestStateDeleted         PromiseRequestState = "deleted"
+	PromiseRequestStateApproved         PromiseRequestState = "approved"
+	PromiseRequestStateRejected         PromiseRequestState = "rejected"
+	PromiseRequestStateProvisioning     PromiseRequestState = "provisioning"
+	PromiseRequestStateReady            PromiseRequestState = "ready"
+	PromiseRequestStateFailed           PromiseRequestState = "failed"
+	PromiseRequestStateDeleting         PromiseRequestState = "deleting"
+	PromiseRequestStateDeleted          PromiseRequestState = "deleted"
 )
 
 // ApprovalInfo contains information about the approval process

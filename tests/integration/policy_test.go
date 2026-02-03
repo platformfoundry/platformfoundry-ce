@@ -381,11 +381,11 @@ warnings[msg] if {
 	}
 
 	tests := []struct {
-		name         string
-		resource     map[string]interface{}
-		shouldAllow  bool
-		shouldWarn   bool
-		description  string
+		name        string
+		resource    map[string]interface{}
+		shouldAllow bool
+		shouldWarn  bool
+		description string
 	}{
 		{
 			name: "Development within budget",

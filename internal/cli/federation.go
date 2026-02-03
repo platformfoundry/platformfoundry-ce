@@ -601,9 +601,9 @@ type federationInfo struct {
 }
 
 type trafficDistributionInfo struct {
-	Service  string                `json:"service"`
-	Policy   string                `json:"policy"`
-	Clusters []clusterTrafficInfo  `json:"clusters"`
+	Service  string               `json:"service"`
+	Policy   string               `json:"policy"`
+	Clusters []clusterTrafficInfo `json:"clusters"`
 }
 
 type clusterTrafficInfo struct {

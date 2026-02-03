@@ -11,11 +11,11 @@ import (
 type ComplianceStatus string
 
 const (
-	ComplianceStatusPassed         ComplianceStatus = "passed"
-	ComplianceStatusFailed         ComplianceStatus = "failed"
-	ComplianceStatusPartial        ComplianceStatus = "partial"
-	ComplianceStatusNotApplicable  ComplianceStatus = "not_applicable"
-	ComplianceStatusNotAssessed    ComplianceStatus = "not_assessed"
+	ComplianceStatusPassed        ComplianceStatus = "passed"
+	ComplianceStatusFailed        ComplianceStatus = "failed"
+	ComplianceStatusPartial       ComplianceStatus = "partial"
+	ComplianceStatusNotApplicable ComplianceStatus = "not_applicable"
+	ComplianceStatusNotAssessed   ComplianceStatus = "not_assessed"
 )
 
 // Severity represents finding severity
@@ -74,17 +74,17 @@ type Recommendation struct {
 
 // AuditReport represents a comprehensive audit report
 type AuditReport struct {
-	ID              string           `json:"id"`
-	Framework       Framework        `json:"framework"`
-	GeneratedAt     time.Time        `json:"generatedAt"`
-	GeneratedBy     string           `json:"generatedBy"`
-	Period          ReportPeriod     `json:"period"`
-	OverallScore    float64          `json:"overallScore"`
-	OverallStatus   ComplianceStatus `json:"overallStatus"`
-	CheckResults    []CheckResult    `json:"checkResults"`
-	Findings        []Finding        `json:"findings"`
-	Recommendations []Recommendation `json:"recommendations"`
-	Summary         AuditSummary     `json:"summary"`
+	ID              string            `json:"id"`
+	Framework       Framework         `json:"framework"`
+	GeneratedAt     time.Time         `json:"generatedAt"`
+	GeneratedBy     string            `json:"generatedBy"`
+	Period          ReportPeriod      `json:"period"`
+	OverallScore    float64           `json:"overallScore"`
+	OverallStatus   ComplianceStatus  `json:"overallStatus"`
+	CheckResults    []CheckResult     `json:"checkResults"`
+	Findings        []Finding         `json:"findings"`
+	Recommendations []Recommendation  `json:"recommendations"`
+	Summary         AuditSummary      `json:"summary"`
 	Metadata        map[string]string `json:"metadata,omitempty"`
 }
 
@@ -104,11 +104,11 @@ type AuditSummary struct {
 
 // ReportOpts contains options for generating a report
 type ReportOpts struct {
-	Framework       Framework         `json:"framework"`
-	Period          ReportPeriod      `json:"period"`
-	IncludeEvidence bool              `json:"includeEvidence"`
-	CheckFilter     []string          `json:"checkFilter,omitempty"`
-	CategoryFilter  []string          `json:"categoryFilter,omitempty"`
+	Framework       Framework    `json:"framework"`
+	Period          ReportPeriod `json:"period"`
+	IncludeEvidence bool         `json:"includeEvidence"`
+	CheckFilter     []string     `json:"checkFilter,omitempty"`
+	CategoryFilter  []string     `json:"categoryFilter,omitempty"`
 }
 
 // TemplateEngineInterface interface for rendering reports
@@ -136,12 +136,12 @@ func NewReportGenerator(collector *EvidenceCollector, mgr *Manager, templates Te
 // Generate generates a compliance audit report
 func (g *ReportGenerator) Generate(ctx context.Context, opts ReportOpts) (*AuditReport, error) {
 	report := &AuditReport{
-		ID:           fmt.Sprintf("report-%s-%d", opts.Framework, time.Now().Unix()),
-		Framework:    opts.Framework,
-		GeneratedAt:  time.Now(),
-		Period:       opts.Period,
-		CheckResults: make([]CheckResult, 0),
-		Findings:     make([]Finding, 0),
+		ID:              fmt.Sprintf("report-%s-%d", opts.Framework, time.Now().Unix()),
+		Framework:       opts.Framework,
+		GeneratedAt:     time.Now(),
+		Period:          opts.Period,
+		CheckResults:    make([]CheckResult, 0),
+		Findings:        make([]Finding, 0),
 		Recommendations: make([]Recommendation, 0),
 	}
 

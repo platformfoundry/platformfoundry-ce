@@ -98,8 +98,8 @@ type claudeRequest struct {
 }
 
 type claudeMessage struct {
-	Role    string               `json:"role"`
-	Content interface{}          `json:"content"` // string or []claudeContentBlock
+	Role    string      `json:"role"`
+	Content interface{} `json:"content"` // string or []claudeContentBlock
 }
 
 type claudeContentBlock struct {

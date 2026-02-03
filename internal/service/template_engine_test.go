@@ -461,13 +461,13 @@ spec:
   {{- end}}`
 
 	params := map[string]interface{}{
-		"serviceName": "UserAPI",
+		"serviceName":  "UserAPI",
 		"organization": "acme-corp",
-		"team":        "Platform",
-		"environment": "",
-		"serviceType": "microservice",
-		"email":       "platform@acme.com",
-		"repoUrl":     "https://github.com/acme/user-api",
+		"team":         "Platform",
+		"environment":  "",
+		"serviceType":  "microservice",
+		"email":        "platform@acme.com",
+		"repoUrl":      "https://github.com/acme/user-api",
 		"dependencies": []map[string]interface{}{
 			{"name": "auth-service", "type": "microservice"},
 			{"name": "postgres", "type": "database"},
