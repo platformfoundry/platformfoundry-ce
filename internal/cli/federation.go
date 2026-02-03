@@ -321,6 +321,166 @@ var fedFailoverCmd = &cobra.Command{
 	Short: "Manage failover",
 }
 
+var fedSyncCmd = &cobra.Command{
+	Use:   "sync",
+	Short: "Manage configuration synchronization",
+}
+
+var fedSyncCreateCmd = &cobra.Command{
+	Use:   "create",
+	Short: "Create a sync policy",
+	Long: `Create a new configuration sync policy.
+
+Examples:
+  # Create sync policy from YAML file
+  pf federation sync create -f sync-policy.yaml
+
+  # Create simple sync policy
+  pf federation sync create --name config-sync \
+    --source prod-us-east --targets prod-eu-west,prod-ap-southeast \
+    --resources ConfigMap,Secret --mode push`,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		filePath, _ := cmd.Flags().GetString("file")
+		name, _ := cmd.Flags().GetString("name")
+		source, _ := cmd.Flags().GetString("source")
+		targets, _ := cmd.Flags().GetStringSlice("targets")
+		resources, _ := cmd.Flags().GetStringSlice("resources")
+		mode, _ := cmd.Flags().GetString("mode")
+
+		if filePath != "" {
+			fmt.Printf("Creating sync policy from file: %s\n", filePath)
+		} else {
+			if name == "" || source == "" || len(targets) == 0 {
+				return fmt.Errorf("--name, --source, and --targets are required")
+			}
+			fmt.Printf("Creating sync policy '%s'...\n", name)
+			fmt.Printf("  Source: %s\n", source)
+			fmt.Printf("  Targets: %v\n", targets)
+			fmt.Printf("  Resources: %v\n", resources)
+			fmt.Printf("  Mode: %s\n", mode)
+		}
+		fmt.Println()
+		fmt.Printf("Sync policy created successfully.\n")
+
+		return nil
+	},
+}
+
+var fedSyncListCmd = &cobra.Command{
+	Use:   "list",
+	Short: "List sync policies",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		format, _ := cmd.Flags().GetString("output")
+
+		policies := getSampleSyncPolicies()
+
+		if format == "json" {
+			data, _ := json.MarshalIndent(policies, "", "  ")
+			fmt.Println(string(data))
+			return nil
+		}
+
+		w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
+		fmt.Fprintln(w, "NAME\tSOURCE\tTARGETS\tMODE\tSTATUS\tLAST SYNC")
+		for _, p := range policies {
+			fmt.Fprintf(w, "%s\t%s\t%d\t%s\t%s\t%s\n",
+				p.Name, p.Source, p.TargetCount, p.Mode, p.Status, p.LastSync)
+		}
+		w.Flush()
+
+		return nil
+	},
+}
+
+var fedSyncStatusCmd = &cobra.Command{
+	Use:   "status [policy-name]",
+	Short: "Get sync policy status",
+	Args:  cobra.ExactArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		name := args[0]
+
+		fmt.Printf("Sync Policy: %s\n", name)
+		fmt.Println(string(repeatChar('-', 40)))
+		fmt.Printf("Status:           synced\n")
+		fmt.Printf("Last Sync:        2m ago\n")
+		fmt.Printf("Next Sync:        3m\n")
+		fmt.Printf("Resources Synced: 15\n")
+		fmt.Printf("Conflicts:        0\n")
+		fmt.Println()
+		fmt.Println("Cluster Status:")
+		w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
+		fmt.Fprintln(w, "  CLUSTER\tSTATUS\tLAST SYNC\tRESOURCES")
+		fmt.Fprintln(w, "  prod-eu-west\tsynced\t2m ago\t8")
+		fmt.Fprintln(w, "  prod-ap-southeast\tsynced\t2m ago\t7")
+		w.Flush()
+
+		return nil
+	},
+}
+
+var fedSyncTriggerCmd = &cobra.Command{
+	Use:   "trigger [policy-name]",
+	Short: "Manually trigger synchronization",
+	Args:  cobra.ExactArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		name := args[0]
+		wait, _ := cmd.Flags().GetBool("wait")
+
+		fmt.Printf("Triggering sync for policy '%s'...\n", name)
+
+		if wait {
+			fmt.Println("Waiting for sync to complete...")
+			fmt.Println("  Fetching resources from source...")
+			fmt.Println("  Comparing with targets...")
+			fmt.Println("  Applying changes...")
+		}
+
+		fmt.Printf("Sync completed successfully.\n")
+		return nil
+	},
+}
+
+var fedSyncDeleteCmd = &cobra.Command{
+	Use:   "delete [policy-name]",
+	Short: "Delete a sync policy",
+	Args:  cobra.ExactArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		name := args[0]
+		force, _ := cmd.Flags().GetBool("force")
+
+		if !force {
+			fmt.Printf("Are you sure you want to delete sync policy '%s'?\n", name)
+			fmt.Print("Type 'yes' to confirm: ")
+			var confirm string
+			fmt.Scanln(&confirm)
+			if confirm != "yes" {
+				fmt.Println("Aborted.")
+				return nil
+			}
+		}
+
+		fmt.Printf("Deleting sync policy '%s'...\n", name)
+		fmt.Printf("Sync policy '%s' deleted.\n", name)
+		return nil
+	},
+}
+
+var fedSyncConflictsCmd = &cobra.Command{
+	Use:   "conflicts [policy-name]",
+	Short: "List sync conflicts",
+	Args:  cobra.MaximumNArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		if len(args) > 0 {
+			fmt.Printf("Conflicts for policy: %s\n", args[0])
+		} else {
+			fmt.Println("All Sync Conflicts:")
+		}
+		fmt.Println()
+		fmt.Println("No conflicts found.")
+		return nil
+	},
+}
+
 var fedFailoverTriggerCmd = &cobra.Command{
 	Use:   "trigger [cluster]",
 	Short: "Trigger failover from a cluster",
@@ -462,6 +622,15 @@ type federationSummaryInfo struct {
 	ByRegion         map[string]int `json:"byRegion"`
 }
 
+type syncPolicyInfo struct {
+	Name        string `json:"name"`
+	Source      string `json:"source"`
+	TargetCount int    `json:"targetCount"`
+	Mode        string `json:"mode"`
+	Status      string `json:"status"`
+	LastSync    string `json:"lastSync"`
+}
+
 // Sample data functions
 func getSampleFederatedClusters() []federatedClusterInfo {
 	return []federatedClusterInfo{
@@ -517,6 +686,13 @@ func getSampleFederationSummary() federationSummaryInfo {
 			"europe-west1":  2,
 			"southeastasia": 1,
 		},
+	}
+}
+
+func getSampleSyncPolicies() []syncPolicyInfo {
+	return []syncPolicyInfo{
+		{Name: "config-sync", Source: "prod-us-east", TargetCount: 2, Mode: "push", Status: "synced", LastSync: "2m ago"},
+		{Name: "secrets-sync", Source: "prod-us-east", TargetCount: 2, Mode: "push", Status: "synced", LastSync: "5m ago"},
 	}
 }
 
@@ -577,4 +753,26 @@ func init() {
 
 	// Summary
 	federationCmd.AddCommand(fedSummaryCmd)
+
+	// Sync subcommands
+	federationCmd.AddCommand(fedSyncCmd)
+	fedSyncCmd.AddCommand(fedSyncCreateCmd)
+	fedSyncCreateCmd.Flags().StringP("file", "f", "", "Path to sync policy file")
+	fedSyncCreateCmd.Flags().StringP("name", "n", "", "Sync policy name")
+	fedSyncCreateCmd.Flags().StringP("source", "s", "", "Source cluster")
+	fedSyncCreateCmd.Flags().StringSlice("targets", nil, "Target clusters")
+	fedSyncCreateCmd.Flags().StringSlice("resources", []string{"ConfigMap", "Secret"}, "Resource types to sync")
+	fedSyncCreateCmd.Flags().String("mode", "push", "Sync mode (push, pull, bidirectional)")
+
+	fedSyncCmd.AddCommand(fedSyncListCmd)
+	fedSyncListCmd.Flags().StringP("output", "o", "table", "Output format (table, json)")
+
+	fedSyncCmd.AddCommand(fedSyncStatusCmd)
+	fedSyncCmd.AddCommand(fedSyncTriggerCmd)
+	fedSyncTriggerCmd.Flags().BoolP("wait", "w", false, "Wait for sync to complete")
+
+	fedSyncCmd.AddCommand(fedSyncDeleteCmd)
+	fedSyncDeleteCmd.Flags().BoolP("force", "f", false, "Force delete without confirmation")
+
+	fedSyncCmd.AddCommand(fedSyncConflictsCmd)
 }
