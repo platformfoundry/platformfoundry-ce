@@ -123,18 +123,18 @@ func (e *Executor) Execute(ctx context.Context, execCtx *ExecutionContext) error
 
 // executeLevel runs all steps in a level concurrently
 func (e *Executor) executeLevel(ctx context.Context, execCtx *ExecutionContext, levelNum int, stepIDs []string, stepMap map[string]workflow.StepSpec) error {
-	var wg sync.WaitGroup
-	errChan := make(chan error, len(stepIDs))
+	var waitGroup sync.WaitGroup
+	stepErrorChan := make(chan error, len(stepIDs))
 
 	for _, stepID := range stepIDs {
-		step, ok := stepMap[stepID]
+		stepSpec, ok := stepMap[stepID]
 		if !ok {
 			continue
 		}
 
 		// Check condition
-		if step.Condition != "" {
-			shouldRun, err := e.evaluateCondition(ctx, step.Condition, execCtx.Resolver)
+		if stepSpec.Condition != "" {
+			shouldRun, err := e.evaluateCondition(ctx, stepSpec.Condition, execCtx.Resolver)
 			if err != nil {
 				return fmt.Errorf("failed to evaluate condition for step %s: %w", stepID, err)
 			}
@@ -150,80 +150,80 @@ func (e *Executor) executeLevel(ctx context.Context, execCtx *ExecutionContext, 
 			}
 		}
 
-		wg.Add(1)
-		go func(s workflow.StepSpec) {
-			defer wg.Done()
+		waitGroup.Add(1)
+		go func(currentStep workflow.StepSpec) {
+			defer waitGroup.Done()
 
 			// Acquire semaphore slot
 			e.semaphore <- struct{}{}
 			defer func() { <-e.semaphore }()
 
-			if err := e.executeStep(ctx, execCtx, s); err != nil {
-				errChan <- fmt.Errorf("step %s failed: %w", s.ID, err)
+			if err := e.executeStep(ctx, execCtx, currentStep); err != nil {
+				stepErrorChan <- fmt.Errorf("step %s failed: %w", currentStep.ID, err)
 			}
-		}(step)
+		}(stepSpec)
 	}
 
-	wg.Wait()
-	close(errChan)
+	waitGroup.Wait()
+	close(stepErrorChan)
 
 	// Collect errors
-	var errs []error
-	for err := range errChan {
-		errs = append(errs, err)
+	var stepErrors []error
+	for err := range stepErrorChan {
+		stepErrors = append(stepErrors, err)
 	}
 
-	if len(errs) > 0 {
-		return fmt.Errorf("%d steps failed: %v", len(errs), errs)
+	if len(stepErrors) > 0 {
+		return fmt.Errorf("%d steps failed: %v", len(stepErrors), stepErrors)
 	}
 
 	return nil
 }
 
 // executeStep runs a single step with retry logic
-func (e *Executor) executeStep(ctx context.Context, execCtx *ExecutionContext, step workflow.StepSpec) error {
-	stepExec := execCtx.Execution.Steps[step.ID]
-	if stepExec == nil {
-		stepExec = &workflow.StepExecution{
-			ID:      fmt.Sprintf("%s-%s", execCtx.Execution.ID, step.ID),
-			StepID:  step.ID,
+func (e *Executor) executeStep(ctx context.Context, execCtx *ExecutionContext, stepSpec workflow.StepSpec) error {
+	stepExecution := execCtx.Execution.Steps[stepSpec.ID]
+	if stepExecution == nil {
+		stepExecution = &workflow.StepExecution{
+			ID:      fmt.Sprintf("%s-%s", execCtx.Execution.ID, stepSpec.ID),
+			StepID:  stepSpec.ID,
 			Status:  workflow.StepStatusPending,
 			Attempt: 0,
 		}
-		execCtx.Execution.Steps[step.ID] = stepExec
+		execCtx.Execution.Steps[stepSpec.ID] = stepExecution
 	}
 
 	// Get handler
-	handler, ok := e.GetHandler(step.Type)
+	handler, ok := e.GetHandler(stepSpec.Type)
 	if !ok {
-		stepExec.Status = workflow.StepStatusFailed
-		stepExec.Error = fmt.Sprintf("no handler registered for step type: %s", step.Type)
-		return fmt.Errorf("%s", stepExec.Error)
+		stepExecution.Status = workflow.StepStatusFailed
+		stepExecution.Error = fmt.Sprintf("no handler registered for step type: %s", stepSpec.Type)
+		return fmt.Errorf("%s", stepExecution.Error)
 	}
 
 	// Parse timeout
-	timeout := e.config.DefaultTimeout
-	if step.Timeout != "" {
-		if parsed, err := time.ParseDuration(step.Timeout); err == nil {
-			timeout = parsed
+	stepTimeout := e.config.DefaultTimeout
+	if stepSpec.Timeout != "" {
+		if parsed, err := time.ParseDuration(stepSpec.Timeout); err == nil {
+			stepTimeout = parsed
 		}
 	}
 
 	// Resolve config variables
-	resolvedConfig, err := execCtx.Resolver.ResolveMap(ctx, step.Config)
+	resolvedConfig, err := execCtx.Resolver.ResolveMap(ctx, stepSpec.Config)
 	if err != nil {
-		stepExec.Status = workflow.StepStatusFailed
-		stepExec.Error = fmt.Sprintf("failed to resolve config: %v", err)
-		return fmt.Errorf("%s", stepExec.Error)
+		stepExecution.Status = workflow.StepStatusFailed
+		stepExecution.Error = fmt.Sprintf("failed to resolve config: %v", err)
+		return fmt.Errorf("%s", stepExecution.Error)
 	}
 
 	// Determine retry count
 	maxAttempts := 1
 	retryDelay := e.config.RetryDelay
-	if step.Retries != nil {
-		maxAttempts = step.Retries.MaxAttempts
-		if step.Retries.Delay != "" {
-			if parsed, err := time.ParseDuration(step.Retries.Delay); err == nil {
+	if stepSpec.Retries != nil {
+		maxAttempts = stepSpec.Retries.MaxAttempts
+		if stepSpec.Retries.Delay != "" {
+			if parsed, err := time.ParseDuration(stepSpec.Retries.Delay); err == nil {
 				retryDelay = parsed
 			}
 		}
@@ -231,35 +231,35 @@ func (e *Executor) executeStep(ctx context.Context, execCtx *ExecutionContext, s
 
 	// Notify step start
 	if execCtx.OnStepStart != nil {
-		execCtx.OnStepStart(step.ID)
+		execCtx.OnStepStart(stepSpec.ID)
 	}
 
-	var lastErr error
-	for attempt := 1; attempt <= maxAttempts; attempt++ {
-		stepExec.Attempt = attempt
-		stepExec.Status = workflow.StepStatusRunning
+	var lastError error
+	for attemptNum := 1; attemptNum <= maxAttempts; attemptNum++ {
+		stepExecution.Attempt = attemptNum
+		stepExecution.Status = workflow.StepStatusRunning
 		now := time.Now()
-		stepExec.StartedAt = &now
+		stepExecution.StartedAt = &now
 
 		// Create step context with timeout
-		stepCtx, cancel := context.WithTimeout(ctx, timeout)
+		stepCtx, cancel := context.WithTimeout(ctx, stepTimeout)
 
 		// Execute step
-		result, err := handler.Execute(stepCtx, stepExec, resolvedConfig, execCtx.Resolver)
+		result, err := handler.Execute(stepCtx, stepExecution, resolvedConfig, execCtx.Resolver)
 		cancel()
 
 		if err != nil {
-			lastErr = err
-			stepExec.Logs = append(stepExec.Logs, workflow.StepLog{
+			lastError = err
+			stepExecution.Logs = append(stepExecution.Logs, workflow.StepLog{
 				Time:    time.Now(),
 				Level:   "error",
-				Message: fmt.Sprintf("Attempt %d failed: %v", attempt, err),
+				Message: fmt.Sprintf("Attempt %d failed: %v", attemptNum, err),
 			})
 
-			if attempt < maxAttempts {
+			if attemptNum < maxAttempts {
 				time.Sleep(retryDelay)
 				// Exponential backoff if configured
-				if step.Retries != nil && step.Retries.Backoff == "exponential" {
+				if stepSpec.Retries != nil && stepSpec.Retries.Backoff == "exponential" {
 					retryDelay *= 2
 				}
 				continue
@@ -268,22 +268,22 @@ func (e *Executor) executeStep(ctx context.Context, execCtx *ExecutionContext, s
 
 		// Process result
 		if result != nil {
-			stepExec.Status = result.Status
-			stepExec.Outputs = result.Outputs
-			stepExec.Logs = append(stepExec.Logs, result.Logs...)
+			stepExecution.Status = result.Status
+			stepExecution.Outputs = result.Outputs
+			stepExecution.Logs = append(stepExecution.Logs, result.Logs...)
 			if result.Error != nil {
-				stepExec.Error = result.Error.Error()
+				stepExecution.Error = result.Error.Error()
 			} else if result.ErrorMsg != "" {
-				stepExec.Error = result.ErrorMsg
+				stepExecution.Error = result.ErrorMsg
 			}
 		}
 
 		completedAt := time.Now()
-		stepExec.CompletedAt = &completedAt
+		stepExecution.CompletedAt = &completedAt
 
 		// Notify step complete
 		if execCtx.OnStepComplete != nil {
-			execCtx.OnStepComplete(step.ID, result)
+			execCtx.OnStepComplete(stepSpec.ID, result)
 		}
 
 		// Check if step succeeded
@@ -292,21 +292,21 @@ func (e *Executor) executeStep(ctx context.Context, execCtx *ExecutionContext, s
 		}
 
 		// Check continueOn settings
-		if step.ContinueOn != nil && step.ContinueOn.Failure && stepExec.Status == workflow.StepStatusFailed {
+		if stepSpec.ContinueOn != nil && stepSpec.ContinueOn.Failure && stepExecution.Status == workflow.StepStatusFailed {
 			return nil
 		}
 
 		break
 	}
 
-	if lastErr != nil {
-		stepExec.Status = workflow.StepStatusFailed
-		stepExec.Error = lastErr.Error()
-		return lastErr
+	if lastError != nil {
+		stepExecution.Status = workflow.StepStatusFailed
+		stepExecution.Error = lastError.Error()
+		return lastError
 	}
 
-	if stepExec.Status != workflow.StepStatusCompleted {
-		return fmt.Errorf("step %s did not complete successfully: %s", step.ID, stepExec.Status)
+	if stepExecution.Status != workflow.StepStatusCompleted {
+		return fmt.Errorf("step %s did not complete successfully: %s", stepSpec.ID, stepExecution.Status)
 	}
 
 	return nil

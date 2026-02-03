@@ -144,43 +144,43 @@ func (g *Graph) DetectCycle() string {
 // detectCycle detects cycles using DFS (internal, must hold lock)
 func (g *Graph) detectCycle() string {
 	visited := make(map[string]bool)
-	recStack := make(map[string]bool)
-	path := make([]string, 0)
+	recursionStack := make(map[string]bool)
+	traversalPath := make([]string, 0)
 
-	var dfs func(id string) string
-	dfs = func(id string) string {
-		visited[id] = true
-		recStack[id] = true
-		path = append(path, id)
+	var dfs func(nodeID string) string
+	dfs = func(nodeID string) string {
+		visited[nodeID] = true
+		recursionStack[nodeID] = true
+		traversalPath = append(traversalPath, nodeID)
 
-		node := g.nodes[id]
-		for _, dep := range node.Dependencies {
-			if _, exists := g.nodes[dep]; !exists {
+		node := g.nodes[nodeID]
+		for _, depID := range node.Dependencies {
+			if _, exists := g.nodes[depID]; !exists {
 				continue
 			}
-			if !visited[dep] {
-				if cycle := dfs(dep); cycle != "" {
+			if !visited[depID] {
+				if cycle := dfs(depID); cycle != "" {
 					return cycle
 				}
-			} else if recStack[dep] {
+			} else if recursionStack[depID] {
 				// Found cycle - build cycle path
 				cycleStart := -1
-				for i, p := range path {
-					if p == dep {
+				for i, pathNode := range traversalPath {
+					if pathNode == depID {
 						cycleStart = i
 						break
 					}
 				}
 				if cycleStart >= 0 {
-					cyclePath := append(path[cycleStart:], dep)
+					cyclePath := append(traversalPath[cycleStart:], depID)
 					return fmt.Sprintf("%v", cyclePath)
 				}
-				return fmt.Sprintf("%s -> %s", id, dep)
+				return fmt.Sprintf("%s -> %s", nodeID, depID)
 			}
 		}
 
-		recStack[id] = false
-		path = path[:len(path)-1]
+		recursionStack[nodeID] = false
+		traversalPath = traversalPath[:len(traversalPath)-1]
 		return ""
 	}
 

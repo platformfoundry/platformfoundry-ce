@@ -9,8 +9,8 @@ import (
 	"github.com/platformfoundry/platformfoundry-ce/internal/workflow/dag"
 )
 
-// Handler defines the interface for workflow step handlers
-type Handler interface {
+// StepHandler defines the interface for workflow step handlers
+type StepHandler interface {
 	// Type returns the step type this handler handles
 	Type() workflow.StepType
 
@@ -21,21 +21,21 @@ type Handler interface {
 	Execute(ctx context.Context, step *workflow.StepExecution, config map[string]interface{}, resolver dag.OutputResolver) (*workflow.StepResult, error)
 }
 
-// Registry manages step handlers
-type Registry struct {
-	handlers map[workflow.StepType]Handler
+// HandlerRegistry manages step handlers
+type HandlerRegistry struct {
+	handlers map[workflow.StepType]StepHandler
 	mu       sync.RWMutex
 }
 
-// NewRegistry creates a new handler registry
-func NewRegistry() *Registry {
-	return &Registry{
-		handlers: make(map[workflow.StepType]Handler),
+// NewHandlerRegistry creates a new handler registry
+func NewHandlerRegistry() *HandlerRegistry {
+	return &HandlerRegistry{
+		handlers: make(map[workflow.StepType]StepHandler),
 	}
 }
 
 // Register registers a handler for a step type
-func (r *Registry) Register(handler Handler) error {
+func (r *HandlerRegistry) Register(handler StepHandler) error {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
@@ -49,7 +49,7 @@ func (r *Registry) Register(handler Handler) error {
 }
 
 // Get returns the handler for a step type
-func (r *Registry) Get(stepType workflow.StepType) (Handler, bool) {
+func (r *HandlerRegistry) Get(stepType workflow.StepType) (StepHandler, bool) {
 	r.mu.RLock()
 	defer r.mu.RUnlock()
 	handler, ok := r.handlers[stepType]
@@ -57,14 +57,14 @@ func (r *Registry) Get(stepType workflow.StepType) (Handler, bool) {
 }
 
 // Unregister removes a handler
-func (r *Registry) Unregister(stepType workflow.StepType) {
+func (r *HandlerRegistry) Unregister(stepType workflow.StepType) {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	delete(r.handlers, stepType)
 }
 
 // Types returns all registered step types
-func (r *Registry) Types() []workflow.StepType {
+func (r *HandlerRegistry) Types() []workflow.StepType {
 	r.mu.RLock()
 	defer r.mu.RUnlock()
 
@@ -75,9 +75,9 @@ func (r *Registry) Types() []workflow.StepType {
 	return types
 }
 
-// DefaultRegistry creates a registry with all default handlers
-func DefaultRegistry() *Registry {
-	registry := NewRegistry()
+// DefaultHandlerRegistry creates a registry with all default handlers
+func DefaultHandlerRegistry() *HandlerRegistry {
+	registry := NewHandlerRegistry()
 
 	// Register default handlers
 	registry.Register(NewShellHandler())

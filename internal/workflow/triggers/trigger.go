@@ -32,30 +32,30 @@ type TriggerEvent struct {
 	Inputs       map[string]interface{}
 }
 
-// Manager manages workflow triggers
-type Manager struct {
+// TriggerManager manages workflow triggers
+type TriggerManager struct {
 	triggers  map[string]Trigger
 	callbacks []TriggerCallback
 	ctx       context.Context
 	cancel    context.CancelFunc
 }
 
-// NewManager creates a new trigger manager
-func NewManager() *Manager {
-	return &Manager{
+// NewTriggerManager creates a new trigger manager
+func NewTriggerManager() *TriggerManager {
+	return &TriggerManager{
 		triggers:  make(map[string]Trigger),
 		callbacks: make([]TriggerCallback, 0),
 	}
 }
 
 // RegisterTrigger registers a trigger
-func (m *Manager) RegisterTrigger(name string, trigger Trigger) {
+func (m *TriggerManager) RegisterTrigger(name string, trigger Trigger) {
 	m.triggers[name] = trigger
 	trigger.OnTrigger(m.onTrigger)
 }
 
 // UnregisterTrigger removes a trigger
-func (m *Manager) UnregisterTrigger(name string) {
+func (m *TriggerManager) UnregisterTrigger(name string) {
 	if trigger, ok := m.triggers[name]; ok {
 		trigger.Stop()
 		delete(m.triggers, name)
@@ -63,19 +63,19 @@ func (m *Manager) UnregisterTrigger(name string) {
 }
 
 // OnTrigger adds a global callback for all triggers
-func (m *Manager) OnTrigger(callback TriggerCallback) {
+func (m *TriggerManager) OnTrigger(callback TriggerCallback) {
 	m.callbacks = append(m.callbacks, callback)
 }
 
 // onTrigger is called when any trigger fires
-func (m *Manager) onTrigger(workflowName string, inputs map[string]interface{}) {
+func (m *TriggerManager) onTrigger(workflowName string, inputs map[string]interface{}) {
 	for _, callback := range m.callbacks {
 		go callback(workflowName, inputs)
 	}
 }
 
 // Start starts all triggers
-func (m *Manager) Start(ctx context.Context) error {
+func (m *TriggerManager) Start(ctx context.Context) error {
 	m.ctx, m.cancel = context.WithCancel(ctx)
 
 	for _, trigger := range m.triggers {
@@ -88,7 +88,7 @@ func (m *Manager) Start(ctx context.Context) error {
 }
 
 // Stop stops all triggers
-func (m *Manager) Stop() error {
+func (m *TriggerManager) Stop() error {
 	if m.cancel != nil {
 		m.cancel()
 	}
@@ -101,7 +101,7 @@ func (m *Manager) Stop() error {
 }
 
 // SetupTriggersForWorkflow sets up triggers for a workflow
-func (m *Manager) SetupTriggersForWorkflow(wf *workflow.DAGWorkflow) error {
+func (m *TriggerManager) SetupTriggersForWorkflow(wf *workflow.DAGWorkflow) error {
 	for _, triggerSpec := range wf.Spec.Triggers {
 		if triggerSpec.Disabled {
 			continue
