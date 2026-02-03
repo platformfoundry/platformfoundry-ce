@@ -515,8 +515,8 @@ func (m *Manager) getBaseEnvironment(ctx context.Context, name string) (*state.R
 // generatePreviewName generates a name for the preview environment
 func (m *Manager) generatePreviewName(opts CreatePreviewOpts) string {
 	branch := opts.SourceBranch
-	if len(branch) > 20 {
-		branch = branch[:20]
+	if len(branch) > 21 {
+		branch = branch[:21]
 	}
 	// Sanitize branch name for use in resource names
 	return fmt.Sprintf("pr-%d-%s", opts.PullRequest, sanitizeName(branch))

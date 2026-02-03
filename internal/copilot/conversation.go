@@ -274,9 +274,20 @@ func (e *ConversationEngine) classifyIntent(msg string) *Intent {
 	}
 
 	// Simple keyword-based classification (would use LLM in production)
+	// Order matters: check more specific intents before generic ones
 	switch {
-	case containsAny(lower, []string{"deploy", "release", "ship", "push"}):
-		intent.Type = IntentDeploy
+	case lower == "help" || lower == "?" || containsAny(lower, []string{" help", "help "}):
+		intent.Type = IntentHelp
+		intent.RequiresAction = false
+		intent.Confidence = 0.9
+
+	case containsAny(lower, []string{"rollback", "revert", "undo"}):
+		intent.Type = IntentRollback
+		intent.RequiresAction = true
+		intent.Confidence = 0.9
+
+	case containsAny(lower, []string{"scale", "replicas", "instances", "resize"}):
+		intent.Type = IntentScale
 		intent.RequiresAction = true
 		intent.Confidence = 0.8
 
@@ -284,16 +295,6 @@ func (e *ConversationEngine) classifyIntent(msg string) *Intent {
 		intent.Type = IntentTroubleshoot
 		intent.RequiresAction = false
 		intent.Confidence = 0.8
-
-	case containsAny(lower, []string{"scale", "replicas", "instances", "resize"}):
-		intent.Type = IntentScale
-		intent.RequiresAction = true
-		intent.Confidence = 0.8
-
-	case containsAny(lower, []string{"rollback", "revert", "undo"}):
-		intent.Type = IntentRollback
-		intent.RequiresAction = true
-		intent.Confidence = 0.9
 
 	case containsAny(lower, []string{"configure", "config", "setting", "set"}):
 		intent.Type = IntentConfigure
@@ -305,15 +306,15 @@ func (e *ConversationEngine) classifyIntent(msg string) *Intent {
 		intent.RequiresAction = false
 		intent.Confidence = 0.7
 
-	case containsAny(lower, []string{"what", "how", "why", "when", "where", "list", "show", "get"}):
+	case containsAny(lower, []string{"list ", "show ", "get ", "what ", "how ", "why ", "when ", "where "}):
 		intent.Type = IntentQuery
 		intent.RequiresAction = false
 		intent.Confidence = 0.7
 
-	case containsAny(lower, []string{"help", "?"}):
-		intent.Type = IntentHelp
-		intent.RequiresAction = false
-		intent.Confidence = 0.9
+	case containsAny(lower, []string{"deploy", "release", "ship", "push"}):
+		intent.Type = IntentDeploy
+		intent.RequiresAction = true
+		intent.Confidence = 0.8
 	}
 
 	// Extract entities
