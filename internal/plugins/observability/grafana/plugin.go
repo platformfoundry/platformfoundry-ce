@@ -3,7 +3,7 @@ package grafana
 import (
 	"fmt"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/plugin"
+	"github.com/platformfoundry/pf-ce/pkg/plugin"
 )
 
 // Plugin implements the Grafana plugin

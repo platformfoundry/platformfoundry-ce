@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/drift"
+	"github.com/platformfoundry/pf-ce/internal/drift"
 	"github.com/spf13/cobra"
 )
 

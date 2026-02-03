@@ -8,10 +8,10 @@ import (
 	"sort"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/cost"
-	"github.com/platformfoundry/platformfoundry-ce/internal/drift"
-	"github.com/platformfoundry/platformfoundry-ce/internal/lint"
-	"github.com/platformfoundry/platformfoundry-ce/internal/policy"
+	"github.com/platformfoundry/pf-ce/internal/cost"
+	"github.com/platformfoundry/pf-ce/internal/drift"
+	"github.com/platformfoundry/pf-ce/internal/lint"
+	"github.com/platformfoundry/pf-ce/internal/policy"
 )
 
 // readFile reads a file and returns its contents

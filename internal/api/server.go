@@ -8,10 +8,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/events"
-	"github.com/platformfoundry/platformfoundry-ce/internal/graph"
-	"github.com/platformfoundry/platformfoundry-ce/internal/telemetry"
-	"github.com/platformfoundry/platformfoundry-ce/pkg/types"
+	"github.com/platformfoundry/pf-ce/internal/events"
+	"github.com/platformfoundry/pf-ce/internal/graph"
+	"github.com/platformfoundry/pf-ce/internal/telemetry"
+	"github.com/platformfoundry/pf-ce/pkg/types"
 )
 
 // Server provides the HTTP API for Platform Foundry

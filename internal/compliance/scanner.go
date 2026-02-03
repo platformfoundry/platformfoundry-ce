@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/types"
+	"github.com/platformfoundry/pf-ce/pkg/types"
 )
 
 // Scanner performs compliance scans

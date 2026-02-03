@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/workflow"
+	"github.com/platformfoundry/pf-ce/internal/workflow"
 	"github.com/spf13/cobra"
 )
 

@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/ai"
+	"github.com/platformfoundry/pf-ce/internal/ai"
 )
 
 // Tool represents a callable tool for the AI assistant

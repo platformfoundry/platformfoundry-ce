@@ -3,7 +3,7 @@ package integration
 import (
 	"testing"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/types"
+	"github.com/platformfoundry/pf-ce/pkg/types"
 )
 
 func TestNewEngine(t *testing.T) {

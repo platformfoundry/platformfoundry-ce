@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/types"
+	"github.com/platformfoundry/pf-ce/pkg/types"
 )
 
 // MemoryEventStore provides an in-memory event store implementation

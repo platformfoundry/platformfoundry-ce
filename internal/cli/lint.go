@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/lint"
+	"github.com/platformfoundry/pf-ce/internal/lint"
 	"github.com/spf13/cobra"
 )
 

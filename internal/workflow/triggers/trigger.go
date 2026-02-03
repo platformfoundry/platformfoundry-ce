@@ -3,7 +3,7 @@ package triggers
 import (
 	"context"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/workflow"
+	"github.com/platformfoundry/pf-ce/internal/workflow"
 )
 
 // Trigger interface for workflow triggers

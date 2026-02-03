@@ -1,6 +1,6 @@
 package argocd
 
-import "github.com/platformfoundry/platformfoundry-ce/pkg/plugin"
+import "github.com/platformfoundry/pf-ce/pkg/plugin"
 
 // Config represents the configuration for ArgoCD plugin
 type Config struct {

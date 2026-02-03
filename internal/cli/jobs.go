@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/jobs"
+	"github.com/platformfoundry/pf-ce/internal/jobs"
 	"github.com/spf13/cobra"
 )
 

@@ -12,8 +12,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/gitops"
-	"github.com/platformfoundry/platformfoundry-ce/internal/notifications"
+	"github.com/platformfoundry/pf-ce/internal/gitops"
+	"github.com/platformfoundry/pf-ce/internal/notifications"
 )
 
 // PREventAction represents the action that triggered the PR event

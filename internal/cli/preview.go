@@ -6,7 +6,7 @@ import (
 	"text/tabwriter"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/preview"
+	"github.com/platformfoundry/pf-ce/internal/preview"
 	"github.com/spf13/cobra"
 )
 

@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/types"
+	"github.com/platformfoundry/pf-ce/pkg/types"
 )
 
 // Engine provides resource graph operations

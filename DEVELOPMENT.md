@@ -25,7 +25,7 @@ your-workspace/
 mkdir pf-workspace && cd pf-workspace
 
 # Clone CE
-git clone https://github.com/platformfoundry/platformfoundry-ce.git
+git clone https://github.com/platformfoundry/pf-ce.git
 
 # Clone EE (if you have access)
 git clone https://github.com/platformfoundry/platformfoundry-ee.git
@@ -101,7 +101,7 @@ If you made CE changes that EE depends on:
 3. Update EE's `go.mod` to reference the CE version:
    ```bash
    cd platformfoundry-ee
-   go get github.com/platformfoundry/platformfoundry-ce@v1.x.x
+   go get github.com/platformfoundry/pf-ce@v1.x.x
    go mod tidy
    ```
 

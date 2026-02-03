@@ -5,7 +5,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/demo"
+	"github.com/platformfoundry/pf-ce/internal/demo"
 	"github.com/spf13/cobra"
 )
 

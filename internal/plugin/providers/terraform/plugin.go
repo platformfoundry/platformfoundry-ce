@@ -11,7 +11,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/plugin"
+	"github.com/platformfoundry/pf-ce/pkg/plugin"
 )
 
 // Plugin wraps Terraform CLI as a plugin (Adapter Pattern)

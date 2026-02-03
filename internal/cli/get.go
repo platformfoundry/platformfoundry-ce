@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/store"
+	"github.com/platformfoundry/pf-ce/internal/store"
 	"github.com/spf13/cobra"
 )
 

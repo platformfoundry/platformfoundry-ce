@@ -3,8 +3,8 @@ package cli
 import (
 	"fmt"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/plugin"
-	"github.com/platformfoundry/platformfoundry-ce/internal/plugins/clusterexisting"
+	"github.com/platformfoundry/pf-ce/internal/plugin"
+	"github.com/platformfoundry/pf-ce/internal/plugins/clusterexisting"
 	"github.com/spf13/cobra"
 )
 

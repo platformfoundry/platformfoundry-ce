@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/log"
-	"github.com/platformfoundry/platformfoundry-ce/pkg/types"
+	"github.com/platformfoundry/pf-ce/pkg/log"
+	"github.com/platformfoundry/pf-ce/pkg/types"
 )
 
 // ApplyCommand handles applying platform resources

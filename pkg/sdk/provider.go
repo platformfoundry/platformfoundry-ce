@@ -4,7 +4,7 @@ package sdk
 import (
 	"context"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/contracts/ppi"
+	"github.com/platformfoundry/pf-ce/pkg/contracts/ppi"
 )
 
 // ProviderBase provides a base implementation of the Provider interface.

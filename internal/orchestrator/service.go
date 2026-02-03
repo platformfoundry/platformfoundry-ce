@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/engine"
-	"github.com/platformfoundry/platformfoundry-ce/internal/plugin"
-	"github.com/platformfoundry/platformfoundry-ce/internal/state"
-	"github.com/platformfoundry/platformfoundry-ce/internal/workload"
-	"github.com/platformfoundry/platformfoundry-ce/pkg/types"
+	"github.com/platformfoundry/pf-ce/internal/engine"
+	"github.com/platformfoundry/pf-ce/internal/plugin"
+	"github.com/platformfoundry/pf-ce/internal/state"
+	"github.com/platformfoundry/pf-ce/internal/workload"
+	"github.com/platformfoundry/pf-ce/pkg/types"
 )
 
 // Service orchestrates workload deployment using the coordinator and plugins

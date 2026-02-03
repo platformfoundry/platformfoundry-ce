@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/types"
+	"github.com/platformfoundry/pf-ce/pkg/types"
 )
 
 // mockParser implements Parser interface for testing

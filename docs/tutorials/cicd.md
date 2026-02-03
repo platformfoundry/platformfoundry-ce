@@ -40,7 +40,7 @@ jobs:
 
       - name: Install PlatformFoundry
         run: |
-          curl -sSL https://github.com/platformfoundry/platformfoundry-ce/releases/download/v${{ env.PF_VERSION }}/pf-linux-amd64 -o pf
+          curl -sSL https://github.com/platformfoundry/pf-ce/releases/download/v${{ env.PF_VERSION }}/pf-linux-amd64 -o pf
           chmod +x pf
           sudo mv pf /usr/local/bin/
 
@@ -59,7 +59,7 @@ jobs:
 
       - name: Install PlatformFoundry
         run: |
-          curl -sSL https://github.com/platformfoundry/platformfoundry-ce/releases/download/v${{ env.PF_VERSION }}/pf-linux-amd64 -o pf
+          curl -sSL https://github.com/platformfoundry/pf-ce/releases/download/v${{ env.PF_VERSION }}/pf-linux-amd64 -o pf
           chmod +x pf
           sudo mv pf /usr/local/bin/
 
@@ -100,7 +100,7 @@ jobs:
 
       - name: Install PlatformFoundry
         run: |
-          curl -sSL https://github.com/platformfoundry/platformfoundry-ce/releases/download/v${{ env.PF_VERSION }}/pf-linux-amd64 -o pf
+          curl -sSL https://github.com/platformfoundry/pf-ce/releases/download/v${{ env.PF_VERSION }}/pf-linux-amd64 -o pf
           chmod +x pf
           sudo mv pf /usr/local/bin/
 
@@ -177,7 +177,7 @@ variables:
 
 .pf-setup: &pf-setup
   before_script:
-    - curl -sSL https://github.com/platformfoundry/platformfoundry-ce/releases/download/v${PF_VERSION}/pf-linux-amd64 -o pf
+    - curl -sSL https://github.com/platformfoundry/pf-ce/releases/download/v${PF_VERSION}/pf-linux-amd64 -o pf
     - chmod +x pf
     - mv pf /usr/local/bin/
 
@@ -247,7 +247,7 @@ pipeline {
         stage('Setup') {
             steps {
                 sh '''
-                    curl -sSL https://github.com/platformfoundry/platformfoundry-ce/releases/download/v${PF_VERSION}/pf-linux-amd64 -o pf
+                    curl -sSL https://github.com/platformfoundry/pf-ce/releases/download/v${PF_VERSION}/pf-linux-amd64 -o pf
                     chmod +x pf
                     sudo mv pf /usr/local/bin/
                 '''

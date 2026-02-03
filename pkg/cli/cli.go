@@ -3,7 +3,7 @@
 package cli
 
 import (
-	internalcli "github.com/platformfoundry/platformfoundry-ce/internal/cli"
+	internalcli "github.com/platformfoundry/pf-ce/internal/cli"
 )
 
 // Execute runs the Platform Foundry CLI.

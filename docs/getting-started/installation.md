@@ -16,7 +16,7 @@ Download the latest release for your platform:
 === "Linux"
 
     ```bash
-    curl -sSL https://github.com/platformfoundry/platformfoundry-ce/releases/latest/download/pf-linux-amd64 -o pf
+    curl -sSL https://github.com/platformfoundry/pf-ce/releases/latest/download/pf-linux-amd64 -o pf
     chmod +x pf
     sudo mv pf /usr/local/bin/
     ```
@@ -24,7 +24,7 @@ Download the latest release for your platform:
 === "macOS"
 
     ```bash
-    curl -sSL https://github.com/platformfoundry/platformfoundry-ce/releases/latest/download/pf-darwin-amd64 -o pf
+    curl -sSL https://github.com/platformfoundry/pf-ce/releases/latest/download/pf-darwin-amd64 -o pf
     chmod +x pf
     sudo mv pf /usr/local/bin/
     ```
@@ -32,14 +32,14 @@ Download the latest release for your platform:
 === "Windows"
 
     ```powershell
-    Invoke-WebRequest -Uri "https://github.com/platformfoundry/platformfoundry-ce/releases/latest/download/pf-windows-amd64.exe" -OutFile "pf.exe"
+    Invoke-WebRequest -Uri "https://github.com/platformfoundry/pf-ce/releases/latest/download/pf-windows-amd64.exe" -OutFile "pf.exe"
     Move-Item pf.exe C:\Windows\System32\
     ```
 
 ### Build from Source
 
 ```bash
-git clone https://github.com/platformfoundry/platformfoundry-ce.git
+git clone https://github.com/platformfoundry/pf-ce.git
 cd platformfoundry-ce
 go run build.go build
 ```
@@ -49,7 +49,7 @@ The binary will be in `bin/pf`.
 ### Go Install
 
 ```bash
-go install github.com/platformfoundry/platformfoundry-ce/cmd/pf@latest
+go install github.com/platformfoundry/pf-ce/cmd/pf@latest
 ```
 
 ## Verify Installation

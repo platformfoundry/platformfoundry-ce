@@ -1013,7 +1013,7 @@ import (
     "encoding/json"
     "net/http"
 
-    "github.com/platformfoundry/platformfoundry-ce/internal/ai"
+    "github.com/platformfoundry/pf-ce/internal/ai"
 )
 
 // ClaudeProvider implements the LLM provider interface for Anthropic Claude
@@ -1247,10 +1247,10 @@ import (
     "fmt"
     "strings"
 
-    "github.com/platformfoundry/platformfoundry-ce/internal/ai/tools"
-    "github.com/platformfoundry/platformfoundry-ce/internal/health"
-    "github.com/platformfoundry/platformfoundry-ce/internal/promise"
-    "github.com/platformfoundry/platformfoundry-ce/internal/service"
+    "github.com/platformfoundry/pf-ce/internal/ai/tools"
+    "github.com/platformfoundry/pf-ce/internal/health"
+    "github.com/platformfoundry/pf-ce/internal/promise"
+    "github.com/platformfoundry/pf-ce/internal/service"
 )
 
 // Assistant provides natural language interface to the platform
@@ -1427,8 +1427,8 @@ import (
     "os"
     "strings"
 
-    "github.com/platformfoundry/platformfoundry-ce/internal/ai"
-    "github.com/platformfoundry/platformfoundry-ce/internal/ai/providers"
+    "github.com/platformfoundry/pf-ce/internal/ai"
+    "github.com/platformfoundry/pf-ce/internal/ai/providers"
     "github.com/spf13/cobra"
 )
 

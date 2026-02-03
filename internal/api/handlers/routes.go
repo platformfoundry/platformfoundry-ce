@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"github.com/platformfoundry/platformfoundry-ce/internal/api"
+	"github.com/platformfoundry/pf-ce/internal/api"
 )
 
 // RegisterRoutes sets up all API routes with the handler

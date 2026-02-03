@@ -18,7 +18,7 @@ import (
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/plugin"
+	"github.com/platformfoundry/pf-ce/pkg/plugin"
 )
 
 // Plugin implements the Plugin interface for Kubernetes resources

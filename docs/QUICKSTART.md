@@ -23,7 +23,7 @@ Get started with Platform Foundry in under 5 minutes! This guide will help you c
 
 **Build from Source**
 ```bash
-git clone https://github.com/platformfoundry/platformfoundry-ce.git
+git clone https://github.com/platformfoundry/pf-ce.git
 cd PlatformFoundry
 go run build.go build
 
@@ -337,9 +337,9 @@ components:
 
 ### Community
 
-- **GitHub**: https://github.com/platformfoundry/platformfoundry-ce
-- **Issues**: https://github.com/platformfoundry/platformfoundry-ce/issues
-- **Discussions**: https://github.com/platformfoundry/platformfoundry-ce/discussions
+- **GitHub**: https://github.com/platformfoundry/pf-ce
+- **Issues**: https://github.com/platformfoundry/pf-ce/issues
+- **Discussions**: https://github.com/platformfoundry/pf-ce/discussions
 
 ---
 
@@ -390,7 +390,7 @@ pf demo
 
 ### Still stuck?
 
-Open an issue: https://github.com/platformfoundry/platformfoundry-ce/issues
+Open an issue: https://github.com/platformfoundry/pf-ce/issues
 
 ---
 

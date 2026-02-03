@@ -9,8 +9,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/intelligence"
-	"github.com/platformfoundry/platformfoundry-ce/internal/state"
+	"github.com/platformfoundry/pf-ce/internal/intelligence"
+	"github.com/platformfoundry/pf-ce/internal/state"
 )
 
 // IntentType represents the classified intent of a user message

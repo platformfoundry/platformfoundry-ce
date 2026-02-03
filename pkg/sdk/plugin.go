@@ -10,7 +10,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/contracts/ppi"
+	"github.com/platformfoundry/pf-ce/pkg/contracts/ppi"
 )
 
 // PluginType represents the type of plugin

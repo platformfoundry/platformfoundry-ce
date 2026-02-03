@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/workflow"
+	"github.com/platformfoundry/pf-ce/internal/workflow"
 )
 
 // StepHandler interface for executing workflow steps

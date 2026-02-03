@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/types"
+	"github.com/platformfoundry/pf-ce/pkg/types"
 )
 
 // RollbackPlan represents a plan for rolling back changes

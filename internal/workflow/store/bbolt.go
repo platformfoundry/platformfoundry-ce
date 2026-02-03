@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/workflow"
+	"github.com/platformfoundry/pf-ce/internal/workflow"
 	"go.etcd.io/bbolt"
 )
 

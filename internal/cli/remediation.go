@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/remediation"
+	"github.com/platformfoundry/pf-ce/internal/remediation"
 	"github.com/spf13/cobra"
 )
 

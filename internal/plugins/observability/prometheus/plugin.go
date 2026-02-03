@@ -1,6 +1,6 @@
 package prometheus
 
-import "github.com/platformfoundry/platformfoundry-ce/pkg/plugin"
+import "github.com/platformfoundry/pf-ce/pkg/plugin"
 
 // Config represents the configuration for Prometheus plugin
 type Config struct {

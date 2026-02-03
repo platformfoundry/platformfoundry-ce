@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/policy"
-	"github.com/platformfoundry/platformfoundry-ce/pkg/types"
+	"github.com/platformfoundry/pf-ce/internal/policy"
+	"github.com/platformfoundry/pf-ce/pkg/types"
 )
 
 func TestPolicy_LocalEngineIntegration(t *testing.T) {

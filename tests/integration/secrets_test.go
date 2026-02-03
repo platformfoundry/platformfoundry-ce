@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/secrets"
+	"github.com/platformfoundry/pf-ce/internal/secrets"
 )
 
 func TestSecrets_FileManagerIntegration(t *testing.T) {

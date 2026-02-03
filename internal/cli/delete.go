@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/orchestrator"
-	"github.com/platformfoundry/platformfoundry-ce/internal/plugin"
-	"github.com/platformfoundry/platformfoundry-ce/internal/plugins/clusterexisting"
-	"github.com/platformfoundry/platformfoundry-ce/internal/store"
+	"github.com/platformfoundry/pf-ce/internal/orchestrator"
+	"github.com/platformfoundry/pf-ce/internal/plugin"
+	"github.com/platformfoundry/pf-ce/internal/plugins/clusterexisting"
+	"github.com/platformfoundry/pf-ce/internal/store"
 	"github.com/spf13/cobra"
 )
 

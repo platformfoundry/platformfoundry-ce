@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/diff"
+	"github.com/platformfoundry/pf-ce/internal/diff"
 	"github.com/spf13/cobra"
 )
 

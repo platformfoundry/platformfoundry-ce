@@ -138,7 +138,7 @@ platformfoundry-ce/
 We welcome contributions! Platform Foundry is community-driven.
 
 ```bash
-git clone https://github.com/platformfoundry/platformfoundry-ce.git
+git clone https://github.com/platformfoundry/pf-ce.git
 cd platformfoundry-ce
 go mod download
 go test ./...
@@ -148,7 +148,7 @@ go run build.go build
 
 ### Ways to Contribute
 
-- Report bugs and request features via [GitHub Issues](https://github.com/platformfoundry/platformfoundry-ce/issues)
+- Report bugs and request features via [GitHub Issues](https://github.com/platformfoundry/pf-ce/issues)
 - Submit pull requests for bug fixes and features
 - Write and improve documentation
 - Create plugins for new providers
@@ -160,8 +160,8 @@ Apache License 2.0 - see [LICENSE](LICENSE)
 
 ## Community
 
-- [GitHub Issues](https://github.com/platformfoundry/platformfoundry-ce/issues)
-- [GitHub Discussions](https://github.com/platformfoundry/platformfoundry-ce/discussions)
+- [GitHub Issues](https://github.com/platformfoundry/pf-ce/issues)
+- [GitHub Discussions](https://github.com/platformfoundry/pf-ce/discussions)
 
 ## Enterprise
 

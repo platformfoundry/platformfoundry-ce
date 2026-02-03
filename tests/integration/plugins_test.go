@@ -3,14 +3,14 @@ package integration
 import (
 	"testing"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/plugin"
-	"github.com/platformfoundry/platformfoundry-ce/internal/plugins/clusterexisting"
-	"github.com/platformfoundry/platformfoundry-ce/internal/plugins/devex/backstage"
-	"github.com/platformfoundry/platformfoundry-ce/internal/plugins/infrastructure/terraform"
-	"github.com/platformfoundry/platformfoundry-ce/internal/plugins/observability/grafana"
-	"github.com/platformfoundry/platformfoundry-ce/internal/plugins/observability/prometheus"
-	"github.com/platformfoundry/platformfoundry-ce/internal/plugins/orchestrator/argocd"
-	pkgplugin "github.com/platformfoundry/platformfoundry-ce/pkg/plugin"
+	"github.com/platformfoundry/pf-ce/internal/plugin"
+	"github.com/platformfoundry/pf-ce/internal/plugins/clusterexisting"
+	"github.com/platformfoundry/pf-ce/internal/plugins/devex/backstage"
+	"github.com/platformfoundry/pf-ce/internal/plugins/infrastructure/terraform"
+	"github.com/platformfoundry/pf-ce/internal/plugins/observability/grafana"
+	"github.com/platformfoundry/pf-ce/internal/plugins/observability/prometheus"
+	"github.com/platformfoundry/pf-ce/internal/plugins/orchestrator/argocd"
+	pkgplugin "github.com/platformfoundry/pf-ce/pkg/plugin"
 )
 
 func TestPlugins_RegistrationAndDiscovery(t *testing.T) {

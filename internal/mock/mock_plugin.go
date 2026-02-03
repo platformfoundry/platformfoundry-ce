@@ -8,7 +8,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/plugin"
+	"github.com/platformfoundry/pf-ce/pkg/plugin"
 )
 
 // MockMode defines the mock behavior

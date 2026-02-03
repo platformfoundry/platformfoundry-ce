@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/workflow"
-	"github.com/platformfoundry/platformfoundry-ce/internal/workflow/dag"
+	"github.com/platformfoundry/pf-ce/internal/workflow"
+	"github.com/platformfoundry/pf-ce/internal/workflow/dag"
 )
 
 // StepHandler defines the interface for workflow step handlers

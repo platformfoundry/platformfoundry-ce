@@ -3,7 +3,7 @@ package intelligence
 import (
 	"testing"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/types"
+	"github.com/platformfoundry/pf-ce/pkg/types"
 )
 
 func TestAnalyzer_AnalyzePlatform(t *testing.T) {

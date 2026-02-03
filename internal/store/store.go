@@ -8,8 +8,8 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/state"
-	"github.com/platformfoundry/platformfoundry-ce/pkg/types"
+	"github.com/platformfoundry/pf-ce/internal/state"
+	"github.com/platformfoundry/pf-ce/pkg/types"
 )
 
 // ResourceState represents the state of a provisioned resource

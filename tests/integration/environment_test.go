@@ -6,12 +6,12 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/orchestrator"
-	"github.com/platformfoundry/platformfoundry-ce/internal/parser"
-	"github.com/platformfoundry/platformfoundry-ce/internal/plugin"
-	"github.com/platformfoundry/platformfoundry-ce/internal/state"
-	"github.com/platformfoundry/platformfoundry-ce/internal/store"
-	"github.com/platformfoundry/platformfoundry-ce/pkg/types"
+	"github.com/platformfoundry/pf-ce/internal/orchestrator"
+	"github.com/platformfoundry/pf-ce/internal/parser"
+	"github.com/platformfoundry/pf-ce/internal/plugin"
+	"github.com/platformfoundry/pf-ce/internal/state"
+	"github.com/platformfoundry/pf-ce/internal/store"
+	"github.com/platformfoundry/pf-ce/pkg/types"
 )
 
 func TestEnvironment_EndToEnd(t *testing.T) {

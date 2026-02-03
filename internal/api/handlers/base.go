@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/orchestrator"
-	"github.com/platformfoundry/platformfoundry-ce/internal/state"
+	"github.com/platformfoundry/pf-ce/internal/orchestrator"
+	"github.com/platformfoundry/pf-ce/internal/state"
 )
 
 // Handler provides common dependencies for all handlers

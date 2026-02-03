@@ -656,7 +656,7 @@ X-RateLimit-Reset: 1705762800
 ### Go
 
 ```go
-import "github.com/platformfoundry/platformfoundry-ce/pkg/sdk"
+import "github.com/platformfoundry/pf-ce/pkg/sdk"
 
 client := sdk.NewClient(
     sdk.WithBaseURL("https://api.example.com"),

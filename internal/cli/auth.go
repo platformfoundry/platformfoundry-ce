@@ -9,8 +9,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/auth"
-	"github.com/platformfoundry/platformfoundry-ce/internal/config"
+	"github.com/platformfoundry/pf-ce/internal/auth"
+	"github.com/platformfoundry/pf-ce/internal/config"
 	"github.com/spf13/cobra"
 	"golang.org/x/term"
 )

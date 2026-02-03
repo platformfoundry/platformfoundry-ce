@@ -6,10 +6,10 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/auth"
-	"github.com/platformfoundry/platformfoundry-ce/internal/secrets"
-	"github.com/platformfoundry/platformfoundry-ce/internal/state"
-	"github.com/platformfoundry/platformfoundry-ce/internal/tls"
+	"github.com/platformfoundry/pf-ce/internal/auth"
+	"github.com/platformfoundry/pf-ce/internal/secrets"
+	"github.com/platformfoundry/pf-ce/internal/state"
+	"github.com/platformfoundry/pf-ce/internal/tls"
 	"gopkg.in/yaml.v3"
 )
 

@@ -4,7 +4,7 @@ import (
     "fmt"
 
     "github.com/spf13/cobra"
-    "github.com/platformfoundry/platformfoundry-ce/internal/scaffold"
+    "github.com/platformfoundry/pf-ce/internal/scaffold"
 )
 
 func NewScaffoldCommand() *cobra.Command {

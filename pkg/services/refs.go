@@ -6,11 +6,11 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/contracts/pai"
-	"github.com/platformfoundry/platformfoundry-ce/pkg/contracts/poi"
-	"github.com/platformfoundry/platformfoundry-ce/pkg/contracts/pse"
-	"github.com/platformfoundry/platformfoundry-ce/pkg/contracts/psi"
-	"github.com/platformfoundry/platformfoundry-ce/pkg/sdk"
+	"github.com/platformfoundry/pf-ce/pkg/contracts/pai"
+	"github.com/platformfoundry/pf-ce/pkg/contracts/poi"
+	"github.com/platformfoundry/pf-ce/pkg/contracts/pse"
+	"github.com/platformfoundry/pf-ce/pkg/contracts/psi"
+	"github.com/platformfoundry/pf-ce/pkg/sdk"
 )
 
 // Core service references that all plugins can depend on

@@ -8,9 +8,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/ai"
-	"github.com/platformfoundry/platformfoundry-ce/internal/ai/providers"
-	"github.com/platformfoundry/platformfoundry-ce/internal/ai/tools"
+	"github.com/platformfoundry/pf-ce/internal/ai"
+	"github.com/platformfoundry/pf-ce/internal/ai/providers"
+	"github.com/platformfoundry/pf-ce/internal/ai/tools"
 	"github.com/spf13/cobra"
 )
 

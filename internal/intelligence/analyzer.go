@@ -1,7 +1,7 @@
 package intelligence
 
 import (
-	"github.com/platformfoundry/platformfoundry-ce/pkg/types"
+	"github.com/platformfoundry/pf-ce/pkg/types"
 )
 
 // TechStack represents the analyzed technology stack of a platform

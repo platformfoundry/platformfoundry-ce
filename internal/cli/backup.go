@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/backup"
+	"github.com/platformfoundry/pf-ce/internal/backup"
 	"github.com/spf13/cobra"
 )
 

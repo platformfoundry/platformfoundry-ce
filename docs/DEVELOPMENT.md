@@ -216,9 +216,9 @@ The `orchestrator.Service` connects CLI/API to the coordinator with plugin manag
 
 ```go
 import (
-    "github.com/platformfoundry/platformfoundry-ce/internal/orchestrator"
-    "github.com/platformfoundry/platformfoundry-ce/internal/plugin"
-    "github.com/platformfoundry/platformfoundry-ce/internal/plugin/providers"
+    "github.com/platformfoundry/pf-ce/internal/orchestrator"
+    "github.com/platformfoundry/pf-ce/internal/plugin"
+    "github.com/platformfoundry/pf-ce/internal/plugin/providers"
 )
 
 // Initialize plugin manager with builtin providers
@@ -298,7 +298,7 @@ bus.Publish(engine.Event{
 The MockPlugin enables testing without real infrastructure:
 
 ```go
-import "github.com/platformfoundry/platformfoundry-ce/internal/mock"
+import "github.com/platformfoundry/pf-ce/internal/mock"
 
 mockPlugin := mock.NewMockPlugin(mock.MockConfig{
     Mode:           mock.MockModeInstant,  // instant, simulated, recorded
@@ -422,7 +422,7 @@ go test -v ./internal/workflow/...
 ### Development Setup
 
 ```bash
-git clone https://github.com/platformfoundry/platformfoundry-ce.git
+git clone https://github.com/platformfoundry/pf-ce.git
 cd PlatformFoundry
 go mod download
 ```

@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/graph"
-	"github.com/platformfoundry/platformfoundry-ce/pkg/types"
+	"github.com/platformfoundry/pf-ce/internal/graph"
+	"github.com/platformfoundry/pf-ce/pkg/types"
 )
 
 // Simulator provides dry-run and what-if analysis capabilities

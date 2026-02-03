@@ -3,8 +3,8 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/workload"
-	"github.com/platformfoundry/platformfoundry-ce/pkg/types"
+	"github.com/platformfoundry/pf-ce/internal/workload"
+	"github.com/platformfoundry/pf-ce/pkg/types"
 	"gopkg.in/yaml.v3"
 )
 

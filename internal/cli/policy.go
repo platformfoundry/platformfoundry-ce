@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/policy"
+	"github.com/platformfoundry/pf-ce/internal/policy"
 	"github.com/spf13/cobra"
 )
 

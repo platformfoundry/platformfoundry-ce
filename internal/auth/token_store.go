@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/configloader"
+	"github.com/platformfoundry/pf-ce/pkg/configloader"
 )
 
 // TokenStore manages authentication tokens

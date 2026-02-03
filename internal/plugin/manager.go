@@ -3,7 +3,7 @@ package plugin
 import (
 	"fmt"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/plugin"
+	"github.com/platformfoundry/pf-ce/pkg/plugin"
 )
 
 // Manager manages plugins

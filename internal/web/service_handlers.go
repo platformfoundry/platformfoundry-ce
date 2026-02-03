@@ -5,10 +5,10 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/auth"
-	"github.com/platformfoundry/platformfoundry-ce/internal/rbac"
-	"github.com/platformfoundry/platformfoundry-ce/internal/service"
-	"github.com/platformfoundry/platformfoundry-ce/pkg/types"
+	"github.com/platformfoundry/pf-ce/internal/auth"
+	"github.com/platformfoundry/pf-ce/internal/rbac"
+	"github.com/platformfoundry/pf-ce/internal/service"
+	"github.com/platformfoundry/pf-ce/pkg/types"
 )
 
 // handleServices handles listing and creating services

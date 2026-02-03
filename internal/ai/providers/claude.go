@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/ai"
+	"github.com/platformfoundry/pf-ce/internal/ai"
 )
 
 const (

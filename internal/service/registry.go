@@ -4,7 +4,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/types"
+	"github.com/platformfoundry/pf-ce/pkg/types"
 )
 
 // Registry provides an in-memory cache of services for fast lookups

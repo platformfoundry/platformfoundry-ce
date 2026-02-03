@@ -3,9 +3,9 @@ package planner
 import (
 	"fmt"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/plugin"
-	"github.com/platformfoundry/platformfoundry-ce/internal/store"
-	"github.com/platformfoundry/platformfoundry-ce/pkg/types"
+	"github.com/platformfoundry/pf-ce/internal/plugin"
+	"github.com/platformfoundry/pf-ce/internal/store"
+	"github.com/platformfoundry/pf-ce/pkg/types"
 )
 
 // Planner generates execution plans

@@ -8,12 +8,12 @@ import (
 	"path/filepath"
 	"sync"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/audit"
-	"github.com/platformfoundry/platformfoundry-ce/internal/auth"
-	configPkg "github.com/platformfoundry/platformfoundry-ce/internal/config"
-	"github.com/platformfoundry/platformfoundry-ce/internal/rbac"
-	"github.com/platformfoundry/platformfoundry-ce/internal/telemetry"
-	"github.com/platformfoundry/platformfoundry-ce/pkg/log"
+	"github.com/platformfoundry/pf-ce/internal/audit"
+	"github.com/platformfoundry/pf-ce/internal/auth"
+	configPkg "github.com/platformfoundry/pf-ce/internal/config"
+	"github.com/platformfoundry/pf-ce/internal/rbac"
+	"github.com/platformfoundry/pf-ce/internal/telemetry"
+	"github.com/platformfoundry/pf-ce/pkg/log"
 )
 
 // Server represents the web server

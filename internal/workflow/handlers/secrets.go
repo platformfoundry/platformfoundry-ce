@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/secrets"
-	"github.com/platformfoundry/platformfoundry-ce/internal/workflow"
-	"github.com/platformfoundry/platformfoundry-ce/internal/workflow/dag"
+	"github.com/platformfoundry/pf-ce/internal/secrets"
+	"github.com/platformfoundry/pf-ce/internal/workflow"
+	"github.com/platformfoundry/pf-ce/internal/workflow/dag"
 )
 
 // SecretsHandler retrieves secrets

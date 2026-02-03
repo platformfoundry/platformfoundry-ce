@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/plugin"
+	"github.com/platformfoundry/pf-ce/pkg/plugin"
 )
 
 func TestDefaultMockConfig(t *testing.T) {

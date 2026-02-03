@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/compliance"
+	"github.com/platformfoundry/pf-ce/internal/compliance"
 	"github.com/spf13/cobra"
 )
 

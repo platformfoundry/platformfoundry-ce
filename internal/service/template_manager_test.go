@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/types"
+	"github.com/platformfoundry/pf-ce/pkg/types"
 )
 
 func TestTemplateManager_Create(t *testing.T) {

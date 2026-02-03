@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/platformfoundry/platformfoundry-ce/internal/state"
+	"github.com/platformfoundry/pf-ce/internal/state"
 )
 
 // PreviewStatus represents the status of a preview environment

@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/engine"
-	"github.com/platformfoundry/platformfoundry-ce/internal/jobs"
-	"github.com/platformfoundry/platformfoundry-ce/internal/mock"
-	"github.com/platformfoundry/platformfoundry-ce/internal/parser"
-	"github.com/platformfoundry/platformfoundry-ce/pkg/types"
+	"github.com/platformfoundry/pf-ce/internal/engine"
+	"github.com/platformfoundry/pf-ce/internal/jobs"
+	"github.com/platformfoundry/pf-ce/internal/mock"
+	"github.com/platformfoundry/pf-ce/internal/parser"
+	"github.com/platformfoundry/pf-ce/pkg/types"
 	"github.com/spf13/cobra"
 )
 

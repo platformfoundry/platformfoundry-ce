@@ -1,7 +1,7 @@
 site_name: PlatformFoundry
 site_description: Cloud-native platform orchestration framework
 site_url: https://platformfoundry.github.io/platformfoundry-ce
-repo_url: https://github.com/platformfoundry/platformfoundry-ce
+repo_url: https://github.com/platformfoundry/pf-ce
 repo_name: platformfoundry/platformfoundry-ce
 
 theme:

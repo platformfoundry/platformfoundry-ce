@@ -6,7 +6,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/engine"
+	"github.com/platformfoundry/pf-ce/internal/engine"
 )
 
 // ProgressDisplay shows real-time engine progress

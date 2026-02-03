@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/environment"
+	"github.com/platformfoundry/pf-ce/internal/environment"
 	"github.com/spf13/cobra"
 )
 

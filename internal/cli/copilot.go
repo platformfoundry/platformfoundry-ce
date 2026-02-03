@@ -6,8 +6,8 @@ import (
 	"strings"
 	"text/tabwriter"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/copilot"
-	"github.com/platformfoundry/platformfoundry-ce/internal/intelligence"
+	"github.com/platformfoundry/pf-ce/internal/copilot"
+	"github.com/platformfoundry/pf-ce/internal/intelligence"
 	"github.com/spf13/cobra"
 )
 

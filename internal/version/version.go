@@ -1,7 +1,7 @@
 // Package version provides build version information for Platform Foundry.
 // These variables are set at build time using ldflags:
 //
-//	go build -ldflags "-X github.com/platformfoundry/platformfoundry-ce/internal/version.Version=v1.0.0"
+//	go build -ldflags "-X github.com/platformfoundry/pf-ce/internal/version.Version=v1.0.0"
 package version
 
 import (

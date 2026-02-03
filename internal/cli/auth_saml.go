@@ -8,7 +8,7 @@ import (
 	"os/exec"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/auth"
+	"github.com/platformfoundry/pf-ce/internal/auth"
 	"github.com/spf13/cobra"
 )
 

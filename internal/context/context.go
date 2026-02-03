@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/configloader"
+	"github.com/platformfoundry/pf-ce/pkg/configloader"
 )
 
 // Context represents the current CLI context

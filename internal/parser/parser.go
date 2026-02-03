@@ -6,7 +6,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/types"
+	"github.com/platformfoundry/pf-ce/pkg/types"
 	"gopkg.in/yaml.v3"
 )
 

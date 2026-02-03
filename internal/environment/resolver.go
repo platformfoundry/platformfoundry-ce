@@ -3,7 +3,7 @@ package environment
 import (
 	"fmt"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/types"
+	"github.com/platformfoundry/pf-ce/pkg/types"
 )
 
 // Resolver handles environment profile resolution and merging

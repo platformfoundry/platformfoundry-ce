@@ -3,7 +3,7 @@ package store
 import (
 	"context"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/workflow"
+	"github.com/platformfoundry/pf-ce/internal/workflow"
 )
 
 // Store interface for workflow persistence

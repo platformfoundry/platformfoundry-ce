@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/jobs"
+	"github.com/platformfoundry/pf-ce/internal/jobs"
 )
 
 func TestJobQueue_Integration(t *testing.T) {

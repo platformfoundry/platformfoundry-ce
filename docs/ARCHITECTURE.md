@@ -175,7 +175,7 @@ Three production-ready plugins are built into Platform Foundry:
 
 ```go
 // Register all builtin providers
-import "github.com/platformfoundry/platformfoundry-ce/internal/plugin/providers"
+import "github.com/platformfoundry/pf-ce/internal/plugin/providers"
 
 pluginManager := plugin.NewManager()
 providers.RegisterBuiltins(pluginManager)

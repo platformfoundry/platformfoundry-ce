@@ -27,10 +27,10 @@ builds:
         goarch: arm64
     ldflags:
       - -s -w
-      - -X github.com/platformfoundry/platformfoundry-ce/internal/version.Version={{.Version}}
-      - -X github.com/platformfoundry/platformfoundry-ce/internal/version.Commit={{.Commit}}
-      - -X github.com/platformfoundry/platformfoundry-ce/internal/version.Date={{.Date}}
-      - -X github.com/platformfoundry/platformfoundry-ce/internal/version.BuiltBy=goreleaser
+      - -X github.com/platformfoundry/pf-ce/internal/version.Version={{.Version}}
+      - -X github.com/platformfoundry/pf-ce/internal/version.Commit={{.Commit}}
+      - -X github.com/platformfoundry/pf-ce/internal/version.Date={{.Date}}
+      - -X github.com/platformfoundry/pf-ce/internal/version.BuiltBy=goreleaser
     mod_timestamp: "{{ .CommitTimestamp }}"
 
 archives:
@@ -130,7 +130,7 @@ release:
     cosign verify-blob --certificate checksums.txt.pem --signature checksums.txt.sig checksums.txt
     ```
   footer: |
-    **Full Changelog**: https://github.com/platformfoundry/platformfoundry-ce/compare/{{ .PreviousTag }}...{{ .Tag }}
+    **Full Changelog**: https://github.com/platformfoundry/pf-ce/compare/{{ .PreviousTag }}...{{ .Tag }}
 
 snapshot:
   version_template: "{{ incpatch .Version }}-next"

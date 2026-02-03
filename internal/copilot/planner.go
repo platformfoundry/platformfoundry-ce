@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/state"
+	"github.com/platformfoundry/pf-ce/internal/state"
 )
 
 var (

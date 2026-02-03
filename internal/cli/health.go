@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/health"
+	"github.com/platformfoundry/pf-ce/internal/health"
 	"github.com/spf13/cobra"
 )
 

@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/sdk"
+	"github.com/platformfoundry/pf-ce/pkg/sdk"
 )
 
 // RegisterBuiltinServices registers the built-in core services

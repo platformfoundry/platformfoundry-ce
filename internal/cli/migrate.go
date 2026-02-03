@@ -3,8 +3,8 @@ package cli
 import (
 	"fmt"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/state"
-	"github.com/platformfoundry/platformfoundry-ce/internal/store"
+	"github.com/platformfoundry/pf-ce/internal/state"
+	"github.com/platformfoundry/pf-ce/internal/store"
 	"github.com/spf13/cobra"
 )
 

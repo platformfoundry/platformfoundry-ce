@@ -3,7 +3,7 @@ package cli
 import (
 	"fmt"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/context"
+	"github.com/platformfoundry/pf-ce/internal/context"
 	"github.com/spf13/cobra"
 )
 

@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/cost"
+	"github.com/platformfoundry/pf-ce/internal/cost"
 	"github.com/spf13/cobra"
 )
 

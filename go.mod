@@ -1,4 +1,4 @@
-module github.com/platformfoundry/platformfoundry-ce
+module github.com/platformfoundry/pf-ce
 
 go 1.25.0
 

@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/tls"
+	"github.com/platformfoundry/pf-ce/internal/tls"
 	"github.com/spf13/cobra"
 )
 

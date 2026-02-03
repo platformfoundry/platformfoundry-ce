@@ -207,7 +207,7 @@ package main
 import (
     "context"
 
-    "github.com/platformfoundry/platformfoundry-ce/pkg/plugin"
+    "github.com/platformfoundry/pf-ce/pkg/plugin"
 )
 
 type MyPlugin struct {

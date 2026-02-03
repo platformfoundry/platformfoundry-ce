@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/engine"
+	"github.com/platformfoundry/pf-ce/internal/engine"
 )
 
 // StreamEvents provides Server-Sent Events for real-time updates

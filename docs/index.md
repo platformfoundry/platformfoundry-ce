@@ -88,10 +88,10 @@ pf apply -f platform.yaml
 
 ## Community
 
-- [GitHub Repository](https://github.com/platformfoundry/platformfoundry-ce)
-- [Issue Tracker](https://github.com/platformfoundry/platformfoundry-ce/issues)
-- [Discussions](https://github.com/platformfoundry/platformfoundry-ce/discussions)
+- [GitHub Repository](https://github.com/platformfoundry/pf-ce)
+- [Issue Tracker](https://github.com/platformfoundry/pf-ce/issues)
+- [Discussions](https://github.com/platformfoundry/pf-ce/discussions)
 
 ## License
 
-PlatformFoundry Community Edition is released under the [Apache 2.0 License](https://github.com/platformfoundry/platformfoundry-ce/blob/main/LICENSE).
+PlatformFoundry Community Edition is released under the [Apache 2.0 License](https://github.com/platformfoundry/pf-ce/blob/main/LICENSE).

@@ -3,9 +3,9 @@ package orchestrator
 import (
 	"fmt"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/engine"
-	"github.com/platformfoundry/platformfoundry-ce/internal/plugin"
-	"github.com/platformfoundry/platformfoundry-ce/internal/workload"
+	"github.com/platformfoundry/pf-ce/internal/engine"
+	"github.com/platformfoundry/pf-ce/internal/plugin"
+	"github.com/platformfoundry/pf-ce/internal/workload"
 )
 
 // InfrastructureEngine orchestrates infrastructure resource provisioning

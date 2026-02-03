@@ -3,7 +3,7 @@ package opentelemetry
 import (
 	"fmt"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/plugin"
+	"github.com/platformfoundry/pf-ce/pkg/plugin"
 )
 
 // Config represents OpenTelemetry configuration

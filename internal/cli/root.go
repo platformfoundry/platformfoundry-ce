@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/extensions"
+	"github.com/platformfoundry/pf-ce/pkg/extensions"
 	"github.com/spf13/cobra"
 )
 

@@ -3,7 +3,7 @@ package backstage
 import (
 	"fmt"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/plugin"
+	"github.com/platformfoundry/pf-ce/pkg/plugin"
 )
 
 // Plugin implements the Backstage plugin

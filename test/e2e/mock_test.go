@@ -3,7 +3,7 @@ package e2e
 import (
 	"testing"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/mock"
+	"github.com/platformfoundry/pf-ce/internal/mock"
 )
 
 func TestMockPlugin(t *testing.T) {

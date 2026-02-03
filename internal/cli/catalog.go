@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/catalog"
+	"github.com/platformfoundry/pf-ce/internal/catalog"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v3"
 )

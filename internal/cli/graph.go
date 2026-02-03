@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/graph"
+	"github.com/platformfoundry/pf-ce/internal/graph"
 	"github.com/spf13/cobra"
 )
 

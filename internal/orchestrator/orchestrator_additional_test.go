@@ -6,11 +6,11 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/environment"
-	"github.com/platformfoundry/platformfoundry-ce/internal/plugin"
-	"github.com/platformfoundry/platformfoundry-ce/internal/store"
-	plugintypes "github.com/platformfoundry/platformfoundry-ce/pkg/plugin"
-	"github.com/platformfoundry/platformfoundry-ce/pkg/types"
+	"github.com/platformfoundry/pf-ce/internal/environment"
+	"github.com/platformfoundry/pf-ce/internal/plugin"
+	"github.com/platformfoundry/pf-ce/internal/store"
+	plugintypes "github.com/platformfoundry/pf-ce/pkg/plugin"
+	"github.com/platformfoundry/pf-ce/pkg/types"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

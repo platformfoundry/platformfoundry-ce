@@ -22,7 +22,7 @@ const (
 	binaryName = "pf"
 	buildDir   = "bin"
 	mainPath   = "./cmd/pf"
-	modulePath = "github.com/platformfoundry/platformfoundry-ce"
+	modulePath = "github.com/platformfoundry/pf-ce"
 )
 
 // Build targets for cross-compilation

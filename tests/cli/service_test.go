@@ -10,8 +10,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/cli"
-	"github.com/platformfoundry/platformfoundry-ce/pkg/types"
+	"github.com/platformfoundry/pf-ce/internal/cli"
+	"github.com/platformfoundry/pf-ce/pkg/types"
 	"github.com/stretchr/testify/assert"
 )
 

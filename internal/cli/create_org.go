@@ -7,11 +7,11 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/generator"
-	"github.com/platformfoundry/platformfoundry-ce/internal/orchestrator"
-	"github.com/platformfoundry/platformfoundry-ce/internal/parser"
-	"github.com/platformfoundry/platformfoundry-ce/internal/plugin"
-	"github.com/platformfoundry/platformfoundry-ce/internal/store"
+	"github.com/platformfoundry/pf-ce/internal/generator"
+	"github.com/platformfoundry/pf-ce/internal/orchestrator"
+	"github.com/platformfoundry/pf-ce/internal/parser"
+	"github.com/platformfoundry/pf-ce/internal/plugin"
+	"github.com/platformfoundry/pf-ce/internal/store"
 	"github.com/spf13/cobra"
 )
 

@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/score"
+	"github.com/platformfoundry/pf-ce/internal/score"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v3"
 )

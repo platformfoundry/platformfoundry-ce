@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/plugin"
+	"github.com/platformfoundry/pf-ce/pkg/plugin"
 )
 
 // Registry manages mock plugins

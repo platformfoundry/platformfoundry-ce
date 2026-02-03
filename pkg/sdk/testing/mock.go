@@ -5,7 +5,7 @@ import (
 	"context"
 	"sync"
 
-	"github.com/platformfoundry/platformfoundry-ce/pkg/contracts/ppi"
+	"github.com/platformfoundry/pf-ce/pkg/contracts/ppi"
 )
 
 // MockProvider is a mock implementation of the Provider interface for testing

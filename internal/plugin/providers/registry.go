@@ -1,11 +1,11 @@
 package providers
 
 import (
-	"github.com/platformfoundry/platformfoundry-ce/internal/plugin"
-	"github.com/platformfoundry/platformfoundry-ce/internal/plugin/providers/aws"
-	"github.com/platformfoundry/platformfoundry-ce/internal/plugin/providers/kubernetes"
-	"github.com/platformfoundry/platformfoundry-ce/internal/plugin/providers/terraform"
-	pluginpkg "github.com/platformfoundry/platformfoundry-ce/pkg/plugin"
+	"github.com/platformfoundry/pf-ce/internal/plugin"
+	"github.com/platformfoundry/pf-ce/internal/plugin/providers/aws"
+	"github.com/platformfoundry/pf-ce/internal/plugin/providers/kubernetes"
+	"github.com/platformfoundry/pf-ce/internal/plugin/providers/terraform"
+	pluginpkg "github.com/platformfoundry/pf-ce/pkg/plugin"
 )
 
 // BuiltinProviders returns all built-in plugin providers

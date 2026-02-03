@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/platformfoundry/platformfoundry-ce/internal/doctor"
+	"github.com/platformfoundry/pf-ce/internal/doctor"
 	"github.com/spf13/cobra"
 )
 
