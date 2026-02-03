@@ -6,6 +6,31 @@ import (
 	"time"
 )
 
+// StepType defines types of workflow steps
+type StepType string
+
+const (
+	StepTypeShell    StepType = "shell"
+	StepTypeHTTP     StepType = "http"
+	StepTypeInfra    StepType = "infra"
+	StepTypePolicy   StepType = "policy"
+	StepTypeSecrets  StepType = "secrets"
+	StepTypeNotify   StepType = "notify"
+	StepTypeApproval StepType = "approval"
+)
+
+// StepStatus represents the current state of a step execution
+type StepStatus string
+
+const (
+	StepStatusPending   StepStatus = "pending"
+	StepStatusRunning   StepStatus = "running"
+	StepStatusCompleted StepStatus = "completed"
+	StepStatusFailed    StepStatus = "failed"
+	StepStatusSkipped   StepStatus = "skipped"
+	StepStatusCancelled StepStatus = "cancelled"
+)
+
 // WorkflowStatus represents the current state of a workflow execution
 type WorkflowStatus string
 
@@ -178,9 +203,156 @@ type ApprovalRecord struct {
 
 // RollbackInfo contains information about a rollback
 type RollbackInfo struct {
-	Triggered   bool      `json:"triggered"`
-	Reason      string    `json:"reason,omitempty"`
-	PreviousVersion string `json:"previousVersion,omitempty"`
-	TriggeredAt *time.Time `json:"triggeredAt,omitempty"`
-	CompletedAt *time.Time `json:"completedAt,omitempty"`
+	Triggered       bool       `json:"triggered"`
+	Reason          string     `json:"reason,omitempty"`
+	PreviousVersion string     `json:"previousVersion,omitempty"`
+	TriggeredAt     *time.Time `json:"triggeredAt,omitempty"`
+	CompletedAt     *time.Time `json:"completedAt,omitempty"`
+}
+
+// DAGWorkflow represents a YAML-defined DAG-based workflow
+type DAGWorkflow struct {
+	APIVersion string           `yaml:"apiVersion" json:"apiVersion"`
+	Kind       string           `yaml:"kind" json:"kind"`
+	Metadata   WorkflowMetadata `yaml:"metadata" json:"metadata"`
+	Spec       DAGWorkflowSpec  `yaml:"spec" json:"spec"`
+}
+
+// WorkflowMetadata contains workflow metadata
+type WorkflowMetadata struct {
+	Name        string            `yaml:"name" json:"name"`
+	Namespace   string            `yaml:"namespace,omitempty" json:"namespace,omitempty"`
+	Labels      map[string]string `yaml:"labels,omitempty" json:"labels,omitempty"`
+	Annotations map[string]string `yaml:"annotations,omitempty" json:"annotations,omitempty"`
+}
+
+// DAGWorkflowSpec defines the workflow specification
+type DAGWorkflowSpec struct {
+	Description   string               `yaml:"description,omitempty" json:"description,omitempty"`
+	Triggers      []TriggerSpec        `yaml:"triggers,omitempty" json:"triggers,omitempty"`
+	Inputs        []InputSpec          `yaml:"inputs,omitempty" json:"inputs,omitempty"`
+	Timeout       string               `yaml:"timeout,omitempty" json:"timeout,omitempty"`
+	Steps         []StepSpec           `yaml:"steps" json:"steps"`
+	OnSuccess     []StepSpec           `yaml:"onSuccess,omitempty" json:"onSuccess,omitempty"`
+	OnFailure     []StepSpec           `yaml:"onFailure,omitempty" json:"onFailure,omitempty"`
+	Notifications []NotificationConfig `yaml:"notifications,omitempty" json:"notifications,omitempty"`
+	Concurrency   *ConcurrencyConfig   `yaml:"concurrency,omitempty" json:"concurrency,omitempty"`
+}
+
+// TriggerSpec defines a workflow trigger
+type TriggerSpec struct {
+	Type     string            `yaml:"type" json:"type"` // manual, schedule, webhook, event
+	Name     string            `yaml:"name,omitempty" json:"name,omitempty"`
+	Cron     string            `yaml:"cron,omitempty" json:"cron,omitempty"`
+	Webhook  *WebhookTrigger   `yaml:"webhook,omitempty" json:"webhook,omitempty"`
+	Event    *EventTrigger     `yaml:"event,omitempty" json:"event,omitempty"`
+	Disabled bool              `yaml:"disabled,omitempty" json:"disabled,omitempty"`
+}
+
+// WebhookTrigger defines webhook trigger configuration
+type WebhookTrigger struct {
+	Path         string            `yaml:"path,omitempty" json:"path,omitempty"`
+	Secret       string            `yaml:"secret,omitempty" json:"secret,omitempty"`
+	Headers      map[string]string `yaml:"headers,omitempty" json:"headers,omitempty"`
+}
+
+// EventTrigger defines event-based trigger configuration
+type EventTrigger struct {
+	Source string   `yaml:"source" json:"source"`
+	Types  []string `yaml:"types" json:"types"`
+}
+
+// InputSpec defines a workflow input parameter
+type InputSpec struct {
+	Name        string      `yaml:"name" json:"name"`
+	Type        string      `yaml:"type" json:"type"` // string, number, boolean, array, object
+	Required    bool        `yaml:"required,omitempty" json:"required,omitempty"`
+	Default     interface{} `yaml:"default,omitempty" json:"default,omitempty"`
+	Description string      `yaml:"description,omitempty" json:"description,omitempty"`
+	Enum        []string    `yaml:"enum,omitempty" json:"enum,omitempty"`
+}
+
+// StepSpec defines a workflow step
+type StepSpec struct {
+	ID          string                 `yaml:"id" json:"id"`
+	Name        string                 `yaml:"name,omitempty" json:"name,omitempty"`
+	Type        StepType               `yaml:"type" json:"type"`
+	DependsOn   []string               `yaml:"dependsOn,omitempty" json:"dependsOn,omitempty"`
+	Condition   string                 `yaml:"condition,omitempty" json:"condition,omitempty"`
+	Config      map[string]interface{} `yaml:"config,omitempty" json:"config,omitempty"`
+	Timeout     string                 `yaml:"timeout,omitempty" json:"timeout,omitempty"`
+	Retries     *RetryConfig           `yaml:"retries,omitempty" json:"retries,omitempty"`
+	ContinueOn  *ContinueOnConfig      `yaml:"continueOn,omitempty" json:"continueOn,omitempty"`
+	Env         map[string]string      `yaml:"env,omitempty" json:"env,omitempty"`
+	Outputs     []OutputSpec           `yaml:"outputs,omitempty" json:"outputs,omitempty"`
+}
+
+// RetryConfig defines retry behavior for a step
+type RetryConfig struct {
+	MaxAttempts int    `yaml:"maxAttempts" json:"maxAttempts"`
+	Delay       string `yaml:"delay,omitempty" json:"delay,omitempty"`
+	Backoff     string `yaml:"backoff,omitempty" json:"backoff,omitempty"` // linear, exponential
+}
+
+// ContinueOnConfig defines when to continue execution despite step status
+type ContinueOnConfig struct {
+	Failure bool `yaml:"failure,omitempty" json:"failure,omitempty"`
+	Error   bool `yaml:"error,omitempty" json:"error,omitempty"`
+}
+
+// OutputSpec defines a step output
+type OutputSpec struct {
+	Name  string `yaml:"name" json:"name"`
+	From  string `yaml:"from,omitempty" json:"from,omitempty"` // JSONPath or expression
+}
+
+// ConcurrencyConfig defines workflow concurrency settings
+type ConcurrencyConfig struct {
+	Group      string `yaml:"group,omitempty" json:"group,omitempty"`
+	MaxRunning int    `yaml:"maxRunning,omitempty" json:"maxRunning,omitempty"`
+	CancelPrev bool   `yaml:"cancelPrev,omitempty" json:"cancelPrev,omitempty"`
+}
+
+// DAGExecution represents an execution of a DAG workflow
+type DAGExecution struct {
+	ID            string                 `json:"id"`
+	WorkflowName  string                 `json:"workflowName"`
+	Status        WorkflowStatus         `json:"status"`
+	Trigger       string                 `json:"trigger"`
+	Inputs        map[string]interface{} `json:"inputs,omitempty"`
+	Steps         map[string]*StepExecution `json:"steps"`
+	StartedAt     time.Time              `json:"startedAt"`
+	CompletedAt   *time.Time             `json:"completedAt,omitempty"`
+	Error         string                 `json:"error,omitempty"`
+	Outputs       map[string]interface{} `json:"outputs,omitempty"`
+}
+
+// StepExecution represents the execution state of a single step
+type StepExecution struct {
+	ID          string                 `json:"id"`
+	StepID      string                 `json:"stepId"`
+	Status      StepStatus             `json:"status"`
+	StartedAt   *time.Time             `json:"startedAt,omitempty"`
+	CompletedAt *time.Time             `json:"completedAt,omitempty"`
+	Attempt     int                    `json:"attempt"`
+	Inputs      map[string]interface{} `json:"inputs,omitempty"`
+	Outputs     map[string]interface{} `json:"outputs,omitempty"`
+	Logs        []StepLog              `json:"logs,omitempty"`
+	Error       string                 `json:"error,omitempty"`
+}
+
+// StepLog represents a log entry from step execution
+type StepLog struct {
+	Time    time.Time `json:"time"`
+	Level   string    `json:"level"`
+	Message string    `json:"message"`
+}
+
+// StepResult represents the result of a step execution
+type StepResult struct {
+	Status   StepStatus             `json:"status"`
+	Outputs  map[string]interface{} `json:"outputs,omitempty"`
+	Logs     []StepLog              `json:"logs,omitempty"`
+	Error    error                  `json:"-"`
+	ErrorMsg string                 `json:"error,omitempty"`
 }
