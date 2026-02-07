@@ -1,0 +1,2419 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Cloud-native platform orchestration framework">
+      
+      
+      
+        <link rel="canonical" href="https://platformfoundry.github.io/platformfoundry-ce/feature-rationalization/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Platform Foundry - Feature Rationalization - PlatformFoundry</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#platform-foundry-feature-rationalization" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="PlatformFoundry" class="md-header__button md-logo" aria-label="PlatformFoundry" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PlatformFoundry
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Platform Foundry - Feature Rationalization
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/platformfoundry/pf-ce" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    platformfoundry/platformfoundry-ce
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="PlatformFoundry" class="md-nav__button md-logo" aria-label="PlatformFoundry" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    PlatformFoundry
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/platformfoundry/pf-ce" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    platformfoundry/platformfoundry-ce
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/platforms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/environments/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Environments
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/secrets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Secrets Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/gitops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GitOps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/policies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/first-platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Your First Platform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/multi-cloud/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Cloud Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/cicd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CI/CD Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enterprise
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Enterprise
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../enterprise/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../enterprise/sso/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SSO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../enterprise/cost-tracking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cost Tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../enterprise/dora/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DORA Metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#executive-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Executive Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#feature-categories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Feature Categories
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Feature Categories">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tier-1-core-keep-invest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 1: Core (Keep &amp; Invest)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tier-2-remove-no-clear-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 2: Remove (No Clear Value)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tier 2: Remove (No Clear Value)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-aillm-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. AI/LLM Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-chaos-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Chaos Engineering
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-marketplace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Marketplace
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-service-mesh-abstraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Service Mesh Abstraction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-federation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Federation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-jit-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. JIT Access
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-slo-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. SLO Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-graph-query-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Graph Query Engine
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tier-3-consolidate-duplicated-functionality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 3: Consolidate (Duplicated Functionality)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tier 3: Consolidate (Duplicated Functionality)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-cost-management-duplication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Cost Management Duplication
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-aiintelligence-duplication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. AI/Intelligence Duplication
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-multi-tenancy-vs-rbac" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Multi-Tenancy vs RBAC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-compliance-vs-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Compliance vs Policy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tier-4-deprioritize-keep-but-minimize-investment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 4: Deprioritize (Keep but Minimize Investment)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tier 4: Deprioritize (Keep but Minimize Investment)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-demo-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Demo System
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-scaffolding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Scaffolding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-doctortroubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Doctor/Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-portalweb-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Portal/Web UI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anti-pattern-competing-with-ecosystem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anti-Pattern: Competing with Ecosystem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cli-command-rationalization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CLI Command Rationalization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CLI Command Rationalization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#current-state-75-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current State: 75+ Commands
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#target-state-40-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Target State: ~40 Commands
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commands-to-remove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Commands to Remove
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#package-rationalization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Package Rationalization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Package Rationalization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#current-67-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current: 67 Packages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#target-45-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Target: ~45 Packages
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Target: ~45 Packages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#remove-14-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remove (14 packages):
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consolidate-4-merges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Consolidate (4 merges):
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migration-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Migration Plan
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Migration Plan">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-immediate-removal-week-1-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: Immediate Removal (Week 1-2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-consolidation-week-3-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Consolidation (Week 3-4)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-3-ecosystem-alignment-week-5-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 3: Ecosystem Alignment (Week 5-6)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-4-extraction-week-7-8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 4: Extraction (Week 7-8)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#impact-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Impact Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-decision-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix: Decision Matrix
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="platform-foundry-feature-rationalization">Platform Foundry - Feature Rationalization<a class="headerlink" href="#platform-foundry-feature-rationalization" title="Permanent link">&para;</a></h1>
+<h2 id="executive-summary">Executive Summary<a class="headerlink" href="#executive-summary" title="Permanent link">&para;</a></h2>
+<p>Platform Foundry has grown to 67 packages and 75+ CLI commands. Analysis reveals significant scope creep, with ~40% of features either duplicating ecosystem tools or serving niche use cases. This document identifies features for removal, consolidation, or deprioritization to sharpen the product focus.</p>
+<p><strong>Core Value Proposition</strong>: Declarative platform provisioning that orchestrates tools, not replaces them.</p>
+<p><strong>Target State</strong>: 45 packages, 40 CLI commands, 40% reduction in maintenance burden.</p>
+<hr />
+<h2 id="feature-categories">Feature Categories<a class="headerlink" href="#feature-categories" title="Permanent link">&para;</a></h2>
+<h3 id="tier-1-core-keep-invest">Tier 1: Core (Keep &amp; Invest)<a class="headerlink" href="#tier-1-core-keep-invest" title="Permanent link">&para;</a></h3>
+<p>These features define Platform Foundry's value:</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Package</th>
+<th>CLI Commands</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Platform Definition</td>
+<td><code>internal/platform/</code></td>
+<td><code>apply</code>, <code>plan</code>, <code>delete</code></td>
+<td>Core declarative engine</td>
+</tr>
+<tr>
+<td>Engine Orchestration</td>
+<td><code>internal/engine/</code></td>
+<td>-</td>
+<td>Parallel execution with DAG</td>
+</tr>
+<tr>
+<td>State Management</td>
+<td><code>internal/state/</code></td>
+<td><code>get</code>, <code>describe</code></td>
+<td>Track platform state</td>
+</tr>
+<tr>
+<td>GitOps Integration</td>
+<td><code>internal/gitops/</code></td>
+<td><code>gitops</code></td>
+<td>ArgoCD/Flux orchestration</td>
+</tr>
+<tr>
+<td>Policy Engine</td>
+<td><code>internal/policy/</code></td>
+<td><code>policy</code></td>
+<td>OPA-based enforcement</td>
+</tr>
+<tr>
+<td>Secrets Management</td>
+<td><code>internal/secrets/</code></td>
+<td><code>secrets</code></td>
+<td>Vault/AWS SM integration</td>
+</tr>
+<tr>
+<td>Authentication</td>
+<td><code>internal/auth/</code></td>
+<td><code>auth</code></td>
+<td>JWT, SAML, API keys</td>
+</tr>
+<tr>
+<td>RBAC</td>
+<td><code>internal/rbac/</code></td>
+<td><code>rbac</code></td>
+<td>Role-based access</td>
+</tr>
+<tr>
+<td>Audit Logging</td>
+<td><code>internal/audit/</code></td>
+<td><code>audit</code></td>
+<td>Compliance trail</td>
+</tr>
+<tr>
+<td>Environment Management</td>
+<td><code>internal/environment/</code></td>
+<td><code>environment</code>, <code>preview</code></td>
+<td>Multi-env + ephemeral</td>
+</tr>
+<tr>
+<td>Golden Paths</td>
+<td><code>internal/goldenpath/</code></td>
+<td><code>golden-path</code>, <code>app</code></td>
+<td>Developer self-service</td>
+</tr>
+<tr>
+<td>Plugin System</td>
+<td><code>internal/plugin/</code></td>
+<td>-</td>
+<td>Extensibility</td>
+</tr>
+<tr>
+<td>Deployment</td>
+<td><code>internal/deploy/</code></td>
+<td><code>deploy</code>, <code>rollback</code></td>
+<td>Deployment strategies</td>
+</tr>
+<tr>
+<td>Workflow/Approvals</td>
+<td><code>internal/workflow/</code></td>
+<td><code>workflow</code></td>
+<td>Change management</td>
+</tr>
+</tbody>
+</table>
+<h3 id="tier-2-remove-no-clear-value">Tier 2: Remove (No Clear Value)<a class="headerlink" href="#tier-2-remove-no-clear-value" title="Permanent link">&para;</a></h3>
+<p>These features should be removed entirely:</p>
+<h4 id="1-aillm-integration">1. AI/LLM Integration<a class="headerlink" href="#1-aillm-integration" title="Permanent link">&para;</a></h4>
+<p><strong>Packages</strong>: <code>internal/ai/</code>, <code>internal/copilot/</code></p>
+<p><strong>CLI Commands</strong>: <code>ask</code>, <code>copilot</code></p>
+<p><strong>Current State</strong>:
+- Two overlapping AI implementations
+- Chat interface with token tracking
+- LLM-powered recommendations</p>
+<p><strong>Why Remove</strong>:
+- Nice-to-have, not core platform functionality
+- Doubles maintenance with Claude/OpenAI provider support
+- Interactive chat mode is feature bloat for infrastructure tooling
+- Users can integrate their own LLM via plugins if needed
+- Rapidly evolving space - hard to keep current</p>
+<p><strong>Migration Path</strong>: Remove packages. Document how to integrate external LLM tools via webhooks or plugins.</p>
+<hr />
+<h4 id="2-chaos-engineering">2. Chaos Engineering<a class="headerlink" href="#2-chaos-engineering" title="Permanent link">&para;</a></h4>
+<p><strong>Package</strong>: <code>internal/chaos/</code></p>
+<p><strong>CLI Commands</strong>: <code>chaos run</code>, <code>chaos list</code>, <code>chaos stop</code>, <code>chaos report</code></p>
+<p><strong>Current State</strong>:
+- Experiment definition and execution
+- Mock executors (not production-ready)
+- Steady-state validation</p>
+<p><strong>Why Remove</strong>:
+- Specialized tools exist: LitmusChaos, Gremlin, Chaos Monkey
+- Very narrow use case within platform engineering
+- Mock executors indicate incomplete implementation
+- Maintenance burden for chaos experiment compatibility</p>
+<p><strong>Migration Path</strong>: Document integration with LitmusChaos. Provide example ChaosExperiment CRDs that work with external tools.</p>
+<hr />
+<h4 id="3-marketplace">3. Marketplace<a class="headerlink" href="#3-marketplace" title="Permanent link">&para;</a></h4>
+<p><strong>Package</strong>: <code>internal/marketplace/</code></p>
+<p><strong>CLI Commands</strong>: <code>marketplace search</code>, <code>marketplace install</code>, <code>marketplace list</code></p>
+<p><strong>Current State</strong>:
+- Plugin discovery and installation
+- Version management
+- No actual backend marketplace</p>
+<p><strong>Why Remove</strong>:
+- No marketplace backend exists
+- Plugin system (<code>internal/plugin/</code>) sufficient for loading extensions
+- GitHub releases or container registries serve discovery needs
+- Creates complexity without infrastructure to support it</p>
+<p><strong>Migration Path</strong>: Use plugin registry pattern with GitHub releases. Document plugin installation from URLs/paths.</p>
+<hr />
+<h4 id="4-service-mesh-abstraction">4. Service Mesh Abstraction<a class="headerlink" href="#4-service-mesh-abstraction" title="Permanent link">&para;</a></h4>
+<p><strong>Package</strong>: <code>internal/mesh/</code></p>
+<p><strong>CLI Commands</strong>: <code>mesh apply</code>, <code>mesh get</code>, <code>mesh list</code>, <code>mesh status</code></p>
+<p><strong>Current State</strong>:
+- Abstraction over Istio/Linkerd
+- Traffic policy management
+- mTLS configuration</p>
+<p><strong>Why Remove</strong>:
+- Users already know Istio/Linkerd CLIs and APIs
+- Adds abstraction layer without simplification
+- Version compatibility maintenance burden
+- Duplicates service mesh native tooling
+- Traffic management overlaps with <code>federation/traffic.go</code></p>
+<p><strong>Migration Path</strong>: Provide Istio/Linkerd as plugin providers. Document native service mesh integration patterns.</p>
+<hr />
+<h4 id="5-federation">5. Federation<a class="headerlink" href="#5-federation" title="Permanent link">&para;</a></h4>
+<p><strong>Package</strong>: <code>internal/federation/</code></p>
+<p><strong>Files</strong>: <code>controller.go</code>, <code>health.go</code>, <code>sync.go</code>, <code>traffic.go</code></p>
+<p><strong>Current State</strong>:
+- Multi-cluster orchestration
+- Cross-cluster health monitoring
+- Traffic distribution</p>
+<p><strong>Why Remove</strong>:
+- Massive scope for MVP
+- Kubernetes Federation v2, ArgoCD multi-cluster, Submariner already solve this
+- Health monitoring duplicates <code>internal/health/</code>
+- Traffic management duplicates <code>internal/mesh/</code>
+- Incomplete implementation</p>
+<p><strong>Migration Path</strong>: Future roadmap item. Document ArgoCD ApplicationSets for multi-cluster GitOps.</p>
+<hr />
+<h4 id="6-jit-access">6. JIT Access<a class="headerlink" href="#6-jit-access" title="Permanent link">&para;</a></h4>
+<p><strong>Package</strong>: <code>internal/tenancy/jit.go</code></p>
+<p><strong>CLI Commands</strong>: <code>jit request</code>, <code>jit approve</code>, <code>jit revoke</code></p>
+<p><strong>Current State</strong>:
+- Just-in-time access requests
+- Approval workflows
+- Temporary permission grants</p>
+<p><strong>Why Remove</strong>:
+- HashiCorp Boundary, Teleport purpose-built for this
+- Security-critical feature requires dedicated tooling
+- Policy concern, not platform orchestration concern
+- Adds approval workflow complexity</p>
+<p><strong>Migration Path</strong>: Document HashiCorp Boundary integration. Provide RBAC patterns for temporary access.</p>
+<hr />
+<h4 id="7-slo-management">7. SLO Management<a class="headerlink" href="#7-slo-management" title="Permanent link">&para;</a></h4>
+<p><strong>Package</strong>: <code>internal/slo/</code></p>
+<p><strong>CLI Commands</strong>: <code>slo create</code>, <code>slo status</code>, <code>slo list</code></p>
+<p><strong>Current State</strong>:
+- SLO definition and tracking
+- Error budget calculation
+- Burn rate alerting</p>
+<p><strong>Why Remove</strong>:
+- Prometheus ecosystem has mature SLO tooling (Sloth, Pyrra)
+- Grafana has native SLO dashboards
+- Duplicates observability stack capabilities
+- Better handled by dedicated SRE tools</p>
+<p><strong>Migration Path</strong>: Document Prometheus SLO recording rules. Provide Grafana dashboard templates.</p>
+<hr />
+<h4 id="8-graph-query-engine">8. Graph Query Engine<a class="headerlink" href="#8-graph-query-engine" title="Permanent link">&para;</a></h4>
+<p><strong>Package</strong>: <code>internal/graph/</code></p>
+<p><strong>CLI Commands</strong>: <code>graph</code></p>
+<p><strong>Current State</strong>:
+- Dependency graph visualization
+- Query engine for traversal
+- Analysis capabilities</p>
+<p><strong>Why Remove</strong>:
+- Over-engineered for the use case
+- Basic dependency visualization sufficient
+- Query engine adds complexity without clear user need
+- Overlaps with Kubernetes API introspection</p>
+<p><strong>Migration Path</strong>: Keep simple <code>pf describe --dependencies</code> output. Remove query engine.</p>
+<hr />
+<h3 id="tier-3-consolidate-duplicated-functionality">Tier 3: Consolidate (Duplicated Functionality)<a class="headerlink" href="#tier-3-consolidate-duplicated-functionality" title="Permanent link">&para;</a></h3>
+<p>These features overlap and should be merged:</p>
+<h4 id="1-cost-management-duplication">1. Cost Management Duplication<a class="headerlink" href="#1-cost-management-duplication" title="Permanent link">&para;</a></h4>
+<p><strong>Current State</strong>:
+- <code>internal/cost/</code> - Cost estimation
+- <code>internal/finops/</code> - FinOps analysis, rightsizing, forecasting</p>
+<p><strong>Problem</strong>: Two systems for cost analysis. Unclear source of truth.</p>
+<p><strong>Resolution</strong>:
+- Keep <code>internal/finops/</code>
+- Remove <code>internal/cost/</code>
+- Rename CLI commands to <code>cost</code> (simpler than <code>finops</code>)</p>
+<p><strong>Resulting Commands</strong>: <code>cost report</code>, <code>cost forecast</code>, <code>cost optimize</code></p>
+<hr />
+<h4 id="2-aiintelligence-duplication">2. AI/Intelligence Duplication<a class="headerlink" href="#2-aiintelligence-duplication" title="Permanent link">&para;</a></h4>
+<p><strong>Current State</strong>:
+- <code>internal/ai/</code> - LLM providers, chat interface
+- <code>internal/intelligence/</code> - Analysis, recommendations</p>
+<p><strong>Problem</strong>: Overlapping recommendation and analysis logic.</p>
+<p><strong>Resolution</strong>:
+- Remove both (per Tier 2 recommendation)
+- If keeping any AI: consolidate into single <code>internal/intelligence/</code> with no chat interface</p>
+<hr />
+<h4 id="3-multi-tenancy-vs-rbac">3. Multi-Tenancy vs RBAC<a class="headerlink" href="#3-multi-tenancy-vs-rbac" title="Permanent link">&para;</a></h4>
+<p><strong>Current State</strong>:
+- <code>internal/tenancy/</code> - Tenant management, quotas, isolation
+- <code>internal/rbac/</code> - Role-based access control</p>
+<p><strong>Problem</strong>: Multi-tenancy duplicates Kubernetes RBAC + namespace isolation.</p>
+<p><strong>Resolution</strong>:
+- Remove <code>internal/tenancy/</code>
+- Enhance <code>internal/rbac/</code> with namespace-scoped roles
+- Use Kubernetes ResourceQuotas for tenant quotas</p>
+<p><strong>Resulting Commands</strong>: Remove <code>tenant</code> commands. Use <code>rbac</code> with namespace scope.</p>
+<hr />
+<h4 id="4-compliance-vs-policy">4. Compliance vs Policy<a class="headerlink" href="#4-compliance-vs-policy" title="Permanent link">&para;</a></h4>
+<p><strong>Current State</strong>:
+- <code>internal/compliance/</code> - Compliance frameworks, scanning
+- <code>internal/policy/</code> - OPA policy engine</p>
+<p><strong>Problem</strong>: OPA policies already enforce compliance. Separate compliance package adds confusion.</p>
+<p><strong>Resolution</strong>:
+- Merge compliance into <code>internal/policy/</code>
+- Add compliance framework templates as policy bundles
+- Single <code>policy</code> CLI with <code>--framework soc2</code> flag</p>
+<p><strong>Resulting Commands</strong>: <code>policy check --framework soc2</code> instead of <code>compliance check</code></p>
+<hr />
+<h3 id="tier-4-deprioritize-keep-but-minimize-investment">Tier 4: Deprioritize (Keep but Minimize Investment)<a class="headerlink" href="#tier-4-deprioritize-keep-but-minimize-investment" title="Permanent link">&para;</a></h3>
+<p>These features have value but shouldn't distract from core:</p>
+<h4 id="1-demo-system">1. Demo System<a class="headerlink" href="#1-demo-system" title="Permanent link">&para;</a></h4>
+<p><strong>Package</strong>: <code>internal/demo/</code></p>
+<p><strong>CLI Commands</strong>: <code>demo</code>, <code>demo quick</code>, <code>demo clean</code></p>
+<p><strong>Value</strong>: Onboarding, local testing with kind cluster</p>
+<p><strong>Recommendation</strong>: Keep minimal. No new features. Consider moving to separate <code>pf-demo</code> repo.</p>
+<hr />
+<h4 id="2-scaffolding">2. Scaffolding<a class="headerlink" href="#2-scaffolding" title="Permanent link">&para;</a></h4>
+<p><strong>Package</strong>: <code>internal/scaffold/</code>, <code>internal/generator/</code></p>
+<p><strong>CLI Commands</strong>: <code>scaffold platform</code>, <code>scaffold component</code></p>
+<p><strong>Value</strong>: Accelerates initial setup</p>
+<p><strong>Recommendation</strong>: Simplify to template expansion only. Remove code generation complexity. Consider <code>pf init</code> as single entry point.</p>
+<hr />
+<h4 id="3-doctortroubleshooting">3. Doctor/Troubleshooting<a class="headerlink" href="#3-doctortroubleshooting" title="Permanent link">&para;</a></h4>
+<p><strong>Package</strong>: <code>internal/doctor/</code></p>
+<p><strong>CLI Commands</strong>: <code>doctor</code>, <code>troubleshoot</code></p>
+<p><strong>Value</strong>: Diagnostic convenience</p>
+<p><strong>Recommendation</strong>: Keep lightweight. No expansion. Consider external script instead of package.</p>
+<hr />
+<h4 id="4-portalweb-ui">4. Portal/Web UI<a class="headerlink" href="#4-portalweb-ui" title="Permanent link">&para;</a></h4>
+<p><strong>Package</strong>: <code>internal/portal/</code></p>
+<p><strong>CLI Commands</strong>: <code>portal</code></p>
+<p><strong>Value</strong>: Visual interface</p>
+<p><strong>Recommendation</strong>: Separate product, not CLI concern. Extract to <code>pf-portal</code> repo or remove from CLI codebase entirely.</p>
+<hr />
+<h2 id="anti-pattern-competing-with-ecosystem">Anti-Pattern: Competing with Ecosystem<a class="headerlink" href="#anti-pattern-competing-with-ecosystem" title="Permanent link">&para;</a></h2>
+<p>Platform Foundry should orchestrate tools, not replace them. These implementations fight the ecosystem:</p>
+<table>
+<thead>
+<tr>
+<th>PF Implementation</th>
+<th>Ecosystem Tool</th>
+<th>Problem</th>
+<th>Resolution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gitops/</code> manifest sync</td>
+<td>ArgoCD</td>
+<td>ArgoCD already syncs, detects drift, self-heals</td>
+<td>Use ArgoCD as provider, don't reimplement sync</td>
+</tr>
+<tr>
+<td><code>drift/</code> detection</td>
+<td>Terraform</td>
+<td><code>terraform plan</code> shows drift</td>
+<td>Call Terraform, don't reimplement</td>
+</tr>
+<tr>
+<td><code>mesh/</code> traffic policies</td>
+<td>Istio/Linkerd</td>
+<td>Native UIs are mature</td>
+<td>Remove abstraction layer</td>
+</tr>
+<tr>
+<td><code>slo/</code> alerting</td>
+<td>Prometheus/Grafana</td>
+<td>Mature SLO ecosystem</td>
+<td>Use recording rules, not custom engine</td>
+</tr>
+<tr>
+<td><code>chaos/</code> experiments</td>
+<td>LitmusChaos</td>
+<td>Purpose-built, Kubernetes-native</td>
+<td>Integrate, don't compete</td>
+</tr>
+<tr>
+<td><code>federation/</code> multi-cluster</td>
+<td>ArgoCD ApplicationSets</td>
+<td>Already solved</td>
+<td>Document integration pattern</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Principle</strong>: Platform Foundry's value is in orchestrating the provisioning and configuration of these tools, not in reimplementing their runtime functionality.</p>
+<hr />
+<h2 id="cli-command-rationalization">CLI Command Rationalization<a class="headerlink" href="#cli-command-rationalization" title="Permanent link">&para;</a></h2>
+<h3 id="current-state-75-commands">Current State: 75+ Commands<a class="headerlink" href="#current-state-75-commands" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Core (20):
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  apply, plan, delete, get, describe, validate, lint
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  deploy, rollback, status, logs, wait, jobs
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  auth, secrets, rbac, policy, audit
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>  environment, preview
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>Platform (10):
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>  platform, app, golden-path, gitops, infrastructure
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>  workload, networking, scaling, catalog, service
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>Observability (8):
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>  health, monitoring, logging, metrics, alerts, tracing
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>  dora, slo
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>Security (6):
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>  tls, compliance, backup, restore, rotate, scan
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>Advanced (15):
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>  chaos, mesh, federation, finops, cost, forecast
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>  marketplace, portal, copilot, ask
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>  jit, tenant, promise, graph, scaffold
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>Utilities (8):
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>  demo, doctor, troubleshoot, version, init, config
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>  upgrade, completion
+</code></pre></div>
+<h3 id="target-state-40-commands">Target State: ~40 Commands<a class="headerlink" href="#target-state-40-commands" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Core (18):
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  apply, plan, delete, get, describe, validate
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  deploy, rollback, status, logs, wait, jobs
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  auth, secrets, rbac, policy, audit, gitops
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>Platform (8):
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>  platform, app, golden-path, environment, preview
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>  workload, catalog, infrastructure
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>Observability (4):
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>  health, metrics, alerts, dora
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>Security (4):
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>  tls, backup, restore, compliance (merged into policy)
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>Utilities (6):
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>  init, config, version, upgrade, doctor, completion
+</code></pre></div>
+<h3 id="commands-to-remove">Commands to Remove<a class="headerlink" href="#commands-to-remove" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ask</code>, <code>copilot</code></td>
+<td>AI chat not core</td>
+</tr>
+<tr>
+<td><code>chaos</code></td>
+<td>Use LitmusChaos</td>
+</tr>
+<tr>
+<td><code>mesh</code></td>
+<td>Use Istio/Linkerd directly</td>
+</tr>
+<tr>
+<td><code>federation</code></td>
+<td>Future scope</td>
+</tr>
+<tr>
+<td><code>jit</code></td>
+<td>Use Boundary</td>
+</tr>
+<tr>
+<td><code>tenant</code></td>
+<td>Use RBAC + namespaces</td>
+</tr>
+<tr>
+<td><code>marketplace</code></td>
+<td>No backend</td>
+</tr>
+<tr>
+<td><code>portal</code></td>
+<td>Separate product</td>
+</tr>
+<tr>
+<td><code>slo</code></td>
+<td>Use Prometheus</td>
+</tr>
+<tr>
+<td><code>graph</code></td>
+<td>Over-engineered</td>
+</tr>
+<tr>
+<td><code>cost</code></td>
+<td>Merged into finops→cost</td>
+</tr>
+<tr>
+<td><code>finops</code></td>
+<td>Renamed to cost</td>
+</tr>
+<tr>
+<td><code>promise</code></td>
+<td>Unclear purpose</td>
+</tr>
+<tr>
+<td><code>scaffold</code></td>
+<td>Merged into init</td>
+</tr>
+<tr>
+<td><code>demo</code></td>
+<td>Move to separate tool</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="package-rationalization">Package Rationalization<a class="headerlink" href="#package-rationalization" title="Permanent link">&para;</a></h2>
+<h3 id="current-67-packages">Current: 67 Packages<a class="headerlink" href="#current-67-packages" title="Permanent link">&para;</a></h3>
+<h3 id="target-45-packages">Target: ~45 Packages<a class="headerlink" href="#target-45-packages" title="Permanent link">&para;</a></h3>
+<h4 id="remove-14-packages">Remove (14 packages):<a class="headerlink" href="#remove-14-packages" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>internal/ai/
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>internal/copilot/
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>internal/chaos/
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>internal/marketplace/
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>internal/mesh/
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>internal/federation/
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>internal/slo/
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>internal/graph/
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>internal/cost/           # Merge into finops
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>internal/tenancy/        # Merge into rbac
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>internal/compliance/     # Merge into policy
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>internal/portal/         # Separate repo
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>internal/scaffold/       # Simplify into init
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>internal/generator/      # Remove
+</code></pre></div>
+<h4 id="consolidate-4-merges">Consolidate (4 merges):<a class="headerlink" href="#consolidate-4-merges" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>internal/cost/ → internal/finops/
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>internal/tenancy/ → internal/rbac/
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>internal/compliance/ → internal/policy/
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>internal/ai/ + internal/intelligence/ → Remove both
+</code></pre></div>
+<hr />
+<h2 id="migration-plan">Migration Plan<a class="headerlink" href="#migration-plan" title="Permanent link">&para;</a></h2>
+<h3 id="phase-1-immediate-removal-week-1-2">Phase 1: Immediate Removal (Week 1-2)<a class="headerlink" href="#phase-1-immediate-removal-week-1-2" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Remove <code>internal/ai/</code>, <code>internal/copilot/</code></li>
+<li>Remove <code>internal/marketplace/</code></li>
+<li>Remove <code>internal/chaos/</code></li>
+<li>Remove CLI commands: <code>ask</code>, <code>copilot</code>, <code>marketplace</code>, <code>chaos</code></li>
+</ol>
+<p><strong>Impact</strong>: Minimal user impact. Features incomplete or unused.</p>
+<h3 id="phase-2-consolidation-week-3-4">Phase 2: Consolidation (Week 3-4)<a class="headerlink" href="#phase-2-consolidation-week-3-4" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Merge <code>internal/cost/</code> into <code>internal/finops/</code>, rename CLI to <code>cost</code></li>
+<li>Merge <code>internal/compliance/</code> into <code>internal/policy/</code></li>
+<li>Merge <code>internal/tenancy/</code> into <code>internal/rbac/</code></li>
+<li>Update documentation</li>
+</ol>
+<p><strong>Impact</strong>: CLI command changes. Provide aliases for transition.</p>
+<h3 id="phase-3-ecosystem-alignment-week-5-6">Phase 3: Ecosystem Alignment (Week 5-6)<a class="headerlink" href="#phase-3-ecosystem-alignment-week-5-6" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Remove <code>internal/mesh/</code> - document Istio integration</li>
+<li>Remove <code>internal/slo/</code> - document Prometheus SLO patterns</li>
+<li>Remove <code>internal/federation/</code> - document ArgoCD multi-cluster</li>
+<li>Remove <code>internal/graph/</code> query engine - keep basic visualization</li>
+</ol>
+<p><strong>Impact</strong>: Feature removal. Provide migration guides to ecosystem tools.</p>
+<h3 id="phase-4-extraction-week-7-8">Phase 4: Extraction (Week 7-8)<a class="headerlink" href="#phase-4-extraction-week-7-8" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Extract <code>internal/portal/</code> to separate repository</li>
+<li>Extract <code>internal/demo/</code> to separate repository</li>
+<li>Simplify <code>internal/scaffold/</code> into <code>init</code> command</li>
+</ol>
+<p><strong>Impact</strong>: Organizational. No user-facing changes.</p>
+<hr />
+<h2 id="impact-summary">Impact Summary<a class="headerlink" href="#impact-summary" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before</th>
+<th>After</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Packages</td>
+<td>67</td>
+<td>45</td>
+<td>-33%</td>
+</tr>
+<tr>
+<td>CLI Commands</td>
+<td>75+</td>
+<td>40</td>
+<td>-47%</td>
+</tr>
+<tr>
+<td>Lines of Code (est.)</td>
+<td>18,600</td>
+<td>12,000</td>
+<td>-35%</td>
+</tr>
+<tr>
+<td>Maintenance Burden</td>
+<td>100%</td>
+<td>60%</td>
+<td>-40%</td>
+</tr>
+<tr>
+<td>Cognitive Load</td>
+<td>High</td>
+<td>Medium</td>
+<td>Significant</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="appendix-decision-matrix">Appendix: Decision Matrix<a class="headerlink" href="#appendix-decision-matrix" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Users</th>
+<th>Ecosystem Alternative</th>
+<th>Implementation Quality</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI Chat</td>
+<td>Few</td>
+<td>External LLMs</td>
+<td>Incomplete</td>
+<td>Remove</td>
+</tr>
+<tr>
+<td>Chaos</td>
+<td>Few</td>
+<td>LitmusChaos</td>
+<td>Mock only</td>
+<td>Remove</td>
+</tr>
+<tr>
+<td>Marketplace</td>
+<td>None</td>
+<td>GitHub/Registry</td>
+<td>No backend</td>
+<td>Remove</td>
+</tr>
+<tr>
+<td>Mesh</td>
+<td>Some</td>
+<td>Istio/Linkerd</td>
+<td>Abstraction overhead</td>
+<td>Remove</td>
+</tr>
+<tr>
+<td>Federation</td>
+<td>Few</td>
+<td>ArgoCD</td>
+<td>Incomplete</td>
+<td>Remove</td>
+</tr>
+<tr>
+<td>JIT</td>
+<td>Few</td>
+<td>Boundary</td>
+<td>Security concern</td>
+<td>Remove</td>
+</tr>
+<tr>
+<td>SLO</td>
+<td>Some</td>
+<td>Prometheus</td>
+<td>Duplication</td>
+<td>Remove</td>
+</tr>
+<tr>
+<td>Graph</td>
+<td>Few</td>
+<td>kubectl</td>
+<td>Over-engineered</td>
+<td>Remove</td>
+</tr>
+<tr>
+<td>Cost/FinOps</td>
+<td>Some</td>
+<td>Cloud tools</td>
+<td>Duplicated</td>
+<td>Consolidate</td>
+</tr>
+<tr>
+<td>Tenancy</td>
+<td>Some</td>
+<td>K8s RBAC</td>
+<td>Duplicated</td>
+<td>Consolidate</td>
+</tr>
+<tr>
+<td>Compliance</td>
+<td>Some</td>
+<td>OPA</td>
+<td>Duplicated</td>
+<td>Consolidate</td>
+</tr>
+<tr>
+<td>Portal</td>
+<td>Some</td>
+<td>N/A</td>
+<td>Separate concern</td>
+<td>Extract</td>
+</tr>
+<tr>
+<td>Demo</td>
+<td>Some</td>
+<td>N/A</td>
+<td>Onboarding only</td>
+<td>Deprioritize</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h2>
+<p>Platform Foundry's strength is declarative platform orchestration. The current feature set dilutes this focus by competing with specialized ecosystem tools. By removing 14 packages and consolidating 4 more, the project can:</p>
+<ol>
+<li><strong>Sharpen focus</strong> on core value: platform provisioning</li>
+<li><strong>Reduce maintenance</strong> by 40%</li>
+<li><strong>Simplify UX</strong> with fewer, more purposeful commands</li>
+<li><strong>Align with ecosystem</strong> by orchestrating tools, not replacing them</li>
+</ol>
+<p>The recommended approach: <strong>orchestrate, don't replicate</strong>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/platformfoundry" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
