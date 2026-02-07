@@ -1,0 +1,414 @@
+# Platform Foundry Security Configuration
+# This file configures all security features for production deployment
+
+# Authentication Configuration
+auth:
+  # Enable authentication enforcement
+  enabled: true
+
+  # JWT Configuration
+  jwt:
+    # Secret key for JWT signing (use environment variable in production)
+    # secretKey: ${PF_JWT_SECRET}
+    secretKey: "change-this-secret-in-production"
+
+    # JWT issuer
+    issuer: "platformfoundry.io"
+
+    # Token expiration duration
+    expiration: "24h"
+
+    # Signing algorithm (HS256, RS256, RS384, RS512)
+    signingAlgorithm: "HS256"
+
+    # Optional: RSA key paths for RS256/RS384/RS512
+    # privateKeyPath: "/etc/platformfoundry/keys/jwt-private.pem"
+    # publicKeyPath: "/etc/platformfoundry/keys/jwt-public.pem"
+
+  # API Key Configuration
+  apiKeys:
+    enabled: true
+    # Default expiration for API keys (0 for no expiration)
+    defaultExpiration: "90d"
+
+  # OAuth 2.0 / SSO Configuration
+  oauth:
+    enabled: false
+    providers:
+      # Google OAuth
+      google:
+        enabled: false
+        clientID: "${GOOGLE_CLIENT_ID}"
+        clientSecret: "${GOOGLE_CLIENT_SECRET}"
+        redirectURL: "https://platformfoundry.io/auth/callback/google"
+
+      # GitHub OAuth
+      github:
+        enabled: false
+        clientID: "${GITHUB_CLIENT_ID}"
+        clientSecret: "${GITHUB_CLIENT_SECRET}"
+        redirectURL: "https://platformfoundry.io/auth/callback/github"
+
+      # Okta
+      okta:
+        enabled: false
+        domain: "${OKTA_DOMAIN}"
+        clientID: "${OKTA_CLIENT_ID}"
+        clientSecret: "${OKTA_CLIENT_SECRET}"
+        redirectURL: "https://platformfoundry.io/auth/callback/okta"
+
+  # SAML Configuration
+  saml:
+    enabled: false
+    entityID: "https://platformfoundry.io/saml/metadata"
+    assertionConsumerServiceURL: "https://platformfoundry.io/saml/acs"
+    singleLogoutServiceURL: "https://platformfoundry.io/saml/slo"
+    # IDP metadata URL or file path
+    idpMetadataURL: "${SAML_IDP_METADATA_URL}"
+
+# TLS/HTTPS Configuration
+tls:
+  # Enable TLS
+  enabled: true
+
+  # Certificate source: manual, acme, or selfsigned
+  source: "acme"
+
+  # Manual certificate configuration
+  manual:
+    certFile: "/etc/platformfoundry/certs/server.crt"
+    keyFile: "/etc/platformfoundry/certs/server.key"
+
+  # Let's Encrypt ACME configuration
+  acme:
+    # Email for ACME account
+    email: "admin@example.com"
+
+    # Domains to obtain certificates for
+    domains:
+      - "platformfoundry.io"
+      - "api.platformfoundry.io"
+
+    # Use staging environment for testing
+    staging: false
+
+    # Certificate renewal window (renew this long before expiry)
+    renewBefore: "720h" # 30 days
+
+    # Challenge type: http-01 or dns-01
+    challengeType: "http-01"
+
+    # DNS provider for dns-01 challenge (route53, cloudflare, etc.)
+    dnsProvider: "route53"
+
+  # Self-signed certificate configuration (for development)
+  selfsigned:
+    organization: "Platform Foundry"
+    validFor: "8760h" # 1 year
+    dnsNames:
+      - "localhost"
+      - "*.local"
+    ipAddresses:
+      - "127.0.0.1"
+
+  # Minimum TLS version
+  minVersion: "TLS13"
+
+  # Cipher suites (for TLS 1.2, TLS 1.3 ciphers are fixed)
+  cipherSuites:
+    - "TLS_AES_128_GCM_SHA256"
+    - "TLS_AES_256_GCM_SHA384"
+    - "TLS_CHACHA20_POLY1305_SHA256"
+
+# Secrets Management Configuration
+secrets:
+  # Secrets provider: local, vault, or aws
+  provider: "vault"
+
+  # Local encrypted storage (for development)
+  local:
+    # Path to encrypted secrets file
+    path: "${HOME}/.platformfoundry/secrets.enc"
+
+    # Encryption key (use environment variable)
+    encryptionKey: "${PF_SECRETS_KEY}"
+
+  # HashiCorp Vault configuration
+  vault:
+    # Vault server address
+    address: "https://vault.example.com:8200"
+
+    # Vault token (use environment variable)
+    token: "${VAULT_TOKEN}"
+
+    # Or token file path
+    tokenFile: "/var/run/secrets/vault-token"
+
+    # Vault namespace (for Vault Enterprise)
+    namespace: "platformfoundry"
+
+    # KV secrets engine mount path
+    mount: "secret"
+
+    # TLS verification
+    tlsSkipVerify: false
+    caCert: "/etc/platformfoundry/vault-ca.pem"
+
+  # AWS Secrets Manager configuration
+  aws:
+    # AWS region
+    region: "us-east-1"
+
+    # AWS credentials (leave empty to use IAM role/instance profile)
+    accessKey: "${AWS_ACCESS_KEY_ID}"
+    secretKey: "${AWS_SECRET_ACCESS_KEY}"
+
+    # Or use AWS profile
+    profile: "platformfoundry"
+
+# State Backend Configuration
+state:
+  # Backend type: local, s3
+  backend: "s3"
+
+  # Local file system backend (for development)
+  local:
+    path: "${HOME}/.platformfoundry/state"
+
+  # S3 backend with DynamoDB locking (for production)
+  s3:
+    # S3 bucket for state storage
+    bucket: "platformfoundry-state"
+
+    # Optional prefix for S3 keys
+    prefix: "environments/"
+
+    # AWS region
+    region: "us-east-1"
+
+    # DynamoDB table for state locking
+    tableName: "platformfoundry-locks"
+
+    # Server-side encryption
+    encryption: true
+    encryptionKeyID: "arn:aws:kms:us-east-1:123456789012:key/abcd1234"
+
+    # Versioning
+    versioning: true
+
+# Web API Server Configuration
+server:
+  # HTTP listen address
+  address: "0.0.0.0"
+
+  # HTTP port
+  port: 8080
+
+  # HTTPS port (when TLS is enabled)
+  httpsPort: 8443
+
+  # Redirect HTTP to HTTPS
+  redirectHTTPS: true
+
+  # Enable authentication on API endpoints
+  requireAuth: true
+
+  # CORS configuration
+  cors:
+    enabled: true
+    allowedOrigins:
+      - "https://platformfoundry.io"
+      - "https://dashboard.platformfoundry.io"
+    allowedMethods:
+      - "GET"
+      - "POST"
+      - "PUT"
+      - "DELETE"
+      - "PATCH"
+    allowedHeaders:
+      - "Authorization"
+      - "Content-Type"
+      - "X-API-Key"
+    allowCredentials: true
+
+  # Rate limiting
+  rateLimit:
+    enabled: true
+    requestsPerMinute: 100
+    burst: 20
+
+  # Request timeout
+  timeout: "30s"
+
+  # Request size limits
+  maxRequestSize: "10MB"
+
+# Audit Logging
+audit:
+  enabled: true
+
+  # Audit log destination: file, stdout, or cloudwatch
+  destination: "file"
+
+  # File configuration
+  file:
+    path: "/var/log/platformfoundry/audit.log"
+    maxSize: "100MB"
+    maxBackups: 10
+    maxAge: "90d"
+    compress: true
+
+  # Log all authentication attempts
+  logAuth: true
+
+  # Log all resource changes
+  logChanges: true
+
+  # Log API access
+  logAPIAccess: true
+
+  # Sensitive data masking
+  maskSecrets: true
+
+# Security Headers
+security:
+  headers:
+    # Strict-Transport-Security
+    hsts:
+      enabled: true
+      maxAge: "31536000" # 1 year
+      includeSubDomains: true
+      preload: true
+
+    # Content-Security-Policy
+    csp:
+      enabled: true
+      policy: "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'"
+
+    # X-Frame-Options
+    frameOptions: "DENY"
+
+    # X-Content-Type-Options
+    contentTypeNoSniff: true
+
+    # X-XSS-Protection
+    xssProtection: true
+
+    # Referrer-Policy
+    referrerPolicy: "strict-origin-when-cross-origin"
+
+# Role-Based Access Control
+rbac:
+  enabled: true
+
+  # Default role for new users
+  defaultRole: "developer"
+
+  # Role definitions
+  roles:
+    admin:
+      description: "Full system access"
+      permissions:
+        - "*"
+
+    platform-engineer:
+      description: "Can manage platforms and infrastructure"
+      permissions:
+        - "platform:*"
+        - "infrastructure:*"
+        - "resource:*"
+        - "environment:*"
+
+    developer:
+      description: "Can view platforms and apply changes"
+      permissions:
+        - "platform:read"
+        - "platform:apply"
+        - "resource:read"
+        - "environment:read"
+
+    viewer:
+      description: "Read-only access"
+      permissions:
+        - "platform:read"
+        - "resource:read"
+        - "environment:read"
+
+# Compliance and Policies
+compliance:
+  # Enable compliance checks
+  enabled: true
+
+  # Compliance frameworks
+  frameworks:
+    - "SOC2"
+    - "HIPAA"
+    - "PCI-DSS"
+
+  # Require encryption at rest
+  encryptionAtRest: true
+
+  # Require encryption in transit
+  encryptionInTransit: true
+
+  # Data retention policy
+  dataRetention:
+    auditLogs: "2y"
+    resourceState: "5y"
+    userActivity: "1y"
+
+  # Require MFA for admin users
+  requireMFA: true
+
+# Monitoring and Alerting
+monitoring:
+  # Security event monitoring
+  securityEvents:
+    enabled: true
+
+    # Alert on failed login attempts
+    failedLoginThreshold: 5
+    failedLoginWindow: "5m"
+
+    # Alert on unauthorized access attempts
+    unauthorizedAccessAlert: true
+
+    # Alert on privilege escalation attempts
+    privilegeEscalationAlert: true
+
+  # Certificate expiration monitoring
+  certificates:
+    enabled: true
+    expirationWarning: "30d"
+
+  # Secret rotation monitoring
+  secretRotation:
+    enabled: true
+    rotationInterval: "90d"
+
+# Backup and Disaster Recovery
+backup:
+  enabled: true
+
+  # Backup schedule (cron format)
+  schedule: "0 2 * * *" # Daily at 2 AM
+
+  # Backup destination
+  destination:
+    type: "s3"
+    bucket: "platformfoundry-backups"
+    region: "us-east-1"
+    encryption: true
+
+  # Backup retention
+  retention:
+    daily: 7
+    weekly: 4
+    monthly: 12
+
+  # Include in backups
+  include:
+    - "state"
+    - "users"
+    - "apiKeys"
+    - "configuration"

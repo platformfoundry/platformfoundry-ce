@@ -1,0 +1,110 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "PlatformFoundry",
+  "scopeName": "source.platformfoundry",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#keywords" },
+    { "include": "#strings" },
+    { "include": "#numbers" },
+    { "include": "#constants" },
+    { "include": "#keys" },
+    { "include": "#variables" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.number-sign.platformfoundry",
+          "match": "#.*$"
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.platformfoundry",
+          "match": "\\b(apiVersion|kind|metadata|spec|status)\\b"
+        },
+        {
+          "name": "keyword.other.platformfoundry",
+          "match": "\\b(name|namespace|labels|annotations|selector|match)\\b"
+        },
+        {
+          "name": "entity.name.type.platformfoundry",
+          "match": "\\b(Platform|Workload|Environment|Service|Deployment|Resource|Policy|Workflow|Secret|ConfigMap|Gateway|Route)\\b"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.platformfoundry",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.platformfoundry",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.platformfoundry",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.platformfoundry",
+              "match": "\\\\."
+            }
+          ]
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.platformfoundry",
+          "match": "\\b\\d+(\\.\\d+)?([eE][+-]?\\d+)?\\b"
+        },
+        {
+          "name": "constant.numeric.resource.platformfoundry",
+          "match": "\\b\\d+(m|Mi|Gi|Ki|Ti|Pi|Ei)?\\b"
+        }
+      ]
+    },
+    "constants": {
+      "patterns": [
+        {
+          "name": "constant.language.boolean.platformfoundry",
+          "match": "\\b(true|false|yes|no|on|off)\\b"
+        },
+        {
+          "name": "constant.language.null.platformfoundry",
+          "match": "\\b(null|~)\\b"
+        }
+      ]
+    },
+    "keys": {
+      "patterns": [
+        {
+          "name": "entity.name.tag.platformfoundry",
+          "match": "^\\s*[\\w\\-\\.]+(?=\\s*:)"
+        }
+      ]
+    },
+    "variables": {
+      "patterns": [
+        {
+          "name": "variable.other.platformfoundry",
+          "match": "\\$\\{[^}]+\\}"
+        },
+        {
+          "name": "variable.other.reference.platformfoundry",
+          "match": "\\$\\([^)]+\\)"
+        }
+      ]
+    }
+  }
+}

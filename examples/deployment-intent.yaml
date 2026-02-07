@@ -1,0 +1,207 @@
+apiVersion: platformfoundry.io/v1
+kind: DeploymentIntent
+metadata:
+  name: deploy-api-v2
+  description: "Deploy API service version 2.0 with canary rollout"
+  labels:
+    app: api
+    team: backend
+spec:
+  application: api
+  targetEnvironment: production
+  version: v2.0.0
+  image: acme/api:v2.0.0
+
+  strategy:
+    type: canary
+    steps:
+      # Step 1: Initial canary with 10% traffic
+      - name: initial-canary
+        weight: 10
+        pause:
+          duration: "5m"
+        analysis:
+          metrics:
+            - name: error_rate
+              metric: |
+                sum(rate(http_requests_total{app="api",status=~"5.."}[5m])) /
+                sum(rate(http_requests_total{app="api"}[5m])) * 100
+              threshold: "< 1.0"
+              provider: prometheus
+            - name: latency_p99
+              metric: |
+                histogram_quantile(0.99, sum(rate(http_request_duration_seconds_bucket{app="api"}[5m])) by (le))
+              threshold: "< 0.5"
+              provider: prometheus
+          successRate: 100
+          interval: "1m"
+
+      # Step 2: Increase to 25% after validation
+      - name: expand-canary
+        weight: 25
+        pause:
+          duration: "5m"
+        analysis:
+          metrics:
+            - name: error_rate
+              metric: |
+                sum(rate(http_requests_total{app="api",status=~"5.."}[5m])) /
+                sum(rate(http_requests_total{app="api"}[5m])) * 100
+              threshold: "< 1.0"
+              provider: prometheus
+
+      # Step 3: 50% traffic - manual approval required
+      - name: half-traffic
+        weight: 50
+        pause:
+          untilApproved: true
+        analysis:
+          metrics:
+            - name: success_rate
+              metric: |
+                sum(rate(http_requests_total{app="api",status=~"2.."}[5m])) /
+                sum(rate(http_requests_total{app="api"}[5m])) * 100
+              threshold: "> 99.0"
+
+      # Step 4: Full rollout
+      - name: full-rollout
+        weight: 100
+
+    canary:
+      trafficRouting:
+        type: istio
+        weighted: true
+      maxWeight: 100
+      increment: 10
+
+  rollback:
+    automatic: true
+    triggers:
+      - metric: error_rate
+        threshold: "> 5%"
+        window: "5m"
+      - metric: latency_p99
+        threshold: "> 2s"
+        window: "5m"
+    revision: 0  # Rollback to previous
+
+  notifications:
+    - channel: slack
+      target: "#deployments"
+      events:
+        - started
+        - step-completed
+        - completed
+        - failed
+        - rolledback
+    - channel: webhook
+      target: "https://hooks.example.com/deploy"
+      events:
+        - "*"
+
+  featureFlags:
+    - name: new-api-endpoints
+      provider: launchdarkly
+      key: api-v2-endpoints
+      value: "true"
+      rollout: 100
+
+---
+apiVersion: platformfoundry.io/v1
+kind: DeploymentIntent
+metadata:
+  name: deploy-frontend-blue-green
+  description: "Blue-green deployment for frontend"
+spec:
+  application: frontend
+  targetEnvironment: production
+  image: acme/frontend:v3.0.0
+
+  strategy:
+    type: blue-green
+    blueGreen:
+      autoPromote: false
+      promoteAfter: "15m"
+      scaleDownDelay: "30m"
+      previewService: frontend-preview
+      activeService: frontend
+
+  rollback:
+    automatic: true
+    triggers:
+      - metric: error_rate
+        threshold: "> 1%"
+
+  notifications:
+    - channel: slack
+      target: "#frontend-team"
+      events: ["*"]
+
+---
+apiVersion: platformfoundry.io/v1
+kind: DeploymentIntent
+metadata:
+  name: worker-rolling-update
+  description: "Rolling update for worker service"
+spec:
+  application: worker
+  targetEnvironment: production
+  image: acme/worker:v1.5.0
+
+  strategy:
+    type: rolling
+    steps:
+      - weight: 25
+        pause:
+          duration: "30s"
+        analysis:
+          metrics:
+            - name: queue_processing_rate
+              metric: rate(worker_jobs_processed_total[5m])
+              threshold: "> 100"
+      - weight: 50
+        pause:
+          duration: "30s"
+      - weight: 75
+        pause:
+          duration: "30s"
+      - weight: 100
+
+  rollback:
+    automatic: true
+    triggers:
+      - metric: queue_backlog
+        threshold: "> 1000"
+
+---
+apiVersion: platformfoundry.io/v1
+kind: DeploymentIntent
+metadata:
+  name: api-ab-test
+  description: "A/B test for new checkout flow"
+spec:
+  application: checkout
+  targetEnvironment: production
+
+  strategy:
+    type: a-b
+    abTest:
+      experimentName: new-checkout-flow
+      variants:
+        - name: control
+          image: acme/checkout:v1.0.0
+        - name: variant-a
+          image: acme/checkout:v2.0.0-new-flow
+          config:
+            FEATURE_NEW_FLOW: "true"
+      trafficSplit:
+        control: 50
+        variant-a: 50
+      targetMetric: checkout_conversion_rate
+      minSampleSize: 10000
+      duration: "7d"
+
+  notifications:
+    - channel: slack
+      target: "#experiments"
+      events: ["*"]

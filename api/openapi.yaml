@@ -1,0 +1,1267 @@
+openapi: 3.1.0
+info:
+  title: PlatformFoundry API
+  description: |
+    PlatformFoundry Internal Developer Platform API.
+
+    This API provides programmatic access to all platform operations including:
+    - Platform and workload management
+    - Deployment orchestration
+    - Resource provisioning
+    - Observability and metrics
+    - Policy and compliance
+  version: 1.0.0
+  contact:
+    name: PlatformFoundry Team
+    url: https://platformfoundry.io
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+
+servers:
+  - url: http://localhost:8080/api/v1
+    description: Local development
+  - url: https://api.platformfoundry.io/v1
+    description: Production
+
+security:
+  - bearerAuth: []
+  - apiKeyAuth: []
+
+tags:
+  - name: Platforms
+    description: Platform management operations
+  - name: Workloads
+    description: Workload deployment and management
+  - name: Environments
+    description: Environment management
+  - name: Deployments
+    description: Deployment operations
+  - name: Resources
+    description: Resource provisioning
+  - name: Workflows
+    description: Workflow automation
+  - name: Policies
+    description: Policy management
+  - name: Secrets
+    description: Secrets management
+  - name: Observability
+    description: Metrics, logs, and traces
+  - name: Compliance
+    description: Compliance and governance
+  - name: Catalog
+    description: Service catalog
+  - name: Plugins
+    description: Plugin management
+
+paths:
+  /health:
+    get:
+      summary: Health check
+      operationId: healthCheck
+      security: []
+      tags: [System]
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+
+  /version:
+    get:
+      summary: Get API version
+      operationId: getVersion
+      security: []
+      tags: [System]
+      responses:
+        '200':
+          description: Version information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionResponse'
+
+  /platforms:
+    get:
+      summary: List platforms
+      operationId: listPlatforms
+      tags: [Platforms]
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, inactive, error]
+      responses:
+        '200':
+          description: List of platforms
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformList'
+    post:
+      summary: Create platform
+      operationId: createPlatform
+      tags: [Platforms]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformCreate'
+      responses:
+        '201':
+          description: Platform created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Platform'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /platforms/{name}:
+    get:
+      summary: Get platform
+      operationId: getPlatform
+      tags: [Platforms]
+      parameters:
+        - $ref: '#/components/parameters/platformName'
+      responses:
+        '200':
+          description: Platform details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Platform'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      summary: Update platform
+      operationId: updatePlatform
+      tags: [Platforms]
+      parameters:
+        - $ref: '#/components/parameters/platformName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformUpdate'
+      responses:
+        '200':
+          description: Platform updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Platform'
+    delete:
+      summary: Delete platform
+      operationId: deletePlatform
+      tags: [Platforms]
+      parameters:
+        - $ref: '#/components/parameters/platformName'
+      responses:
+        '204':
+          description: Platform deleted
+
+  /platforms/{name}/apply:
+    post:
+      summary: Apply platform configuration
+      operationId: applyPlatform
+      tags: [Platforms]
+      parameters:
+        - $ref: '#/components/parameters/platformName'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplyOptions'
+      responses:
+        '202':
+          description: Apply started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobStatus'
+
+  /platforms/{name}/plan:
+    post:
+      summary: Plan platform changes
+      operationId: planPlatform
+      tags: [Platforms]
+      parameters:
+        - $ref: '#/components/parameters/platformName'
+      responses:
+        '200':
+          description: Plan result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlanResult'
+
+  /workloads:
+    get:
+      summary: List workloads
+      operationId: listWorkloads
+      tags: [Workloads]
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+        - name: environment
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of workloads
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkloadList'
+    post:
+      summary: Create workload
+      operationId: createWorkload
+      tags: [Workloads]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkloadCreate'
+      responses:
+        '201':
+          description: Workload created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workload'
+
+  /workloads/{name}:
+    get:
+      summary: Get workload
+      operationId: getWorkload
+      tags: [Workloads]
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Workload details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workload'
+
+  /environments:
+    get:
+      summary: List environments
+      operationId: listEnvironments
+      tags: [Environments]
+      responses:
+        '200':
+          description: List of environments
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentList'
+    post:
+      summary: Create environment
+      operationId: createEnvironment
+      tags: [Environments]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvironmentCreate'
+      responses:
+        '201':
+          description: Environment created
+
+  /environments/{name}:
+    get:
+      summary: Get environment
+      operationId: getEnvironment
+      tags: [Environments]
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Environment details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Environment'
+
+  /deployments:
+    get:
+      summary: List deployments
+      operationId: listDeployments
+      tags: [Deployments]
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+        - name: environment
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [pending, running, succeeded, failed]
+      responses:
+        '200':
+          description: List of deployments
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentList'
+    post:
+      summary: Create deployment
+      operationId: createDeployment
+      tags: [Deployments]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeploymentCreate'
+      responses:
+        '202':
+          description: Deployment started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deployment'
+
+  /deployments/{id}:
+    get:
+      summary: Get deployment
+      operationId: getDeployment
+      tags: [Deployments]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Deployment details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deployment'
+
+  /deployments/{id}/rollback:
+    post:
+      summary: Rollback deployment
+      operationId: rollbackDeployment
+      tags: [Deployments]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '202':
+          description: Rollback started
+
+  /workflows:
+    get:
+      summary: List workflows
+      operationId: listWorkflows
+      tags: [Workflows]
+      responses:
+        '200':
+          description: List of workflows
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowList'
+    post:
+      summary: Create workflow
+      operationId: createWorkflow
+      tags: [Workflows]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkflowCreate'
+      responses:
+        '201':
+          description: Workflow created
+
+  /workflows/{name}/run:
+    post:
+      summary: Run workflow
+      operationId: runWorkflow
+      tags: [Workflows]
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                inputs:
+                  type: object
+                  additionalProperties: true
+      responses:
+        '202':
+          description: Workflow started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowExecution'
+
+  /policies:
+    get:
+      summary: List policies
+      operationId: listPolicies
+      tags: [Policies]
+      responses:
+        '200':
+          description: List of policies
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyList'
+
+  /policies/evaluate:
+    post:
+      summary: Evaluate policy
+      operationId: evaluatePolicy
+      tags: [Policies]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyEvaluationRequest'
+      responses:
+        '200':
+          description: Evaluation result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyEvaluationResult'
+
+  /secrets:
+    get:
+      summary: List secrets
+      operationId: listSecrets
+      tags: [Secrets]
+      parameters:
+        - name: path
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of secret paths
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecretList'
+
+  /secrets/{path}:
+    get:
+      summary: Get secret
+      operationId: getSecret
+      tags: [Secrets]
+      parameters:
+        - name: path
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Secret value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Secret'
+    put:
+      summary: Set secret
+      operationId: setSecret
+      tags: [Secrets]
+      parameters:
+        - name: path
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SecretValue'
+      responses:
+        '200':
+          description: Secret set
+
+  /catalog/services:
+    get:
+      summary: List catalog services
+      operationId: listCatalogServices
+      tags: [Catalog]
+      responses:
+        '200':
+          description: List of services
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CatalogServiceList'
+
+  /catalog/templates:
+    get:
+      summary: List templates
+      operationId: listTemplates
+      tags: [Catalog]
+      responses:
+        '200':
+          description: List of templates
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateList'
+
+  /plugins:
+    get:
+      summary: List plugins
+      operationId: listPlugins
+      tags: [Plugins]
+      responses:
+        '200':
+          description: List of plugins
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginList'
+
+  /plugins/{name}:
+    get:
+      summary: Get plugin
+      operationId: getPlugin
+      tags: [Plugins]
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Plugin details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plugin'
+
+  /plugins/{name}/install:
+    post:
+      summary: Install plugin
+      operationId: installPlugin
+      tags: [Plugins]
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                version:
+                  type: string
+      responses:
+        '202':
+          description: Installation started
+
+  /metrics:
+    get:
+      summary: Get metrics
+      operationId: getMetrics
+      tags: [Observability]
+      parameters:
+        - name: query
+          in: query
+          schema:
+            type: string
+        - name: start
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: end
+          in: query
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Metrics data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricsResponse'
+
+  /slos:
+    get:
+      summary: List SLOs
+      operationId: listSLOs
+      tags: [Observability]
+      responses:
+        '200':
+          description: List of SLOs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SLOList'
+
+  /compliance/reports:
+    get:
+      summary: List compliance reports
+      operationId: listComplianceReports
+      tags: [Compliance]
+      responses:
+        '200':
+          description: List of reports
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComplianceReportList'
+
+  /events:
+    get:
+      summary: List events
+      operationId: listEvents
+      tags: [System]
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+        - name: type
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventList'
+
+  /events/stream:
+    get:
+      summary: Stream events (SSE)
+      operationId: streamEvents
+      tags: [System]
+      responses:
+        '200':
+          description: Event stream
+          content:
+            text/event-stream:
+              schema:
+                type: string
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+
+  parameters:
+    limitParam:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        default: 20
+        maximum: 100
+    offsetParam:
+      name: offset
+      in: query
+      schema:
+        type: integer
+        default: 0
+    platformName:
+      name: name
+      in: path
+      required: true
+      schema:
+        type: string
+
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        code:
+          type: string
+        details:
+          type: object
+      required: [error]
+
+    HealthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [healthy, degraded, unhealthy]
+        timestamp:
+          type: string
+          format: date-time
+
+    VersionResponse:
+      type: object
+      properties:
+        version:
+          type: string
+        apiVersion:
+          type: string
+        gitCommit:
+          type: string
+        buildDate:
+          type: string
+
+    Platform:
+      type: object
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+        spec:
+          type: object
+        status:
+          type: object
+
+    PlatformCreate:
+      type: object
+      properties:
+        name:
+          type: string
+        spec:
+          type: object
+      required: [name]
+
+    PlatformUpdate:
+      type: object
+      properties:
+        spec:
+          type: object
+
+    PlatformList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Platform'
+        total:
+          type: integer
+
+    Workload:
+      type: object
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+        spec:
+          $ref: '#/components/schemas/WorkloadSpec'
+        status:
+          type: object
+
+    WorkloadCreate:
+      type: object
+      properties:
+        name:
+          type: string
+        spec:
+          $ref: '#/components/schemas/WorkloadSpec'
+      required: [name, spec]
+
+    WorkloadSpec:
+      type: object
+      properties:
+        containers:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Container'
+        resources:
+          type: object
+
+    WorkloadList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Workload'
+        total:
+          type: integer
+
+    Container:
+      type: object
+      properties:
+        image:
+          type: string
+        command:
+          type: array
+          items:
+            type: string
+        args:
+          type: array
+          items:
+            type: string
+        variables:
+          type: object
+        resources:
+          type: object
+
+    Environment:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+          enum: [development, staging, production]
+        cluster:
+          type: string
+        namespace:
+          type: string
+        variables:
+          type: object
+
+    EnvironmentCreate:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        cluster:
+          type: string
+      required: [name, type]
+
+    EnvironmentList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Environment'
+
+    Deployment:
+      type: object
+      properties:
+        id:
+          type: string
+        workload:
+          type: string
+        environment:
+          type: string
+        version:
+          type: string
+        status:
+          type: string
+          enum: [pending, running, succeeded, failed, rolled_back]
+        startedAt:
+          type: string
+          format: date-time
+        completedAt:
+          type: string
+          format: date-time
+
+    DeploymentCreate:
+      type: object
+      properties:
+        workload:
+          type: string
+        environment:
+          type: string
+        version:
+          type: string
+        strategy:
+          type: string
+          enum: [rolling, canary, blue-green]
+      required: [workload, environment]
+
+    DeploymentList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Deployment'
+        total:
+          type: integer
+
+    Workflow:
+      type: object
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+        spec:
+          type: object
+
+    WorkflowCreate:
+      type: object
+      properties:
+        name:
+          type: string
+        spec:
+          type: object
+      required: [name, spec]
+
+    WorkflowList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Workflow'
+
+    WorkflowExecution:
+      type: object
+      properties:
+        id:
+          type: string
+        workflowName:
+          type: string
+        status:
+          type: string
+        startedAt:
+          type: string
+          format: date-time
+
+    Policy:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        rules:
+          type: array
+          items:
+            type: object
+
+    PolicyList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Policy'
+
+    PolicyEvaluationRequest:
+      type: object
+      properties:
+        policy:
+          type: string
+        input:
+          type: object
+      required: [policy, input]
+
+    PolicyEvaluationResult:
+      type: object
+      properties:
+        allowed:
+          type: boolean
+        violations:
+          type: array
+          items:
+            type: object
+
+    Secret:
+      type: object
+      properties:
+        path:
+          type: string
+        version:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+
+    SecretValue:
+      type: object
+      properties:
+        value:
+          type: string
+        metadata:
+          type: object
+
+    SecretList:
+      type: object
+      properties:
+        paths:
+          type: array
+          items:
+            type: string
+
+    CatalogService:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        owner:
+          type: string
+        lifecycle:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+
+    CatalogServiceList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CatalogService'
+
+    Template:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        parameters:
+          type: array
+          items:
+            type: object
+
+    TemplateList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Template'
+
+    Plugin:
+      type: object
+      properties:
+        name:
+          type: string
+        version:
+          type: string
+        description:
+          type: string
+        enabled:
+          type: boolean
+        config:
+          type: object
+
+    PluginList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Plugin'
+
+    MetricsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+
+    SLO:
+      type: object
+      properties:
+        name:
+          type: string
+        service:
+          type: string
+        objective:
+          type: number
+        current:
+          type: number
+        errorBudget:
+          type: number
+
+    SLOList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SLO'
+
+    ComplianceReport:
+      type: object
+      properties:
+        id:
+          type: string
+        framework:
+          type: string
+        status:
+          type: string
+        score:
+          type: number
+        generatedAt:
+          type: string
+          format: date-time
+
+    ComplianceReportList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComplianceReport'
+
+    Event:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        source:
+          type: string
+        data:
+          type: object
+        timestamp:
+          type: string
+          format: date-time
+
+    EventList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+
+    Metadata:
+      type: object
+      properties:
+        name:
+          type: string
+        namespace:
+          type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    ApplyOptions:
+      type: object
+      properties:
+        dryRun:
+          type: boolean
+        force:
+          type: boolean
+        wait:
+          type: boolean
+        timeout:
+          type: string
+
+    PlanResult:
+      type: object
+      properties:
+        toCreate:
+          type: array
+          items:
+            type: string
+        toUpdate:
+          type: array
+          items:
+            type: string
+        toDelete:
+          type: array
+          items:
+            type: string
+        noChanges:
+          type: boolean
+
+    JobStatus:
+      type: object
+      properties:
+        jobId:
+          type: string
+        status:
+          type: string
+          enum: [pending, running, succeeded, failed]
+        message:
+          type: string

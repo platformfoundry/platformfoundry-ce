@@ -1,0 +1,183 @@
+apiVersion: platformfoundry.io/v1
+kind: ScalingPolicy
+metadata:
+  name: api-scaling
+  labels:
+    app: api
+    team: platform
+spec:
+  target:
+    kind: Deployment
+    name: api
+    namespace: production
+
+  strategy: predictive
+
+  metrics:
+    - name: cpu_utilization
+      type: cpu
+      source: prometheus
+      query: |
+        avg(rate(container_cpu_usage_seconds_total{
+          namespace="production",
+          pod=~"api-.*"
+        }[5m])) * 100
+      target:
+        type: Utilization
+        averageUtilization: 70
+      weight: 0.6
+
+    - name: request_rate
+      type: custom
+      source: prometheus
+      query: |
+        sum(rate(http_requests_total{
+          namespace="production",
+          service="api"
+        }[5m]))
+      target:
+        type: AverageValue
+        averageValue: 1000
+      weight: 0.4
+
+  predictions:
+    enabled: true
+    model: holtwinter
+    horizon: 1h
+    trainingWindow: 7d
+    updateInterval: 1h
+    confidenceLevel: 0.7
+    seasonalityMode: daily
+    bufferPercentage: 10
+
+  constraints:
+    minReplicas: 2
+    maxReplicas: 50
+    maxCPUPerPod: "2"
+    maxMemoryPerPod: "4Gi"
+    maxCostPerHour: 10.00
+
+  behavior:
+    scaleUp:
+      stabilizationWindow: 60s
+      policies:
+        - type: Percent
+          value: 100
+          periodSeconds: 60
+        - type: Pods
+          value: 4
+          periodSeconds: 60
+    scaleDown:
+      stabilizationWindow: 300s
+      policies:
+        - type: Percent
+          value: 50
+          periodSeconds: 120
+
+  costPolicy:
+    maxHourlyCost: 10.00
+    maxDailyCost: 200.00
+    maxMonthlyCost: 5000.00
+    preferSpot: true
+    spotPercentage: 70
+    optimizeForCost: true
+
+  schedule:
+    - name: business-hours
+      cron: "0 9 * * MON-FRI"
+      minReplicas: 5
+      duration: 10h
+      timezone: America/New_York
+
+    - name: weekend-reduced
+      cron: "0 0 * * SAT,SUN"
+      maxReplicas: 10
+      timezone: America/New_York
+
+---
+apiVersion: platformfoundry.io/v1
+kind: ScalingPolicy
+metadata:
+  name: worker-scaling
+  labels:
+    app: worker
+    team: platform
+spec:
+  target:
+    kind: Deployment
+    name: worker
+    namespace: production
+
+  strategy: reactive
+
+  metrics:
+    - name: queue_depth
+      type: external
+      source: prometheus
+      query: |
+        sum(rabbitmq_queue_messages{
+          queue="tasks"
+        })
+      target:
+        type: AverageValue
+        averageValue: 100
+
+  constraints:
+    minReplicas: 1
+    maxReplicas: 20
+
+  behavior:
+    scaleUp:
+      stabilizationWindow: 0s
+      policies:
+        - type: Pods
+          value: 2
+          periodSeconds: 30
+    scaleDown:
+      stabilizationWindow: 300s
+      policies:
+        - type: Pods
+          value: 1
+          periodSeconds: 60
+
+---
+apiVersion: platformfoundry.io/v1
+kind: ScalingPolicy
+metadata:
+  name: batch-scaling
+  labels:
+    app: batch-processor
+    team: data
+spec:
+  target:
+    kind: Deployment
+    name: batch-processor
+    namespace: data-pipeline
+
+  strategy: scheduled
+
+  metrics:
+    - name: cpu_utilization
+      type: cpu
+      source: prometheus
+      query: avg(rate(container_cpu_usage_seconds_total{namespace="data-pipeline",pod=~"batch-.*"}[5m])) * 100
+      target:
+        type: Utilization
+        averageUtilization: 80
+
+  constraints:
+    minReplicas: 0
+    maxReplicas: 100
+
+  schedule:
+    - name: nightly-batch
+      cron: "0 2 * * *"
+      replicas: 50
+      duration: 4h
+      timezone: UTC
+
+    - name: end-of-month
+      cron: "0 1 28-31 * *"
+      replicas: 100
+      duration: 8h
+      timezone: UTC

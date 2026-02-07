@@ -1,0 +1,231 @@
+{
+  "PlatformFoundry Platform": {
+    "prefix": "pf-platform",
+    "body": [
+      "apiVersion: platformfoundry.io/v1",
+      "kind: Platform",
+      "metadata:",
+      "  name: ${1:my-platform}",
+      "  labels:",
+      "    team: ${2:platform-team}",
+      "spec:",
+      "  environments:",
+      "    - name: development",
+      "      cluster: ${3:dev-cluster}",
+      "    - name: staging",
+      "      cluster: ${4:staging-cluster}",
+      "    - name: production",
+      "      cluster: ${5:prod-cluster}",
+      "  $0"
+    ],
+    "description": "PlatformFoundry Platform definition"
+  },
+  "PlatformFoundry Workload": {
+    "prefix": "pf-workload",
+    "body": [
+      "apiVersion: platformfoundry.io/v1",
+      "kind: Workload",
+      "metadata:",
+      "  name: ${1:my-service}",
+      "  labels:",
+      "    app: ${1:my-service}",
+      "spec:",
+      "  container:",
+      "    image: ${2:my-registry}/${1:my-service}:${3:latest}",
+      "    ports:",
+      "      - containerPort: ${4:8080}",
+      "    resources:",
+      "      requests:",
+      "        cpu: ${5:100m}",
+      "        memory: ${6:128Mi}",
+      "      limits:",
+      "        cpu: ${7:500m}",
+      "        memory: ${8:512Mi}",
+      "  replicas: ${9:2}",
+      "  $0"
+    ],
+    "description": "PlatformFoundry Workload definition"
+  },
+  "PlatformFoundry Environment": {
+    "prefix": "pf-environment",
+    "body": [
+      "apiVersion: platformfoundry.io/v1",
+      "kind: Environment",
+      "metadata:",
+      "  name: ${1:development}",
+      "spec:",
+      "  cluster: ${2:dev-cluster}",
+      "  namespace: ${3:default}",
+      "  type: ${4|development,staging,production|}",
+      "  $0"
+    ],
+    "description": "PlatformFoundry Environment definition"
+  },
+  "PlatformFoundry Deployment": {
+    "prefix": "pf-deployment",
+    "body": [
+      "apiVersion: platformfoundry.io/v1",
+      "kind: Deployment",
+      "metadata:",
+      "  name: ${1:my-deployment}",
+      "spec:",
+      "  workload: ${2:my-service}",
+      "  environment: ${3:production}",
+      "  version: ${4:v1.0.0}",
+      "  strategy:",
+      "    type: ${5|RollingUpdate,BlueGreen,Canary|}",
+      "  $0"
+    ],
+    "description": "PlatformFoundry Deployment definition"
+  },
+  "PlatformFoundry Policy": {
+    "prefix": "pf-policy",
+    "body": [
+      "apiVersion: platformfoundry.io/v1",
+      "kind: Policy",
+      "metadata:",
+      "  name: ${1:my-policy}",
+      "spec:",
+      "  enforcement: ${2|enforce,warn,audit|}",
+      "  rules:",
+      "    - name: ${3:rule-name}",
+      "      match:",
+      "        kinds:",
+      "          - ${4:Workload}",
+      "      validate:",
+      "        message: \"${5:Validation message}\"",
+      "        pattern:",
+      "          spec:",
+      "            $0"
+    ],
+    "description": "PlatformFoundry Policy definition"
+  },
+  "PlatformFoundry Workflow": {
+    "prefix": "pf-workflow",
+    "body": [
+      "apiVersion: platformfoundry.io/v1",
+      "kind: Workflow",
+      "metadata:",
+      "  name: ${1:my-workflow}",
+      "spec:",
+      "  triggers:",
+      "    - type: ${2|manual,schedule,webhook|}",
+      "  inputs:",
+      "    - name: ${3:version}",
+      "      type: string",
+      "      required: true",
+      "  timeout: ${4:1h}",
+      "  steps:",
+      "    - id: ${5:step-1}",
+      "      type: ${6|shell,http,infra,policy|}",
+      "      config:",
+      "        $0"
+    ],
+    "description": "PlatformFoundry Workflow definition"
+  },
+  "PlatformFoundry Resource": {
+    "prefix": "pf-resource",
+    "body": [
+      "apiVersion: platformfoundry.io/v1",
+      "kind: Resource",
+      "metadata:",
+      "  name: ${1:my-database}",
+      "spec:",
+      "  type: ${2|postgres,mysql,redis,mongodb,s3,sqs|}",
+      "  provider: ${3:aws}",
+      "  config:",
+      "    ${4:instanceClass}: ${5:db.t3.micro}",
+      "  $0"
+    ],
+    "description": "PlatformFoundry Resource definition"
+  },
+  "PlatformFoundry Secret": {
+    "prefix": "pf-secret",
+    "body": [
+      "apiVersion: platformfoundry.io/v1",
+      "kind: Secret",
+      "metadata:",
+      "  name: ${1:my-secret}",
+      "spec:",
+      "  provider: ${2|vault,aws-secrets,local|}",
+      "  path: ${3:secret/data/myapp}",
+      "  keys:",
+      "    - ${4:API_KEY}",
+      "    - ${5:DB_PASSWORD}",
+      "  $0"
+    ],
+    "description": "PlatformFoundry Secret definition"
+  },
+  "PlatformFoundry Service": {
+    "prefix": "pf-service",
+    "body": [
+      "apiVersion: platformfoundry.io/v1",
+      "kind: Service",
+      "metadata:",
+      "  name: ${1:my-service}",
+      "spec:",
+      "  selector:",
+      "    app: ${1:my-service}",
+      "  ports:",
+      "    - name: http",
+      "      port: ${2:80}",
+      "      targetPort: ${3:8080}",
+      "  type: ${4|ClusterIP,LoadBalancer,NodePort|}",
+      "  $0"
+    ],
+    "description": "PlatformFoundry Service definition"
+  },
+  "PlatformFoundry Gateway": {
+    "prefix": "pf-gateway",
+    "body": [
+      "apiVersion: platformfoundry.io/v1",
+      "kind: Gateway",
+      "metadata:",
+      "  name: ${1:api-gateway}",
+      "spec:",
+      "  hosts:",
+      "    - ${2:api.example.com}",
+      "  tls:",
+      "    mode: ${3|SIMPLE,MUTUAL,PASSTHROUGH|}",
+      "    credentialName: ${4:tls-secret}",
+      "  routes:",
+      "    - match:",
+      "        path: ${5:/api}",
+      "      destination:",
+      "        service: ${6:backend-service}",
+      "        port: ${7:80}",
+      "  $0"
+    ],
+    "description": "PlatformFoundry Gateway definition"
+  },
+  "Score Workload": {
+    "prefix": "score-workload",
+    "body": [
+      "apiVersion: score.dev/v1b1",
+      "metadata:",
+      "  name: ${1:my-service}",
+      "",
+      "containers:",
+      "  ${1:my-service}:",
+      "    image: ${2:my-registry}/${1:my-service}:${3:latest}",
+      "    variables:",
+      "      PORT: \"${4:8080}\"",
+      "    resources:",
+      "      requests:",
+      "        cpu: ${5:100m}",
+      "        memory: ${6:128Mi}",
+      "",
+      "service:",
+      "  ports:",
+      "    www:",
+      "      port: ${7:80}",
+      "      targetPort: ${4:8080}",
+      "",
+      "resources:",
+      "  ${8:database}:",
+      "    type: ${9:postgres}",
+      "  $0"
+    ],
+    "description": "Score workload definition"
+  }
+}

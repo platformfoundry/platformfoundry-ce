@@ -1,0 +1,11 @@
+apiVersion: platformfoundry.io/v1
+kind: Cluster
+metadata:
+  name: dev-cluster
+  labels:
+    environment: development
+    team: platform-engineering
+spec:
+  provider: existing
+  kubeconfig: ~/.kube/config
+  context: dev-cluster

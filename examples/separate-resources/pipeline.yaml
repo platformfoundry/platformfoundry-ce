@@ -1,0 +1,22 @@
+apiVersion: platformfoundry.io/v1
+kind: Pipeline
+metadata:
+  name: jenkins-ci
+  labels:
+    environment: development
+spec:
+  provider: jenkins
+  url: https://jenkins.example.com:8080
+  clusterRef: dev-cluster
+
+  credentials:
+    username: admin
+    passwordSecretRef: jenkins-admin-password
+
+  jobs:
+    - name: build-backend
+      type: pipeline
+      scriptPath: pipelines/backend.Jenkinsfile
+    - name: build-frontend
+      type: pipeline
+      scriptPath: pipelines/frontend.Jenkinsfile

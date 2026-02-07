@@ -1,0 +1,122 @@
+apiVersion: platformfoundry.io/v1
+kind: Workflow
+metadata:
+  name: deploy-production
+  labels:
+    team: platform
+    environment: production
+spec:
+  description: Production deployment workflow with policy checks and approvals
+
+  triggers:
+    - type: manual
+    - type: schedule
+      cron: "0 9 * * 1-5"  # Weekdays at 9 AM
+
+  inputs:
+    - name: version
+      type: string
+      required: true
+      description: Version to deploy
+    - name: environment
+      type: string
+      required: false
+      default: production
+      enum: [staging, production]
+    - name: dry_run
+      type: boolean
+      default: false
+
+  timeout: 2h
+
+  steps:
+    - id: validate-policy
+      name: Validate Deployment Policy
+      type: policy
+      config:
+        policy: deploy/production-ready
+        input:
+          version: "${inputs.version}"
+          environment: "${inputs.environment}"
+
+    - id: get-secrets
+      name: Retrieve Deployment Secrets
+      type: secrets
+      config:
+        paths:
+          - deploy/prod/database
+          - deploy/prod/api-keys
+
+    - id: run-tests
+      name: Run Integration Tests
+      type: shell
+      dependsOn: [validate-policy]
+      config:
+        command: |
+          echo "Running integration tests for version ${inputs.version}"
+          # ./run-tests.sh --version ${inputs.version}
+        timeout: 600
+      retries:
+        maxAttempts: 2
+        delay: 30s
+
+    - id: approval
+      name: Production Approval
+      type: approval
+      dependsOn: [run-tests, get-secrets]
+      config:
+        message: "Approve deployment of version ${inputs.version} to ${inputs.environment}?"
+        roles: [sre, platform-admin]
+        required: 1
+        timeout: 60
+
+    - id: deploy
+      name: Deploy to Production
+      type: infra
+      dependsOn: [approval]
+      condition: "${inputs.dry_run} != true"
+      config:
+        operation: apply
+        specs:
+          kubernetes:
+            version: "${inputs.version}"
+            replicas: 3
+      timeout: 30m
+
+    - id: health-check
+      name: Verify Deployment Health
+      type: http
+      dependsOn: [deploy]
+      config:
+        url: "https://api.example.com/health"
+        method: GET
+        successCodes: ["2xx"]
+        timeout: 30
+      retries:
+        maxAttempts: 5
+        delay: 10s
+        backoff: exponential
+
+    - id: notify-success
+      name: Notify Success
+      type: notify
+      dependsOn: [health-check]
+      config:
+        channel: slack
+        message: "Successfully deployed version ${inputs.version} to ${inputs.environment}"
+        title: "Deployment Complete"
+        severity: info
+
+  onFailure:
+    - id: notify-failure
+      type: notify
+      config:
+        channel: slack
+        message: "Deployment of version ${inputs.version} failed"
+        title: "Deployment Failed"
+        severity: error
+
+  notifications:
+    - type: slack
+      channel: "#deployments"
+      onEvents: [workflow.started, workflow.completed, workflow.failed]

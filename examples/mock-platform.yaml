@@ -1,0 +1,154 @@
+# Platform Foundry - Mock/Simulation Mode Example
+# This example simulates platform creation without deploying real resources
+# Perfect for:
+#   - Testing configurations
+#   - Learning Platform Foundry
+#   - Demo presentations
+#   - CI/CD pipeline validation
+#
+# Usage:
+#   pf apply -f mock-platform.yaml --mode=mock
+#   pf plan -f mock-platform.yaml  # See what would be created
+
+apiVersion: platformfoundry.io/v1
+kind: Platform
+metadata:
+  name: production-platform
+  labels:
+    environment: production
+    mode: mock
+spec:
+  mode: mock  # Simulates everything without real resources
+
+  # Infrastructure - simulates AWS EKS
+  infrastructure:
+    name: prod-infra
+    provider: terraform  # Will use MockTerraformPlugin
+    cloud:
+      provider: aws
+      region: us-east-1
+      vpc:
+        cidr: "10.0.0.0/16"
+        subnets:
+          - cidr: "10.0.1.0/24"
+            zone: us-east-1a
+          - cidr: "10.0.2.0/24"
+            zone: us-east-1b
+          - cidr: "10.0.3.0/24"
+            zone: us-east-1c
+    cluster:
+      provider: eks
+      name: prod-eks
+      version: "1.27"
+      nodeGroups:
+        - name: system
+          instanceType: t3.large
+          minSize: 3
+          maxSize: 10
+        - name: workload
+          instanceType: t3.xlarge
+          minSize: 5
+          maxSize: 20
+
+  # Components
+  components:
+    # ArgoCD for GitOps
+    orchestrator:
+      name: prod-argocd
+      provider: argocd  # Will use MockArgoCDPlugin
+      namespace: argocd
+      gitops:
+        repo: https://github.com/my-org/platform-config
+        branch: main
+        path: environments/production
+      applications:
+        - name: platform-apps
+          path: apps
+          syncPolicy: automated
+
+    # Prometheus + Grafana for observability
+    observability:
+      name: prod-monitoring
+      provider: prometheus-stack  # Will use MockPrometheusPlugin
+      namespace: monitoring
+      prometheus:
+        enabled: true
+        retention: 30d
+        storage: 500Gi
+        highAvailability: true
+        replicas: 3
+      grafana:
+        enabled: true
+        replicas: 2
+        dashboards:
+          - kubernetes-cluster
+          - applications
+          - argocd
+          - custom-business-metrics
+
+    # Backstage developer portal
+    devex:
+      name: prod-portal
+      provider: backstage
+      namespace: backstage
+      config:
+        intelligentGeneration: true
+        techStack:
+          infrastructure: terraform-aws
+          orchestrator: argocd
+          observability: prometheus-grafana
+          cicd: github-actions
+        features:
+          - software-catalog
+          - tech-docs
+          - scaffolder
+          - kubernetes
+          - cost-insights
+        integrations:
+          - github
+          - argocd
+          - grafana
+          - prometheus
+          - pagerduty
+          - slack
+
+  # Global configuration
+  config:
+    # High availability
+    highAvailability:
+      enabled: true
+      minReplicas: 3
+
+    # Auto-integration
+    autoIntegration: true
+
+    # Security
+    security:
+      rbac: true
+      networkPolicies: true
+      podSecurityPolicies: true
+
+    # Tags
+    tags:
+      Environment: production
+      ManagedBy: platform-foundry
+      CostCenter: engineering
+      Team: platform
+
+---
+# Additional component: CI/CD Pipeline
+apiVersion: platformfoundry.io/v1
+kind: Pipeline
+metadata:
+  name: prod-ci-pipeline
+spec:
+  provider: github-actions
+  repositories:
+    - name: platform-foundry/applications
+      workflows:
+        - build
+        - test
+        - deploy
+  integration:
+    argocd: prod-argocd
+    monitoring: prod-monitoring

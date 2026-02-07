@@ -1,0 +1,29 @@
+run:
+  timeout: 5m
+
+linters:
+  disable-all: true
+  enable:
+    - govet
+    - staticcheck
+    - unused
+
+linters-settings:
+  staticcheck:
+    checks:
+      - all
+      - -SA1019  # Ignore deprecation warnings
+      - -SA5011  # Ignore nil pointer dereference checks that have manual nil checks
+
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - unused
+        - staticcheck
+    - text: "strings.Title"
+      linters:
+        - staticcheck
+    - text: "SA6005"
+      linters:
+        - staticcheck

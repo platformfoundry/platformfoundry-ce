@@ -1,0 +1,226 @@
+apiVersion: platformfoundry.io/v1
+kind: ServiceMesh
+metadata:
+  name: production-mesh
+  namespace: istio-system
+  labels:
+    environment: production
+
+spec:
+  provider: istio  # istio, linkerd, cilium, consul
+
+  # Mutual TLS Configuration
+  mtls:
+    mode: strict  # strict, permissive, disabled
+    certificateAuthority: vault
+    rootCertTTL: "8760h"      # 1 year
+    workloadCertTTL: "24h"
+    minTLSVersion: "TLSv1_2"
+
+  # Traffic Management
+  traffic:
+    retries:
+      attempts: 3
+      perTryTimeout: "2s"
+      retryOn:
+        - "5xx"
+        - "gateway-error"
+        - "connect-failure"
+        - "retriable-4xx"
+      backoffBase: "25ms"
+      backoffMax: "1s"
+
+    circuitBreaker:
+      consecutiveErrors: 5
+      interval: "30s"
+      baseEjectionTime: "30s"
+      maxEjectionPercent: 50
+      minHealthPercent: 30
+
+    timeout:
+      request: "15s"
+      idle: "1h"
+
+    loadBalancing:
+      algorithm: "round_robin"  # round_robin, least_conn, random
+      localityAware: true
+      consistentHash:
+        httpHeader: "x-user-id"
+        minimumRingSize: 1024
+
+    rateLimiting:
+      requestsPerUnit: 1000
+      unit: "second"
+      burstSize: 100
+
+  # Observability
+  observability:
+    tracing:
+      enabled: true
+      sampling: 1.0  # 1% of requests
+      provider: tempo
+      collectorAddr: "tempo.observability:4317"
+
+    metrics:
+      enabled: true
+      prometheusPort: 15090
+      includeLabels:
+        - "app"
+        - "version"
+        - "environment"
+
+    logging:
+      enabled: true
+      format: "json"
+      level: "info"
+
+  # Security
+  security:
+    authorizationPolicy:
+      action: "ALLOW"
+      rules:
+        - from:
+            - principals:
+                - "cluster.local/ns/production/sa/api-gateway"
+            - namespaces:
+                - "production"
+          to:
+            - hosts:
+                - "*.production.svc.cluster.local"
+              methods:
+                - "GET"
+                - "POST"
+                - "PUT"
+                - "DELETE"
+
+    peerAuthentication:
+      mode: strict
+      portSelector:
+        9090: permissive  # Allow prometheus scraping
+
+  # Ingress Gateway
+  ingress:
+    enabled: true
+    hosts:
+      - "api.example.com"
+      - "*.api.example.com"
+    tls:
+      mode: "SIMPLE"
+      credentialName: "api-tls-cert"
+      minVersion: "TLSv1_2"
+    replicas: 3
+
+  # Egress Gateway
+  egress:
+    enabled: true
+    allowedHosts:
+      - "*.amazonaws.com"
+      - "api.stripe.com"
+      - "api.twilio.com"
+    blockByDefault: true
+
+---
+# Virtual Service for canary deployment
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: api-service-canary
+  namespace: production
+
+spec:
+  hosts:
+    - api-service
+  http:
+    - name: canary
+      match:
+        - headers:
+            x-canary:
+              exact: "true"
+      route:
+        - destination:
+            host: api-service
+            subset: canary
+          weight: 100
+
+    - name: primary
+      route:
+        - destination:
+            host: api-service
+            subset: stable
+          weight: 90
+        - destination:
+            host: api-service
+            subset: canary
+          weight: 10
+      retries:
+        attempts: 3
+        perTryTimeout: 2s
+      timeout: 10s
+
+---
+# Destination Rule with traffic policies
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: api-service
+  namespace: production
+
+spec:
+  host: api-service
+  trafficPolicy:
+    connectionPool:
+      tcp:
+        maxConnections: 100
+        connectTimeout: "10s"
+      http:
+        http1MaxPendingRequests: 100
+        http2MaxRequests: 1000
+        maxRequestsPerConnection: 10
+        maxRetries: 3
+    loadBalancer:
+      simple: "ROUND_ROBIN"
+    outlierDetection:
+      consecutive5xxErrors: 5
+      consecutiveGatewayErrors: 5
+      interval: "30s"
+      baseEjectionTime: "30s"
+      maxEjectionPercent: 50
+    tls:
+      mode: "ISTIO_MUTUAL"
+
+  subsets:
+    - name: stable
+      labels:
+        version: stable
+    - name: canary
+      labels:
+        version: canary
+      trafficPolicy:
+        connectionPool:
+          http:
+            http2MaxRequests: 100  # Lower limit for canary
+
+---
+# Fault injection for testing
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: payment-service-fault-test
+  namespace: staging
+
+spec:
+  hosts:
+    - payment-service
+  http:
+    - name: fault-test
+      fault:
+        delay:
+          percentage: 10
+          fixedDelay: "500ms"
+        abort:
+          percentage: 5
+          httpStatus: 503
+      route:
+        - destination:
+            host: payment-service
+          weight: 100
